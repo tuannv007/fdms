@@ -1,4 +1,4 @@
-package com.framgia.fdms.main;
+package com.framgia.fdms.feature.main;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
