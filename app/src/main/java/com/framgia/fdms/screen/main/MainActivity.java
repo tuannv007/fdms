@@ -3,7 +3,6 @@ package com.framgia.fdms.screen.main;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-
 import com.framgia.fdms.R;
 import com.framgia.fdms.databinding.ActivityMainBinding;
 
@@ -17,11 +16,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mViewModel = new MainViewModel();
-        MainContract.Presenter presenter =
-            new MainPresenter(mViewModel);
+        MainContract.Presenter presenter = new MainPresenter(mViewModel);
         mViewModel.setPresenter(presenter);
-        ActivityMainBinding binding =
-            DataBindingUtil.setContentView(this, R.layout.activity_main);
+        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.setViewModel((MainViewModel) mViewModel);
     }
 
