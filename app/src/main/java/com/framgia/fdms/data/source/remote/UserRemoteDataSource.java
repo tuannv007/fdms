@@ -19,7 +19,7 @@ public class UserRemoteDataSource implements UserDataSource.RemoteDataSource {
     @Override
     public Observable<User> login(String userName, String passWord) {
         // TODO: 4/4/17 replace by call API later
-        User user = new User("tuan", "123");
+        User user = new User("tuan", "123", "", "", "", "", "");
         return Observable.just(user);
     }
 }

@@ -7,6 +7,7 @@ import android.databinding.Bindable;
 import android.widget.Toast;
 import com.framgia.fdms.R;
 import com.framgia.fdms.screen.main.MainActivity;
+import com.framgia.fdms.screen.register.RegisterActivity;
 
 /**
  * Exposes the data to be used in the Login screen.
@@ -60,7 +61,7 @@ public class LoginViewModel extends BaseObservable implements LoginContract.View
     }
 
     public void onSignUpClick() {
-        //TODO SignUp Activity
+        mContext.startActivity(new Intent(mContext, RegisterActivity.class));
     }
 
     @Bindable
