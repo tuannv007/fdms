@@ -1,9 +1,13 @@
 package com.framgia.fdms.screen.main;
 
+import android.content.Context;
+import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.support.v7.widget.RecyclerView;
+import com.framgia.fdms.BaseRecyclerViewAdapter;
 import com.framgia.fdms.data.model.Device;
+import com.framgia.fdms.screen.detail.DetailActivity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,12 +15,22 @@ import java.util.List;
  * Exposes the data to be used in the Main screen.
  */
 public class MainViewModel extends BaseObservable implements MainContract.ViewModel {
+    private Context mContext;
     private MainContract.Presenter mPresenter;
     private DeviceListAdapter mAdapter;
     private List<Device> mDevices = new ArrayList<>();
 
-    public MainViewModel() {
-        mAdapter = new DeviceListAdapter(mDevices);
+    public MainViewModel(Context context) {
+        mContext = context;
+        mAdapter = new DeviceListAdapter(mContext, mDevices);
+        mAdapter.setItemClickListener(
+                new BaseRecyclerViewAdapter.OnRecyclerViewItemClickListener<Device>() {
+
+                    @Override
+                    public void onItemRecyclerViewClick(Device item) {
+                        mContext.startActivity(new Intent(mContext, DetailActivity.class));
+                    }
+                });
     }
 
     @Override

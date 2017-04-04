@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewModel = new MainViewModel();
+        mViewModel = new MainViewModel(this);
         MainContract.Presenter presenter = new MainPresenter(mViewModel,
                 new DeviceRepository(new DeviceRemoteDataSource(FDMSServiceClient.getInstance())));
         mViewModel.setPresenter(presenter);
