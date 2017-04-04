@@ -31,4 +31,6 @@
     <string name="msg_login_error">Login Error!</string>
     <string name="msg_login_ok">Login Ok !</string>
     <string name="msg_please_input_text"><![CDATA[please input username & password]]></string>
+    <string name="title_description">Description:</string>
+    <string name="title_related_device">Related device:</string>
 </resources>

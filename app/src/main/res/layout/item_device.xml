@@ -5,7 +5,10 @@
     >
 
     <data class="ItemDataBinding">
-
+        <variable
+            name="viewModel"
+            type="com.framgia.fdms.screen.main.ItemDeviceResultViewModel"
+            />
         <variable
             name="item"
             type="com.framgia.fdms.data.model.Device"
@@ -19,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dp5"
         android:elevation="@dimen/dp3"
+        android:onClick="@{viewModel::onItemClicked}"
         android:padding="@dimen/dp5"
         car_view:cardCornerRadius="@dimen/dp1"
         car_view:cardElevation="@dimen/dp1"

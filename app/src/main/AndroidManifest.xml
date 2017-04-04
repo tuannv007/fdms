@@ -12,10 +12,11 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Design.NoActionBar">
+        android:theme="@style/AppTheme">
         <activity
             android:name=".screen.login.LoginActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -28,6 +29,10 @@
         <activity
             android:name=".screen.register.RegisterActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".screen.detail.DetailActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
+
