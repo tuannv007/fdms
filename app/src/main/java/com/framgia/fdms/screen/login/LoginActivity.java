@@ -15,7 +15,7 @@ public class LoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewModel = new LoginViewModel();
+        mViewModel = new LoginViewModel(this);
         LoginContract.Presenter presenter = new LoginPresenter(mViewModel);
         mViewModel.setPresenter(presenter);
         ActivityLoginBinding binding =
