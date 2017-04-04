@@ -17,4 +17,6 @@
     <string name="action_register">Register</string>
     <string name="action_sign_up">sign up</string>
     <string name="msg_notice_progress">This function is in progress!</string>
+    <string name="msg_login_error">Login Error!</string>
+    <string name="msg_login_ok">Login Ok !</string>
 </resources>
