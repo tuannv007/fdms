@@ -1,9 +1,7 @@
 package com.framgia.fdms.data;
 
 import com.framgia.fdms.data.model.Device;
-
 import java.util.List;
-
 import rx.Observable;
 
 /**

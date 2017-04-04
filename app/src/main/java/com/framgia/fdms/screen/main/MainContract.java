@@ -3,7 +3,6 @@ package com.framgia.fdms.screen.main;
 import com.framgia.fdms.BasePresenter;
 import com.framgia.fdms.BaseViewModel;
 import com.framgia.fdms.data.model.Device;
-
 import java.util.List;
 
 /**
@@ -15,8 +14,11 @@ interface MainContract {
      */
     interface ViewModel extends BaseViewModel<Presenter> {
         void onDeviceLoaded(List<Device> devices);
+
         void onError();
+
         void showProgressbar();
+
         void hideProgressbar();
     }
 
