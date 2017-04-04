@@ -1,20 +1,27 @@
-package com.framgia.fdms.data.model;
+package com.framgia.fdms.data.source.api.request;
+
+import rx.subscriptions.CompositeSubscription;
 
 /**
- * Created by levutantuan on 3/31/17.
+ * Created by levutantuan on 4/5/17.
  */
-public class User {
 
+public class RegisterRequest extends BaseRequest {
     public String mUserName;
+    public String mPassWord;
+    public String mConfirmPassword;
     public String mFirstName;
     public String mLastName;
     public String mAddress;
     public String mRole;
     public String mDepartment;
+    private CompositeSubscription mCompositeSubscription = new CompositeSubscription();
 
-    public User(String userName, String firstName, String lastName, String address, String role,
-            String department) {
+    public RegisterRequest(String userName, String passWord, String confirmPassword,
+            String firstName, String lastName, String address, String role, String department) {
         mUserName = userName;
+        mPassWord = passWord;
+        mConfirmPassword = confirmPassword;
         mFirstName = firstName;
         mLastName = lastName;
         mAddress = address;
@@ -22,7 +29,7 @@ public class User {
         mDepartment = department;
     }
 
-    public User() {
+    public RegisterRequest() {
     }
 
     public String getUserName() {
@@ -31,6 +38,22 @@ public class User {
 
     public void setUserName(String userName) {
         mUserName = userName;
+    }
+
+    public String getPassWord() {
+        return mPassWord;
+    }
+
+    public void setPassWord(String passWord) {
+        mPassWord = passWord;
+    }
+
+    public String getConfirmPassword() {
+        return mConfirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        mConfirmPassword = confirmPassword;
     }
 
     public String getFirstName() {
