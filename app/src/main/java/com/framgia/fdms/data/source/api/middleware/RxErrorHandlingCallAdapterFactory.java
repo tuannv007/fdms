@@ -1,6 +1,5 @@
 package com.framgia.fdms.data.source.api.middleware;
 
-import android.util.Log;
 import com.framgia.fdms.data.source.api.error.BaseException;
 import java.io.IOException;
 import java.lang.annotation.Annotation;

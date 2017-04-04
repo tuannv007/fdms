@@ -3,9 +3,7 @@ package com.framgia.fdms.screen.main;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.support.v7.widget.RecyclerView;
-
 import com.framgia.fdms.data.model.Device;
-
 import java.util.ArrayList;
 import java.util.List;
 

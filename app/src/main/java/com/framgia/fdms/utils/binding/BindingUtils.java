@@ -11,9 +11,9 @@ public final class BindingUtils {
         // No-op
     }
 
-    @BindingAdapter({"recyclerAdapter"})
+    @BindingAdapter({ "recyclerAdapter" })
     public static void setAdapterForRecyclerView(RecyclerView recyclerView,
-                                                 RecyclerView.Adapter adapter) {
+            RecyclerView.Adapter adapter) {
         recyclerView.setAdapter(adapter);
     }
 }

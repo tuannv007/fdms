@@ -2,9 +2,7 @@ package com.framgia.fdms.screen.main;
 
 import com.framgia.fdms.data.DeviceRepository;
 import com.framgia.fdms.data.model.Device;
-
 import java.util.List;
-
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.functions.Action1;
@@ -35,14 +33,12 @@ final class MainPresenter implements MainContract.Presenter {
     }
 
     public void getListDevice() {
-        mDeviceRepository.getListDevice().subscribeOn(Schedulers.io())
-            .doOnSubscribe(new Action0() {
-                @Override
-                public void call() {
-                    mViewModel.showProgressbar();
-                }
-            }).observeOn
-            (AndroidSchedulers.mainThread()).subscribe(new Action1<List<Device>>() {
+        mDeviceRepository.getListDevice().subscribeOn(Schedulers.io()).doOnSubscribe(new Action0() {
+            @Override
+            public void call() {
+                mViewModel.showProgressbar();
+            }
+        }).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<List<Device>>() {
             @Override
             public void call(List<Device> devices) {
                 mViewModel.onDeviceLoaded(devices);

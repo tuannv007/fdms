@@ -1,13 +1,20 @@
 package com.framgia.fdms.data.source.api.service;
 
 import com.framgia.fdms.data.model.Device;
+import com.framgia.fdms.data.model.User;
 import java.util.List;
+import java.util.Map;
+import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 import rx.Observable;
 
 public interface FDMSApi {
     @GET("/search/users")
     Observable<List<Device>> getListDevice(@Query("per_page") int limit,
             @Query("q") String searchTerm);
+
+    @GET("user")
+    Call<User> login(@QueryMap Map<String, String> params);
 }

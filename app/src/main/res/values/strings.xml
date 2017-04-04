@@ -10,7 +10,7 @@
     <string name="title_last_name">Last Name</string>
     <string name="title_email">Email</string>
     <string name="title_confirm_password">Confirm Password</string>
-    <string name="title_adress">Address</string>
+    <string name="title_adress">Adress</string>
     <string name="title_role">Role</string>
     <string name="title_department">Department</string>
     <string name="action_create_account">create account</string>
@@ -28,4 +28,7 @@
     <string name="title_name_device">Name Device: </string>
     <string name="title_date_device">Date: </string>
     <string name="title_category">Category: </string>
+    <string name="msg_login_error">Login Error!</string>
+    <string name="msg_login_ok">Login Ok !</string>
+    <string name="msg_please_input_text"><![CDATA[please input username & password]]></string>
 </resources>
