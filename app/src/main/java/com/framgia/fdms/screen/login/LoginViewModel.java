@@ -1,12 +1,21 @@
 package com.framgia.fdms.screen.login;
 
+import android.content.Context;
+import android.content.Intent;
+import com.framgia.fdms.screen.main.MainActivity;
+
 /**
  * Exposes the data to be used in the Login screen.
  */
 public class LoginViewModel implements LoginContract.ViewModel {
+    private Context mContext;
     private LoginContract.Presenter mPresenter;
     private String mUsername;
     private String mPassword;
+
+    public LoginViewModel(Context context) {
+        mContext = context;
+    }
 
     @Override
     public void onStart() {
@@ -24,22 +33,16 @@ public class LoginViewModel implements LoginContract.ViewModel {
     }
 
     public void onLoginClick() {
-        //TODO Login
+        mContext.startActivity(new Intent(mContext, MainActivity.class));
     }
-
-    ;
 
     public void onForgotPasswordClick() {
         //TODO Forgot Password Activity
     }
 
-    ;
-
     public void onSignUpClick() {
         //TODO SignUp Activity
     }
-
-    ;
 
     public String getUsername() {
         return mUsername;
