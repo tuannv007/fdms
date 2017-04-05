@@ -19,7 +19,7 @@ public class DeviceListAdapter extends BaseRecyclerViewAdapter<DeviceListAdapter
     private List<Device> mListDevice;
     private BaseRecyclerViewAdapter.OnRecyclerViewItemClickListener<Device> mItemClickListener;
 
-    protected DeviceListAdapter(@NonNull Context context, @NonNull List<Device> listDevice) {
+    public DeviceListAdapter(@NonNull Context context, @NonNull List<Device> listDevice) {
         super(context);
         mListDevice = listDevice;
     }
@@ -50,7 +50,7 @@ public class DeviceListAdapter extends BaseRecyclerViewAdapter<DeviceListAdapter
         return mListDevice == null ? 0 : mListDevice.size();
     }
 
-    void setItemClickListener(OnRecyclerViewItemClickListener<Device> itemClickListener) {
+    public void setItemClickListener(OnRecyclerViewItemClickListener<Device> itemClickListener) {
         mItemClickListener = itemClickListener;
     }
 

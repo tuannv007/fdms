@@ -6,6 +6,9 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import com.framgia.fdms.R;
+import com.framgia.fdms.data.source.DeviceRepository;
+import com.framgia.fdms.data.source.api.service.FDMSServiceClient;
+import com.framgia.fdms.data.source.remote.DeviceRemoteDataSource;
 import com.framgia.fdms.databinding.ActivitySearchBinding;
 
 /**
@@ -23,10 +26,11 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mViewModel = new SearchViewModel();
+        mViewModel = new SearchViewModel(this);
         setTitle(getString(R.string.title_search));
 
-        SearchContract.Presenter presenter = new SearchPresenter(mViewModel);
+        SearchContract.Presenter presenter = new SearchPresenter(mViewModel,
+                new DeviceRepository(new DeviceRemoteDataSource(FDMSServiceClient.getInstance())));
         mViewModel.setPresenter(presenter);
 
         ActivitySearchBinding binding =

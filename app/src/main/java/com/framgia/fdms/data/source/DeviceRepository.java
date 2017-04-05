@@ -1,7 +1,7 @@
-package com.framgia.fdms.data;
+package com.framgia.fdms.data.source;
 
 import com.framgia.fdms.data.model.Device;
-import com.framgia.fdms.data.source.DeviceRemoteDataSource;
+import com.framgia.fdms.data.source.remote.DeviceRemoteDataSource;
 import java.util.List;
 import rx.Observable;
 
@@ -14,5 +14,9 @@ public class DeviceRepository {
 
     public Observable<List<Device>> getListDevice() {
         return mDeviceRemoteDataSource.getListDevice();
+    }
+
+    public Observable<List<Device>> searchDevices(String keyWord) {
+        return mDeviceRemoteDataSource.searchDevices(keyWord);
     }
 }

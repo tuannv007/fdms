@@ -1,6 +1,6 @@
-package com.framgia.fdms.data.source;
+package com.framgia.fdms.data.source.remote;
 
-import com.framgia.fdms.data.DeviceDataSource;
+import com.framgia.fdms.data.source.DeviceDataSource;
 import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.data.source.api.service.FDMSApi;
 import java.util.ArrayList;
@@ -41,6 +41,20 @@ public class DeviceRemoteDataSource implements DeviceDataSource.RemoteDataSource
         devices.add(new Device("Sam Sung Galaxy s6", "1/10/2017", "SamSung", "http://cdn03.androidauthority.net/wp-content/uploads/2016/02/samsung-galaxy-s7-first-look-aa-840x560.jpg"));
         devices.add(new Device("Sam Sung Galaxy s7", "1/11/2017", "SamSung", "http://www.chipworks.com/sites/default/files/06-Samsung-Galaxy-S7-Teardown-External.jpg", "Description 20"));
         devices.add(new Device("Sam Sung Galaxy s1", "1/12/2017", "SamSung", "http://cdn03.androidauthority.net/wp-content/uploads/2016/02/samsung-galaxy-s7-first-look-aa-840x560.jpg", "Description 21"));
+        return Observable.just(devices);
+    }
+
+    @Override
+    public Observable<List<Device>> searchDevices(String keyWord) {
+        List<Device> devices = new ArrayList<>();
+        devices.add(new Device("Sam Sung Galaxy s1", "1/2/2017", "SamSung", "https://cdn.tgdd.vn/Products/Images/42/74113/samsung-galaxy-s7-2-400x460.png", "Description 1"));
+        devices.add(new Device("Sam Sung Galaxy s2", "1/3/2017", "SamSung", "http://didongthongminh.vn/images/products/2016/06/14/original/samsung-galaxy-s7-gold_1465900740.jpg"));
+        devices.add(new Device("Sam Sung Galaxy s3", "1/4/2017", "SamSung", "https://cdn3.tgdd.vn/Products/Images/42/74113/samsung-galaxy-s7-16-300x300.jpg", "Description 3"));
+        devices.add(new Device("Sam Sung Galaxy s4", "1/5/2017", "SamSung", "http://www.samsung.com/hk_en/consumer/mobile/smartphones/galaxy-s/galaxy-s7/images/galaxy-s7-edge_gallery_front_silver_s3.png"));
+        devices.add(new Device("Sam Sung Galaxy s5", "1/6/2017", "SamSung", "http://www.chipworks.com/sites/default/files/06-Samsung-Galaxy-S7-Teardown-External.jpg"));
+        devices.add(new Device("Sam Sung Galaxy s6", "1/7/2017", "SamSung", "http://www.samsung.com/hk_en/consumer/mobile/smartphones/galaxy-s/galaxy-s7/images/galaxy-s7-edge_gallery_front_silver_s3.png", "Description 6"));
+        devices.add(new Device("Sam Sung Galaxy s4", "1/8/2017", "SamSung", "http://zaibis.com/wp-content/uploads/2016/11/features_samsung-galaxy-s7-edge_performance_pink.jpg", "Description 17"));
+        devices.add(new Device("Sam Sung Galaxy s5", "1/9/2017", "SamSung", "http://www.samsung.com/hk_en/consumer/mobile/smartphones/galaxy-s/galaxy-s7/images/galaxy-s7-edge_gallery_front_silver_s3.png", "Description 18"));
         return Observable.just(devices);
     }
 }

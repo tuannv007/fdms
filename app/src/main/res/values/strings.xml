@@ -37,4 +37,5 @@
     <string name="action_add_new_device">Add New Device</string>
     <string name="title_type_here">Type here...</string>
     <string name="title_search">Search</string>
+    <string name="msg_search_error">No data</string>
 </resources>
