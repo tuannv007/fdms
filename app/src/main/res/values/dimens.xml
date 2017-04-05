@@ -17,4 +17,6 @@
     <dimen name="dp75">75dp</dimen>
     <dimen name="dp15">15dp</dimen>
     <dimen name="dp8">8dp</dimen>
+    <dimen name="dp17">17dp</dimen>
+    <dimen name="dp320">320dp</dimen>
 </resources>
