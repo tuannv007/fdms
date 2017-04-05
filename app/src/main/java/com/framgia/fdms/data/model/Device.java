@@ -1,9 +1,11 @@
 package com.framgia.fdms.data.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Age on 4/1/2017.
  */
-public class Device {
+public class Device implements Serializable {
     private String mName;
     private String mDate;
     private String mCategory;

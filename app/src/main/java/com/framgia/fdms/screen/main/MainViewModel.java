@@ -28,7 +28,7 @@ public class MainViewModel extends BaseObservable implements MainContract.ViewMo
 
                     @Override
                     public void onItemRecyclerViewClick(Device item) {
-                        mContext.startActivity(new Intent(mContext, DetailActivity.class));
+                        mContext.startActivity(new Intent(DetailActivity.getDeviceIntent(mContext, item)));
                     }
                 });
     }
