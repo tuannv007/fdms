@@ -33,4 +33,8 @@
     <string name="msg_please_input_text"><![CDATA[please input username & password]]></string>
     <string name="title_description">Description:</string>
     <string name="title_related_device">Related device:</string>
+    <string name="title_result">Result:</string>
+    <string name="action_add_new_device">Add New Device</string>
+    <string name="title_type_here">Type here...</string>
+    <string name="title_search">Search</string>
 </resources>
