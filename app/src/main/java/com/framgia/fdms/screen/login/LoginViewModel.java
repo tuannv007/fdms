@@ -6,6 +6,7 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.widget.Toast;
 import com.framgia.fdms.R;
+import com.framgia.fdms.screen.forgotpassword.ForgotpasswordActivity;
 import com.framgia.fdms.screen.main.MainActivity;
 import com.framgia.fdms.screen.register.RegisterActivity;
 
@@ -57,7 +58,7 @@ public class LoginViewModel extends BaseObservable implements LoginContract.View
     }
 
     public void onForgotPasswordClick() {
-        //TODO Forgot Password Activity
+        mContext.startActivity(ForgotpasswordActivity.getForgetPasswordIntent(mContext));
     }
 
     public void onSignUpClick() {
