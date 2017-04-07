@@ -4,6 +4,9 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import com.framgia.fdms.R;
+import com.framgia.fdms.data.source.UserRepository;
+import com.framgia.fdms.data.source.api.service.FDMSServiceClient;
+import com.framgia.fdms.data.source.remote.UserRemoteDataSource;
 import com.framgia.fdms.databinding.ActivityRegisterBinding;
 
 /**
@@ -16,12 +19,12 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mViewModel = new RegisterViewModel(this);
 
-        mViewModel = new RegisterViewModel();
-
-        RegisterContract.Presenter presenter = new RegisterPresenter(mViewModel);
+        UserRepository repository =
+                new UserRepository(new UserRemoteDataSource(FDMSServiceClient.getInstance()));
+        RegisterContract.Presenter presenter = new RegisterPresenter(mViewModel, repository);
         mViewModel.setPresenter(presenter);
-
         ActivityRegisterBinding binding =
                 DataBindingUtil.setContentView(this, R.layout.activity_register);
         binding.setViewModel((RegisterViewModel) mViewModel);

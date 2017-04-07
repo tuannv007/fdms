@@ -1,5 +1,6 @@
 package com.framgia.fdms.screen.login;
 
+import android.databinding.BaseObservable;
 import android.text.TextUtils;
 import com.framgia.fdms.data.model.User;
 import com.framgia.fdms.data.source.UserRepository;
@@ -11,7 +12,7 @@ import rx.schedulers.Schedulers;
  * Listens to user actions from the UI ({@link LoginActivity}), retrieves the data and updates
  * the UI as required.
  */
-final class LoginPresenter implements LoginContract.Presenter {
+final class LoginPresenter extends BaseObservable implements LoginContract.Presenter {
 
     private LoginContract.ViewModel mView;
     private UserRepository mUserRepository;
@@ -49,9 +50,15 @@ final class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public boolean validateDataInput(String username, String password) {
-        if (TextUtils.isEmpty(username) && TextUtils.isEmpty(password)) {
-            return false;
+        boolean isValid = true;
+        if (TextUtils.isEmpty(username)) {
+            isValid = false;
+            mView.onInputUserNameError();
         }
-        return true;
+        if (TextUtils.isEmpty(password)) {
+            isValid = false;
+            mView.onInputPasswordError();
+        }
+        return isValid;
     }
 }

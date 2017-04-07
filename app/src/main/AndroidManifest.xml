@@ -34,6 +34,7 @@
         <activity
             android:name=".screen.detail.DetailActivity"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".screen.search.SearchActivity"
             android:screenOrientation="portrait"/>

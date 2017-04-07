@@ -1,6 +1,7 @@
 package com.framgia.fdms.utils.binding;
 
 import android.databinding.BindingAdapter;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
@@ -23,5 +24,10 @@ public final class BindingUtils {
     @BindingAdapter("app:imageUrl")
     public static void loadImage(ImageView view, String imageUrl) {
         Glide.with(view.getContext()).load(imageUrl).placeholder(R.drawable.img_framgia).into(view);
+    }
+
+    @BindingAdapter("errorText")
+    public static void setErrorText(TextInputLayout layout, String text) {
+        layout.setError(text);
     }
 }

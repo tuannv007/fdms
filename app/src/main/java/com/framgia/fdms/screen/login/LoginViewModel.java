@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.widget.Toast;
+import com.android.databinding.library.baseAdapters.BR;
 import com.framgia.fdms.R;
 import com.framgia.fdms.screen.main.MainActivity;
 import com.framgia.fdms.screen.register.RegisterActivity;
@@ -18,6 +19,8 @@ public class LoginViewModel extends BaseObservable implements LoginContract.View
     private LoginContract.Presenter mPresenter;
     private String mUsername;
     private String mPassword;
+    private String mUsernameError;
+    private String mPasswordError;
 
     public LoginViewModel(Context context) {
         mContext = context;
@@ -48,9 +51,20 @@ public class LoginViewModel extends BaseObservable implements LoginContract.View
         mContext.startActivity(new Intent(mContext, MainActivity.class));
     }
 
+    @Override
+    public void onInputUserNameError() {
+        mUsernameError = mContext.getString(R.string.msg_error_user_name);
+        notifyPropertyChanged(BR.usernameError);
+    }
+
+    @Override
+    public void onInputPasswordError() {
+        mPasswordError = mContext.getString(R.string.msg_error_user_name);
+        notifyPropertyChanged(BR.passwordError);
+    }
+
     public void onLoginClick() {
         if (!mPresenter.validateDataInput(mUsername, mPassword)) {
-            Toast.makeText(mContext, R.string.msg_please_input_text, Toast.LENGTH_SHORT).show();
             return;
         }
         mPresenter.login(mUsername, mPassword);
@@ -80,5 +94,23 @@ public class LoginViewModel extends BaseObservable implements LoginContract.View
 
     public void setPassword(String password) {
         mPassword = password;
+    }
+
+    @Bindable
+    public String getUsernameError() {
+        return mUsernameError;
+    }
+
+    public void setUsernameError(String usernameError) {
+        mUsernameError = usernameError;
+    }
+
+    @Bindable
+    public String getPasswordError() {
+        return mPasswordError;
+    }
+
+    public void setPasswordError(String passwordError) {
+        mPasswordError = passwordError;
     }
 }
