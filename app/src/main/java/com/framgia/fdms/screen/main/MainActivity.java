@@ -7,9 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.framgia.fdms.R;
-import com.framgia.fdms.data.DeviceRepository;
-import com.framgia.fdms.data.source.DeviceRemoteDataSource;
+import com.framgia.fdms.data.source.DeviceRepository;
 import com.framgia.fdms.data.source.api.service.FDMSServiceClient;
+import com.framgia.fdms.data.source.remote.DeviceRemoteDataSource;
 import com.framgia.fdms.databinding.ActivityMainBinding;
 import com.framgia.fdms.screen.search.SearchActivity;
 

@@ -1,4 +1,4 @@
-package com.framgia.fdms.data.source;
+package com.framgia.fdms.data.source.remote;
 
 import com.framgia.fdms.data.source.api.service.FDMSApi;
 

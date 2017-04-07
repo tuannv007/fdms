@@ -1,7 +1,7 @@
 package com.framgia.fdms.screen.main;
 
-import com.framgia.fdms.data.DeviceRepository;
 import com.framgia.fdms.data.model.Device;
+import com.framgia.fdms.data.source.DeviceRepository;
 import java.util.List;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;

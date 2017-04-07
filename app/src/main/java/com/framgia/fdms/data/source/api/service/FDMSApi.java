@@ -17,4 +17,7 @@ public interface FDMSApi {
 
     @GET("user")
     Call<User> login(@QueryMap Map<String, String> params);
+
+    @GET("/search/devices")
+    Observable<List<Device>> searchDevices(@Query("keyWord") String type);
 }

@@ -26,16 +26,18 @@
                 android:layout_width="@dimen/dp320"
                 android:layout_height="wrap_content"
                 android:hint="@string/title_type_here"
+                android:text="@={viewModel.keyWord}"
                 />
             <ImageButton
                 android:id="@+id/button_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:src="@android:drawable/ic_search_category_default"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@null"
+                android:onClick="@{() -> viewModel.onClickSearch()}"
+                android:src="@android:drawable/ic_search_category_default"
                 />
         </RelativeLayout>
         <android.support.v7.widget.RecyclerView
