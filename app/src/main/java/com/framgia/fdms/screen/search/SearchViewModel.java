@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.databinding.ObservableField;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Toast;
 import com.framgia.fdms.BaseRecyclerViewAdapter;
 import com.framgia.fdms.R;
@@ -20,6 +22,7 @@ import java.util.List;
 
 public class SearchViewModel extends BaseObservable implements SearchContract.ViewModel {
 
+    public final ObservableField<Integer> progressBarVisibility = new ObservableField<>();
     private Context mContext;
     private SearchContract.Presenter mPresenter;
     private DeviceListAdapter mAdapter;
@@ -28,6 +31,7 @@ public class SearchViewModel extends BaseObservable implements SearchContract.Vi
 
     public SearchViewModel(Context context) {
         mContext = context;
+        progressBarVisibility.set(View.GONE);
         mAdapter = new DeviceListAdapter(mContext, mDevices);
         mAdapter.setItemClickListener(
                 new BaseRecyclerViewAdapter.OnRecyclerViewItemClickListener<Device>() {
@@ -82,5 +86,15 @@ public class SearchViewModel extends BaseObservable implements SearchContract.Vi
 
     public void setKeyWord(String keyWord) {
         mKeyWord = keyWord;
+    }
+
+    @Override
+    public void showProgressbar() {
+        progressBarVisibility.set(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgressbar() {
+        progressBarVisibility.set(View.GONE);
     }
 }

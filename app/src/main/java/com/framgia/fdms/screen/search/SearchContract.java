@@ -16,6 +16,10 @@ interface SearchContract {
         void searchDevicesSuccess(List<Device> devices);
 
         void onSearchDevicesError();
+
+        void showProgressbar();
+
+        void hideProgressbar();
     }
 
     /**
