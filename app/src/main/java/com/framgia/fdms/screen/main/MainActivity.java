@@ -1,5 +1,6 @@
 package com.framgia.fdms.screen.main;
 
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -18,6 +19,10 @@ import com.framgia.fdms.screen.search.SearchActivity;
  */
 public class MainActivity extends AppCompatActivity {
     private MainContract.ViewModel mViewModel;
+
+    public static Intent getInstance(Context context) {
+        return new Intent(context, MainActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

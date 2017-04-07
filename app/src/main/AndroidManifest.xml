@@ -38,6 +38,11 @@
         <activity
             android:name=".screen.search.SearchActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".screen.forgotpassword.ForgotpasswordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.NoActionBar"/>
     </application>
 
 </manifest>
+

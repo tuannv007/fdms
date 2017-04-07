@@ -19,4 +19,6 @@
     <dimen name="dp8">8dp</dimen>
     <dimen name="dp17">17dp</dimen>
     <dimen name="dp320">320dp</dimen>
+    <dimen name="dp68">68dp</dimen>
+    <dimen name="dp110">110dp</dimen>
 </resources>
