@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.databinding.ObservableField;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import com.framgia.fdms.BaseRecyclerViewAdapter;
 import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.screen.detail.DetailActivity;
@@ -15,6 +17,7 @@ import java.util.List;
  * Exposes the data to be used in the Main screen.
  */
 public class MainViewModel extends BaseObservable implements MainContract.ViewModel {
+    public final ObservableField<Integer> progressBarVisibility = new ObservableField<>();
     private Context mContext;
     private MainContract.Presenter mPresenter;
     private DeviceListAdapter mAdapter;
@@ -28,7 +31,8 @@ public class MainViewModel extends BaseObservable implements MainContract.ViewMo
 
                     @Override
                     public void onItemRecyclerViewClick(Device item) {
-                        mContext.startActivity(new Intent(DetailActivity.getDeviceIntent(mContext, item)));
+                        mContext.startActivity(
+                                new Intent(DetailActivity.getDeviceIntent(mContext, item)));
                     }
                 });
     }
@@ -65,11 +69,11 @@ public class MainViewModel extends BaseObservable implements MainContract.ViewMo
 
     @Override
     public void showProgressbar() {
-        //TODO dev later
+        progressBarVisibility.set(View.VISIBLE);
     }
 
     @Override
     public void hideProgressbar() {
-        //TODO dev later
+        progressBarVisibility.set(View.GONE);
     }
 }

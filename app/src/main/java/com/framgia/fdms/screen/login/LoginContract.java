@@ -16,6 +16,10 @@ interface LoginContract {
         void onInputUserNameError();
 
         void onInputPasswordError();
+
+        void showProgressbar();
+
+        void hideProgressbar();
     }
 
     interface Presenter extends BasePresenter {

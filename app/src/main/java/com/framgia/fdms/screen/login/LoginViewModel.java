@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.databinding.ObservableField;
+import android.view.View;
 import android.widget.Toast;
 import com.android.databinding.library.baseAdapters.BR;
 import com.framgia.fdms.R;
@@ -22,9 +24,11 @@ public class LoginViewModel extends BaseObservable implements LoginContract.View
     private String mPassword;
     private String mUsernameError;
     private String mPasswordError;
+    public final ObservableField<Integer> progressBarVisibility = new ObservableField<>();
 
     public LoginViewModel(Context context) {
         mContext = context;
+        progressBarVisibility.set(View.GONE);
     }
 
     @Override
@@ -113,5 +117,15 @@ public class LoginViewModel extends BaseObservable implements LoginContract.View
 
     public void setPasswordError(String passwordError) {
         mPasswordError = passwordError;
+    }
+
+    @Override
+    public void showProgressbar() {
+        progressBarVisibility.set(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgressbar() {
+        progressBarVisibility.set(View.GONE);
     }
 }

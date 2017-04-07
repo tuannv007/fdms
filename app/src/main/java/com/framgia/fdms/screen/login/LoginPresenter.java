@@ -4,9 +4,12 @@ import android.databinding.BaseObservable;
 import android.text.TextUtils;
 import com.framgia.fdms.data.model.User;
 import com.framgia.fdms.data.source.UserRepository;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * Listens to user actions from the UI ({@link LoginActivity}), retrieves the data and updates
@@ -16,6 +19,7 @@ final class LoginPresenter extends BaseObservable implements LoginContract.Prese
 
     private LoginContract.ViewModel mView;
     private UserRepository mUserRepository;
+    private CompositeSubscription mCompositeSubscriptions = new CompositeSubscription();
 
     public LoginPresenter(LoginContract.ViewModel view, UserRepository userRepository) {
         this.mView = view;
@@ -28,12 +32,19 @@ final class LoginPresenter extends BaseObservable implements LoginContract.Prese
 
     @Override
     public void onStop() {
+        mCompositeSubscriptions.clear();
     }
 
     @Override
     public void login(String userName, String passWord) {
-        mUserRepository.login(userName, passWord)
+        Subscription subscription = mUserRepository.login(userName, passWord)
                 .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mView.showProgressbar();
+                    }
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<User>() {
                     @Override
@@ -45,7 +56,13 @@ final class LoginPresenter extends BaseObservable implements LoginContract.Prese
                     public void call(Throwable throwable) {
                         mView.onLoginError();
                     }
+                }, new Action0() {
+                    @Override
+                    public void call() {
+                        mView.hideProgressbar();
+                    }
                 });
+        mCompositeSubscriptions.add(subscription);
     }
 
     @Override
