@@ -34,7 +34,6 @@
         <activity
             android:name=".screen.detail.DetailActivity"
             android:screenOrientation="portrait"/>
-
         <activity
             android:name=".screen.search.SearchActivity"
             android:screenOrientation="portrait"/>
@@ -42,6 +41,10 @@
             android:name=".screen.forgotpassword.ForgotpasswordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.NoActionBar"/>
+        <activity
+            android:name=".screen.device.DeviceActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>

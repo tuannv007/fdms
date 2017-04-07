@@ -13,4 +13,6 @@
     <color name="color_mos">#DEDEDE</color>\
     <color name="color_red_mos">#D63813</color>
     <color name="color_background">#F7F7F7</color>
+    <color name="color_gray_blue">#FAFFFF</color>
+    <color name="color_orange">#FF9B43</color>
 </resources>
