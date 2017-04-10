@@ -1,5 +1,6 @@
 package com.framgia.fdms.screen.login;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.BaseObservable;
@@ -54,6 +55,7 @@ public class LoginViewModel extends BaseObservable implements LoginContract.View
     @Override
     public void onLoginSuccess() {
         mContext.startActivity(new Intent(mContext, MainActivity.class));
+        ((Activity)(mContext)).finish();
     }
 
     @Override

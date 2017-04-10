@@ -33,6 +33,7 @@
     <string name="msg_please_input_text"><![CDATA[please input username & password]]></string>
     <string name="title_description">Description:</string>
     <string name="title_related_device">Related device:</string>
+    <string name="title_status_device">Status:</string>
     <string name="msg_input_text">Please Input Text!</string>
     <string name="msg_create_account_error">Create Account Error!</string>
     <string name="msg_error_user_name">Text Must not Empty!</string>

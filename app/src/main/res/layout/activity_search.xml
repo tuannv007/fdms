@@ -11,53 +11,25 @@
             />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_background"
         android:orientation="vertical"
         >
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-            <EditText
-                android:id="@+id/text_search"
-                android:layout_width="@dimen/dp320"
-                android:layout_height="wrap_content"
-                android:hint="@string/title_type_here"
-                android:text="@={viewModel.keyWord}"
-                />
-            <ImageButton
-                android:id="@+id/button_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:background="@null"
-                android:onClick="@{() -> viewModel.onClickSearch()}"
-                android:src="@android:drawable/ic_search_category_default"
-                />
-        </RelativeLayout>
-        <RelativeLayout
+        <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            >
-            <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scrollbars="vertical"
-                app:layoutManager="LinearLayoutManager"
-                app:recyclerAdapter="@{viewModel.adapter}"
-                />
-            <ProgressBar
-                android:id="@+id/progress_load"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:visibility="@{viewModel.progressBarVisibility}"
-                />
-        </RelativeLayout>
-    </LinearLayout>
+            android:scrollbars="vertical"
+            app:layoutManager="LinearLayoutManager"
+            app:recyclerAdapter="@{viewModel.adapter}"
+            />
+        <ProgressBar
+            android:id="@+id/progress_load"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="@{viewModel.progressBarVisibility}"
+            />
+    </RelativeLayout>
 </layout>

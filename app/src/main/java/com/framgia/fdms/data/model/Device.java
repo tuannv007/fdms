@@ -11,6 +11,7 @@ public class Device implements Serializable {
     private String mCategory;
     private String mImage;
     private String mDescription;
+    private String mStatus;
 
     public Device(String name, String date, String category, String image) {
         mName = name;
@@ -19,12 +20,14 @@ public class Device implements Serializable {
         mImage = image;
     }
 
-    public Device(String name, String date, String category, String image, String description) {
+    public Device(String name, String date, String category, String image, String description,
+            String status) {
         mName = name;
         mDate = date;
         mCategory = category;
         mImage = image;
         mDescription = description;
+        mStatus = status;
     }
 
     public String getDescription() {
@@ -65,5 +68,13 @@ public class Device implements Serializable {
 
     public void setImage(String image) {
         mImage = image;
+    }
+
+    public String getStatus() {
+        return mStatus;
+    }
+
+    public void setStatus(String status) {
+        mStatus = status;
     }
 }

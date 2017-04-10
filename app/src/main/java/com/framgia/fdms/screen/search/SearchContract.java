@@ -20,6 +20,8 @@ interface SearchContract {
         void showProgressbar();
 
         void hideProgressbar();
+
+        void onClickSearch();
     }
 
     /**
