@@ -22,12 +22,12 @@ import java.util.List;
 
 public class SearchViewModel extends BaseObservable implements SearchContract.ViewModel {
 
-    public final ObservableField<Integer> progressBarVisibility = new ObservableField<>();
     private Context mContext;
     private SearchContract.Presenter mPresenter;
     private DeviceListAdapter mAdapter;
     private List<Device> mDevices = new ArrayList<>();
     private String mKeyWord;
+    public final ObservableField<Integer> progressBarVisibility = new ObservableField<>();
 
     public SearchViewModel(Context context) {
         mContext = context;
@@ -44,6 +44,7 @@ public class SearchViewModel extends BaseObservable implements SearchContract.Vi
                 });
     }
 
+    @Override
     public void onClickSearch() {
         mDevices.clear();
         mPresenter.searchDevice(getKeyWord());
