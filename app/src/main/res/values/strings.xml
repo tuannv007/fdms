@@ -42,9 +42,16 @@
     <string name="title_type_here">Type here...</string>
     <string name="title_search">Search</string>
     <string name="msg_search_error">No data</string>
+    <string name="msg_scan_qrcode">Scan QRCode are is processed!</string>
+    <string name="msg_register_success">Register Device Success !</string>
     <string name="error_text_email">Please input email</string>
     <string name="title_input_email">Input Email</string>
     <string name="action_request">Request</string>
     <string name="title_forget_the_password">Forget the Password</string>
     <string name="error_text_format_email">Please input correct the email</string>
+    <string name="title_number_of_devices">Number of devices</string>
+    <string name="title_device_name">Device Name</string>
+    <string name="title_descriptions">Description</string>
+    <string name="title_title">Title</string>
+    <string name="title_register_my_device">Register My Device</string>
 </resources>
