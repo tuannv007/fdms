@@ -2,7 +2,9 @@ package com.framgia.fdms.utils.binding;
 
 import android.databinding.BindingAdapter;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.framgia.fdms.R;
@@ -29,5 +31,11 @@ public final class BindingUtils {
     @BindingAdapter("errorText")
     public static void setErrorText(TextInputLayout layout, String text) {
         layout.setError(text);
+    }
+
+    @BindingAdapter({ "spinnerAdapter" })
+    public static void setAdapterForSpinner(AppCompatSpinner spinner,
+            ArrayAdapter<String> adapter) {
+        spinner.setAdapter(adapter);
     }
 }
