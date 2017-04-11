@@ -28,12 +28,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/boder_title"
-                android:fontFamily="cursive"
                 android:gravity="center"
                 android:text="@string/title_register_my_device"
                 android:textColor="@color/color_brown"
                 android:textSize="@dimen/dp30"
                 android:textStyle="bold"
+                app:font='@{@string/title_asset_font}'
                 />
             <LinearLayout
                 android:layout_width="match_parent"
@@ -125,17 +125,16 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp20"
-                android:layout_marginRight="@dimen/dp20"
+                android:layout_margin="@dimen/dp10"
                 android:background="@drawable/boder_title"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="@dimen/dp20"
-                android:paddingTop="@dimen/dp30"
+                android:padding="@dimen/dp10"
                 >
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp10"
                     android:background="@drawable/boder_title"
                     android:drawableLeft="@drawable/ic_framgia"
                     android:onClick="@{() -> viewModel.onCreateDeviceClick()}"

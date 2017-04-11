@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.source.DeviceRepository;
 import com.framgia.fdms.data.source.api.service.FDMSServiceClient;
@@ -72,11 +73,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_sort_by_status:
                 //TODO dev later
                 return true;
-
+            case R.id.action_qr_code:
+                //Todo Scan QRCode Activity
+                Toast.makeText(this, R.string.msg_scan_qrcode, Toast.LENGTH_SHORT).show();
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
 }

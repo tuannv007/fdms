@@ -83,9 +83,4 @@ public class MainViewModel extends BaseObservable implements MainContract.ViewMo
     public void onRegisterDeviceClick() {
         mContext.startActivity(new Intent(mContext, DeviceActivity.class));
     }
-
-    public void onQRCodeClick() {
-        //Todo Scan QRCode Activity
-        Toast.makeText(mContext, R.string.msg_scan_qrcode, Toast.LENGTH_SHORT).show();
-    }
 }

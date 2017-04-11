@@ -26,5 +26,10 @@
         android:icon="@android:drawable/ic_menu_search"
         android:title="@string/action_sort_by_status"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_qr_code"
+        android:icon="@drawable/ic_qr_code"
+        android:title="@string/action_qr_code"
+        app:showAsAction="always"/>
 </menu>
 
