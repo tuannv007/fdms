@@ -7,6 +7,11 @@
         android:title="@string/menu_search"
         app:showAsAction="always"/>
     <item
+        android:id="@+id/action_logout"
+        android:icon="@drawable/ic_logout"
+        android:title="@string/title_logout"
+        app:showAsAction="always"/>
+    <item
         android:id="@+id/action_sort_by_category"
         android:icon="@android:drawable/ic_menu_search"
         android:title="@string/action_sort_by_category"
@@ -21,5 +26,10 @@
         android:icon="@android:drawable/ic_menu_search"
         android:title="@string/action_sort_by_status"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_qr_code"
+        android:icon="@drawable/ic_qr_code"
+        android:title="@string/action_qr_code"
+        app:showAsAction="always"/>
 </menu>
 

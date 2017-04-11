@@ -15,4 +15,9 @@
     <color name="color_background">#F7F7F7</color>
     <color name="color_gray_blue">#FAFFFF</color>
     <color name="color_orange">#FF9B43</color>
+    <color name="color_white_mos">#F4F4F4</color>
+    <color name="color_gray_light">#F5F5F5</color>
+    <color name="color_white_light">#EEEEEE</color>
+    <color name="color_gray_mos">#DFDFDF</color>
+
 </resources>

@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.source.DeviceRepository;
 import com.framgia.fdms.data.source.api.service.FDMSServiceClient;
 import com.framgia.fdms.data.source.remote.DeviceRemoteDataSource;
 import com.framgia.fdms.databinding.ActivityMainBinding;
+import com.framgia.fdms.screen.login.LoginActivity;
 import com.framgia.fdms.screen.search.SearchActivity;
 
 /**
@@ -59,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_search:
                 startActivity(new Intent(SearchActivity.searchIntent(this)));
                 return true;
+            case R.id.action_logout:
+                startActivity(new Intent(LoginActivity.getInstance(this)));
+                return true;
             case R.id.action_sort_by_category:
                 //TODO dev later
                 return true;
@@ -68,7 +73,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_sort_by_status:
                 //TODO dev later
                 return true;
-
+            case R.id.action_qr_code:
+                //Todo Scan QRCode Activity
+                Toast.makeText(this, R.string.msg_scan_qrcode, Toast.LENGTH_SHORT).show();
             default:
                 return super.onOptionsItemSelected(item);
         }

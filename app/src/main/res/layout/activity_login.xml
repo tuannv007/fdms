@@ -46,6 +46,7 @@
             android:textColor="@color/color_red_mos"
             android:textSize="@dimen/dp40"
             android:textStyle="bold|italic"
+            app:font='@{@string/title_asset_font}'
             />
 
         <LinearLayout
@@ -58,12 +59,13 @@
             android:paddingTop="@dimen/dp10"
             android:weightSum="1"
             >
-
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dp5"
                 android:layout_marginBottom="@dimen/dp10"
+                android:background="@drawable/bordel_text"
+                android:padding="@dimen/dp5"
                 android:textColorHint="@color/color_black"
                 app:errorText="@{viewModel.usernameError}"
                 >
@@ -72,17 +74,19 @@
                     android:id="@+id/text_user_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_username"
                     android:hint="@string/title_user_name"
                     android:text="@={viewModel.username}"
                     android:textColor="@color/color_black"
                     />
             </android.support.design.widget.TextInputLayout>
-
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dp5"
                 android:layout_marginBottom="@dimen/dp10"
+                android:background="@drawable/bordel_text"
+                android:padding="@dimen/dp5"
                 android:textColorHint="@color/color_black"
                 app:errorText="@{viewModel.passwordError}"
                 >
@@ -91,6 +95,7 @@
                     android:id="@+id/text_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_password"
                     android:hint="@string/title_password"
                     android:inputType="textPassword"
                     android:text="@={viewModel.password}"
@@ -103,8 +108,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/dp10"
-                android:layout_marginRight="@dimen/dp10"
+                android:layout_margin="@dimen/dp5"
+                android:layout_marginTop="@dimen/dp10"
                 android:background="@drawable/boder_title"
                 android:drawableLeft="@drawable/ic_framgia"
                 android:fontFamily="serif"
@@ -146,6 +151,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/dp20"
                 android:layout_marginRight="@dimen/dp20"

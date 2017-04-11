@@ -1,6 +1,8 @@
 package com.framgia.fdms.screen.login;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import com.framgia.fdms.R;
@@ -15,6 +17,10 @@ import com.framgia.fdms.databinding.ActivityLoginBinding;
 public class LoginActivity extends Activity {
 
     private LoginContract.ViewModel mViewModel;
+
+    public static Intent getInstance(Context context) {
+        return new Intent(context, LoginActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

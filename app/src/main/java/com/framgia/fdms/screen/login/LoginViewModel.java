@@ -25,6 +25,7 @@ public class LoginViewModel extends BaseObservable implements LoginContract.View
     private String mPassword;
     private String mUsernameError;
     private String mPasswordError;
+    private boolean isValid;
     public final ObservableField<Integer> progressBarVisibility = new ObservableField<>();
 
     public LoginViewModel(Context context) {
@@ -55,7 +56,8 @@ public class LoginViewModel extends BaseObservable implements LoginContract.View
     @Override
     public void onLoginSuccess() {
         mContext.startActivity(new Intent(mContext, MainActivity.class));
-        ((Activity)(mContext)).finish();
+        ((Activity) (mContext)).finish();
+        isValid = false;
     }
 
     @Override
