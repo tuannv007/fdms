@@ -24,6 +24,7 @@ public class ForgotpasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         mViewModel = new ForgotpasswordViewModel(this);
+        setTitle(getString(R.string.title_forgot_the_password));
 
         ForgetpasswordContract.Presenter presenter = new ForgetpasswordPresenter(mViewModel);
         mViewModel.setPresenter(presenter);

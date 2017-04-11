@@ -29,22 +29,38 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".screen.register.RegisterActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.Design.NoActionBar"/>
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".screen.login.LoginActivity"/>
+        </activity>
         <activity
             android:name=".screen.detail.DetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.NoActionBar">
+        </activity>
         <activity
             android:name=".screen.search.SearchActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".screen.main.MainActivity"/>
+        </activity>
         <activity
             android:name=".screen.forgotpassword.ForgotpasswordActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.Design.NoActionBar"/>
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".screen.login.LoginActivity"/>
+        </activity>
         <activity
             android:name=".screen.device.DeviceActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".screen.main.MainActivity"/>
+        </activity>
     </application>
 
 </manifest>
