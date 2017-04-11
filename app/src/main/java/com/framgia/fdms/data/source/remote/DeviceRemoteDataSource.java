@@ -1,7 +1,9 @@
 package com.framgia.fdms.data.source.remote;
 
+import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.data.source.DeviceDataSource;
+import com.framgia.fdms.data.source.api.request.RegisterDeviceRequest;
 import com.framgia.fdms.data.source.api.service.FDMSApi;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,73 +23,79 @@ public class DeviceRemoteDataSource implements DeviceDataSource.RemoteDataSource
         List<Device> devices = new ArrayList<>();
         devices.add(new Device("Sam Sung Galaxy s1", "1/2/2017", "SamSung",
                 "https://cdn.tgdd.vn/Products/Images/42/74113/samsung-galaxy-s7-2-400x460.png",
-                "Description 1","Still"));
+                "Description 1", "Still"));
         devices.add(new Device("Sam Sung Galaxy s2", "1/3/2017", "SamSung", "http://didongthongminh"
                 + ".vn/images/products/2016/06/14/original/samsung-galaxy-s7"
-                + "-gold_1465900740.jpg","Description 1","Over"));
+                + "-gold_1465900740.jpg", "Description 1", "Over"));
         devices.add(new Device("Sam Sung Galaxy s3", "1/4/2017", "SamSung",
                 "https://cdn3.tgdd.vn/Products/Images/42/74113/samsung-galaxy-s7-16-300x300.jpg",
-                "Description 3","Over"));
+                "Description 3", "Over"));
         devices.add(new Device("Sam Sung Galaxy s4", "1/5/2017", "SamSung",
                 "http://www.samsung.com/hk_en/consumer/mobile/smartphones/galaxy-s/galaxy-s7"
-                        + "/images/galaxy-s7-edge_gallery_front_silver_s3.png","Description 1","Over"));
+                        + "/images/galaxy-s7-edge_gallery_front_silver_s3.png", "Description 1",
+                "Over"));
         devices.add(new Device("Sam Sung Galaxy s5", "1/6/2017", "SamSung", "http://www.chipworks"
-                + ".com/sites/default/files/06-Samsung-Galaxy-S7-Teardown-External.jpg","Description 3","Over"));
+                + ".com/sites/default/files/06-Samsung-Galaxy-S7-Teardown-External.jpg",
+                "Description 3", "Over"));
         devices.add(new Device("Sam Sung Galaxy s6", "1/7/2017", "SamSung",
                 "http://www.samsung.com/hk_en/consumer/mobile/smartphones/galaxy-s/galaxy-s7"
-                        + "/images/galaxy-s7-edge_gallery_front_silver_s3.png", "Description 6","Still"));
+                        + "/images/galaxy-s7-edge_gallery_front_silver_s3.png", "Description 6",
+                "Still"));
         devices.add(new Device("Sam Sung Galaxy s7", "2/2/2017", "SamSung",
                 "https://cdn4.tgdd.vn/Products/Images/42/90709/samsung-galaxy-s7-edge-black-pearl"
-                        + "-den-ngoc-trai-6.jpg", "Description 7","Over"));
+                        + "-den-ngoc-trai-6.jpg", "Description 7", "Over"));
         devices.add(new Device("Sam Sung Galaxy s1", "3/2/2017", "SamSung",
                 "http://zaibis.com/wp-content/uploads/2016/11/features_samsung-galaxy-s7"
-                        + "-edge_performance_pink.jpg","Description 3","Still"));
+                        + "-edge_performance_pink.jpg", "Description 3", "Still"));
         devices.add(new Device("Sam Sung Galaxy s2", "4/2/2017", "SamSung",
                 "http://www.samsung.com/hk_en/consumer/mobile/smartphones/galaxy-s/galaxy-s7"
-                        + "/images/galaxy-s7-edge_gallery_front_silver_s3.png", "Description 8","Over"));
+                        + "/images/galaxy-s7-edge_gallery_front_silver_s3.png", "Description 8",
+                "Over"));
         devices.add(new Device("Sam Sung Galaxy s3", "5/2/2017", "SamSung",
                 "https://cdn4.tgdd.vn/Products/Images/42/90709/samsung-galaxy-s7-edge-black-pearl"
-                        + "-den-ngoc-trai-6.jpg", "Description 9","Over"));
+                        + "-den-ngoc-trai-6.jpg", "Description 9", "Over"));
         devices.add(new Device("Sam Sung Galaxy s4", "6/2/2017", "SamSung",
                 "http://static.nghenhinvietnam"
                         + ".vn/w670/uploaded/vanphong/2016_12_14/s7edge/dsc_6535_pbic.jpg",
-                "Description 10","Still"));
+                "Description 10", "Still"));
         devices.add(new Device("Sam Sung Galaxy s5", "7/2/2017", "SamSung",
                 "http://cdn03.androidauthority"
                         + ".net/wp-content/uploads/2016/02/samsung-galaxy-s7-first-look-aa"
-                        + "-840x560.jpg", "Description 11","Over"));
+                        + "-840x560.jpg", "Description 11", "Over"));
         devices.add(new Device("Sam Sung Galaxy s6", "8/2/2017", "SamSung",
                 "http://zaibis.com/wp-content/uploads/2016/11/features_samsung-galaxy-s7"
-                        + "-edge_performance_pink.jpg", "Description 12","Still"));
+                        + "-edge_performance_pink.jpg", "Description 12", "Still"));
         devices.add(new Device("Sam Sung Galaxy s7", "9/2/2017", "SamSung", "http://www.chipworks"
                 + ".com/sites/default/files/06-Samsung-Galaxy-S7-Teardown-External.jpg",
-                "Description 13","Over"));
+                "Description 13", "Over"));
         devices.add(new Device("Sam Sung Galaxy s1", "10/2/2017", "SamSung",
                 "https://cdn4.tgdd.vn/Products/Images/42/90709/samsung-galaxy-s7-edge-black-pearl"
-                        + "-den-ngoc-trai-6.jpg", "Description 14","Still"));
+                        + "-den-ngoc-trai-6.jpg", "Description 14", "Still"));
         devices.add(new Device("Sam Sung Galaxy s2", "11/2/2017", "SamSung",
                 "http://www.samsung.com/hk_en/consumer/mobile/smartphones/galaxy-s/galaxy-s7"
-                        + "/images/galaxy-s7-edge_gallery_front_silver_s3.png", "Description 15","Still"));
+                        + "/images/galaxy-s7-edge_gallery_front_silver_s3.png", "Description 15",
+                "Still"));
         devices.add(new Device("Sam Sung Galaxy s3", "12/2/2017", "SamSung",
                 "https://cdn4.tgdd.vn/Products/Images/42/90709/samsung-galaxy-s7-edge-black-pearl"
-                        + "-den-ngoc-trai-6.jpg", "Description 16","Over"));
+                        + "-den-ngoc-trai-6.jpg", "Description 16", "Over"));
         devices.add(new Device("Sam Sung Galaxy s4", "1/8/2017", "SamSung",
                 "http://zaibis.com/wp-content/uploads/2016/11/features_samsung-galaxy-s7"
-                        + "-edge_performance_pink.jpg", "Description 17","Still"));
+                        + "-edge_performance_pink.jpg", "Description 17", "Still"));
         devices.add(new Device("Sam Sung Galaxy s5", "1/9/2017", "SamSung",
                 "http://www.samsung.com/hk_en/consumer/mobile/smartphones/galaxy-s/galaxy-s7"
-                        + "/images/galaxy-s7-edge_gallery_front_silver_s3.png", "Description 18","Still"));
+                        + "/images/galaxy-s7-edge_gallery_front_silver_s3.png", "Description 18",
+                "Still"));
         devices.add(new Device("Sam Sung Galaxy s6", "1/10/2017", "SamSung",
                 "http://cdn03.androidauthority"
                         + ".net/wp-content/uploads/2016/02/samsung-galaxy-s7-first-look-aa"
-                        + "-840x560.jpg", "Description 18","Over"));
+                        + "-840x560.jpg", "Description 18", "Over"));
         devices.add(new Device("Sam Sung Galaxy s7", "1/11/2017", "SamSung", "http://www.chipworks"
                 + ".com/sites/default/files/06-Samsung-Galaxy-S7-Teardown-External.jpg",
-                "Description 20","Still"));
+                "Description 20", "Still"));
         devices.add(new Device("Sam Sung Galaxy s1", "1/12/2017", "SamSung",
                 "http://cdn03.androidauthority"
                         + ".net/wp-content/uploads/2016/02/samsung-galaxy-s7-first-look-aa"
-                        + "-840x560.jpg", "Description 21","Still"));
+                        + "-840x560.jpg", "Description 21", "Still"));
         return Observable.just(devices);
     }
 
@@ -96,27 +104,50 @@ public class DeviceRemoteDataSource implements DeviceDataSource.RemoteDataSource
         List<Device> devices = new ArrayList<>();
         devices.add(new Device("Sam Sung Galaxy s1", "1/2/2017", "SamSung",
                 "https://cdn.tgdd.vn/Products/Images/42/74113/samsung-galaxy-s7-2-400x460.png",
-                "Description 1","Over"));
+                "Description 1", "Over"));
         devices.add(new Device("Sam Sung Galaxy s2", "1/3/2017", "SamSung", "http://didongthongminh"
                 + ".vn/images/products/2016/06/14/original/samsung-galaxy-s7"
-                + "-gold_1465900740.jpg","Description 1","Still"));
+                + "-gold_1465900740.jpg", "Description 1", "Still"));
         devices.add(new Device("Sam Sung Galaxy s3", "1/4/2017", "SamSung",
                 "https://cdn3.tgdd.vn/Products/Images/42/74113/samsung-galaxy-s7-16-300x300.jpg",
-                "Description 3","Over"));
+                "Description 3", "Over"));
         devices.add(new Device("Sam Sung Galaxy s4", "1/5/2017", "SamSung",
                 "http://www.samsung.com/hk_en/consumer/mobile/smartphones/galaxy-s/galaxy-s7"
-                        + "/images/galaxy-s7-edge_gallery_front_silver_s3.png","Description 1","Over"));
+                        + "/images/galaxy-s7-edge_gallery_front_silver_s3.png", "Description 1",
+                "Over"));
         devices.add(new Device("Sam Sung Galaxy s5", "1/6/2017", "SamSung", "http://www.chipworks"
-                + ".com/sites/default/files/06-Samsung-Galaxy-S7-Teardown-External.jpg","Description 1","Still"));
+                + ".com/sites/default/files/06-Samsung-Galaxy-S7-Teardown-External.jpg",
+                "Description 1", "Still"));
         devices.add(new Device("Sam Sung Galaxy s6", "1/7/2017", "SamSung",
                 "http://www.samsung.com/hk_en/consumer/mobile/smartphones/galaxy-s/galaxy-s7"
-                        + "/images/galaxy-s7-edge_gallery_front_silver_s3.png", "Description 6","Still"));
+                        + "/images/galaxy-s7-edge_gallery_front_silver_s3.png", "Description 6",
+                "Still"));
         devices.add(new Device("Sam Sung Galaxy s4", "1/8/2017", "SamSung",
                 "http://zaibis.com/wp-content/uploads/2016/11/features_samsung-galaxy-s7"
-                        + "-edge_performance_pink.jpg", "Description 17","Over"));
+                        + "-edge_performance_pink.jpg", "Description 17", "Over"));
         devices.add(new Device("Sam Sung Galaxy s5", "1/9/2017", "SamSung",
                 "http://www.samsung.com/hk_en/consumer/mobile/smartphones/galaxy-s/galaxy-s7"
-                        + "/images/galaxy-s7-edge_gallery_front_silver_s3.png", "Description 18","Still"));
+                        + "/images/galaxy-s7-edge_gallery_front_silver_s3.png", "Description 18",
+                "Still"));
         return Observable.just(devices);
+    }
+
+    @Override
+    public Observable<List<Category>> getListCategory() {
+        List<Category> categories = new ArrayList<>();
+        categories.add(new Category("Laptop"));
+        categories.add(new Category("CPU"));
+        categories.add(new Category("IPad"));
+        categories.add(new Category("Mouse"));
+        categories.add(new Category("Keyboard"));
+        return Observable.just(categories);
+    }
+
+    @Override
+    public Observable<Device> registerdevice(RegisterDeviceRequest registerdevice) {
+        // TODO: 4/4/17 replace by call API later
+        Device device = new Device(registerdevice.getTitle(), registerdevice.getDescription(),
+                registerdevice.getCategory(), registerdevice.getNumber());
+        return Observable.just(device);
     }
 }
