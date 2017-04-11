@@ -19,6 +19,8 @@ public class DeviceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mViewModel = new DeviceViewModel(this);
+
+        setTitle(getString(R.string.title_register_device));
         DeviceRepository repository =
                 new DeviceRepository(new DeviceRemoteDataSource(FDMSServiceClient.getInstance()));
         DeviceContract.Presenter presenter = new DevicePresenter(mViewModel, repository);

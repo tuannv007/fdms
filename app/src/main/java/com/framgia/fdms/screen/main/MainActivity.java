@@ -12,6 +12,7 @@ import com.framgia.fdms.data.source.DeviceRepository;
 import com.framgia.fdms.data.source.api.service.FDMSServiceClient;
 import com.framgia.fdms.data.source.remote.DeviceRemoteDataSource;
 import com.framgia.fdms.databinding.ActivityMainBinding;
+import com.framgia.fdms.screen.login.LoginActivity;
 import com.framgia.fdms.screen.search.SearchActivity;
 
 /**
@@ -59,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_search:
                 startActivity(new Intent(SearchActivity.searchIntent(this)));
                 return true;
+            case R.id.action_logout:
+                startActivity(new Intent(LoginActivity.getInstance(this)));
+                return true;
             case R.id.action_sort_by_category:
                 //TODO dev later
                 return true;
@@ -73,4 +77,6 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 }

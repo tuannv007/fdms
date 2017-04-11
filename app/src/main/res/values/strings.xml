@@ -55,4 +55,8 @@
     <string name="title_descriptions">Description</string>
     <string name="title_title">Title</string>
     <string name="title_register_my_device">Register My Device</string>
+    <string name="title_logout">Logout</string>
+    <string name="title_forgot_the_password">Forgot the password</string>
+    <string name="title_register">Register</string>
+    <string name="title_register_device">Register Device</string>
 </resources>

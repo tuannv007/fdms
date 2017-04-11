@@ -21,6 +21,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mViewModel = new RegisterViewModel(this);
 
+        setTitle(getString(R.string.title_register));
         UserRepository repository =
                 new UserRepository(new UserRemoteDataSource(FDMSServiceClient.getInstance()));
         RegisterContract.Presenter presenter = new RegisterPresenter(mViewModel, repository);
