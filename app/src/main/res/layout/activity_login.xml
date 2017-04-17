@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     >
 
     <data>
@@ -16,7 +16,7 @@
         android:id="@+id/activity_login"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_background"
+        android:background="@android:color/white"
         tools:context=".screen.login.LoginActivity"
         >
 
@@ -32,28 +32,11 @@
             android:scaleType="fitXY"
             />
 
-        <TextView
-            android:id="@+id/text_login_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/image_slogan"
-            android:layout_marginTop="@dimen/dp10"
-            android:gravity="center"
-            android:text="@string/app_name"
-            android:textAlignment="center"
-            android:textColor="@color/color_red_mos"
-            android:textSize="@dimen/dp40"
-            android:textStyle="bold|italic"
-            app:font='@{@string/title_asset_font}'
-            />
-
         <LinearLayout
             android:id="@+id/linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/text_login_name"
+            android:layout_centerInParent="true"
             android:layout_margin="@dimen/dp20"
             android:orientation="vertical"
             android:paddingTop="@dimen/dp10"
@@ -62,60 +45,62 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp5"
-                android:layout_marginBottom="@dimen/dp10"
-                android:background="@drawable/bordel_text"
-                android:padding="@dimen/dp5"
-                android:textColorHint="@color/color_black"
-                app:errorText="@{viewModel.usernameError}"
+                android:layout_marginTop="@dimen/dp10"
+                android:textColorHighlight="#ff0000"
+                android:textColorHint="@color/color_gray_"
+                bind:errorText="@{viewModel.usernameError}"
+                android:transitionName="@string/title_user_name"
                 >
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/text_user_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_username"
+                    android:backgroundTint="@color/color_gray_"
                     android:hint="@string/title_user_name"
+                    android:paddingLeft="@dimen/dp10"
                     android:text="@={viewModel.username}"
                     android:textColor="@color/color_black"
+                    android:textColorHint="@color/color_gray_"
                     />
             </android.support.design.widget.TextInputLayout>
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp5"
-                android:layout_marginBottom="@dimen/dp10"
-                android:background="@drawable/bordel_text"
-                android:padding="@dimen/dp5"
-                android:textColorHint="@color/color_black"
-                app:errorText="@{viewModel.passwordError}"
+                android:layout_marginTop="@dimen/dp10"
+                bind:errorText="@{viewModel.passwordError}"
+                android:textColorHint="@color/color_gray_"
+                android:transitionName="@string/title_password"
                 >
-
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/text_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_password"
+                    android:backgroundTint="@color/color_gray_"
                     android:hint="@string/title_password"
                     android:inputType="textPassword"
+                    android:paddingLeft="@dimen/dp10"
                     android:text="@={viewModel.password}"
                     android:textColor="@color/color_black"
+                    android:textColorHint="@color/color_gray_"
                     />
             </android.support.design.widget.TextInputLayout>
 
-            <Button
+            <TextView
                 android:id="@+id/button_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/dp5"
-                android:layout_marginTop="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp20"
                 android:background="@drawable/boder_title"
-                android:drawableLeft="@drawable/ic_framgia"
                 android:fontFamily="serif"
+                android:gravity="center"
                 android:onClick="@{()-> viewModel.onLoginClick()}"
+                android:padding="@dimen/dp10"
                 android:text="@string/action_login"
-                android:textColor="@color/color_brown"
+                android:textAllCaps="true"
+                android:textColor="@color/color_white"
+                android:textStyle="bold"
                 />
 
             <TextView
@@ -125,9 +110,11 @@
                 android:fontFamily="serif"
                 android:gravity="center"
                 android:onClick="@{()-> viewModel.onForgotPasswordClick()}"
-                android:paddingTop="@dimen/dp10"
+                android:paddingTop="@dimen/dp5"
                 android:text="@string/action_forgot_password"
-                android:textColor="@color/color_black"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="italic|bold"
                 />
         </LinearLayout>
 
@@ -146,33 +133,21 @@
                 android:layout_centerInParent="true"
                 android:visibility="@{viewModel.progressBarVisibility}"
                 />
-            <Button
+            <TextView
                 android:id="@+id/button_create_account_now"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-
+                android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/dp20"
-                android:layout_marginRight="@dimen/dp20"
-                android:background="@drawable/boder_title"
-                android:drawableLeft="@drawable/ic_framgia"
+                android:background="@drawable/bordel_text"
                 android:fontFamily="serif"
-                android:onClick="@{()-> viewModel.onSignUpClick()}"
-                android:text="@string/action_sign_up"
-                android:textColor="@color/color_brown"
-                />
-
-            <TextView
-                android:id="@+id/text_create_account"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/button_create_account_now"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:gravity="center"
-                android:text="@string/title_create_account_now"
-                android:textColor="@color/color_black"
+                android:onClick="@{()-> viewModel.onSignUpClick()}"
+                android:padding="@dimen/dp10"
+                android:text="@string/action_sign_up"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
                 />
         </RelativeLayout>
     </RelativeLayout>
