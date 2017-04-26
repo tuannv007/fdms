@@ -4,6 +4,7 @@ import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import com.framgia.fdms.data.model.Device;
+import com.framgia.fdms.data.model.Picture;
 
 /**
  * Exposes the data to be used in the Detail screen.
@@ -37,21 +38,22 @@ public class DetailViewModel extends BaseObservable implements DetailContract.Vi
 
     @Bindable
     public String getName() {
-        return mDevice.getName();
+        return mDevice.getProductionName();
     }
 
     @Bindable
     public String getCategory() {
-        return mDevice.getCategory();
+        return mDevice.getDeviceCategoryName();
     }
 
     @Bindable
     public String getDescription() {
-        return mDevice.getDescription();
+        return mDevice.getDeviceCode();
     }
 
     @Bindable
     public String getImageUrl() {
-        return mDevice.getImage();
+        return (mDevice != null && mDevice.getPicture() != null) ? mDevice.getPicture().getUrl()
+                : null;
     }
 }

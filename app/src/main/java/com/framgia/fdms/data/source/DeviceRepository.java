@@ -14,16 +14,19 @@ public class DeviceRepository {
         mDeviceRemoteDataSource = remoteDataSource;
     }
 
-    public Observable<List<Device>> getListDevice() {
-        return mDeviceRemoteDataSource.getListDevice();
+    public Observable<List<Device>> getListDevices(int categoryId, int statusId, int page,
+            int perPage) {
+        return mDeviceRemoteDataSource.getListDevices(categoryId, statusId, page, perPage);
     }
 
     public Observable<List<Device>> searchDevices(String keyWord) {
         return mDeviceRemoteDataSource.searchDevices(keyWord);
     }
-    public Observable<List<Category>> getListCategory(){
-        return  mDeviceRemoteDataSource.getListCategory();
+
+    public Observable<List<Category>> getListCategory() {
+        return mDeviceRemoteDataSource.getListCategory();
     }
+
     public Observable<Device> registerdevice(RegisterDeviceRequest registerdevice) {
         return mDeviceRemoteDataSource.registerdevice(registerdevice);
     }

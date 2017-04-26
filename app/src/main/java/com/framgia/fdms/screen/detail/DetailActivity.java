@@ -33,7 +33,7 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Device device = (Device) getIntent().getSerializableExtra(EXTRA_DEVICE);
-        setTitle(device.getName());
+        setTitle(device.getProductionName());
         mViewModel = new DetailViewModel(this, device);
 
         DetailContract.Presenter presenter = new DetailPresenter(mViewModel);

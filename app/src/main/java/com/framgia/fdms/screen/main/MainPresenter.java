@@ -27,7 +27,6 @@ final class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void onStart() {
-        getListDevice();
     }
 
     @Override
@@ -35,32 +34,4 @@ final class MainPresenter implements MainContract.Presenter {
         mCompositeSubscriptions.clear();
     }
 
-    public void getListDevice() {
-        Subscription subscription = mDeviceRepository.getListDevice()
-                .subscribeOn(Schedulers.io())
-                .doOnSubscribe(new Action0() {
-                    @Override
-                    public void call() {
-                        mViewModel.showProgressbar();
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<Device>>() {
-                    @Override
-                    public void call(List<Device> devices) {
-                        mViewModel.onDeviceLoaded(devices);
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        mViewModel.onError();
-                    }
-                }, new Action0() {
-                    @Override
-                    public void call() {
-                        mViewModel.hideProgressbar();
-                    }
-                });
-        mCompositeSubscriptions.add(subscription);
-    }
 }

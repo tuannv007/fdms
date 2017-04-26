@@ -5,10 +5,10 @@
     xmlns:tools="http://schemas.android.com/apk/res-auto"
     >
 
-    <data class="ItemDataBinding">
+    <data class="ItemListDataBinding">
         <variable
             name="viewModel"
-            type="com.framgia.fdms.screen.main.ItemDeviceResultViewModel"
+            type="com.framgia.fdms.screen.listDevice.ListDeviceViewModel"
             />
         <variable
             name="item"
@@ -23,11 +23,11 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dp3"
         android:elevation="@dimen/dp3"
-        android:onClick="@{viewModel::onItemClicked}"
+        android:onClick="@{() -> viewModel.onDeviceClick(item)}"
         android:padding="@dimen/dp3"
         car_view:cardCornerRadius="@dimen/dp1"
         car_view:cardElevation="@dimen/dp1"
-        tools:cardCornerRadius="@dimen/dp5"
+        tools:cardCornerRadius="@dimen/dp3"
         >
 
         <LinearLayout
@@ -56,29 +56,23 @@
                 >
 
                 <TextView
-                    android:id="@+id/text_title"
+                    android:id="@+id/text_device_code"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="2"
-                    android:text='@{@string/title_name_device+item.productionName}'
+                    android:text='@{item.deviceCode}'
                     />
 
                 <TextView
-                    android:id="@+id/text_overview"
+                    android:id="@+id/text_production_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="4"
-                    android:text='@{@string/title_date_device+item.boughtDate}'
+                    android:text='@{item.productionName}'
                     />
 
-
                 <TextView
-                    android:id="@+id/text_vote_average"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text='@{@string/title_category+item.deviceCategoryName}'
-                    />
-                <TextView
+                    android:id="@+id/text_status_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
