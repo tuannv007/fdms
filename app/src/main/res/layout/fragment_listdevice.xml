@@ -5,11 +5,11 @@
     >
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.framgia.fdms.screen.listDevice.ListDeviceViewModel"
             />
-
     </data>
 
     <RelativeLayout
@@ -22,6 +22,7 @@
             android:scrollbars="vertical"
             app:layoutManager="LinearLayoutManager"
             app:recyclerAdapter="@{viewModel.adapter}"
+            app:scrollListenner="@{viewModel.scrollListenner}"
             />
         <ProgressBar
             android:id="@+id/progress_loading"
@@ -46,6 +47,14 @@
             android:src="@drawable/ic_action_add"
             app:backgroundTint="@color/colorAccent"
             app:pressedTranslationZ="@dimen/dp15"
+            />
+        <ProgressBar
+            android:id="@+id/progress_loading_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:visibility="@{viewModel.isLoadingMore ? View.VISIBLE : View.GONE}"
             />
     </RelativeLayout>
 </layout>

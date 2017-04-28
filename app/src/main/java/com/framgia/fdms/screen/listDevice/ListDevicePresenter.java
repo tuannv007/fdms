@@ -72,4 +72,10 @@ final class ListDevicePresenter implements ListDeviceContract.Presenter {
                         });
         mCompositeSubscriptions.add(subscription);
     }
+
+    @Override
+    public void loadMoreData() {
+        mPage++;
+        getListDevice(OUT_OF_INDEX, OUT_OF_INDEX, mPage, PER_PAGE);
+    }
 }
