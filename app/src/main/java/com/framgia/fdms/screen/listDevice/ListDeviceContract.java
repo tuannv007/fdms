@@ -30,5 +30,6 @@ interface ListDeviceContract {
      * Presenter.
      */
     interface Presenter extends BasePresenter {
+        void loadMoreData();
     }
 }

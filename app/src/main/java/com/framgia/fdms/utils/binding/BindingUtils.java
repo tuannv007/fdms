@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,5 +45,11 @@ public final class BindingUtils {
     @BindingAdapter({ "bind:font" })
     public static void setFont(TextView textView, String fontName) {
         textView.setTypeface(Typeface.createFromAsset(textView.getContext().getAssets(), fontName));
+    }
+
+    @BindingAdapter({ "scrollListenner" })
+    public static void setScrollListenner(RecyclerView recyclerView,
+            RecyclerView.OnScrollListener listener) {
+        recyclerView.addOnScrollListener(listener);
     }
 }
