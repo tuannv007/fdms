@@ -1,109 +1,144 @@
 package com.framgia.fdms.data.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by Age on 4/1/2017.
  */
 public class Device implements Serializable {
-    private String mName;
-    private String mDate;
-    private String mCategory;
-    private String mImage;
-    private String mDescription;
-    private String mTitle;
-    private String mNumber;
-    private String mStatus;
+    @Expose
+    @SerializedName("id")
+    private int mId;
+    @Expose
+    @SerializedName("device_code")
+    private String mDeviceCode;
+    @Expose
+    @SerializedName("production_name")
+    private String mProductionName;
+    @Expose
+    @SerializedName("device_status_id")
+    private int mDeviceStatusId;
+    @Expose
+    @SerializedName("device_category_id")
+    private int mDeviceCategoryId;
+    @Expose
+    @SerializedName("picture")
+    private Picture mPicture;
+    @Expose
+    @SerializedName("original_price")
+    private double mOriginalPrice;
+    @Expose
+    @SerializedName("bought_date")
+    private Date mBoughtDate;
+    @Expose
+    @SerializedName("printed_code")
+    private String mPrintedCode;
+    @Expose
+    @SerializedName("is_barcode")
+    private boolean mIsBarcode;
+    @Expose
+    @SerializedName("device_status_name")
+    private String mDeviceStatusName;
+    @Expose
+    @SerializedName("device_category_name")
+    private String mDeviceCategoryName;
 
-    public Device(String name, String date, String category, String image) {
-        mName = name;
-        mDate = date;
-        mCategory = category;
-        mImage = image;
+    public int getId() {
+        return mId;
     }
 
-    public Device(String name, String date, String category, String image, String description,
-            String status) {
-        mName = name;
-        mDate = date;
-        mCategory = category;
-        mImage = image;
-        mDescription = description;
-        mStatus = status;
+    public void setId(int id) {
+        mId = id;
     }
 
-    public Device(String name, String date, String category, String image, String description,
-            String title, String number) {
-        mName = name;
-        mDate = date;
-        mCategory = category;
-        mImage = image;
-        mDescription = description;
-        mTitle = title;
-        mNumber = number;
+    public String getDeviceCode() {
+        return mDeviceCode;
     }
 
-    public String getDescription() {
-        return mDescription;
+    public void setDeviceCode(String deviceCode) {
+        mDeviceCode = deviceCode;
     }
 
-    public void setDescription(String description) {
-        mDescription = description;
+    public String getProductionName() {
+        return mProductionName;
     }
 
-    public String getName() {
-        return mName;
+    public void setProductionName(String productionName) {
+        mProductionName = productionName;
     }
 
-    public void setName(String name) {
-        mName = name;
+    public int getDeviceStatusId() {
+        return mDeviceStatusId;
     }
 
-    public String getDate() {
-        return mDate;
+    public void setDeviceStatusId(int deviceStatusId) {
+        mDeviceStatusId = deviceStatusId;
     }
 
-    public void setDate(String date) {
-        mDate = date;
+    public int getDeviceCategoryId() {
+        return mDeviceCategoryId;
     }
 
-    public String getCategory() {
-        return mCategory;
+    public void setDeviceCategoryId(int deviceCategoryId) {
+        mDeviceCategoryId = deviceCategoryId;
     }
 
-    public void setCategory(String category) {
-        mCategory = category;
+    public Picture getPicture() {
+        return mPicture;
     }
 
-    public String getImage() {
-        return mImage;
+    public void setPicture(Picture picture) {
+        mPicture = picture;
     }
 
-    public void setImage(String image) {
-        mImage = image;
+    public double getOriginalPrice() {
+        return mOriginalPrice;
     }
 
-    public String getStatus() {
-        return mStatus;
+    public void setOriginalPrice(double originalPrice) {
+        mOriginalPrice = originalPrice;
     }
 
-    public void setStatus(String status) {
-        mStatus = status;
+    public Date getBoughtDate() {
+        return mBoughtDate;
     }
 
-    public String getTitle() {
-        return mTitle;
+    public void setBoughtDate(Date boughtDate) {
+        mBoughtDate = boughtDate;
     }
 
-    public void setTitle(String title) {
-        mTitle = title;
+    public String getPrintedCode() {
+        return mPrintedCode;
     }
 
-    public String getNumber() {
-        return mNumber;
+    public void setPrintedCode(String printedCode) {
+        mPrintedCode = printedCode;
     }
 
-    public void setNumber(String number) {
-        mNumber = number;
+    public boolean isBarcode() {
+        return mIsBarcode;
+    }
+
+    public void setBarcode(boolean barcode) {
+        mIsBarcode = barcode;
+    }
+
+    public String getDeviceStatusName() {
+        return mDeviceStatusName;
+    }
+
+    public void setDeviceStatusName(String deviceStatusName) {
+        mDeviceStatusName = deviceStatusName;
+    }
+
+    public String getDeviceCategoryName() {
+        return mDeviceCategoryName;
+    }
+
+    public void setDeviceCategoryName(String deviceCategoryName) {
+        mDeviceCategoryName = deviceCategoryName;
     }
 }
