@@ -2,6 +2,7 @@ package com.framgia.fdms.data.source;
 
 import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Device;
+import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.data.source.api.request.RegisterDeviceRequest;
 import com.framgia.fdms.data.source.remote.DeviceRemoteDataSource;
 import java.util.List;
@@ -25,6 +26,10 @@ public class DeviceRepository {
 
     public Observable<List<Category>> getListCategory() {
         return mDeviceRemoteDataSource.getListCategory();
+    }
+
+    public Observable<List<Status>> getListStatus() {
+        return mDeviceRemoteDataSource.getListStatus();
     }
 
     public Observable<Device> registerdevice(RegisterDeviceRequest registerdevice) {

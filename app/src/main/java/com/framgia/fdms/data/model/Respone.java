@@ -16,8 +16,11 @@ public class Respone<T> {
     @SerializedName("error")
     private boolean mError;
     @Expose
+    @SerializedName("message")
+    private String mMessage;
+    @Expose
     @SerializedName("data")
-    private T mData = null;
+    private T mData;
 
     public int getStatus() {
         return mStatus;
@@ -41,5 +44,13 @@ public class Respone<T> {
 
     public void setData(T data) {
         mData = data;
+    }
+
+    public String getMessage() {
+        return mMessage;
+    }
+
+    public void setMessage(String message) {
+        mMessage = message;
     }
 }

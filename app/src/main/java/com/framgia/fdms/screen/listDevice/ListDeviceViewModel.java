@@ -10,12 +10,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
-import com.framgia.fdms.BaseRecyclerViewAdapter;
 import com.framgia.fdms.data.model.Device;
-import com.framgia.fdms.screen.device.DeviceActivity;
+import com.framgia.fdms.screen.devicecreation.CreateDeviceActivity;
 import java.util.ArrayList;
 import java.util.List;
-import rx.Observable;
 
 /**
  * Exposes the data to be used in the ListDevice screen.
@@ -86,7 +84,7 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
 
     @Override
     public void onRegisterDeviceClick() {
-        mContext.startActivity(new Intent(mContext, DeviceActivity.class));
+        mContext.startActivity(new Intent(mContext, CreateDeviceActivity.class));
     }
 
     public ObservableField<Integer> getProgressBarVisibility() {

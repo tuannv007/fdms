@@ -1,65 +1,77 @@
 package com.framgia.fdms.data.source.api.request;
 
+import com.framgia.fdms.data.model.Picture;
+import java.io.File;
+
 /**
  * Created by levutantuan on 4/10/17.
  */
 
 public class RegisterDeviceRequest extends BaseRequest {
-    private String mTitle;
-    private String mDescription;
-    private String mDeviceName;
-    private String mCategory;
-    private String mNumber;
-
-    public RegisterDeviceRequest(String title, String description, String deviceName,
-            String category, String number) {
-        mTitle = title;
-        mDescription = description;
-        mDeviceName = deviceName;
-        mCategory = category;
-        mNumber = number;
-    }
+    private String mProductionName;
+    private int mDeviceStatusId;
+    private int mDeviceCategoryId;
+    private String mSerialNumber;
+    private String mModellNumber;
+    private String mDeviceCode;
+    private String mFilePath;
 
     public RegisterDeviceRequest() {
     }
 
-    public String getTitle() {
-        return mTitle;
+    public String getProductionName() {
+        return mProductionName;
     }
 
-    public void setTitle(String title) {
-        mTitle = title;
+    public void setProductionName(String productionName) {
+        mProductionName = productionName;
     }
 
-    public String getDescription() {
-        return mDescription;
+    public int getDeviceStatusId() {
+        return mDeviceStatusId;
     }
 
-    public void setDescription(String description) {
-        mDescription = description;
+    public void setDeviceStatusId(int deviceStatusId) {
+        mDeviceStatusId = deviceStatusId;
     }
 
-    public String getDeviceName() {
-        return mDeviceName;
+    public int getDeviceCategoryId() {
+        return mDeviceCategoryId;
     }
 
-    public void setDeviceName(String deviceName) {
-        mDeviceName = deviceName;
+    public void setDeviceCategoryId(int deviceCategoryId) {
+        mDeviceCategoryId = deviceCategoryId;
     }
 
-    public String getCategory() {
-        return mCategory;
+    public String getSerialNumber() {
+        return mSerialNumber;
     }
 
-    public void setCategory(String category) {
-        mCategory = category;
+    public void setSerialNumber(String serialNumber) {
+        mSerialNumber = serialNumber;
     }
 
-    public String getNumber() {
-        return mNumber;
+    public String getModellNumber() {
+        return mModellNumber;
     }
 
-    public void setNumber(String number) {
-        mNumber = number;
+    public void setModellNumber(String modellNumber) {
+        mModellNumber = modellNumber;
+    }
+
+    public String getDeviceCode() {
+        return mDeviceCode;
+    }
+
+    public void setDeviceCode(String deviceCode) {
+        mDeviceCode = deviceCode;
+    }
+
+    public String getFilePath() {
+        return mFilePath;
+    }
+
+    public void setFilePath(String filePath) {
+        mFilePath = filePath;
     }
 }

@@ -4,6 +4,7 @@ import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.data.model.Picture;
 import com.framgia.fdms.data.model.Respone;
+import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.data.source.DeviceDataSource;
 import com.framgia.fdms.data.source.api.request.RegisterDeviceRequest;
 import com.framgia.fdms.data.source.api.service.FDMSApi;
@@ -59,13 +60,16 @@ public class DeviceRemoteDataSource implements DeviceDataSource.RemoteDataSource
 
     @Override
     public Observable<List<Category>> getListCategory() {
+        // TODO: replace by call API later
         List<Category> categories = new ArrayList<>();
-        categories.add(new Category("Laptop"));
-        categories.add(new Category("CPU"));
-        categories.add(new Category("IPad"));
-        categories.add(new Category("Mouse"));
-        categories.add(new Category("Keyboard"));
         return Observable.just(categories);
+    }
+
+    @Override
+    public Observable<List<Status>> getListStatus() {
+        // TODO: replace by call API later
+        List<Status> statuses = new ArrayList<>();
+        return Observable.just(statuses);
     }
 
     @Override

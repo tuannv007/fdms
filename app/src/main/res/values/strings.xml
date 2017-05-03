@@ -67,4 +67,10 @@
     <string name="title_manage_request">request manager</string>
     <string name="title_scan">scanner</string>
     <string name="title_device">all device</string>
+    <string name="title_code">Code</string>
+    <string name="msg_create_device_error">Create Device Error</string>
+    <string name="title_device_type">Device type</string>
+    <string name="title_device_status">Status of device</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="title_create_device">Create device</string>
 </resources>

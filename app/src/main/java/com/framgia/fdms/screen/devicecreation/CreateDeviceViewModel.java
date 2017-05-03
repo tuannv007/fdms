@@ -1,0 +1,279 @@
+package com.framgia.fdms.screen.devicecreation;
+
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.ArrayAdapter;
+import android.widget.Toast;
+import com.framgia.fdms.BR;
+import com.framgia.fdms.R;
+import com.framgia.fdms.data.model.Category;
+import com.framgia.fdms.data.model.Status;
+import com.framgia.fdms.data.source.api.request.RegisterDeviceRequest;
+import com.framgia.fdms.screen.main.MainActivity;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Exposes the data to be used in the Createdevice screen.
+ */
+
+public class CreateDeviceViewModel extends BaseObservable implements CreateDeviceContract.ViewModel {
+
+    private Context mContext;
+    private AppCompatActivity mActivity;
+    private CreateDeviceContract.Presenter mPresenter;
+    private String mDeviceCodeError;
+    private String mNameDeviceError;
+    private String mSerialNumberError;
+    private String mModelNumberError;
+    private RegisterDeviceRequest mRequest;
+    private ArrayAdapter<String> mAdapterCategory;
+    private ArrayAdapter<String> mAdapterStatus;
+    private List<Category> mCategories = new ArrayList<>();
+    private List<Status> mStatuses = new ArrayList<>();
+    private Category mCategory;
+    private Status mStatus;
+
+    public CreateDeviceViewModel(CreateDeviceActivity activity) {
+        mContext = activity.getApplicationContext();
+        mActivity = activity;
+        mRequest = new RegisterDeviceRequest();
+
+        mAdapterCategory = new ArrayAdapter<String>(mContext,
+                android.R.layout.select_dialog_item);
+        mAdapterStatus = new ArrayAdapter<String>(mContext,
+                android.R.layout.select_dialog_item);
+    }
+
+    public void onCreateDeviceClick() {
+        mPresenter.registerDevice(mRequest);
+    }
+
+    public void onChooseCategory(){
+        if (mAdapterCategory == null){
+            return;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+
+        builder.setNegativeButton(R.string.action_cancel, null);
+
+        builder.setAdapter(mAdapterCategory, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                setCategory(mCategories.get(which));
+            }
+        });
+        builder.show();
+    }
+
+    public void onChooseStatus(){
+        if (mAdapterStatus == null){
+            return;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+
+        builder.setNegativeButton(R.string.action_cancel, null);
+
+        builder.setAdapter(mAdapterStatus, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                setStatus(mStatuses.get(which));
+            }
+        });
+        builder.show();
+    }
+
+    @Override
+    public void onStart() {
+        mPresenter.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        mPresenter.onStop();
+    }
+
+    @Override
+    public void setPresenter(CreateDeviceContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void onDeviceCategoryLoaded(List<Category> categories) {
+        updateCategory(categories);
+    }
+
+    public void updateCategory(List<Category> list) {
+        if (list == null) {
+            return;
+        }
+
+        mCategories.addAll(list);
+        mAdapterCategory.clear();
+        for (Category category : mCategories){
+            mAdapterCategory.addAll(category.getName());
+        }
+        mAdapterCategory.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onDeviceStatusLoaded(List<Status> statuses) {
+        updateStatus(statuses);
+    }
+
+    public void updateStatus(List<Status> list) {
+        if (list == null) {
+            return;
+        }
+
+        mStatuses.addAll(list);
+        mAdapterStatus.clear();
+        for (Status status : mStatuses){
+            mAdapterStatus.addAll(status.getName());
+        }
+        mAdapterStatus.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showProgressbar() {
+        // TODO: later
+    }
+
+    @Override
+    public void hideProgressbar() {
+        // TODO: later
+    }
+
+    @Override
+    public void onRegisterError() {
+        Toast.makeText(mContext, R.string.msg_create_device_error, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onRegisterSuccess() {
+        mContext.startActivity(MainActivity.getInstance(mContext));
+    }
+
+    @Override
+    public void onInputProductionNameError() {
+        mNameDeviceError = mContext.getString(R.string.msg_error_user_name);
+        notifyPropertyChanged(BR.nameDeviceError);
+    }
+
+    @Override
+    public void onInputSerialNumberError() {
+        mSerialNumberError = mContext.getString(R.string.msg_error_user_name);
+        notifyPropertyChanged(BR.serialNumberError);
+    }
+
+    @Override
+    public void onInputModellNumberError() {
+        mModelNumberError = mContext.getString(R.string.msg_error_user_name);
+        notifyPropertyChanged(BR.modelNumberError);
+    }
+
+    @Override
+    public void onInputDeviceCodeError() {
+        mDeviceCodeError = mContext.getString(R.string.msg_error_user_name);
+        notifyPropertyChanged(BR.deviceCodeError);
+    }
+
+    @Override
+    public void onInputCategoryError() {
+        // TODO: later
+    }
+
+    @Override
+    public void onInputStatusError() {
+        // TODO: later
+    }
+
+    @Bindable
+    public String getDeviceCodeError() {
+        return mDeviceCodeError;
+    }
+
+    @Bindable
+    public String getNameDeviceError() {
+        return mNameDeviceError;
+    }
+
+    @Bindable
+    public String getSerialNumberError() {
+        return mSerialNumberError;
+    }
+
+    @Bindable
+    public String getModelNumberError() {
+        return mModelNumberError;
+    }
+
+    @Bindable
+    public Category getCategory() {
+        return mCategory;
+    }
+
+    public void setCategory(Category category) {
+        mRequest.setDeviceCategoryId(category.getId());
+        mCategory = category;
+        notifyPropertyChanged(BR.category);
+    }
+
+    @Bindable
+    public Status getStatus() {
+        return mStatus;
+    }
+
+    public void setStatus(Status status) {
+        mRequest.setDeviceStatusId(status.getId());
+        mStatus = status;
+        notifyPropertyChanged(BR.status);
+    }
+
+    @Bindable
+    public String getModelNumber() {
+        return mRequest.getModellNumber();
+    }
+
+    public void setModelNumber(String modelNumber) {
+        mRequest.setModellNumber(modelNumber);
+    }
+
+    @Bindable
+    public String getSerialNumber() {
+        return mRequest.getSerialNumber();
+    }
+
+    public void setSerialNumber(String serialNumber) {
+        mRequest.setSerialNumber(serialNumber);
+    }
+
+    @Bindable
+    public String getNameDevice() {
+        return mRequest.getProductionName();
+    }
+
+    public void setNameDevice(String nameDevice) {
+        mRequest.setProductionName(nameDevice);
+    }
+
+    @Bindable
+    public String getDeviceCode() {
+        return mRequest.getDeviceCode();
+    }
+
+    public void setDeviceCode(String deviceCode) {
+        mRequest.setDeviceCode(deviceCode);
+    }
+
+    public AppCompatActivity getActivity() {
+        return mActivity;
+    }
+}
