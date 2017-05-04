@@ -3,14 +3,16 @@ package com.framgia.fdms.utils.binding;
 import android.databinding.BindingAdapter;
 import android.graphics.Typeface;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.framgia.fdms.R;
+import com.framgia.fdms.screen.newmain.ViewPagerAdapter;
 
 /**
  * Created by Age on 4/3/2017.
@@ -20,9 +22,9 @@ public final class BindingUtils {
         // No-op
     }
 
-    @BindingAdapter({ "recyclerAdapter" })
+    @BindingAdapter({"recyclerAdapter"})
     public static void setAdapterForRecyclerView(RecyclerView recyclerView,
-            RecyclerView.Adapter adapter) {
+                                                 RecyclerView.Adapter adapter) {
         recyclerView.setAdapter(adapter);
     }
 
@@ -36,20 +38,26 @@ public final class BindingUtils {
         layout.setError(text);
     }
 
-    @BindingAdapter({ "spinnerAdapter" })
+    @BindingAdapter({"spinnerAdapter"})
     public static void setAdapterForSpinner(AppCompatSpinner spinner,
-            ArrayAdapter<String> adapter) {
+                                            ArrayAdapter<String> adapter) {
         spinner.setAdapter(adapter);
     }
 
-    @BindingAdapter({ "bind:font" })
+    @BindingAdapter({"bind:font"})
     public static void setFont(TextView textView, String fontName) {
         textView.setTypeface(Typeface.createFromAsset(textView.getContext().getAssets(), fontName));
     }
 
-    @BindingAdapter({ "scrollListenner" })
+    @BindingAdapter({"scrollListenner"})
     public static void setScrollListenner(RecyclerView recyclerView,
-            RecyclerView.OnScrollListener listener) {
+                                          RecyclerView.OnScrollListener listener) {
         recyclerView.addOnScrollListener(listener);
     }
+
+    @BindingAdapter("adapter")
+    public static void setupViewPager(ViewPager viewPager, ViewPagerAdapter adapter) {
+        viewPager.setAdapter(adapter);
+    }
 }
+
