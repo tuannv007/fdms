@@ -76,7 +76,7 @@ public class DeviceViewModel extends BaseObservable implements DeviceContract.Vi
         }
         mCategories.clear();
         for (Category category : list) {
-            mAdapter.addAll(category.getTitle());
+            mAdapter.addAll(category.getName());
         }
         mAdapter.notifyDataSetChanged();
     }
@@ -134,47 +134,47 @@ public class DeviceViewModel extends BaseObservable implements DeviceContract.Vi
 
     @Bindable
     public String getTitle() {
-        return mRequest.getTitle();
+        return mRequest.getDeviceCode();
     }
 
     public void setTitle(String title) {
-        mRequest.setTitle(title);
+        mRequest.setDeviceCode(title);
     }
 
     @Bindable
     public String getDescription() {
-        return mRequest.getDescription();
+        return mRequest.getProductionName();
     }
 
     public void setDescription(String description) {
-        mRequest.setDescription(description);
+        mRequest.setProductionName(description);
     }
 
     @Bindable
     public String getNameDevice() {
-        return mRequest.getDeviceName();
+        return mRequest.getProductionName();
     }
 
     public void setNameDevice(String nameDevice) {
-        mRequest.setDeviceName(nameDevice);
+        mRequest.setProductionName(nameDevice);
     }
 
     @Bindable
     public String getCategory() {
-        return mRequest.getCategory();
+        return mRequest.getDeviceCode();
     }
 
     public void setCategory(String category) {
-        mRequest.setCategory(category);
+        mRequest.setProductionName(category);
     }
 
     @Bindable
     public String getNumber() {
-        return mRequest.getNumber();
+        return mRequest.getProductionName();
     }
 
     public void setNumber(String number) {
-        mRequest.setNumber(number);
+        mRequest.setProductionName(number);
     }
 
     @Bindable

@@ -4,10 +4,10 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by levutantuan on 4/10/17.
+ * Created by MyPC on 03/05/2017.
  */
 
-public class Category {
+public class Status {
     @Expose
     @SerializedName("id")
     private int mId;
@@ -15,7 +15,7 @@ public class Category {
     @SerializedName("name")
     private String mName;
 
-    public Category(int id, String name) {
+    public Status(int id, String name) {
         mId = id;
         mName = name;
     }

@@ -24,4 +24,5 @@
     <dimen name="dp_110">110dp</dimen>
     <dimen name="dp_60">60dp</dimen>
     <dimen name="dp_0">0dp</dimen>
+    <dimen name="dp_300">300dp</dimen>
 </resources>
