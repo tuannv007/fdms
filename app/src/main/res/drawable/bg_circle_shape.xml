@@ -5,9 +5,9 @@
     <solid
         android:color="@color/color_grey_100"/>
     <size
-        android:width="@dimen/dp20"
-        android:height="@dimen/dp20"/>
+        android:height="@dimen/dp_20"
+        android:width="@dimen/dp_20"/>
     <stroke
-        android:width="@dimen/dp2"
-        android:color="@color/colorPrimaryDark"/>
+        android:color="@color/colorPrimaryDark"
+        android:width="@dimen/dp_2"/>
 </shape>

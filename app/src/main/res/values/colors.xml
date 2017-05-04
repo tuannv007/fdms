@@ -23,4 +23,5 @@
     <color name="color_grey_900">#212121</color>
     <color name="color_grey_700">#616161</color>
     <color name="color_grey_100">#F5F5F5</color>
+    <color name="color_blue_grey_50">#ECEFF1</color>
 </resources>

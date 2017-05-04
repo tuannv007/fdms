@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.framgia.fdms"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.framgia.fdms">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
@@ -18,7 +18,10 @@
             android:name=".screen.login.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.NoActionBar">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity
             android:name=".screen.main.MainActivity"
@@ -59,12 +62,6 @@
         </activity>
         <activity
             android:name=".screen.newmain.NewMainActivity"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
+            android:screenOrientation="portrait"/>
     </application>
-
 </manifest>
