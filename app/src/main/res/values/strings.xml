@@ -61,4 +61,10 @@
     <string name="title_register_device">Register Device</string>
     <string name="action_qr_code">QR Code</string>
     <string name="title_asset_font">speedline.ttf</string>
+    <string name="title_home">home</string>
+    <string name="title_dashboard">dashboard</string>
+    <string name="title_notifications">notification</string>
+    <string name="title_manage_request">request manager</string>
+    <string name="title_scan">scanner</string>
+    <string name="title_device">all device</string>
 </resources>
