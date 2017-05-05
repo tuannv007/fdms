@@ -25,4 +25,5 @@
     <dimen name="dp_60">60dp</dimen>
     <dimen name="dp_0">0dp</dimen>
     <dimen name="dp_300">300dp</dimen>
+    <dimen name="sp_17">17sp</dimen>
 </resources>

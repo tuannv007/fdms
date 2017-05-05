@@ -38,6 +38,10 @@ interface CreateDeviceContract {
         void onInputCategoryError();
 
         void onInputStatusError();
+
+        void onAddImageClick();
+
+        void onCreateDeviceClick();
     }
 
     /**

@@ -9,6 +9,7 @@ import com.framgia.fdms.data.source.DeviceDataSource;
 import com.framgia.fdms.data.source.api.request.RegisterDeviceRequest;
 import com.framgia.fdms.data.source.api.service.FDMSApi;
 import com.framgia.fdms.data.source.api.service.ServiceClient;
+import com.framgia.fdms.utils.Utils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,14 +40,7 @@ public class DeviceRemoteDataSource implements DeviceDataSource.RemoteDataSource
                 .flatMap(new Func1<Respone<List<Device>>, Observable<List<Device>>>() {
                     @Override
                     public Observable<List<Device>> call(Respone<List<Device>> listRespone) {
-                        if (listRespone == null) {
-                            return Observable.error(new NullPointerException());
-                        } else if (listRespone.isError()) {
-                            return Observable.error(
-                                    new NullPointerException("ERROR" + listRespone.getStatus()));
-                        } else {
-                            return Observable.just(listRespone.getData());
-                        }
+                        return Utils.getResponse(listRespone);
                     }
                 });
     }

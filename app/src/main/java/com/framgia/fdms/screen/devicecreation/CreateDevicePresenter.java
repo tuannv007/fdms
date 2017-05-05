@@ -4,7 +4,9 @@ import android.text.TextUtils;
 import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.data.model.Status;
+import com.framgia.fdms.data.source.CategoryRepository;
 import com.framgia.fdms.data.source.DeviceRepository;
+import com.framgia.fdms.data.source.StatusRepository;
 import com.framgia.fdms.data.source.api.request.RegisterDeviceRequest;
 import java.util.List;
 import rx.Subscription;
@@ -23,11 +25,17 @@ final class CreateDevicePresenter implements CreateDeviceContract.Presenter {
     private final CreateDeviceContract.ViewModel mViewModel;
     private CompositeSubscription mCompositeSubscription;
     private DeviceRepository mDeviceRepository;
+    private StatusRepository mStatusRepository;
+    private CategoryRepository mCategoryRepository;
     private RegisterDeviceRequest mRequest;
 
-    public CreateDevicePresenter(CreateDeviceContract.ViewModel viewModel, DeviceRepository repository) {
+    public CreateDevicePresenter(CreateDeviceContract.ViewModel viewModel,
+            DeviceRepository deviceRepository, StatusRepository statusRepository,
+            CategoryRepository categoryRepository) {
         mViewModel = viewModel;
-        mDeviceRepository = repository;
+        mDeviceRepository = deviceRepository;
+        mCategoryRepository = categoryRepository;
+        mStatusRepository = statusRepository;
         mRequest = new RegisterDeviceRequest();
         mCompositeSubscription = new CompositeSubscription();
     }
@@ -66,7 +74,7 @@ final class CreateDevicePresenter implements CreateDeviceContract.Presenter {
     }
 
     public void getListCategories() {
-        Subscription subscription = mDeviceRepository.getListCategory()
+        Subscription subscription = mCategoryRepository.getListCategory()
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override
@@ -95,7 +103,7 @@ final class CreateDevicePresenter implements CreateDeviceContract.Presenter {
     }
 
     public void getListStatuses() {
-        Subscription subscription = mDeviceRepository.getListStatus()
+        Subscription subscription = mStatusRepository.getListStatus()
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override
