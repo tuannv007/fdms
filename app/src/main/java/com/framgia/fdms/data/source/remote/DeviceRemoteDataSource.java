@@ -2,19 +2,16 @@ package com.framgia.fdms.data.source.remote;
 
 import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Device;
-import com.framgia.fdms.data.model.Picture;
 import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.data.source.DeviceDataSource;
 import com.framgia.fdms.data.source.api.request.RegisterDeviceRequest;
 import com.framgia.fdms.data.source.api.service.FDMSApi;
-import com.framgia.fdms.data.source.api.service.ServiceClient;
 import com.framgia.fdms.utils.Utils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import retrofit2.http.Query;
 import rx.Observable;
 import rx.functions.Func1;
 
@@ -70,6 +67,12 @@ public class DeviceRemoteDataSource implements DeviceDataSource.RemoteDataSource
     public Observable<Device> registerdevice(RegisterDeviceRequest registerdevice) {
         // TODO: 4/4/17 replace by call API later
         return null;
+    }
+
+    @Override
+    public Observable<Device> getDeviceByQrCode(String qrCode) {
+        // todo connect server to get device by qr code
+        return Observable.just(new Device());
     }
 
     public Map<String, String> getDeviceParams(int categoryId, int statusId, int page,

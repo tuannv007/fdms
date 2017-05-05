@@ -32,4 +32,7 @@ public interface FDMSApi {
 
     @GET("/api/v1/device_status")
     Observable<Respone<List<Status>>> getListStatus();
+
+    @GET("/api/v1/device_code")
+    Observable<Respone<Device>> getDeviceByQrCode();
 }

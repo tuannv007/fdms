@@ -24,5 +24,7 @@ public class DeviceDataSource {
         Observable<List<Status>> getListStatus();
 
         Observable<Device> registerdevice(RegisterDeviceRequest registerdevice);
+
+        Observable<Device> getDeviceByQrCode(String qrCode);
     }
 }
