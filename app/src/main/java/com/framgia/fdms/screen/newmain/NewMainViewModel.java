@@ -3,6 +3,7 @@ package com.framgia.fdms.screen.newmain;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.support.annotation.IntDef;
+import android.support.v4.view.ViewPager;
 import com.framgia.fdms.BR;
 
 import static com.framgia.fdms.screen.newmain.NewMainViewModel.Tab.TAB_DASH_BOARD;
@@ -48,6 +49,11 @@ public class NewMainViewModel extends BaseObservable implements NewMainContract.
     public void setTab(int tab) {
         mTab = tab;
         notifyPropertyChanged(BR.tab);
+    }
+
+    public void onDirectChildTab(@Tab int tab, ViewPager viewPager) {
+        if (mPagerAdapter == null) return;
+        viewPager.setCurrentItem(tab);
     }
 
     @IntDef({
