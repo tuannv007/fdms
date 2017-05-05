@@ -18,10 +18,7 @@
             android:name=".screen.login.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+
         </activity>
         <activity
             android:name=".screen.main.MainActivity"
@@ -32,6 +29,10 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".screen.login.LoginActivity"/>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity
             android:name=".screen.detail.DetailActivity"
@@ -67,4 +68,5 @@
             android:name=".screen.devicecreation.CreateDeviceActivity"
             android:screenOrientation="portrait"/>
     </application>
+
 </manifest>

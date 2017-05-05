@@ -73,4 +73,6 @@
     <string name="title_device_status">Status of device</string>
     <string name="action_cancel">Cancel</string>
     <string name="title_create_device">Create device</string>
+    <string name="title_failure_scanner">No QrCode found, please try again!!!</string>
+    <string name="title_scanning">Scanning</string>
 </resources>

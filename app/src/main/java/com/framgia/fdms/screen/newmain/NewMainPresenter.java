@@ -1,5 +1,7 @@
 package com.framgia.fdms.screen.newmain;
 
+import com.framgia.fdms.data.model.Device;
+
 /**
  * Listens to user actions from the UI ({@link NewMainActivity}), retrieves the data and updates
  * the UI as required.
@@ -18,5 +20,11 @@ final class NewMainPresenter implements NewMainContract.Presenter {
 
     @Override
     public void onStop() {
+    }
+
+    @Override
+    public Device getDevice(String resultQrCode) {
+        //todo get device from result of Qr Code 
+        return null;
     }
 }
