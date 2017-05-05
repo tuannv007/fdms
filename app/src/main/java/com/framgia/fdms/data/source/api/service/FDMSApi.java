@@ -1,7 +1,9 @@
 package com.framgia.fdms.data.source.api.service;
 
+import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.data.model.Respone;
+import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.data.model.User;
 import java.util.List;
 import java.util.Map;
@@ -24,4 +26,10 @@ public interface FDMSApi {
 
     @GET("/api/v1/devices")
     Observable<Respone<List<Device>>> getListDevices(@QueryMap Map<String, String> parrams);
+
+    @GET("/api/v1/device_categories")
+    Observable<Respone<List<Category>>> getListCategory();
+
+    @GET("/api/v1/device_status")
+    Observable<Respone<List<Status>>> getListStatus();
 }

@@ -22,7 +22,8 @@ import java.util.List;
  * Exposes the data to be used in the Createdevice screen.
  */
 
-public class CreateDeviceViewModel extends BaseObservable implements CreateDeviceContract.ViewModel {
+public class CreateDeviceViewModel extends BaseObservable
+        implements CreateDeviceContract.ViewModel {
 
     private Context mContext;
     private AppCompatActivity mActivity;
@@ -32,10 +33,8 @@ public class CreateDeviceViewModel extends BaseObservable implements CreateDevic
     private String mSerialNumberError;
     private String mModelNumberError;
     private RegisterDeviceRequest mRequest;
-    private ArrayAdapter<String> mAdapterCategory;
-    private ArrayAdapter<String> mAdapterStatus;
-    private List<Category> mCategories = new ArrayList<>();
-    private List<Status> mStatuses = new ArrayList<>();
+    private ArrayAdapter<Category> mAdapterCategory;
+    private ArrayAdapter<Status> mAdapterStatus;
     private Category mCategory;
     private Status mStatus;
 
@@ -44,47 +43,50 @@ public class CreateDeviceViewModel extends BaseObservable implements CreateDevic
         mActivity = activity;
         mRequest = new RegisterDeviceRequest();
 
-        mAdapterCategory = new ArrayAdapter<String>(mContext,
-                android.R.layout.select_dialog_item);
-        mAdapterStatus = new ArrayAdapter<String>(mContext,
-                android.R.layout.select_dialog_item);
+        mAdapterCategory = new ArrayAdapter<Category>(mContext, R.layout.select_dialog_item);
+        mAdapterStatus = new ArrayAdapter<Status>(mContext, R.layout.select_dialog_item);
     }
 
+    @Override
     public void onCreateDeviceClick() {
         mPresenter.registerDevice(mRequest);
     }
 
-    public void onChooseCategory(){
-        if (mAdapterCategory == null){
+    public void onChooseCategory() {
+        if (mAdapterCategory == null) {
             return;
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+
+        builder.setTitle(R.string.title_category);
 
         builder.setNegativeButton(R.string.action_cancel, null);
 
         builder.setAdapter(mAdapterCategory, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                setCategory(mCategories.get(which));
+                setCategory(mAdapterCategory.getItem(which));
             }
         });
         builder.show();
     }
 
-    public void onChooseStatus(){
-        if (mAdapterStatus == null){
+    public void onChooseStatus() {
+        if (mAdapterStatus == null) {
             return;
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+
+        builder.setTitle(R.string.title_status_device);
 
         builder.setNegativeButton(R.string.action_cancel, null);
 
         builder.setAdapter(mAdapterStatus, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                setStatus(mStatuses.get(which));
+                setStatus(mAdapterStatus.getItem(which));
             }
         });
         builder.show();
@@ -114,30 +116,17 @@ public class CreateDeviceViewModel extends BaseObservable implements CreateDevic
         if (list == null) {
             return;
         }
-
-        mCategories.addAll(list);
         mAdapterCategory.clear();
-        for (Category category : mCategories){
-            mAdapterCategory.addAll(category.getName());
-        }
+        mAdapterCategory.addAll(list);
         mAdapterCategory.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onDeviceStatusLoaded(List<Status> statuses) {
-        updateStatus(statuses);
     }
 
     public void updateStatus(List<Status> list) {
         if (list == null) {
             return;
         }
-
-        mStatuses.addAll(list);
         mAdapterStatus.clear();
-        for (Status status : mStatuses){
-            mAdapterStatus.addAll(status.getName());
-        }
+        mAdapterStatus.addAll(list);
         mAdapterStatus.notifyDataSetChanged();
     }
 
@@ -193,6 +182,16 @@ public class CreateDeviceViewModel extends BaseObservable implements CreateDevic
     @Override
     public void onInputStatusError() {
         // TODO: later
+    }
+
+    @Override
+    public void onAddImageClick() {
+
+    }
+
+    @Override
+    public void onDeviceStatusLoaded(List<Status> statuses) {
+        updateStatus(statuses);
     }
 
     @Bindable
