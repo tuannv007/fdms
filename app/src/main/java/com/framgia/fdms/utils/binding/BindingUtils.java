@@ -64,7 +64,7 @@ public final class BindingUtils {
     }
 
     @BindingAdapter({ "bind:adapter", "model" })
-    public static void setupViewPager(ViewPager viewPager, FragmentPagerAdapter adapter,
+    public static void setupViewPager(final ViewPager viewPager, FragmentPagerAdapter adapter,
             final NewMainViewModel viewModel) {
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
