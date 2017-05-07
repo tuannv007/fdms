@@ -3,8 +3,15 @@ package com.framgia.fdms.screen.devicecreation;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
@@ -17,6 +24,10 @@ import com.framgia.fdms.data.source.api.request.RegisterDeviceRequest;
 import com.framgia.fdms.screen.main.MainActivity;
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.app.Activity.RESULT_OK;
+import static com.framgia.fdms.utils.Constant.PICK_IMAGE_REQUEST;
 
 /**
  * Exposes the data to be used in the Createdevice screen.
@@ -186,7 +197,39 @@ public class CreateDeviceViewModel extends BaseObservable
 
     @Override
     public void onAddImageClick() {
+        pickImage();
+    }
 
+    public void pickImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        mActivity.startActivityForResult(Intent.createChooser(intent,
+                mContext.getString(R.string.title_select_file_upload)),
+                PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PICK_IMAGE_REQUEST
+                && resultCode == RESULT_OK
+                && data != null
+                && data.getData() != null) {
+            Uri uri = data.getData();
+            setImageUrl(getRealPathFromURI(uri));
+        }
+    }
+
+    public String getRealPathFromURI(Uri contentUri) {
+        String path = null;
+        String[] proj = { MediaStore.MediaColumns.DATA };
+        Cursor cursor = mContext.getContentResolver().query(contentUri, proj, null, null, null);
+        if (cursor.moveToFirst()) {
+            int colum_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
+            path = cursor.getString(colum_index);
+        }
+        cursor.close();
+        return path;
     }
 
     @Override
@@ -274,5 +317,15 @@ public class CreateDeviceViewModel extends BaseObservable
 
     public AppCompatActivity getActivity() {
         return mActivity;
+    }
+
+    @Bindable
+    public String getImageUrl() {
+        return mRequest != null ? mRequest.getFilePath() : null;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        mRequest.setFilePath(imageUrl);
+        notifyPropertyChanged(BR.imageUrl);
     }
 }

@@ -1,5 +1,6 @@
 package com.framgia.fdms.screen.devicecreation;
 
+import android.content.Intent;
 import com.framgia.fdms.BasePresenter;
 import com.framgia.fdms.BaseViewModel;
 import com.framgia.fdms.data.model.Category;
@@ -42,6 +43,8 @@ interface CreateDeviceContract {
         void onAddImageClick();
 
         void onCreateDeviceClick();
+
+        void onActivityResult(int requestCode, int resultCode, Intent data);
     }
 
     /**

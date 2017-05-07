@@ -1,5 +1,6 @@
 package com.framgia.fdms.data.source.remote;
 
+import android.net.Uri;
 import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.data.model.Respone;
@@ -8,16 +9,27 @@ import com.framgia.fdms.data.source.DeviceDataSource;
 import com.framgia.fdms.data.source.api.request.RegisterDeviceRequest;
 import com.framgia.fdms.data.source.api.service.FDMSApi;
 import com.framgia.fdms.utils.Utils;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import rx.Observable;
 import rx.functions.Func1;
 
 import static com.framgia.fdms.utils.Constant.ApiParram.CATEGORY_ID;
+import static com.framgia.fdms.utils.Constant.ApiParram.DEVICE_CATEGORY_ID;
+import static com.framgia.fdms.utils.Constant.ApiParram.DEVICE_CODE;
+import static com.framgia.fdms.utils.Constant.ApiParram.DEVICE_STATUS_ID;
+import static com.framgia.fdms.utils.Constant.ApiParram.MODEL_NUMBER;
 import static com.framgia.fdms.utils.Constant.ApiParram.PAGE;
 import static com.framgia.fdms.utils.Constant.ApiParram.PER_PAGE;
+import static com.framgia.fdms.utils.Constant.ApiParram.PICTURE;
+import static com.framgia.fdms.utils.Constant.ApiParram.PRODUCTION_NAME;
+import static com.framgia.fdms.utils.Constant.ApiParram.SERIAL_NUMBER;
 import static com.framgia.fdms.utils.Constant.ApiParram.STATUS_ID;
 import static com.framgia.fdms.utils.Constant.OUT_OF_INDEX;
 
@@ -65,8 +77,44 @@ public class DeviceRemoteDataSource implements DeviceDataSource.RemoteDataSource
 
     @Override
     public Observable<Device> registerdevice(RegisterDeviceRequest registerdevice) {
-        // TODO: 4/4/17 replace by call API later
-        return null;
+        Map<String, RequestBody> parrams = new HashMap<>();
+
+        RequestBody productionName = createPartFromString(registerdevice.getProductionName());
+        RequestBody deviceStatusId =
+                createPartFromString(String.valueOf(registerdevice.getDeviceStatusId()));
+        RequestBody deviceCategoryId =
+                createPartFromString(String.valueOf(registerdevice.getDeviceStatusId()));
+        RequestBody serialNumber = createPartFromString(registerdevice.getSerialNumber());
+        RequestBody modellNumber = createPartFromString(registerdevice.getModellNumber());
+        RequestBody deviceCode = createPartFromString(registerdevice.getDeviceCode());
+
+        parrams.put(PRODUCTION_NAME, productionName);
+        parrams.put(DEVICE_STATUS_ID, deviceStatusId);
+        parrams.put(DEVICE_CATEGORY_ID, deviceCategoryId);
+        parrams.put(SERIAL_NUMBER, serialNumber);
+        parrams.put(MODEL_NUMBER, modellNumber);
+        parrams.put(DEVICE_CODE, deviceCode);
+
+        MultipartBody.Part filePart = null;
+
+        if (registerdevice.getFilePath() != null) {
+            File file = new File(registerdevice.getFilePath());
+
+            if (file.exists()) {
+                RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
+
+                filePart =
+                        MultipartBody.Part.createFormData(PICTURE, file.getName(), requestBody);
+            }
+        }
+
+        return mFDMSApi.uploadDevice(parrams, filePart)
+                .flatMap(new Func1<Respone<Device>, Observable<Device>>() {
+                    @Override
+                    public Observable<Device> call(Respone<Device> deviceRespone) {
+                        return Utils.getResponse(deviceRespone);
+                    }
+                });
     }
 
     @Override
@@ -97,5 +145,10 @@ public class DeviceRemoteDataSource implements DeviceDataSource.RemoteDataSource
             parrams.put(PER_PAGE, String.valueOf(perPage));
         }
         return parrams;
+    }
+
+    private RequestBody createPartFromString(String partString) {
+        return RequestBody.create(
+                okhttp3.MultipartBody.FORM, partString);
     }
 }

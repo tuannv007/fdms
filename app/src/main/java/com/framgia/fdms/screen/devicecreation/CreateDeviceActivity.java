@@ -1,8 +1,14 @@
 package com.framgia.fdms.screen.devicecreation;
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.source.CategoryRepository;
 import com.framgia.fdms.data.source.DeviceRepository;
@@ -52,5 +58,10 @@ public class CreateDeviceActivity extends AppCompatActivity {
     protected void onStop() {
         mViewModel.onStop();
         super.onStop();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mViewModel.onActivityResult(requestCode, resultCode, data);
     }
 }

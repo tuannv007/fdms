@@ -9,6 +9,7 @@ public class Constant {
     public static final int OUT_OF_INDEX = -1;
     public static final int PER_PAGE = 20;
     public static final int FIRST_PAGE = 1;
+    public static final int PICK_IMAGE_REQUEST = 2;
 
     private Constant() {
         // No-op
@@ -19,5 +20,12 @@ public class Constant {
         public static final String STATUS_ID = "status_id";
         public static final String PAGE = "page";
         public static final String PER_PAGE = "per_page";
+        public static final String PRODUCTION_NAME = "production_name";
+        public static final String DEVICE_STATUS_ID = "device_status_id";
+        public static final String DEVICE_CATEGORY_ID = "device_category_id";
+        public static final String SERIAL_NUMBER = "serial_number";
+        public static final String MODEL_NUMBER = "model_number";
+        public static final String DEVICE_CODE = "device_code";
+        public static final String PICTURE = "picture";
     }
 }
