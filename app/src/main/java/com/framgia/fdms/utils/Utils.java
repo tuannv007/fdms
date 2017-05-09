@@ -1,8 +1,6 @@
 package com.framgia.fdms.utils;
 
-import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Respone;
-import java.util.List;
 import rx.Observable;
 
 /**
@@ -10,12 +8,11 @@ import rx.Observable;
  */
 
 public class Utils {
-    public static <T> Observable<T> getResponse(Respone<T> listRespone){
-        if (listRespone == null){
+    public static <T> Observable<T> getResponse(Respone<T> listRespone) {
+        if (listRespone == null) {
             return Observable.error(new NullPointerException());
         } else if (listRespone.isError()) {
-            return Observable.error(
-                    new NullPointerException("ERROR" + listRespone.getStatus()));
+            return Observable.error(new NullPointerException("ERROR" + listRespone.getStatus()));
         } else {
             return Observable.just(listRespone.getData());
         }
