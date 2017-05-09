@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import com.framgia.fdms.BR;
 import com.framgia.fdms.R;
+import com.framgia.fdms.data.model.Device;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -85,6 +86,17 @@ public class NewMainViewModel extends BaseObservable implements NewMainContract.
         } else {
             getResult(contentResult);
         }
+    }
+
+    @Override
+    public void onGetDecodeSuccess(Device device) {
+        // todo direct to detail device screen
+    }
+
+    @Override
+    public void onGetDeviceError(String error) {
+        Snackbar.make(mActivity.findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG)
+                .show();
     }
 
     private void onFailScanner() {

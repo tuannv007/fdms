@@ -35,4 +35,8 @@ public class DeviceRepository {
     public Observable<Device> registerdevice(RegisterDeviceRequest registerdevice) {
         return mDeviceRemoteDataSource.registerdevice(registerdevice);
     }
+
+    public Observable<Device> getDeviceByQrCode(String qrCode) {
+        return mDeviceRemoteDataSource.getDeviceByQrCode(qrCode);
+    }
 }
