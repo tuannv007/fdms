@@ -21,6 +21,10 @@ public abstract class BaseRecyclerViewAdapter<V extends RecyclerView.ViewHolder>
         return mContext;
     }
 
+    public void onUpdatePage() {
+
+    }
+
     /**
      * OnRecyclerViewItemClickListener
      *
