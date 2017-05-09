@@ -12,6 +12,7 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -25,8 +26,9 @@ public interface FDMSApi {
     Observable<List<Device>> getListDevice(@Query("per_page") int limit,
             @Query("q") String searchTerm);
 
-    @GET("/api/v1/user")
-    Call<User> login(@QueryMap Map<String, String> params);
+    @GET("/api/v1/sessions")
+    Observable<Respone<User>> login(@Query("user[email]") String userName,
+            @Query("user[password]") String passWord);
 
     @GET("/api/v1/search/devices")
     Observable<List<Device>> searchDevices(@Query("keyWord") String type);
@@ -39,7 +41,6 @@ public interface FDMSApi {
 
     @GET("/api/v1/device_status")
     Observable<Respone<List<Status>>> getListStatus();
-
 
     @GET("/api/v1/device_code")
     Observable<Respone<Device>> getDeviceByQrCode(@Query("printed_code") String qrCode);

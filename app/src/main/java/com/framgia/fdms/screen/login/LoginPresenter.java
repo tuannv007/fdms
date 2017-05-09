@@ -1,15 +1,20 @@
 package com.framgia.fdms.screen.login;
 
+import android.content.SharedPreferences;
 import android.databinding.BaseObservable;
 import android.text.TextUtils;
 import com.framgia.fdms.data.model.User;
 import com.framgia.fdms.data.source.UserRepository;
+import com.framgia.fdms.data.source.local.sharepref.SharePreferenceApi;
+import com.google.gson.Gson;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
+
+import static com.framgia.fdms.data.source.local.sharepref.SharePreferenceKey.USER_PREFS;
 
 /**
  * Listens to user actions from the UI ({@link LoginActivity}), retrieves the data and updates
@@ -20,14 +25,20 @@ final class LoginPresenter extends BaseObservable implements LoginContract.Prese
     private LoginContract.ViewModel mView;
     private UserRepository mUserRepository;
     private CompositeSubscription mCompositeSubscriptions = new CompositeSubscription();
+    private SharePreferenceApi mSharedPreferences;
 
-    public LoginPresenter(LoginContract.ViewModel view, UserRepository userRepository) {
+    public LoginPresenter(LoginContract.ViewModel view, UserRepository userRepository,
+            SharePreferenceApi sharedPreferences) {
         this.mView = view;
         mUserRepository = userRepository;
+        mSharedPreferences = sharedPreferences;
     }
 
     @Override
     public void onStart() {
+        if (mSharedPreferences.get(USER_PREFS, String.class) != null) {
+            mView.onLoginSuccess();
+        }
     }
 
     @Override
@@ -49,6 +60,7 @@ final class LoginPresenter extends BaseObservable implements LoginContract.Prese
                 .subscribe(new Action1<User>() {
                     @Override
                     public void call(User user) {
+                        saveUser(user);
                         mView.onLoginSuccess();
                     }
                 }, new Action1<Throwable>() {
@@ -77,5 +89,11 @@ final class LoginPresenter extends BaseObservable implements LoginContract.Prese
             mView.onInputPasswordError();
         }
         return isValid;
+    }
+
+    private void saveUser(User user) {
+        Gson gson = new Gson();
+        String json = gson.toJson(user);
+        mSharedPreferences.put(USER_PREFS, json);
     }
 }
