@@ -91,6 +91,8 @@ public class NewMainViewModel extends BaseObservable implements NewMainContract.
     @Override
     public void onGetDecodeSuccess(Device device) {
         // todo direct to detail device screen
+        Snackbar.make(mActivity.findViewById(android.R.id.content), device.getDeviceCategoryName(), Snackbar.LENGTH_LONG)
+                .show();
     }
 
     @Override

@@ -71,8 +71,13 @@ public class DeviceRemoteDataSource implements DeviceDataSource.RemoteDataSource
 
     @Override
     public Observable<Device> getDeviceByQrCode(String qrCode) {
-        // todo connect server to get device by qr code
-        return Observable.just(new Device());
+        return mFDMSApi.getDeviceByQrCode(qrCode)
+                .flatMap(new Func1<Respone<Device>, Observable<Device>>() {
+                    @Override
+                    public Observable<Device> call(Respone<Device> deviceRespone) {
+                        return Utils.getResponse(deviceRespone);
+                    }
+                });
     }
 
     public Map<String, String> getDeviceParams(int categoryId, int statusId, int page,

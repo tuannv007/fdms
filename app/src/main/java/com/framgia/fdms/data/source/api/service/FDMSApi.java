@@ -34,5 +34,5 @@ public interface FDMSApi {
     Observable<Respone<List<Status>>> getListStatus();
 
     @GET("/api/v1/device_code")
-    Observable<Respone<Device>> getDeviceByQrCode();
+    Observable<Respone<Device>> getDeviceByQrCode(@Query("printed_code") String qrCode);
 }
