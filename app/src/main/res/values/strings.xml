@@ -75,4 +75,6 @@
     <string name="title_create_device">Create device</string>
     <string name="title_failure_scanner">No QrCode found, please try again!!!</string>
     <string name="title_scanning">Scanning</string>
+    <string name="msg_permission_denied">Permission Denied</string>
+    <string name="title_select_file_upload">Select a File to Upload</string>
 </resources>

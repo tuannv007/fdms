@@ -43,6 +43,7 @@
                     android:layout_height="match_parent"
                     android:scaleType="centerInside"
                     android:src="@drawable/img_camera"
+                    bind:imageUrl="@{viewModel.imageUrl}"
                     />
 
                 <android.support.v7.widget.Toolbar

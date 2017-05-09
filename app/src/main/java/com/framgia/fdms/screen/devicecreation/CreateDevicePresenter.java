@@ -9,6 +9,7 @@ import com.framgia.fdms.data.source.DeviceRepository;
 import com.framgia.fdms.data.source.StatusRepository;
 import com.framgia.fdms.data.source.api.request.RegisterDeviceRequest;
 import java.util.List;
+import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
@@ -56,12 +57,12 @@ final class CreateDevicePresenter implements CreateDeviceContract.Presenter {
         if (!validateDataInput(registerDeviceRequest)) {
             return;
         }
-        Subscription subscription = mDeviceRepository.registerdevice(mRequest)
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(Schedulers.io())
+        Subscription subscription = mDeviceRepository.registerdevice(registerDeviceRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Device>() {
                     @Override
-                    public void call(Device deviceRequest) {
+                    public void call(Device device) {
                         mViewModel.onRegisterSuccess();
                     }
                 }, new Action1<Throwable>() {

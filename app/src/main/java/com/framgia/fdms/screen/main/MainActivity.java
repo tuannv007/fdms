@@ -23,7 +23,8 @@ public class MainActivity extends AppCompatActivity {
     private MainContract.ViewModel mViewModel;
 
     public static Intent getInstance(Context context) {
-        return new Intent(context, MainActivity.class);
+        return new Intent(context, MainActivity.class)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     }
 
     @Override
