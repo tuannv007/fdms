@@ -2,6 +2,7 @@ package com.framgia.fdms.data.source.remote;
 
 import android.net.Uri;
 import com.framgia.fdms.data.model.Category;
+import com.framgia.fdms.data.model.Dashboard;
 import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.Status;
@@ -103,8 +104,7 @@ public class DeviceRemoteDataSource implements DeviceDataSource.RemoteDataSource
             if (file.exists()) {
                 RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
 
-                filePart =
-                        MultipartBody.Part.createFormData(PICTURE, file.getName(), requestBody);
+                filePart = MultipartBody.Part.createFormData(PICTURE, file.getName(), requestBody);
             }
         }
 
@@ -128,6 +128,11 @@ public class DeviceRemoteDataSource implements DeviceDataSource.RemoteDataSource
                 });
     }
 
+    @Override
+    public Observable<Respone<List<Dashboard>>> getDeviceDashboard() {
+        return mFDMSApi.getDeviceDashboard();
+    }
+
     public Map<String, String> getDeviceParams(int categoryId, int statusId, int page,
             int perPage) {
         Map<String, String> parrams = new HashMap<>();
@@ -148,7 +153,6 @@ public class DeviceRemoteDataSource implements DeviceDataSource.RemoteDataSource
     }
 
     private RequestBody createPartFromString(String partString) {
-        return RequestBody.create(
-                okhttp3.MultipartBody.FORM, partString);
+        return RequestBody.create(okhttp3.MultipartBody.FORM, partString);
     }
 }

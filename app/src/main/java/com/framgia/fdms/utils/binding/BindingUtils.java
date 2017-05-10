@@ -1,6 +1,7 @@
 package com.framgia.fdms.utils.binding;
 
 import android.databinding.BindingAdapter;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.support.design.widget.TextInputLayout;
@@ -16,6 +17,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.framgia.fdms.R;
 import com.framgia.fdms.screen.newmain.NewMainViewModel;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.PieData;
 
 import static com.framgia.fdms.screen.newmain.NewMainViewModel.Tab.TAB_DASH_BOARD;
 import static com.framgia.fdms.screen.newmain.NewMainViewModel.Tab.TAB_DEVICE_MANAGER;
@@ -123,6 +127,13 @@ public final class BindingUtils {
     public static void setupViewPager(Toolbar view, AppCompatActivity activity) {
         activity.setSupportActionBar(view);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @BindingAdapter({ "setData" })
+    public static void setData(PieChart view, PieData pieData) {
+        if (pieData.getDataSetCount() > 0) {
+            view.setData(pieData);
+        }
     }
 }
 

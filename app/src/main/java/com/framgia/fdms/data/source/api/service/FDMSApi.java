@@ -1,6 +1,7 @@
 package com.framgia.fdms.data.source.api.service;
 
 import com.framgia.fdms.data.model.Category;
+import com.framgia.fdms.data.model.Dashboard;
 import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.Status;
@@ -51,4 +52,10 @@ public interface FDMSApi {
             @PartMap Map<String, RequestBody> parrams,
             @Part MultipartBody.Part picture
     );
+
+    @GET("/api/v1/request_dashboard")
+    Observable<Respone<List<Dashboard>>> getRequestDashboard();
+
+    @GET("/api/v1/device_dashboard")
+    Observable<Respone<List<Dashboard>>> getDeviceDashboard();
 }
