@@ -128,8 +128,10 @@ public class DeviceRemoteDataSource implements DeviceDataSource.RemoteDataSource
     }
 
     @Override
-    public Observable<Respone<List<Dashboard>>> getDeviceDashboard() {
-        return mFDMSApi.getDeviceDashboard();
+    public Observable<List<Dashboard>> getDashboardDevice() {
+        List<Dashboard> dashboards = new ArrayList<>();
+        dashboards.add(new Dashboard());
+        return Observable.just(dashboards);
     }
 
     public Map<String, String> getDeviceParams(int categoryId, int statusId, int page,

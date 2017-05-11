@@ -12,6 +12,7 @@ public class Constant {
     public static final int PICK_IMAGE_REQUEST = 2;
     public static final int ALL_REQUEST_STATUS_ID = -1;
     public static final int ALL_RELATIVE_ID = -1;
+    public static final String PERCENT = " %";
 
     private Constant() {
         // No-op

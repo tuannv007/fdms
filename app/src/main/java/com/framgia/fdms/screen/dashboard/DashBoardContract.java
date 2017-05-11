@@ -20,7 +20,9 @@ interface DashBoardContract {
 
         void onDashBoardError(String error);
 
-        String getTitle(int titleRs);
+        void onDashBoardLoaded(List<Dashboard> dashboards);
+
+        void getData();
     }
 
     /**
@@ -31,6 +33,6 @@ interface DashBoardContract {
 
         void getRequestDashboard();
 
-        void onDashBoardLoaded(Respone<List<Dashboard>> listRespone);
+        void getData();
     }
 }

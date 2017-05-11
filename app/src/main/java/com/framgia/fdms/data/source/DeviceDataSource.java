@@ -30,6 +30,6 @@ public class DeviceDataSource {
 
         Observable<Device> getDeviceByQrCode(String qrCode);
 
-        Observable<Respone<List<Dashboard>>> getDeviceDashboard();
+        Observable<List<Dashboard>> getDashboardDevice();
     }
 }

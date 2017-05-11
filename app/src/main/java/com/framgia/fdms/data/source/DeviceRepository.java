@@ -42,7 +42,7 @@ public class DeviceRepository {
         return mDeviceRemoteDataSource.getDeviceByQrCode(qrCode);
     }
 
-    public Observable<Respone<List<Dashboard>>> getDeviceDashboard() {
-        return mDeviceRemoteDataSource.getDeviceDashboard();
+    public Observable<List<Dashboard>> getDashboardDevice() {
+        return mDeviceRemoteDataSource.getDashboardDevice();
     };
 }

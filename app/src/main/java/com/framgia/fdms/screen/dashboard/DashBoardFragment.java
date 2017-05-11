@@ -42,8 +42,8 @@ public class DashBoardFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         int dashboradType = DEVICE_DASHBOARD;
-        if (savedInstanceState != null) {
-            dashboradType = savedInstanceState.getInt(EXTRA_DASHBORAD_TYPE);
+        if (getArguments() != null) {
+            dashboradType = getArguments().getInt(EXTRA_DASHBORAD_TYPE);
         }
 
         mViewModel = new DashBoardViewModel(getContext());
@@ -53,6 +53,7 @@ public class DashBoardFragment extends Fragment {
                         new RequestRemoteDataSource(FDMSServiceClient.getInstance())),
                 dashboradType);
         mViewModel.setPresenter(presenter);
+        mViewModel.getData();
     }
 
     @Nullable

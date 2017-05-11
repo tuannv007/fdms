@@ -3,11 +3,17 @@ package com.framgia.fdms.screen.dashboard;
 import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.graphics.Color;
 import android.widget.Toast;
 import com.framgia.fdms.BR;
+import com.framgia.fdms.R;
+import com.framgia.fdms.data.model.Dashboard;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Exposes the data to be used in the Scanner screen.
@@ -18,6 +24,7 @@ public class DashBoardViewModel extends BaseObservable implements DashBoardContr
     private DashBoardContract.Presenter mPresenter;
     private PieData mPieData;
     private Context mContext;
+    private int mTotal;
 
     public DashBoardViewModel(Context context) {
         mContext = context;
@@ -55,7 +62,7 @@ public class DashBoardViewModel extends BaseObservable implements DashBoardContr
     @Override
     public void setDataSet(PieDataSet dataSet) {
         mPieData.setDataSet(dataSet);
-        mPieData.setValueFormatter(new PercentFormatter());
+        setPieData(mPieData);
     }
 
     @Override
@@ -64,7 +71,45 @@ public class DashBoardViewModel extends BaseObservable implements DashBoardContr
     }
 
     @Override
-    public String getTitle(int titleRs) {
-        return mContext.getString(titleRs);
+    public void onDashBoardLoaded(List<Dashboard> dashboards) {
+        int total = 0;
+        List<Integer> colors = new ArrayList<Integer>();
+        List<PieEntry> values = new ArrayList<PieEntry>();
+
+        for (Dashboard dashboard : dashboards) {
+            total += dashboard.getCount();
+        }
+
+        for (int i = 0; i < dashboards.size(); i++) {
+            Dashboard dashboard = dashboards.get(i);
+            float percent = (float) dashboard.getCount() / total * 100f;
+            if (percent != 0 ) {
+                values.add(new PieEntry(percent, dashboard.getTitle(), i));
+                colors.add(Color.parseColor(dashboard.getBackgroundColor()));
+            }
+        }
+
+        PieDataSet dataSet =
+                new PieDataSet(values, mContext.getString(R.string.title_chart));
+        dataSet.setColors(colors);
+
+        setDataSet(dataSet);
+        setTotal(total);
     }
+
+    @Override
+    public void getData() {
+        mPresenter.getData();
+    }
+
+    public void setTotal(int total) {
+        mTotal = total;
+        notifyPropertyChanged(BR.total);
+    }
+
+    @Bindable
+    public int getTotal() {
+        return mTotal;
+    }
+
 }

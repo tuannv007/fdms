@@ -42,11 +42,6 @@ final class DashBoardPresenter implements DashBoardContract.Presenter {
 
     @Override
     public void onStart() {
-        if (mDashboardType == DEVICE_DASHBOARD) {
-            getDeviceDashboard();
-        } else if (mDashboardType == REQUEST_DASHBOARD) {
-            getRequestDashboard();
-        }
     }
 
     @Override
@@ -56,13 +51,13 @@ final class DashBoardPresenter implements DashBoardContract.Presenter {
 
     @Override
     public void getDeviceDashboard() {
-        Subscription subscription = mDeviceRepository.getDeviceDashboard()
+        Subscription subscription = mDeviceRepository.getDashboardDevice()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Respone<List<Dashboard>>>() {
+                .subscribe(new Action1<List<Dashboard>>() {
                     @Override
-                    public void call(Respone<List<Dashboard>> listRespone) {
-                        onDashBoardLoaded(listRespone);
+                    public void call(List<Dashboard> dashboards) {
+                        mViewModel.onDashBoardLoaded(dashboards);
                     }
                 }, new Action1<Throwable>() {
                     @Override
@@ -78,10 +73,10 @@ final class DashBoardPresenter implements DashBoardContract.Presenter {
         Subscription subscription = mRequestRepository.getDashboardRequest()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Respone<List<Dashboard>>>() {
+                .subscribe(new Action1<List<Dashboard>>() {
                     @Override
-                    public void call(Respone<List<Dashboard>> listRespone) {
-                        onDashBoardLoaded(listRespone);
+                    public void call(List<Dashboard> dashboards) {
+                        mViewModel.onDashBoardLoaded(dashboards);
                     }
                 }, new Action1<Throwable>() {
                     @Override
@@ -93,22 +88,11 @@ final class DashBoardPresenter implements DashBoardContract.Presenter {
     }
 
     @Override
-    public void onDashBoardLoaded(Respone<List<Dashboard>> listRespone) {
-        int totalRequest = listRespone.getTotalRequest();
-        List<Dashboard> dashboards = listRespone.getData();
-        List<Integer> colors = new ArrayList<Integer>();
-        List<PieEntry> values = new ArrayList<PieEntry>();
-
-        for (int i = 0; i < dashboards.size(); i++) {
-            Dashboard dashboard = dashboards.get(i);
-            float percent = (float) dashboard.getCount() / totalRequest * 100f;
-            values.add(new PieEntry(percent, dashboard.getTitle(), i));
-            colors.add(Color.parseColor(dashboard.getBackgroundColor()));
+    public void getData() {
+        if (mDashboardType == DEVICE_DASHBOARD) {
+            getDeviceDashboard();
+        } else if (mDashboardType == REQUEST_DASHBOARD) {
+            getRequestDashboard();
         }
-
-        PieDataSet dataSet =
-                new PieDataSet(values, mViewModel.getTitle(R.string.title_chart));
-        dataSet.setColors(colors);
-        mViewModel.setDataSet(dataSet);
     }
 }
