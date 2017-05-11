@@ -1,7 +1,9 @@
 package com.framgia.fdms.data.source;
 
 import com.framgia.fdms.data.model.Category;
+import com.framgia.fdms.data.model.Dashboard;
 import com.framgia.fdms.data.model.Device;
+import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.data.source.api.request.RegisterDeviceRequest;
 import com.framgia.fdms.data.source.remote.DeviceRemoteDataSource;
@@ -39,4 +41,8 @@ public class DeviceRepository {
     public Observable<Device> getDeviceByQrCode(String qrCode) {
         return mDeviceRemoteDataSource.getDeviceByQrCode(qrCode);
     }
+
+    public Observable<Respone<List<Dashboard>>> getDeviceDashboard() {
+        return mDeviceRemoteDataSource.getDeviceDashboard();
+    };
 }

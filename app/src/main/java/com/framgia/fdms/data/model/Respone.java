@@ -24,6 +24,8 @@ public class Respone<T> {
     @Expose
     @SerializedName("token")
     private String mToken;
+    @SerializedName("total_request")
+    private int mTotalRequest;
 
     public int getStatus() {
         return mStatus;
@@ -63,5 +65,13 @@ public class Respone<T> {
 
     public void setToken(String token) {
         mToken = token;
+    }
+
+    public int getTotalRequest() {
+        return mTotalRequest;
+    }
+
+    public void setTotalRequest(int totalRequest) {
+        mTotalRequest = totalRequest;
     }
 }

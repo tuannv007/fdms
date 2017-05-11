@@ -24,7 +24,6 @@ public class DashBoardFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewModel = new DashBoardViewModel();
         DashBoardContract.Presenter presenter = new DashBoardPresenter(mViewModel);
         mViewModel.setPresenter(presenter);
     }
