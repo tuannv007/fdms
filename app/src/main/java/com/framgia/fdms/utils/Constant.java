@@ -10,8 +10,6 @@ public class Constant {
     public static final int PER_PAGE = 20;
     public static final int FIRST_PAGE = 1;
     public static final int PICK_IMAGE_REQUEST = 2;
-    public static final int DEVICE_DASHBOARD = 3;
-    public static final String FLAG_DASHBOARD = "flag_dashboard";
 
     private Constant() {
         // No-op

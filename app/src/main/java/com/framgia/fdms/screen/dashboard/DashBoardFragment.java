@@ -8,14 +8,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.framgia.fdms.R;
+import com.framgia.fdms.data.source.DeviceRepository;
+import com.framgia.fdms.data.source.RequestRepository;
+import com.framgia.fdms.data.source.api.service.FDMSServiceClient;
+import com.framgia.fdms.data.source.remote.DeviceRemoteDataSource;
+import com.framgia.fdms.data.source.remote.RequestRemoteDataSource;
 import com.framgia.fdms.databinding.FragmentDashBoardBinding;
 
 /**
  * Scanner Screen.
  */
 public class DashBoardFragment extends Fragment {
+    public static final String EXTRA_DASHBORAD_TYPE = "EXTRA_DASHBORAD_TYPE";
+    public static final int DEVICE_DASHBOARD = 0;
+    public static final int REQUEST_DASHBOARD = 1;
 
     private DashBoardContract.ViewModel mViewModel;
+
+    public static DashBoardFragment newInstance(int dashboradType) {
+        DashBoardFragment boardFragment = new DashBoardFragment();
+        Bundle args = new Bundle();
+        args.putInt(EXTRA_DASHBORAD_TYPE, dashboradType);
+        boardFragment.setArguments(args);
+        return boardFragment;
+    }
 
     public static DashBoardFragment newInstance() {
         return new DashBoardFragment();
@@ -24,7 +40,17 @@ public class DashBoardFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DashBoardContract.Presenter presenter = new DashBoardPresenter(mViewModel);
+
+        int dashboradType = DEVICE_DASHBOARD;
+        if (savedInstanceState != null) {
+            dashboradType = savedInstanceState.getInt(EXTRA_DASHBORAD_TYPE);
+        }
+
+        mViewModel = new DashBoardViewModel(getContext());
+        DashBoardContract.Presenter presenter = new DashBoardPresenter(mViewModel,
+                new DeviceRepository(new DeviceRemoteDataSource(FDMSServiceClient.getInstance())),
+                new RequestRepository(new RequestRemoteDataSource(FDMSServiceClient.getInstance())),
+                dashboradType);
         mViewModel.setPresenter(presenter);
     }
 
