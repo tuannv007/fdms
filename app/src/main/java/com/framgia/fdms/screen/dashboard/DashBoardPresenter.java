@@ -1,23 +1,114 @@
 package com.framgia.fdms.screen.dashboard;
 
+import android.graphics.Color;
+import com.framgia.fdms.R;
+import com.framgia.fdms.data.model.Dashboard;
+import com.framgia.fdms.data.model.Respone;
+import com.framgia.fdms.data.source.DeviceRepository;
+import com.framgia.fdms.data.source.RequestRepository;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import java.util.ArrayList;
+import java.util.List;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
+
+import static com.framgia.fdms.screen.dashboard.DashBoardFragment.DEVICE_DASHBOARD;
+import static com.framgia.fdms.screen.dashboard.DashBoardFragment.REQUEST_DASHBOARD;
+
 /**
  * Listens to user actions from the UI ({@link DashBoardFragment}), retrieves the data and updates
  * the UI as required.
  */
 final class DashBoardPresenter implements DashBoardContract.Presenter {
-    private static final String TAG = DashBoardPresenter.class.getName();
+    private CompositeSubscription mCompositeSubscriptions = new CompositeSubscription();
 
     private final DashBoardContract.ViewModel mViewModel;
+    private DeviceRepository mDeviceRepository;
+    private RequestRepository mRequestRepository;
+    private int mDashboardType;
 
-    public DashBoardPresenter(DashBoardContract.ViewModel viewModel) {
+    public DashBoardPresenter(DashBoardContract.ViewModel viewModel,
+            DeviceRepository deviceRepository, RequestRepository requestRepository,
+            int dashboardType) {
         mViewModel = viewModel;
+        mDeviceRepository = deviceRepository;
+        mRequestRepository = requestRepository;
+        mDashboardType = dashboardType;
     }
 
     @Override
     public void onStart() {
+        if (mDashboardType == DEVICE_DASHBOARD) {
+            getDeviceDashboard();
+        } else if (mDashboardType == REQUEST_DASHBOARD) {
+            getRequestDashboard();
+        }
     }
 
     @Override
     public void onStop() {
+        mCompositeSubscriptions.clear();
+    }
+
+    @Override
+    public void getDeviceDashboard() {
+        Subscription subscription = mDeviceRepository.getDeviceDashboard()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Respone<List<Dashboard>>>() {
+                    @Override
+                    public void call(Respone<List<Dashboard>> listRespone) {
+                        onDashBoardLoaded(listRespone);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        mViewModel.onDashBoardError(throwable.getMessage());
+                    }
+                });
+        mCompositeSubscriptions.add(subscription);
+    }
+
+    @Override
+    public void getRequestDashboard() {
+        Subscription subscription = mRequestRepository.getRequestDashboard()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Respone<List<Dashboard>>>() {
+                    @Override
+                    public void call(Respone<List<Dashboard>> listRespone) {
+                        onDashBoardLoaded(listRespone);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        mViewModel.onDashBoardError(throwable.getMessage());
+                    }
+                });
+        mCompositeSubscriptions.add(subscription);
+    }
+
+    @Override
+    public void onDashBoardLoaded(Respone<List<Dashboard>> listRespone) {
+        int totalRequest = listRespone.getTotalRequest();
+        List<Dashboard> dashboards = listRespone.getData();
+        List<Integer> colors = new ArrayList<Integer>();
+        List<PieEntry> values = new ArrayList<PieEntry>();
+
+        for (int i = 0; i < dashboards.size(); i++) {
+            Dashboard dashboard = dashboards.get(i);
+            float percent = (float) dashboard.getCount() / totalRequest * 100f;
+            values.add(new PieEntry(percent, dashboard.getTitle(), i));
+            colors.add(Color.parseColor(dashboard.getBackgroundColor()));
+        }
+
+        PieDataSet dataSet =
+                new PieDataSet(values, mViewModel.getTitle(R.string.title_chart));
+        dataSet.setColors(colors);
+        mViewModel.setDataSet(dataSet);
     }
 }
