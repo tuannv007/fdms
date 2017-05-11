@@ -3,11 +3,14 @@ package com.framgia.fdms.screen.login;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.source.UserRepository;
 import com.framgia.fdms.data.source.api.service.FDMSServiceClient;
+import com.framgia.fdms.data.source.local.sharepref.SharePreferenceImp;
 import com.framgia.fdms.data.source.remote.UserRemoteDataSource;
 import com.framgia.fdms.databinding.ActivityLoginBinding;
 
@@ -28,7 +31,8 @@ public class LoginActivity extends Activity {
         mViewModel = new LoginViewModel(this);
         UserRepository repository =
                 new UserRepository(new UserRemoteDataSource(FDMSServiceClient.getInstance()));
-        LoginContract.Presenter presenter = new LoginPresenter(mViewModel, repository);
+        LoginContract.Presenter presenter = new LoginPresenter(mViewModel, repository,
+                new SharePreferenceImp(getApplicationContext()));
         mViewModel.setPresenter(presenter);
         ActivityLoginBinding binding =
                 DataBindingUtil.setContentView(this, R.layout.activity_login);
