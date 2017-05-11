@@ -69,8 +69,8 @@ public class DashBoardFragment extends Fragment {
 
     @Override
     public void onStart() {
-        super.onStart();
         mViewModel.onStart();
+        super.onStart();
     }
 
     @Override

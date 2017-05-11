@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    >
+
+    <data>
+        <import type="android.graphics.Color"/>
+
+        <variable
+            name="dashboard"
+            type="com.framgia.fdms.data.model.Dashboard"
+            />
+
+        <variable
+            name="viewModel"
+            type="com.framgia.fdms.screen.dashboard.DashBoardViewModel"
+            />
+
+    </data>
+
+    <LinearLayout
+        android:background="@drawable/bg_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp_15"
+        android:weightSum="4"
+        >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="2"
+            >
+
+            <TextView
+                android:id="@+id/background_color"
+                android:layout_width="@dimen/dp_15"
+                android:layout_height="@dimen/dp_15"
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@{Color.parseColor(dashboard.backgroundColor)}"
+                />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_black"
+                android:text="@{dashboard.title}"
+                android:textSize="@dimen/sp_17"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/count"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/color_black"
+            android:text="@{String.valueOf(dashboard.count)}"
+            android:textSize="@dimen/sp_17"
+            />
+
+        <TextView
+            android:id="@+id/percent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="@dimen/sp_17"
+            android:textColor="@color/color_black"
+            bind:count="@{dashboard.count}"
+            bind:total="@{viewModel.total}"
+            />
+
+    </LinearLayout>
+
+</layout>

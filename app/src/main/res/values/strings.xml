@@ -78,4 +78,5 @@
     <string name="msg_permission_denied">Permission Denied</string>
     <string name="title_select_file_upload">Select a File to Upload</string>
     <string name="title_chart">Chart</string>
+    <string name="title_total">Total\n</string>
 </resources>

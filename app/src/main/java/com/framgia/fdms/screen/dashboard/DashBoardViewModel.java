@@ -25,10 +25,12 @@ public class DashBoardViewModel extends BaseObservable implements DashBoardContr
     private PieData mPieData;
     private Context mContext;
     private int mTotal;
+    private DashBoardAdapter mAdapter;
 
     public DashBoardViewModel(Context context) {
         mContext = context;
         mPieData = new PieData();
+        mAdapter = new DashBoardAdapter(mContext, new ArrayList<Dashboard>(), this);
     }
 
     public DashBoardViewModel() {
@@ -95,6 +97,7 @@ public class DashBoardViewModel extends BaseObservable implements DashBoardContr
 
         setDataSet(dataSet);
         setTotal(total);
+        mAdapter.onUpdatePage(dashboards);
     }
 
     @Override
@@ -112,4 +115,8 @@ public class DashBoardViewModel extends BaseObservable implements DashBoardContr
         return mTotal;
     }
 
+    @Bindable
+    public DashBoardAdapter getAdapter() {
+        return mAdapter;
+    }
 }

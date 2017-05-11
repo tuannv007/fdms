@@ -133,11 +133,33 @@ public final class BindingUtils {
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    @BindingAdapter({ "pieData" })
-    public static void setData(PieChart view, PieData pieData) {
+    @BindingAdapter({ "pieData", "totalValue" })
+    public static void setData(PieChart view, PieData pieData, int total) {
+        Resources resources = view.getContext().getResources();
+
         if (pieData.getDataSetCount() > 0) {
+            pieData.setValueFormatter(new PercentFormatter());
+            pieData.setValueTextColor(Color.BLACK);
+            pieData.setValueTextSize(resources.getDimension(R.dimen.sp_8));
+
             view.setData(pieData);
+            view.setTransparentCircleRadius(resources.getDimension(R.dimen.dp_30));
+            view.setHoleRadius(resources.getDimension(R.dimen.dp_30));
+            view.setDescription(null);
+            view.setDrawEntryLabels(false);
+            view.setCenterText(resources.getString(R.string.title_total) + total);
+            view.setCenterTextSize(resources.getDimension(R.dimen.sp_17));
+            view.setCenterTextColor(Color.BLUE);
+
+            Legend legend = view.getLegend();
+            legend.setEnabled(false);
         }
     }
-}
 
+    @BindingAdapter({ "count", "total" })
+    public static void setPercent(TextView view, int count, int total) {
+        float percent = (float) count / total * 100f;
+        String percentStr = String.format("%.1f", percent) + PERCENT;
+        view.setText(percentStr);
+    }
+}
