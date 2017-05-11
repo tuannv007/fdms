@@ -27,7 +27,7 @@ public interface FDMSApi {
     Observable<List<Device>> getListDevice(@Query("per_page") int limit,
             @Query("q") String searchTerm);
 
-    @GET("/api/v1/sessions")
+    @POST("/api/v1/sessions")
     Observable<Respone<User>> login(@Query("user[email]") String userName,
             @Query("user[password]") String passWord);
 

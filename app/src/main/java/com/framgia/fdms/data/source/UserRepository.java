@@ -1,5 +1,6 @@
 package com.framgia.fdms.data.source;
 
+import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.User;
 import com.framgia.fdms.data.source.api.request.RegisterRequest;
 import com.framgia.fdms.data.source.remote.UserRemoteDataSource;
@@ -17,7 +18,7 @@ public class UserRepository {
         mUserRemoteDataSource = remoteDataSource;
     }
 
-    public Observable<User> login(String userName, String passWord) {
+    public Observable<Respone<User>> login(String userName, String passWord) {
         return mUserRemoteDataSource.login(userName, passWord);
     }
 

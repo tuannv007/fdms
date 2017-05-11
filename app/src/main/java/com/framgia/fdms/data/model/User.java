@@ -74,6 +74,9 @@ public class User {
     @Expose
     @SerializedName("end_probation_date")
     private Date mEndProbationDate;
+    @Expose
+    @SerializedName("token")
+    private String mToken;
 
     public User() {
     }
@@ -252,5 +255,13 @@ public class User {
 
     public void setEndProbationDate(Date endProbationDate) {
         mEndProbationDate = endProbationDate;
+    }
+
+    public String getToken() {
+        return mToken;
+    }
+
+    public void setToken(String token) {
+        mToken = token;
     }
 }
