@@ -1,6 +1,5 @@
 package com.framgia.fdms.data.source.remote;
 
-import android.net.Uri;
 import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Dashboard;
 import com.framgia.fdms.data.model.Device;

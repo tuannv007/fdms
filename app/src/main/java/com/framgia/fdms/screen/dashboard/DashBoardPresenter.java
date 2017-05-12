@@ -75,7 +75,7 @@ final class DashBoardPresenter implements DashBoardContract.Presenter {
 
     @Override
     public void getRequestDashboard() {
-        Subscription subscription = mRequestRepository.getRequestDashboard()
+        Subscription subscription = mRequestRepository.getDashboardRequest()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Respone<List<Dashboard>>>() {

@@ -123,5 +123,37 @@ public class Request implements Serializable {
         @Expose
         @SerializedName("category_name")
         private String mCategoryName;
+
+        public int getId() {
+            return mId;
+        }
+
+        public void setId(int id) {
+            mId = id;
+        }
+
+        public String getDescription() {
+            return mDescription;
+        }
+
+        public void setDescription(String description) {
+            mDescription = description;
+        }
+
+        public int getNumber() {
+            return mNumber;
+        }
+
+        public void setNumber(int number) {
+            mNumber = number;
+        }
+
+        public String getCategoryName() {
+            return mCategoryName;
+        }
+
+        public void setCategoryName(String categoryName) {
+            mCategoryName = categoryName;
+        }
     }
 }

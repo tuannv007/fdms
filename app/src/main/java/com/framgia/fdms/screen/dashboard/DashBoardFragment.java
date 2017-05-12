@@ -49,7 +49,8 @@ public class DashBoardFragment extends Fragment {
         mViewModel = new DashBoardViewModel(getContext());
         DashBoardContract.Presenter presenter = new DashBoardPresenter(mViewModel,
                 new DeviceRepository(new DeviceRemoteDataSource(FDMSServiceClient.getInstance())),
-                new RequestRepository(new RequestRemoteDataSource(FDMSServiceClient.getInstance())),
+                RequestRepository.getInstant(
+                        new RequestRemoteDataSource(FDMSServiceClient.getInstance())),
                 dashboradType);
         mViewModel.setPresenter(presenter);
     }

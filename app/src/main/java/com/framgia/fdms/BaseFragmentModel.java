@@ -6,20 +6,18 @@ package com.framgia.fdms;
 
 import android.databinding.ObservableField;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 import java.util.List;
 
-public class BaseFragmentModel<T> implements BaseFragmentContract.ViewModel<T> {
+public abstract class BaseFragmentModel<T> implements BaseFragmentContract.ViewModel<T> {
     protected BaseRecyclerViewAdapter mAdapter;
     protected ObservableField<Boolean> mIsLoadMore = new ObservableField<>(false);
     private ObservableField<Integer> mProgressBarVisibility = new ObservableField<>();
-    private AppCompatActivity mActivity;
+    private FragmentActivity mActivity;
     private BaseFragmentContract.Presenter mPresenter;
-
     private RecyclerView.OnScrollListener mScrollListenner = new RecyclerView.OnScrollListener() {
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -49,7 +47,7 @@ public class BaseFragmentModel<T> implements BaseFragmentContract.ViewModel<T> {
     @Override
     public void onPageLoad(List<T> datas) {
         mIsLoadMore.set(false);
-        mAdapter.onUpdatePage();
+        mAdapter.onUpdatePage(datas);
     }
 
     @Override
@@ -65,7 +63,8 @@ public class BaseFragmentModel<T> implements BaseFragmentContract.ViewModel<T> {
     @Override
     public void onErrorLoadPage(String msg) {
         mIsLoadMore.set(false);
-        Snackbar.make(mActivity.findViewById(android.R.id.content), msg, Toast.LENGTH_SHORT).show();
+        if(mActivity == null) return;
+        Snackbar.make(mActivity.findViewById(android.R.id.content), msg, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -85,6 +84,18 @@ public class BaseFragmentModel<T> implements BaseFragmentContract.ViewModel<T> {
 
     @Override
     public void setPresenter(BaseFragmentContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
 
+    public ObservableField<Integer> getProgressBarVisibility() {
+        return mProgressBarVisibility;
+    }
+
+    public FragmentActivity getActivity() {
+        return mActivity;
+    }
+
+    public void setActivity(FragmentActivity activity) {
+        mActivity = activity;
     }
 }
