@@ -3,6 +3,7 @@ package com.framgia.fdms.screen.login;
 import android.content.SharedPreferences;
 import android.databinding.BaseObservable;
 import android.text.TextUtils;
+import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.User;
 import com.framgia.fdms.data.source.UserRepository;
 import com.framgia.fdms.data.source.local.sharepref.SharePreferenceApi;
@@ -57,9 +58,11 @@ final class LoginPresenter extends BaseObservable implements LoginContract.Prese
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<User>() {
+                .subscribe(new Action1<Respone<User>>() {
                     @Override
-                    public void call(User user) {
+                    public void call(Respone<User> userRespone) {
+                        User user = userRespone.getData();
+                        user.setToken(userRespone.getToken());
                         saveUser(user);
                         mView.onLoginSuccess();
                     }
