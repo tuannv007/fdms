@@ -10,10 +10,7 @@ import java.util.List;
 import java.util.Map;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.http.Field;
 import retrofit2.http.GET;
-import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -54,7 +51,7 @@ public interface FDMSApi {
     );
 
     @GET("/api/v1/request_dashboard")
-    Observable<Respone<List<Dashboard>>> getRequestDashboard();
+    Observable<Respone<List<Dashboard>>> getDashboardRequest();
 
     @GET("/api/v1/device_dashboard")
     Observable<Respone<List<Dashboard>>> getDeviceDashboard();

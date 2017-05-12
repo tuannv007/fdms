@@ -18,5 +18,6 @@ interface RequestManagerContract {
      * Presenter.
      */
     interface Presenter extends BaseFragmentContract.Presenter<Request> {
+        void getMyRequest(int requestStatusId, int relativeId, int perPage, int page);
     }
 }

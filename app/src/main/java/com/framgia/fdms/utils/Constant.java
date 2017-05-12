@@ -5,11 +5,13 @@ package com.framgia.fdms.utils;
  */
 public class Constant {
     // TODO: 4/3/2017 develop later
-    public static final String END_POINT_URL = "http://stg-dms.framgia.vn";
+    public static final String END_POINT_URL = "http://stg-dms.framgia.vn/";
     public static final int OUT_OF_INDEX = -1;
     public static final int PER_PAGE = 20;
     public static final int FIRST_PAGE = 1;
     public static final int PICK_IMAGE_REQUEST = 2;
+    public static final int ALL_REQUEST_STATUS_ID = -1;
+    public static final int ALL_RELATIVE_ID = -1;
 
     private Constant() {
         // No-op
@@ -27,5 +29,7 @@ public class Constant {
         public static final String MODEL_NUMBER = "model_number";
         public static final String DEVICE_CODE = "device_code";
         public static final String PICTURE = "picture";
+        public static final String REQUEST_STATUS_ID = "request_status_id";
+        public static final String RELATIVE_ID = "relative_id";
     }
 }

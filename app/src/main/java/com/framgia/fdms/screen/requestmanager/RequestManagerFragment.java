@@ -8,9 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.framgia.fdms.R;
-import com.framgia.fdms.data.source.DeviceRepository;
+import com.framgia.fdms.data.source.RequestRepository;
 import com.framgia.fdms.data.source.api.service.FDMSServiceClient;
-import com.framgia.fdms.data.source.remote.DeviceRemoteDataSource;
+import com.framgia.fdms.data.source.remote.RequestRemoteDataSource;
 import com.framgia.fdms.databinding.FragmentRequestmanagerBinding;
 
 /**
@@ -27,9 +27,11 @@ public class RequestManagerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewModel = new RequestManagerViewModel(new RequestManagerAdapter(getContext()));
+        mViewModel =
+                new RequestManagerViewModel(new RequestManagerAdapter(getContext()), getActivity());
         RequestManagerContract.Presenter presenter = new RequestManagerPresenter(mViewModel,
-                new DeviceRepository(new DeviceRemoteDataSource(FDMSServiceClient.getInstance())));
+                RequestRepository.getInstant(
+                        new RequestRemoteDataSource(FDMSServiceClient.getInstance())));
         mViewModel.setPresenter(presenter);
     }
 
@@ -43,6 +45,11 @@ public class RequestManagerFragment extends Fragment {
                         false);
         binding.setViewModel((RequestManagerViewModel) mViewModel);
         return binding.getRoot();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
     @Override

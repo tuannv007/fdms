@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.android.databinding.library.baseAdapters.BR;
 import com.framgia.fdms.R;
 import com.framgia.fdms.screen.forgotpassword.ForgotpasswordActivity;
-import com.framgia.fdms.screen.main.MainActivity;
+import com.framgia.fdms.screen.newmain.NewMainActivity;
 import com.framgia.fdms.screen.register.RegisterActivity;
 
 /**
@@ -56,7 +56,7 @@ public class LoginViewModel extends BaseObservable implements LoginContract.View
 
     @Override
     public void onLoginSuccess() {
-        mContext.startActivity(new Intent(mContext, MainActivity.class));
+        mContext.startActivity(new Intent(mContext, NewMainActivity.class));
         ((Activity) (mContext)).finish();
         isValid = false;
     }

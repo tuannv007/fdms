@@ -14,11 +14,17 @@ import java.util.List;
  */
 
 public class RequestManagerAdapter
-        extends BaseRecyclerViewAdapter<RequestManagerAdapter.ViewHolder> {
+        extends BaseRecyclerViewAdapter<Request, RequestManagerAdapter.ViewHolder> {
     private List<Request> mRequests;
 
     public RequestManagerAdapter(Context context) {
         super(context);
+    }
+
+    @Override
+    public void onUpdatePage(List<Request> datas) {
+        mRequests.addAll(datas);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -28,7 +34,6 @@ public class RequestManagerAdapter
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
         holder.bind(new RequestModel(mRequests.get(position)));
     }
 
@@ -56,7 +61,6 @@ public class RequestManagerAdapter
     }
 
     public class RequestModel {
-
         private Request mRequest;
         private ObservableField<Integer> mStatusRequest = new ObservableField<>();
 
