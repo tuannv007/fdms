@@ -15,7 +15,8 @@ import java.util.List;
 /**
  * Adapter show list device
  */
-public class DeviceListAdapter extends BaseRecyclerViewAdapter<DeviceListAdapter.ViewHolder> {
+public class DeviceListAdapter
+        extends BaseRecyclerViewAdapter<Device, DeviceListAdapter.ViewHolder> {
     private List<Device> mListDevice;
     private BaseRecyclerViewAdapter.OnRecyclerViewItemClickListener<Device> mItemClickListener;
 
@@ -52,6 +53,10 @@ public class DeviceListAdapter extends BaseRecyclerViewAdapter<DeviceListAdapter
 
     public void setItemClickListener(OnRecyclerViewItemClickListener<Device> itemClickListener) {
         mItemClickListener = itemClickListener;
+    }
+
+    @Override
+    public void onUpdatePage(List data) {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

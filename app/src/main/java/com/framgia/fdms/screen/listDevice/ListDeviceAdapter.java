@@ -5,7 +5,6 @@ import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import com.framgia.fdms.BaseRecyclerViewAdapter;
 import com.framgia.fdms.R;
@@ -17,7 +16,8 @@ import java.util.List;
  * Created by MyPC on 26/04/2017.
  */
 
-public class ListDeviceAdapter extends BaseRecyclerViewAdapter<ListDeviceAdapter.ViewHolder>{
+public class ListDeviceAdapter
+        extends BaseRecyclerViewAdapter<Device, ListDeviceAdapter.ViewHolder> {
     private List<Device> mDevices;
     private ListDeviceViewModel mViewModel;
 
@@ -30,8 +30,9 @@ public class ListDeviceAdapter extends BaseRecyclerViewAdapter<ListDeviceAdapter
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ItemListDataBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
-                R.layout.item_listdevice, parent, false);
+        ItemListDataBinding binding =
+                DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
+                        R.layout.item_listdevice, parent, false);
         return new ViewHolder(binding, mViewModel);
     }
 
@@ -45,11 +46,12 @@ public class ListDeviceAdapter extends BaseRecyclerViewAdapter<ListDeviceAdapter
         return mDevices == null ? 0 : mDevices.size();
     }
 
-    public void updateData(List<Device> devices){
-        if (devices == null){
+    @Override
+    public void onUpdatePage(List<Device> datas) {
+        if (datas == null) {
             return;
         }
-        mDevices.addAll(devices);
+        mDevices.addAll(datas);
         notifyDataSetChanged();
     }
 
@@ -63,8 +65,8 @@ public class ListDeviceAdapter extends BaseRecyclerViewAdapter<ListDeviceAdapter
             mViewModel = viewModel;
         }
 
-        void bindData(Device device){
-            if (device == null){
+        void bindData(Device device) {
+            if (device == null) {
                 return;
             }
 

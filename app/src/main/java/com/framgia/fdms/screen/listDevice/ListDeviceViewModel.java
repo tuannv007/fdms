@@ -58,7 +58,7 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
     @Override
     public void onDeviceLoaded(List<Device> devices) {
         mIsLoadingMore.set(false);
-        mAdapter.updateData(devices);
+        mAdapter.onUpdatePage(devices);
     }
 
     @Override

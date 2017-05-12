@@ -3,12 +3,13 @@ package com.framgia.fdms;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import java.util.List;
 
 /**
  * @param <V> is a type extend from {@link RecyclerView.ViewHolder}
  */
 
-public abstract class BaseRecyclerViewAdapter<V extends RecyclerView.ViewHolder>
+public abstract class BaseRecyclerViewAdapter<T, V extends RecyclerView.ViewHolder>
         extends RecyclerView.Adapter<V> {
 
     private final Context mContext;
@@ -21,9 +22,7 @@ public abstract class BaseRecyclerViewAdapter<V extends RecyclerView.ViewHolder>
         return mContext;
     }
 
-    public void onUpdatePage() {
-
-    }
+    public abstract void onUpdatePage(List<T> data);
 
     /**
      * OnRecyclerViewItemClickListener

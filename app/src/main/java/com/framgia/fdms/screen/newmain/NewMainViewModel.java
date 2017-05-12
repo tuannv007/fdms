@@ -81,6 +81,7 @@ public class NewMainViewModel extends BaseObservable implements NewMainContract.
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result == null) return;
         String contentResult = result.getContents();
+
         if (contentResult == null) {
             onFailScanner();
         } else {
@@ -91,8 +92,8 @@ public class NewMainViewModel extends BaseObservable implements NewMainContract.
     @Override
     public void onGetDecodeSuccess(Device device) {
         // todo direct to detail device screen
-        Snackbar.make(mActivity.findViewById(android.R.id.content), device.getDeviceCategoryName(), Snackbar.LENGTH_LONG)
-                .show();
+        Snackbar.make(mActivity.findViewById(android.R.id.content), device.getDeviceCategoryName(),
+                Snackbar.LENGTH_LONG).show();
     }
 
     @Override
