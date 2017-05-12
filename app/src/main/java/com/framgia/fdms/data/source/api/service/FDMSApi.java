@@ -3,6 +3,7 @@ package com.framgia.fdms.data.source.api.service;
 import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Dashboard;
 import com.framgia.fdms.data.model.Device;
+import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.data.model.User;
@@ -20,39 +21,40 @@ import retrofit2.http.QueryMap;
 import rx.Observable;
 
 public interface FDMSApi {
-    @GET("/api/v1/search/users")
+    @GET("api/v1/search/users")
     Observable<List<Device>> getListDevice(@Query("per_page") int limit,
             @Query("q") String searchTerm);
 
-    @POST("/api/v1/sessions")
+    @POST("api/v1/sessions")
     Observable<Respone<User>> login(@Query("user[email]") String userName,
             @Query("user[password]") String passWord);
 
-    @GET("/api/v1/search/devices")
+    @GET("api/v1/search/devices")
     Observable<List<Device>> searchDevices(@Query("keyWord") String type);
 
-    @GET("/api/v1/devices")
+    @GET("api/v1/devices")
     Observable<Respone<List<Device>>> getListDevices(@QueryMap Map<String, String> parrams);
 
-    @GET("/api/v1/device_categories")
+    @GET("api/v1/device_categories")
     Observable<Respone<List<Category>>> getListCategory();
 
-    @GET("/api/v1/device_status")
+    @GET("api/v1/device_status")
     Observable<Respone<List<Status>>> getListStatus();
 
-    @GET("/api/v1/device_code")
+    @GET("api/v1/device_code")
     Observable<Respone<Device>> getDeviceByQrCode(@Query("printed_code") String qrCode);
 
     @Multipart
-    @POST("/api/v1/devices")
-    Observable<Respone<Device>> uploadDevice(
-            @PartMap Map<String, RequestBody> parrams,
-            @Part MultipartBody.Part picture
-    );
+    @POST("api/v1/devices")
+    Observable<Respone<Device>> uploadDevice(@PartMap Map<String, RequestBody> parrams,
+            @Part MultipartBody.Part picture);
 
     @GET("/api/v1/request_dashboard")
     Observable<Respone<List<Dashboard>>> getDashboardRequest();
 
-    @GET("/api/v1/device_dashboard")
+    @GET("api/v1/device_dashboard")
     Observable<Respone<List<Dashboard>>> getDeviceDashboard();
+
+    @GET("api/v1/requests")
+    Observable<Respone<List<Request>>> getMyRequest(@QueryMap Map<String, Integer> params);
 }

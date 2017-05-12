@@ -2,7 +2,6 @@ package com.framgia.fdms.data.source.api.service;
 
 import android.app.Application;
 import android.support.annotation.NonNull;
-import com.framgia.fdms.BuildConfig;
 import com.framgia.fdms.data.source.api.middleware.RxErrorHandlingCallAdapterFactory;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -41,11 +40,10 @@ public class ServiceClient {
         Retrofit.Builder builder = new Retrofit.Builder().baseUrl(endPoint)
                 .addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson));
-        if (BuildConfig.DEBUG) {
-            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-            httpClientBuilder.addInterceptor(logging);
-            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-        }
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        httpClientBuilder.addInterceptor(logging);
+        httpClientBuilder.addInterceptor(new FAMSInterceptor());
         Retrofit retrofit = builder.client(httpClientBuilder.build())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
