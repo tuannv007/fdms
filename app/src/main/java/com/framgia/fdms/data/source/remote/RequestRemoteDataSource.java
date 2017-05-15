@@ -7,6 +7,7 @@ import com.framgia.fdms.data.source.RequestDataSource;
 import com.framgia.fdms.data.source.api.service.FDMSApi;
 import com.framgia.fdms.utils.Utils;
 import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import rx.Observable;
@@ -34,8 +35,8 @@ public class RequestRemoteDataSource extends BaseRemoteDataSource
     }
 
     @Override
-    public Observable<List<Request>> getMyRequest(int requestStatusId, int relativeId,
-            int perPage, int page) {
+    public Observable<List<Request>> getMyRequest(int requestStatusId, int relativeId, int perPage,
+            int page) {
         return mFDMSApi.getMyRequest(getRequestParams(requestStatusId, relativeId, page, perPage))
                 .flatMap(new Func1<Respone<List<Request>>, Observable<List<Request>>>() {
                     @Override
@@ -46,8 +47,10 @@ public class RequestRemoteDataSource extends BaseRemoteDataSource
     }
 
     @Override
-    public Observable<Respone<List<Dashboard>>> getDashboardRequest() {
-        return mFDMSApi.getDashboardRequest();
+    public Observable<List<Dashboard>> getDashboardRequest() {
+        List<Dashboard> dashboards = new ArrayList<>();
+        dashboards.add(new Dashboard());
+        return Observable.just(dashboards);
     }
 
     private Map<String, Integer> getRequestParams(int requestStatusId, int relativeId, int page,

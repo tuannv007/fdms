@@ -17,5 +17,5 @@ public interface RequestRepositoryContract {
     Observable<List<Request>> getMyRequest(int requestStatusId, int relativeId, int perPage,
             int page);
 
-    Observable<Respone<List<Dashboard>>> getDashboardRequest();
+    Observable<List<Dashboard>> getDashboardRequest();
 }

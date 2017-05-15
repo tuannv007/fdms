@@ -1,5 +1,6 @@
 package com.framgia.fdms.utils.binding;
 
+import android.content.res.Resources;
 import android.databinding.BindingAdapter;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -11,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,11 +22,13 @@ import com.framgia.fdms.screen.newmain.NewMainViewModel;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 
 import static com.framgia.fdms.screen.newmain.NewMainViewModel.Tab.TAB_DASH_BOARD;
 import static com.framgia.fdms.screen.newmain.NewMainViewModel.Tab.TAB_DEVICE_MANAGER;
 import static com.framgia.fdms.screen.newmain.NewMainViewModel.Tab.TAB_PROFILE;
 import static com.framgia.fdms.screen.newmain.NewMainViewModel.Tab.TAB_REQUEST_MANAGER;
+import static com.framgia.fdms.utils.Constant.PERCENT;
 
 /**
  * Created by Age on 4/3/2017.
@@ -129,7 +133,7 @@ public final class BindingUtils {
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    @BindingAdapter({ "setData" })
+    @BindingAdapter({ "pieData" })
     public static void setData(PieChart view, PieData pieData) {
         if (pieData.getDataSetCount() > 0) {
             view.setData(pieData);

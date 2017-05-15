@@ -33,7 +33,7 @@ public class RequestRepository implements RequestRepositoryContract {
     }
 
     @Override
-    public Observable<Respone<List<Dashboard>>> getDashboardRequest() {
+    public Observable<List<Dashboard>> getDashboardRequest() {
         return mRemoteDataSource.getDashboardRequest();
     }
 }
