@@ -74,6 +74,7 @@ public final class BindingUtils {
     public static void setupViewPager(final ViewPager viewPager, FragmentPagerAdapter adapter,
             final NewMainViewModel viewModel) {
         viewPager.setAdapter(adapter);
+        if (viewModel == null) return;
         viewPager.setOffscreenPageLimit(adapter.getCount());
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

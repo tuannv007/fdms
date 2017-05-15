@@ -3,7 +3,7 @@ package com.framgia.fdms.screen.newmain;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import com.framgia.fdms.screen.dashboard.DashBoardFragment;
+import com.framgia.fdms.screen.dashboard.DashboardFragment;
 import com.framgia.fdms.screen.listDevice.ListDeviceFragment;
 import com.framgia.fdms.screen.requestmanager.RequestManagerFragment;
 
@@ -27,14 +27,14 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         switch (position) {
             case TAB_DASH_BOARD:
                 // todo direct to dashboard screen
-                return DashBoardFragment.newInstance();
+                return DashboardFragment.newInstance();
             case TAB_REQUEST_MANAGER:
                 return RequestManagerFragment.newInstance();
             case TAB_DEVICE_MANAGER:
                 return ListDeviceFragment.newInstance();
             case TAB_PROFILE:
                 // todo direct to profile screen
-                return DashBoardFragment.newInstance();
+                return DashboardFragment.newInstance();
             default:
                 break;
         }

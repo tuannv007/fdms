@@ -1,4 +1,4 @@
-package com.framgia.fdms.screen.dashboard;
+package com.framgia.fdms.screen.dashboard.dashboarddetail;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -16,12 +16,13 @@ import java.util.List;
  * Created by MyPC on 12/05/2017.
  */
 
-public class DashBoardAdapter extends BaseRecyclerViewAdapter<Dashboard, DashBoardAdapter.ViewHolder> {
+public class DashBoardDetailAdapter
+        extends BaseRecyclerViewAdapter<Dashboard, DashBoardDetailAdapter.ViewHolder> {
     private List<Dashboard> mDashboards;
-    private DashBoardViewModel mViewModel;
+    private DashBoardDetailViewModel mViewModel;
 
-    protected DashBoardAdapter(@NonNull Context context, @NonNull List<Dashboard> dashboards,
-            @NonNull DashBoardViewModel viewModel) {
+    protected DashBoardDetailAdapter(@NonNull Context context, @NonNull List<Dashboard> dashboards,
+            @NonNull DashBoardDetailViewModel viewModel) {
         super(context);
         mDashboards = dashboards;
         mViewModel = viewModel;
@@ -55,9 +56,9 @@ public class DashBoardAdapter extends BaseRecyclerViewAdapter<Dashboard, DashBoa
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         private ItemDashBoardBinding mBinding;
-        private DashBoardViewModel mViewModel;
+        private DashBoardDetailViewModel mViewModel;
 
-        public ViewHolder(ItemDashBoardBinding binding, DashBoardViewModel viewModel) {
+        public ViewHolder(ItemDashBoardBinding binding, DashBoardDetailViewModel viewModel) {
             super(binding.getRoot());
             mBinding = binding;
             mViewModel = viewModel;
