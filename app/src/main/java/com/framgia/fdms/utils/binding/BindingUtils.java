@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -75,6 +74,7 @@ public final class BindingUtils {
     public static void setupViewPager(final ViewPager viewPager, FragmentPagerAdapter adapter,
             final NewMainViewModel viewModel) {
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(adapter.getCount());
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset,
@@ -156,10 +156,4 @@ public final class BindingUtils {
         }
     }
 
-    @BindingAdapter({ "count", "total" })
-    public static void setPercent(TextView view, int count, int total) {
-        float percent = (float) count / total * 100f;
-        String percentStr = String.format("%.1f", percent) + PERCENT;
-        view.setText(percentStr);
-    }
 }
