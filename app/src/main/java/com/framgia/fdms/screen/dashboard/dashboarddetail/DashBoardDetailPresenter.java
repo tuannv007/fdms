@@ -1,14 +1,8 @@
-package com.framgia.fdms.screen.dashboard;
+package com.framgia.fdms.screen.dashboard.dashboarddetail;
 
-import android.graphics.Color;
-import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Dashboard;
-import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.source.DeviceRepository;
 import com.framgia.fdms.data.source.RequestRepository;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-import java.util.ArrayList;
 import java.util.List;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -16,22 +10,22 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
-import static com.framgia.fdms.screen.dashboard.DashBoardFragment.DEVICE_DASHBOARD;
-import static com.framgia.fdms.screen.dashboard.DashBoardFragment.REQUEST_DASHBOARD;
+import static com.framgia.fdms.screen.dashboard.dashboarddetail.DashBoardDetailFragment.DEVICE_DASHBOARD;
+import static com.framgia.fdms.screen.dashboard.dashboarddetail.DashBoardDetailFragment.REQUEST_DASHBOARD;
 
 /**
- * Listens to user actions from the UI ({@link DashBoardFragment}), retrieves the data and updates
+ * Listens to user actions from the UI ({@link DashBoardDetailFragment}), retrieves the data and updates
  * the UI as required.
  */
-final class DashBoardPresenter implements DashBoardContract.Presenter {
+final class DashBoardDetailPresenter implements DashBoardDetailContract.Presenter {
     private CompositeSubscription mCompositeSubscriptions = new CompositeSubscription();
 
-    private final DashBoardContract.ViewModel mViewModel;
+    private final DashBoardDetailContract.ViewModel mViewModel;
     private DeviceRepository mDeviceRepository;
     private RequestRepository mRequestRepository;
     private int mDashboardType;
 
-    public DashBoardPresenter(DashBoardContract.ViewModel viewModel,
+    public DashBoardDetailPresenter(DashBoardDetailContract.ViewModel viewModel,
             DeviceRepository deviceRepository, RequestRepository requestRepository,
             int dashboardType) {
         mViewModel = viewModel;

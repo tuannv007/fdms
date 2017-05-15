@@ -1,4 +1,4 @@
-package com.framgia.fdms.screen.dashboard;
+package com.framgia.fdms.screen.dashboard.dashboarddetail;
 
 import android.content.Context;
 import android.databinding.BaseObservable;
@@ -11,7 +11,6 @@ import com.framgia.fdms.data.model.Dashboard;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.PercentFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,21 +18,21 @@ import java.util.List;
  * Exposes the data to be used in the Scanner screen.
  */
 
-public class DashBoardViewModel extends BaseObservable implements DashBoardContract.ViewModel {
+public class DashBoardDetailViewModel extends BaseObservable implements DashBoardDetailContract.ViewModel {
 
-    private DashBoardContract.Presenter mPresenter;
+    private DashBoardDetailContract.Presenter mPresenter;
     private PieData mPieData;
     private Context mContext;
     private int mTotal;
-    private DashBoardAdapter mAdapter;
+    private DashBoardDetailAdapter mAdapter;
 
-    public DashBoardViewModel(Context context) {
+    public DashBoardDetailViewModel(Context context) {
         mContext = context;
         mPieData = new PieData();
-        mAdapter = new DashBoardAdapter(mContext, new ArrayList<Dashboard>(), this);
+        mAdapter = new DashBoardDetailAdapter(mContext, new ArrayList<Dashboard>(), this);
     }
 
-    public DashBoardViewModel() {
+    public DashBoardDetailViewModel() {
     }
 
     @Override
@@ -47,7 +46,7 @@ public class DashBoardViewModel extends BaseObservable implements DashBoardContr
     }
 
     @Override
-    public void setPresenter(DashBoardContract.Presenter presenter) {
+    public void setPresenter(DashBoardDetailContract.Presenter presenter) {
         mPresenter = presenter;
     }
 
@@ -116,7 +115,7 @@ public class DashBoardViewModel extends BaseObservable implements DashBoardContr
     }
 
     @Bindable
-    public DashBoardAdapter getAdapter() {
+    public DashBoardDetailAdapter getAdapter() {
         return mAdapter;
     }
 }

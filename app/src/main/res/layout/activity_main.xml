@@ -16,7 +16,7 @@
         >
         <fragment
             android:id="@+id/fragment_list_device"
-            android:name="com.framgia.fdms.screen.dashboard.DashBoardFragment"
+            android:name="com.framgia.fdms.screen.dashboard.dashboarddetail.DashBoardDetailFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </RelativeLayout>

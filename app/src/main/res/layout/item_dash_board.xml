@@ -13,7 +13,7 @@
 
         <variable
             name="viewModel"
-            type="com.framgia.fdms.screen.dashboard.DashBoardViewModel"
+            type="com.framgia.fdms.screen.dashboard.dashboarddetail.DashBoardDetailViewModel"
             />
 
     </data>
