@@ -129,8 +129,11 @@ public class DeviceRemoteDataSource implements DeviceDataSource.RemoteDataSource
 
     @Override
     public Observable<List<Dashboard>> getDashboardDevice() {
+        // TODO: later
         List<Dashboard> dashboards = new ArrayList<>();
-        dashboards.add(new Dashboard());
+        dashboards.add(new Dashboard("using", 398, "aero", "#BDC3C7", "#CFD4D8"));
+        dashboards.add(new Dashboard("available", 35, "purple", "#9B59B6", "#B370CF"));
+        dashboards.add(new Dashboard("broken", 0, "red", "#E74C3C", "#E95E4F"));
         return Observable.just(dashboards);
     }
 
