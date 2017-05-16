@@ -2,7 +2,9 @@ package com.framgia.fdms.screen.listDevice;
 
 import com.framgia.fdms.BasePresenter;
 import com.framgia.fdms.BaseViewModel;
+import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Device;
+import com.framgia.fdms.data.model.Status;
 import java.util.List;
 
 /**
@@ -24,6 +26,16 @@ interface ListDeviceContract {
         void hideProgressbar();
 
         void onRegisterDeviceClick();
+
+        void onDeviceCategoryLoaded(List<Category> categories);
+
+        void onDeviceStatusLoaded(List<Status> statuses);
+
+        void onSearch();
+
+        void onChooseCategory();
+
+        void onChooseStatus();
     }
 
     /**
@@ -31,5 +43,7 @@ interface ListDeviceContract {
      */
     interface Presenter extends BasePresenter {
         void loadMoreData();
+
+        void searchDevices(String keyWord, int categoryId, int statusId);
     }
 }

@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.framgia.fdms.R;
 import com.framgia.fdms.screen.dashboard.DashboardViewModel;
+import com.framgia.fdms.screen.listDevice.ListDeviceViewModel;
 import com.framgia.fdms.screen.newmain.NewMainViewModel;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -183,9 +185,9 @@ public final class BindingUtils {
 
     @BindingAdapter("tabDashBoard")
     public static void onChangeImage(ImageView image, int tab) {
-        if (image.getId() == R.id.image_device_dashboard){
+        if (image.getId() == R.id.image_device_dashboard) {
             image.setImageResource(R.drawable.ic_devices);
-        } else if (image.getId() == R.id.image_request_dashboard){
+        } else if (image.getId() == R.id.image_request_dashboard) {
             image.setImageResource(R.drawable.ic_request);
         }
 
@@ -203,5 +205,21 @@ public final class BindingUtils {
             default:
                 break;
         }
+    }
+
+    @BindingAdapter({ "model" })
+    public static void onSearch(SearchView view, final ListDeviceViewModel viewModel) {
+        view.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                viewModel.setKeyWord(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 }
