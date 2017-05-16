@@ -17,8 +17,8 @@ public class DeviceDataSource {
     }
 
     public interface RemoteDataSource {
-        Observable<List<Device>> getListDevices(int categoryId, int statusId, int page,
-                int perPage);
+        Observable<List<Device>> getListDevices(String deviceName, int categoryId, int statusId,
+                int page, int perPage);
 
         Observable<List<Device>> searchDevices(String keyWord);
 

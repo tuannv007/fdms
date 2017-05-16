@@ -23,6 +23,7 @@ import rx.functions.Func1;
 import static com.framgia.fdms.utils.Constant.ApiParram.CATEGORY_ID;
 import static com.framgia.fdms.utils.Constant.ApiParram.DEVICE_CATEGORY_ID;
 import static com.framgia.fdms.utils.Constant.ApiParram.DEVICE_CODE;
+import static com.framgia.fdms.utils.Constant.ApiParram.DEVICE_NAME;
 import static com.framgia.fdms.utils.Constant.ApiParram.DEVICE_STATUS_ID;
 import static com.framgia.fdms.utils.Constant.ApiParram.MODEL_NUMBER;
 import static com.framgia.fdms.utils.Constant.ApiParram.PAGE;
@@ -31,6 +32,7 @@ import static com.framgia.fdms.utils.Constant.ApiParram.PICTURE;
 import static com.framgia.fdms.utils.Constant.ApiParram.PRODUCTION_NAME;
 import static com.framgia.fdms.utils.Constant.ApiParram.SERIAL_NUMBER;
 import static com.framgia.fdms.utils.Constant.ApiParram.STATUS_ID;
+import static com.framgia.fdms.utils.Constant.NOT_SEARCH;
 import static com.framgia.fdms.utils.Constant.OUT_OF_INDEX;
 
 public class DeviceRemoteDataSource implements DeviceDataSource.RemoteDataSource {
@@ -42,10 +44,11 @@ public class DeviceRemoteDataSource implements DeviceDataSource.RemoteDataSource
     }
 
     @Override
-    public Observable<List<Device>> getListDevices(int categoryId, int statusId, int page,
-            int perPage) {
+    public Observable<List<Device>> getListDevices(String deviceName, int categoryId, int statusId,
+            int page, int perPage) {
 
-        return mFDMSApi.getListDevices(getDeviceParams(categoryId, statusId, page, perPage))
+        return mFDMSApi.getListDevices(
+                getDeviceParams(deviceName, categoryId, statusId, page, perPage))
                 .flatMap(new Func1<Respone<List<Device>>, Observable<List<Device>>>() {
                     @Override
                     public Observable<List<Device>> call(Respone<List<Device>> listRespone) {
@@ -137,8 +140,8 @@ public class DeviceRemoteDataSource implements DeviceDataSource.RemoteDataSource
         return Observable.just(dashboards);
     }
 
-    public Map<String, String> getDeviceParams(int categoryId, int statusId, int page,
-            int perPage) {
+    public Map<String, String> getDeviceParams(String deviceName, int categoryId, int statusId,
+            int page, int perPage) {
         Map<String, String> parrams = new HashMap<>();
         if (categoryId != OUT_OF_INDEX) {
             parrams.put(CATEGORY_ID, String.valueOf(categoryId));
@@ -152,6 +155,9 @@ public class DeviceRemoteDataSource implements DeviceDataSource.RemoteDataSource
         }
         if (perPage != OUT_OF_INDEX) {
             parrams.put(PER_PAGE, String.valueOf(perPage));
+        }
+        if (!deviceName.equals(NOT_SEARCH)) {
+            parrams.put(DEVICE_NAME, deviceName);
         }
         return parrams;
     }

@@ -1,8 +1,11 @@
 package com.framgia.fdms.screen.listDevice;
 
-import android.util.Log;
+import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Device;
+import com.framgia.fdms.data.model.Status;
+import com.framgia.fdms.data.source.CategoryRepository;
 import com.framgia.fdms.data.source.DeviceRepository;
+import com.framgia.fdms.data.source.StatusRepository;
 import java.util.List;
 import rx.Subscriber;
 import rx.Subscription;
@@ -13,6 +16,7 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 import static com.framgia.fdms.utils.Constant.FIRST_PAGE;
+import static com.framgia.fdms.utils.Constant.NOT_SEARCH;
 import static com.framgia.fdms.utils.Constant.OUT_OF_INDEX;
 import static com.framgia.fdms.utils.Constant.PER_PAGE;
 
@@ -26,16 +30,23 @@ final class ListDevicePresenter implements ListDeviceContract.Presenter {
 
     private final ListDeviceContract.ViewModel mViewModel;
     private DeviceRepository mDeviceRepository;
+    private CategoryRepository mCategoryRepository;
+    private StatusRepository mStatusRepository;
+    private String mKeyWord = NOT_SEARCH;
+    private int mCategoryId = OUT_OF_INDEX;
+    private int mStatusId = OUT_OF_INDEX;
 
     public ListDevicePresenter(ListDeviceContract.ViewModel viewModel,
-            DeviceRepository deviceRepository) {
+            DeviceRepository deviceRepository, CategoryRepository categoryRepository,
+            StatusRepository statusRepository) {
         mViewModel = viewModel;
         mDeviceRepository = deviceRepository;
+        mCategoryRepository = categoryRepository;
+        mStatusRepository = statusRepository;
     }
 
     @Override
     public void onStart() {
-        getListDevice(OUT_OF_INDEX, OUT_OF_INDEX, mPage, PER_PAGE);
     }
 
     @Override
@@ -43,9 +54,10 @@ final class ListDevicePresenter implements ListDeviceContract.Presenter {
         mCompositeSubscriptions.clear();
     }
 
-    public void getListDevice(int categoryId, int statusId, int page, int perPage) {
+    public void getListDevice(String deviceName, int categoryId, int statusId, int page,
+            int perPage) {
         Subscription subscription =
-                mDeviceRepository.getListDevices(categoryId, statusId, page, perPage)
+                mDeviceRepository.getListDevices(deviceName, categoryId, statusId, page, perPage)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnSubscribe(new Action0() {
@@ -57,7 +69,7 @@ final class ListDevicePresenter implements ListDeviceContract.Presenter {
                         .subscribe(new Subscriber<List<Device>>() {
                             @Override
                             public void onCompleted() {
-                                    mViewModel.hideProgressbar();
+                                mViewModel.hideProgressbar();
                             }
 
                             @Override
@@ -73,14 +85,82 @@ final class ListDevicePresenter implements ListDeviceContract.Presenter {
         mCompositeSubscriptions.add(subscription);
     }
 
-    @Override
-    public void loadMoreData() {
-        mPage++;
-        getListDevice(OUT_OF_INDEX, OUT_OF_INDEX, mPage, PER_PAGE);
+    public void getListCategories() {
+        Subscription subscription = mCategoryRepository.getListCategory()
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mViewModel.showProgressbar();
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<Category>>() {
+                    @Override
+                    public void call(List<Category> categories) {
+                        mViewModel.onDeviceCategoryLoaded(categories);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        mViewModel.onError(throwable.getCause().getMessage());
+                    }
+                }, new Action0() {
+                    @Override
+                    public void call() {
+                        mViewModel.hideProgressbar();
+                    }
+                });
+        mCompositeSubscriptions.add(subscription);
+    }
+
+    public void getListStatuses() {
+        Subscription subscription = mStatusRepository.getListStatus()
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mViewModel.showProgressbar();
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<Status>>() {
+                    @Override
+                    public void call(List<Status> statuses) {
+                        mViewModel.onDeviceStatusLoaded(statuses);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        mViewModel.onError(throwable.getCause().getMessage());
+                    }
+                }, new Action0() {
+                    @Override
+                    public void call() {
+                        mViewModel.hideProgressbar();
+                    }
+                });
+        mCompositeSubscriptions.add(subscription);
     }
 
     @Override
-    public void searchDevices(String keyWord, int categoryId, int statusId) {
-        // TODO: 16/05/2017
+    public void loadMoreData() {
+        mPage++;
+        getListDevice(mKeyWord, mCategoryId, mStatusId, mPage, PER_PAGE);
+    }
+
+    @Override
+    public void getData(String keyWord, Category category, Status status) {
+        mPage = FIRST_PAGE;
+        if (category != null) {
+            mCategoryId = category.getId();
+        } else if (status != null){
+            mStatusId = status.getId();
+        } else if (keyWord != null) {
+            mKeyWord = keyWord;
+        }
+        getListDevice(mKeyWord, mCategoryId, mStatusId, mPage, PER_PAGE);
+        getListCategories();
+        getListStatuses();
     }
 }

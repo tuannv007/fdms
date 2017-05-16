@@ -33,7 +33,10 @@ import static com.framgia.fdms.screen.newmain.NewMainViewModel.Tab.TAB_DASH_BOAR
 import static com.framgia.fdms.screen.newmain.NewMainViewModel.Tab.TAB_DEVICE_MANAGER;
 import static com.framgia.fdms.screen.newmain.NewMainViewModel.Tab.TAB_PROFILE;
 import static com.framgia.fdms.screen.newmain.NewMainViewModel.Tab.TAB_REQUEST_MANAGER;
+import static com.framgia.fdms.utils.Constant.AVAIABLE;
+import static com.framgia.fdms.utils.Constant.BROKEN;
 import static com.framgia.fdms.utils.Constant.PERCENT;
+import static com.framgia.fdms.utils.Constant.USING;
 
 /**
  * Created by Age on 4/3/2017.
@@ -208,18 +211,32 @@ public final class BindingUtils {
     }
 
     @BindingAdapter({ "model" })
-    public static void onSearch(SearchView view, final ListDeviceViewModel viewModel) {
+    public static void onSearch(final SearchView view, final ListDeviceViewModel viewModel) {
         view.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                viewModel.setKeyWord(query);
+                viewModel.onSearch(query);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                return false;
+                if (newText.equals("")) viewModel.onReset();
+                return true;
             }
         });
+
+        view.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                viewModel.onReset();
+                return true;
+            }
+        });
+    }
+
+    @BindingAdapter({ "resourceId" })
+    public static void setImage(ImageView view, int resource) {
+        view.setImageResource(resource);
     }
 }
