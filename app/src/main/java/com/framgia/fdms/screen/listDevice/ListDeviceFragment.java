@@ -28,7 +28,7 @@ public class ListDeviceFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewModel = new ListDeviceViewModel(getContext());
+        mViewModel = new ListDeviceViewModel(getActivity());
 
         ListDeviceContract.Presenter presenter = new ListDevicePresenter(mViewModel,
                 new DeviceRepository(new DeviceRemoteDataSource(FDMSServiceClient.getInstance())));

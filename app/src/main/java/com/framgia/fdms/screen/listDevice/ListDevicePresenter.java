@@ -78,4 +78,9 @@ final class ListDevicePresenter implements ListDeviceContract.Presenter {
         mPage++;
         getListDevice(OUT_OF_INDEX, OUT_OF_INDEX, mPage, PER_PAGE);
     }
+
+    @Override
+    public void searchDevices(String keyWord, int categoryId, int statusId) {
+        // TODO: 16/05/2017
+    }
 }

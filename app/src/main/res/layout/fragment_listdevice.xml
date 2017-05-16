@@ -16,9 +16,50 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
+
+        <android.support.v7.widget.SearchView
+            android:id="@+id/searchview"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:background="@color/colorPrimary"
+            app:model="@{viewModel}"
+            />
+
+        <LinearLayout
+            android:id="@id/linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_30"
+            android:layout_below="@id/searchview"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            >
+
+            <Button
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Status"
+                android:onClick="@{()-> viewModel.onChooseStatus()}"
+                android:text="@={viewModel.status.name}"
+                android:textSize="@dimen/sp_8"
+                />
+
+            <Button
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Category"
+                android:onClick="@{()-> viewModel.onChooseCategory()}"
+                android:text="@={viewModel.category.name}"
+                android:textSize="@dimen/sp_8"
+                />
+
+        </LinearLayout>
+
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@id/linear_layout"
             android:scrollbars="vertical"
             app:layoutManager="LinearLayoutManager"
             app:recyclerAdapter="@{viewModel.adapter}"
@@ -52,8 +93,8 @@
             android:id="@+id/progress_loading_bottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             android:visibility="@{viewModel.isLoadingMore ? View.VISIBLE : View.GONE}"
             />
     </RelativeLayout>
