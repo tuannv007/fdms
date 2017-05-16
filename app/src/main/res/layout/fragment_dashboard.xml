@@ -6,6 +6,8 @@
 
     <data>
 
+        <import type="com.framgia.fdms.screen.dashboard.DashboardViewModel.Tab"/>
+
         <variable
             name="viewModel"
             type="com.framgia.fdms.screen.dashboard.DashboardViewModel"
@@ -13,10 +15,46 @@
 
     </data>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        bind:adapter="@{viewModel.pagerAdapter}"
-        />
+        >
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            bind:adapter="@{viewModel.pagerAdapter}"
+            bind:model="@{viewModel}"
+            />
+
+        <LinearLayout
+            android:padding="@dimen/dp_10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentRight="true"
+            >
+
+            <ImageView
+                android:id="@+id/image_device_dashboard"
+                android:src="@drawable/ic_devices"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp_10"
+                android:onClick="@{()->viewModel.onDirectChildTab(Tab.TAB_DEVIVE_DASH_BOARD, viewpager)}"
+                bind:tabDashBoard="@{viewModel.tab}"
+                />
+
+            <ImageView
+                android:id="@+id/image_request_dashboard"
+                android:src="@drawable/ic_request"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{()->viewModel.onDirectChildTab(Tab.TAB_REQUEST_DASH_BOARD, viewpager)}"
+                bind:tabDashBoard="@{viewModel.tab}"
+                />
+        </LinearLayout>
+    </RelativeLayout>
 </layout>

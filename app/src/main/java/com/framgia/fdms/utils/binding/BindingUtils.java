@@ -12,17 +12,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.framgia.fdms.R;
+import com.framgia.fdms.screen.dashboard.DashboardViewModel;
 import com.framgia.fdms.screen.newmain.NewMainViewModel;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 
+import static com.framgia.fdms.screen.dashboard.DashboardViewModel.Tab.TAB_DEVIVE_DASH_BOARD;
+import static com.framgia.fdms.screen.dashboard.DashboardViewModel.Tab.TAB_REQUEST_DASH_BOARD;
 import static com.framgia.fdms.screen.newmain.NewMainViewModel.Tab.TAB_DASH_BOARD;
 import static com.framgia.fdms.screen.newmain.NewMainViewModel.Tab.TAB_DEVICE_MANAGER;
 import static com.framgia.fdms.screen.newmain.NewMainViewModel.Tab.TAB_PROFILE;
@@ -157,4 +161,47 @@ public final class BindingUtils {
         }
     }
 
+    @BindingAdapter({ "model" })
+    public static void setupViewPagerDashBorad(final ViewPager viewPager,
+            final DashboardViewModel viewModel) {
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset,
+                    int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                viewModel.setTab(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
+    }
+
+    @BindingAdapter("tabDashBoard")
+    public static void onChangeImage(ImageView image, int tab) {
+        if (image.getId() == R.id.image_device_dashboard){
+            image.setImageResource(R.drawable.ic_devices);
+        } else if (image.getId() == R.id.image_request_dashboard){
+            image.setImageResource(R.drawable.ic_request);
+        }
+
+        switch (tab) {
+            case TAB_DEVIVE_DASH_BOARD:
+                if (image.getId() == R.id.image_device_dashboard) {
+                    image.setImageResource(R.drawable.ic_devices_actived);
+                }
+                break;
+            case TAB_REQUEST_DASH_BOARD:
+                if (image.getId() == R.id.image_request_dashboard) {
+                    image.setImageResource(R.drawable.ic_request_actived);
+                }
+                break;
+            default:
+                break;
+        }
+    }
 }
