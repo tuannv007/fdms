@@ -71,13 +71,13 @@
                     android:text='@{item.productionName}'
                     />
 
-                <TextView
+                <ImageView
                     android:id="@+id/text_status_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:layout_marginRight="@dimen/dp_5"
-                    android:text="@{item.deviceStatusName}"
+                    android:layout_marginRight="@dimen/dp_10"
+                    app:resourceId='@{item.resourceId}'
                     />
 
             </LinearLayout>

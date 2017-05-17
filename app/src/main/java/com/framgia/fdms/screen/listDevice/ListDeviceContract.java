@@ -31,11 +31,15 @@ interface ListDeviceContract {
 
         void onDeviceStatusLoaded(List<Status> statuses);
 
-        void onSearch();
+        void onSearch(String keyWord);
 
         void onChooseCategory();
 
         void onChooseStatus();
+
+        void onReset();
+
+        void getData();
     }
 
     /**
@@ -44,6 +48,6 @@ interface ListDeviceContract {
     interface Presenter extends BasePresenter {
         void loadMoreData();
 
-        void searchDevices(String keyWord, int categoryId, int statusId);
+        void getData(String keyWord, Category category, Status status);
     }
 }

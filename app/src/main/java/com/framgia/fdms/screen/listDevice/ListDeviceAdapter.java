@@ -55,6 +55,11 @@ public class ListDeviceAdapter
         notifyDataSetChanged();
     }
 
+    public void clear() {
+        mDevices.clear();
+        notifyDataSetChanged();
+    }
+
     static class ViewHolder extends RecyclerView.ViewHolder {
         private ItemListDataBinding mBinding;
         private ListDeviceViewModel mViewModel;

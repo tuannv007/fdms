@@ -21,7 +21,7 @@
             android:id="@+id/searchview"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_50"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/bg_item"
             app:model="@{viewModel}"
             />
 

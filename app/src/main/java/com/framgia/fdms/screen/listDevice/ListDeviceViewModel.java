@@ -10,6 +10,7 @@ import android.databinding.ObservableField;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -24,6 +25,9 @@ import com.framgia.fdms.screen.devicecreation.CreateDeviceActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.framgia.fdms.utils.Constant.NOT_SEARCH;
+import static com.framgia.fdms.utils.Constant.OUT_OF_INDEX;
+
 /**
  * Exposes the data to be used in the ListDevice screen.
  */
@@ -34,12 +38,12 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
     private ListDeviceAdapter mAdapter;
     private ListDeviceContract.Presenter mPresenter;
     private Context mContext;
-    private String mKeyWord;
     private FragmentActivity mActivity;
     private ArrayAdapter<Category> mAdapterCategory;
     private ArrayAdapter<Status> mAdapterStatus;
     private Category mCategory;
     private Status mStatus;
+    private String mKeyWord;
 
     public ObservableBoolean getIsLoadingMore() {
         return mIsLoadingMore;
@@ -63,10 +67,22 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
         AlertDialog.Builder builder =
                 new AlertDialog.Builder(mActivity).setTitle(R.string.title_category)
                         .setNegativeButton(R.string.action_cancel, null)
+                        .setPositiveButton(R.string.action_clear,
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        setCategory(new Category(OUT_OF_INDEX,
+                                                mContext.getString(R.string.title_btn_category)));
+                                        mAdapter.clear();
+                                        mPresenter.getData(mKeyWord, mCategory, mStatus);
+                                    }
+                                })
                         .setAdapter(mAdapterCategory, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 setCategory(mAdapterCategory.getItem(which));
+                                mAdapter.clear();
+                                mPresenter.getData(mKeyWord, mCategory, mStatus);
                             }
                         });
         builder.show();
@@ -81,13 +97,36 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
         AlertDialog.Builder builder =
                 new AlertDialog.Builder(mActivity).setTitle(R.string.title_status_device)
                         .setNegativeButton(R.string.action_cancel, null)
+                        .setPositiveButton(R.string.action_clear,
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        setStatus(new Status(OUT_OF_INDEX,
+                                                mContext.getString(R.string.title_btn_status)));
+                                        mAdapter.clear();
+                                        mPresenter.getData(mKeyWord, mCategory, mStatus);
+                                    }
+                                })
                         .setAdapter(mAdapterStatus, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 setStatus(mAdapterStatus.getItem(which));
+                                mAdapter.clear();
+                                mPresenter.getData(mKeyWord, mCategory, mStatus);
                             }
                         });
         builder.show();
+    }
+
+    @Override
+    public void onReset() {
+        mAdapter.clear();
+        mPresenter.getData(null, mCategory, mStatus);
+    }
+
+    @Override
+    public void getData() {
+        mPresenter.getData(null, null, null);
     }
 
     @Override
@@ -124,6 +163,7 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
     @Override
     public void onError(String msg) {
         mIsLoadingMore.set(false);
+        hideProgressbar();
         Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
     }
 
@@ -148,8 +188,10 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
     }
 
     @Override
-    public void onSearch() {
-        mPresenter.searchDevices(mKeyWord, mCategory.getId(), mStatus.getId());
+    public void onSearch(String keyWord) {
+        mAdapter.clear();
+        mKeyWord = keyWord;
+        mPresenter.getData(mKeyWord, mCategory, mStatus);
     }
 
     public void updateCategory(List<Category> list) {
@@ -223,15 +265,5 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
     public void setStatus(Status status) {
         mStatus = status;
         notifyPropertyChanged(BR.status);
-    }
-
-    @Bindable
-    public String getKeyWord() {
-        return mKeyWord;
-    }
-
-    public void setKeyWord(String keyWord) {
-        mKeyWord = keyWord;
-        notifyPropertyChanged(BR.keyWord);
     }
 }

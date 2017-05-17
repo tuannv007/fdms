@@ -1,9 +1,14 @@
 package com.framgia.fdms.data.model;
 
+import com.framgia.fdms.R;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.Date;
+
+import static com.framgia.fdms.utils.Constant.AVAIABLE;
+import static com.framgia.fdms.utils.Constant.BROKEN;
+import static com.framgia.fdms.utils.Constant.USING;
 
 /**
  * Created by Age on 4/1/2017.
@@ -140,5 +145,18 @@ public class Device implements Serializable {
 
     public void setDeviceCategoryName(String deviceCategoryName) {
         mDeviceCategoryName = deviceCategoryName;
+    }
+
+    public int getResourceId() {
+        switch (mDeviceStatusId) {
+            case USING:
+                return R.drawable.ic_using;
+            case AVAIABLE:
+                return R.drawable.ic_avaiable;
+            case BROKEN:
+                return R.drawable.ic_broken;
+            default:
+                return R.drawable.ic_avaiable;
+        }
     }
 }

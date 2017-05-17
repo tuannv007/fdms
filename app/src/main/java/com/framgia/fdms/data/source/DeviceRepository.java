@@ -17,9 +17,10 @@ public class DeviceRepository {
         mDeviceRemoteDataSource = remoteDataSource;
     }
 
-    public Observable<List<Device>> getListDevices(int categoryId, int statusId, int page,
-            int perPage) {
-        return mDeviceRemoteDataSource.getListDevices(categoryId, statusId, page, perPage);
+    public Observable<List<Device>> getListDevices(String deviceName, int categoryId, int statusId,
+            int page, int perPage) {
+        return mDeviceRemoteDataSource.getListDevices(deviceName, categoryId, statusId, page,
+                perPage);
     }
 
     public Observable<List<Device>> searchDevices(String keyWord) {
@@ -44,5 +45,5 @@ public class DeviceRepository {
 
     public Observable<List<Dashboard>> getDashboardDevice() {
         return mDeviceRemoteDataSource.getDashboardDevice();
-    };
+    }
 }

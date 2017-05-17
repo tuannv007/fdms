@@ -9,9 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.framgia.fdms.R;
+import com.framgia.fdms.data.source.CategoryRepository;
 import com.framgia.fdms.data.source.DeviceRepository;
+import com.framgia.fdms.data.source.StatusRepository;
 import com.framgia.fdms.data.source.api.service.FDMSServiceClient;
+import com.framgia.fdms.data.source.remote.CategoryRemoteDataSource;
 import com.framgia.fdms.data.source.remote.DeviceRemoteDataSource;
+import com.framgia.fdms.data.source.remote.StatusRemoteDataSource;
 import com.framgia.fdms.databinding.FragmentListdeviceBinding;
 
 /**
@@ -31,8 +35,12 @@ public class ListDeviceFragment extends Fragment {
         mViewModel = new ListDeviceViewModel(getActivity());
 
         ListDeviceContract.Presenter presenter = new ListDevicePresenter(mViewModel,
-                new DeviceRepository(new DeviceRemoteDataSource(FDMSServiceClient.getInstance())));
+                new DeviceRepository(new DeviceRemoteDataSource(FDMSServiceClient.getInstance())),
+                new CategoryRepository(
+                        new CategoryRemoteDataSource(FDMSServiceClient.getInstance())),
+                new StatusRepository(new StatusRemoteDataSource(FDMSServiceClient.getInstance())));
         mViewModel.setPresenter(presenter);
+        mViewModel.getData();
     }
 
     @Nullable
