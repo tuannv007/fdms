@@ -1,15 +1,21 @@
 package com.framgia.fdms.data.model;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+import com.android.databinding.library.baseAdapters.BR;
+import com.framgia.fdms.FDMSApplication;
+import com.framgia.fdms.R;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by beepi on 09/05/2017.
  */
 
-public class Request implements Serializable {
+public class Request extends BaseObservable implements Serializable {
     @Expose
     @SerializedName("id")
     private int mId;
@@ -37,6 +43,19 @@ public class Request implements Serializable {
     @Expose
     @SerializedName("devices")
     private List<DeviceRequest> mDevices;
+    @Expose
+    @SerializedName("created_at")
+    private Date mCreatedAt;
+
+    @Bindable
+    public Date getCreatedAt() {
+        return mCreatedAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        mCreatedAt = createdAt;
+        notifyPropertyChanged(BR.createdAt);
+    }
 
     public int getId() {
         return mId;
@@ -46,12 +65,14 @@ public class Request implements Serializable {
         mId = id;
     }
 
+    @Bindable
     public String getTitle() {
         return mTitle;
     }
 
     public void setTitle(String title) {
         mTitle = title;
+        notifyPropertyChanged(BR.title);
     }
 
     public String getDescription() {
@@ -62,12 +83,14 @@ public class Request implements Serializable {
         mDescription = description;
     }
 
+    @Bindable
     public String getRequestStatus() {
         return mRequestStatus;
     }
 
     public void setRequestStatus(String requestStatus) {
         mRequestStatus = requestStatus;
+        notifyPropertyChanged(BR.requestStatus);
     }
 
     public String getAssignee() {
@@ -78,14 +101,17 @@ public class Request implements Serializable {
         mAssignee = assignee;
     }
 
+    @Bindable
     public String getRequestFor() {
         return mRequestFor;
     }
 
     public void setRequestFor(String requestFor) {
         mRequestFor = requestFor;
+        notifyPropertyChanged(BR.requestFor);
     }
 
+    @Bindable
     public String getCreater() {
         return mCreater;
     }
@@ -94,23 +120,39 @@ public class Request implements Serializable {
         mCreater = creater;
     }
 
+    @Bindable
     public String getUpdater() {
         return mUpdater;
     }
 
     public void setUpdater(String updater) {
         mUpdater = updater;
+        notifyPropertyChanged(BR.updater);
     }
 
+    @Bindable
     public List<DeviceRequest> getDevices() {
         return mDevices;
     }
 
     public void setDevices(List<DeviceRequest> devices) {
         mDevices = devices;
+        notifyPropertyChanged(BR.devices);
     }
 
-    public class DeviceRequest implements Serializable {
+    @Bindable
+    public String getRequestDescription() {
+        String nameDevice;
+        if (getDevices() == null || getDevices().size() == 0) {
+            nameDevice = FDMSApplication.getInstant().getString(R.string.title_device);
+        } else {
+            nameDevice = getDevices().get(0).getCategoryName();
+        }
+        return String.format(FDMSApplication.getInstant().getString(R.string.title_request),
+                getCreater(), nameDevice, getRequestFor());
+    }
+
+    public class DeviceRequest extends BaseObservable implements Serializable {
         @Expose
         @SerializedName("id")
         private int mId;
@@ -148,12 +190,14 @@ public class Request implements Serializable {
             mNumber = number;
         }
 
+        @Bindable
         public String getCategoryName() {
             return mCategoryName;
         }
 
         public void setCategoryName(String categoryName) {
             mCategoryName = categoryName;
+            notifyPropertyChanged(BR.categoryName);
         }
     }
 }

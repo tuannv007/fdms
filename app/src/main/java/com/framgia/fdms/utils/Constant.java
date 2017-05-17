@@ -39,4 +39,11 @@ public class Constant {
         public static final String DEVICE_NAME = "device_name";
 
     }
+    public class DeviceStatus{
+        public static final String CANCELLED = "cancelled";
+        public static final String WAITING_APPROVE = "waiting approve";
+        public static final String APPROVED = "approved";
+        public static final String WAITING_DONE = "waiting done";
+        public static final String DONE = "done";
+    }
 }

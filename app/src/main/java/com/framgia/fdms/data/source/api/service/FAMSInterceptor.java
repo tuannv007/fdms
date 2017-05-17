@@ -26,15 +26,12 @@ public class FAMSInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
-        Request.Builder builder = request.newBuilder();
-
-        builder.addHeader(HEADER_ACCEPT, HEADER_VALUE_ACCEPT);
+        Request.Builder builder = request.newBuilder().header(HEADER_ACCEPT, HEADER_VALUE_ACCEPT);
         String token = getToken();
         if (token != null) {
-            builder.addHeader(HEADER_AUTHORIZE, token);
+            builder.header(HEADER_AUTHORIZE, token);
         }
-        builder.method(request.method(), request.body()).build();
-        return chain.proceed(request);
+        return chain.proceed(builder.build());
     }
 
     public static String getToken() {
