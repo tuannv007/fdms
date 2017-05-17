@@ -14,5 +14,6 @@ public class StatusDataSource {
 
     public interface RemoteDataSource {
         Observable<List<Status>> getListStatus();
+        Observable<List<Status>> getListStatusRequest();
     }
 }

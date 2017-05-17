@@ -5,6 +5,7 @@ package com.framgia.fdms;
  */
 
 import android.support.v7.widget.RecyclerView;
+import com.framgia.fdms.data.model.Status;
 import java.util.List;
 
 /**
@@ -28,5 +29,7 @@ public interface BaseFragmentContract {
         void onLoadMore();
 
         void getListData(int page, int perPage);
+
+        void getData(String keyWord, Status relative, Status status);
     }
 }

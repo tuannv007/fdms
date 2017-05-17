@@ -1,7 +1,9 @@
 package com.framgia.fdms.screen.requestmanager;
 
 import com.framgia.fdms.data.model.Request;
+import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.data.source.RequestRepositoryContract;
+import com.framgia.fdms.data.source.StatusRepository;
 import java.util.List;
 import rx.Subscriber;
 import rx.Subscription;
@@ -26,12 +28,17 @@ final class RequestManagerPresenter implements RequestManagerContract.Presenter 
     private final RequestManagerContract.ViewModel mViewModel;
     private CompositeSubscription mSubscription;
     private RequestRepositoryContract mRequestRepository;
+    private StatusRepository mRepository;
+    private int mRelativeId = ALL_RELATIVE_ID;
+    private int mStatusId = ALL_REQUEST_STATUS_ID;
+    private String mKeyWord;
 
     public RequestManagerPresenter(RequestManagerContract.ViewModel viewModel,
-            RequestRepositoryContract deviceRepository) {
+            RequestRepositoryContract deviceRepository, StatusRepository statusRepository) {
         mViewModel = viewModel;
         mSubscription = new CompositeSubscription();
         mRequestRepository = deviceRepository;
+        mRepository = statusRepository;
     }
 
     @Override
@@ -43,6 +50,22 @@ final class RequestManagerPresenter implements RequestManagerContract.Presenter 
     @Override
     public void getListData(int page, int perPage) {
 
+    }
+
+    @Override
+    public void getData(String keyWord, Status relative, Status status) {
+        mPage = FIRST_PAGE;
+        if (relative != null) {
+            mRelativeId = relative.getId();
+        }
+        if (status != null) {
+            mStatusId = status.getId();
+        }
+        if (keyWord != null) {
+            mKeyWord = keyWord;
+        }
+        getMyRequest(mStatusId, mRelativeId, mPage, PER_PAGE);
+        getStatusDevice();
     }
 
     @Override
@@ -83,6 +106,38 @@ final class RequestManagerPresenter implements RequestManagerContract.Presenter 
                                 mViewModel.onGetRequestSuccess(requests);
                             }
                         });
+
+        mSubscription.add(subscription);
+    }
+
+    @Override
+    public void getStatusDevice() {
+        Subscription subscription = mRepository.getListStatusRequest()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mViewModel.showProgressbar();
+                    }
+                })
+                .subscribe(new Subscriber<List<Status>>() {
+                    @Override
+                    public void onCompleted() {
+                        mViewModel.hideProgressbar();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mViewModel.hideProgressbar();
+                        mViewModel.onErrorLoadPage(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(List<Status> statuses) {
+                        mViewModel.onGetStatusSuccess(statuses);
+                    }
+                });
 
         mSubscription.add(subscription);
     }

@@ -4,6 +4,7 @@ package com.framgia.fdms;
  * Created by beepi on 09/05/2017.
  */
 
+import android.databinding.BaseObservable;
 import android.databinding.ObservableField;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
@@ -12,7 +13,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import java.util.List;
 
-public abstract class BaseFragmentModel<T> implements BaseFragmentContract.ViewModel<T> {
+public abstract class BaseFragmentModel<T> extends BaseObservable
+        implements BaseFragmentContract.ViewModel<T> {
     protected BaseRecyclerViewAdapter mAdapter;
     protected ObservableField<Boolean> mIsLoadMore = new ObservableField<>(false);
     private ObservableField<Integer> mProgressBarVisibility = new ObservableField<>();
@@ -63,8 +65,9 @@ public abstract class BaseFragmentModel<T> implements BaseFragmentContract.ViewM
     @Override
     public void onErrorLoadPage(String msg) {
         mIsLoadMore.set(false);
-        if(mActivity == null) return;
-        Snackbar.make(mActivity.findViewById(android.R.id.content), msg, Snackbar.LENGTH_SHORT).show();
+        if (mActivity == null) return;
+        Snackbar.make(mActivity.findViewById(android.R.id.content), msg, Snackbar.LENGTH_SHORT)
+                .show();
     }
 
     @Override
