@@ -13,7 +13,8 @@ import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.text.Html;
+import android.text.format.DateUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,6 +27,8 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.formatter.PercentFormatter;
+import java.util.Calendar;
+import java.util.Date;
 
 import static com.framgia.fdms.screen.dashboard.DashboardViewModel.Tab.TAB_DEVIVE_DASH_BOARD;
 import static com.framgia.fdms.screen.dashboard.DashboardViewModel.Tab.TAB_REQUEST_DASH_BOARD;
@@ -33,10 +36,11 @@ import static com.framgia.fdms.screen.newmain.NewMainViewModel.Tab.TAB_DASH_BOAR
 import static com.framgia.fdms.screen.newmain.NewMainViewModel.Tab.TAB_DEVICE_MANAGER;
 import static com.framgia.fdms.screen.newmain.NewMainViewModel.Tab.TAB_PROFILE;
 import static com.framgia.fdms.screen.newmain.NewMainViewModel.Tab.TAB_REQUEST_MANAGER;
-import static com.framgia.fdms.utils.Constant.AVAIABLE;
-import static com.framgia.fdms.utils.Constant.BROKEN;
-import static com.framgia.fdms.utils.Constant.PERCENT;
-import static com.framgia.fdms.utils.Constant.USING;
+import static com.framgia.fdms.utils.Constant.DeviceStatus.APPROVED;
+import static com.framgia.fdms.utils.Constant.DeviceStatus.CANCELLED;
+import static com.framgia.fdms.utils.Constant.DeviceStatus.DONE;
+import static com.framgia.fdms.utils.Constant.DeviceStatus.WAITING_APPROVE;
+import static com.framgia.fdms.utils.Constant.DeviceStatus.WAITING_DONE;
 
 /**
  * Created by Age on 4/3/2017.
@@ -204,6 +208,41 @@ public final class BindingUtils {
                 if (image.getId() == R.id.image_request_dashboard) {
                     image.setImageResource(R.drawable.ic_request_actived);
                 }
+                break;
+            default:
+                break;
+        }
+    }
+
+    @BindingAdapter("bind:textForHtml")
+    public static void setText(TextView view, String title) {
+        view.setText(Html.fromHtml(title));
+    }
+
+    @BindingAdapter("bind:dateCreate")
+    public static void setDate(TextView view, Date dateTime) {
+        String niceDateStr = String.valueOf(DateUtils.getRelativeTimeSpanString(dateTime.getTime(),
+                Calendar.getInstance().getTimeInMillis(), DateUtils.MINUTE_IN_MILLIS));
+        view.setText(niceDateStr);
+    }
+
+    @BindingAdapter("bind:deviceStatus")
+    public static void setTextColor(TextView view, String status) {
+        switch (status) {
+            case CANCELLED:
+                view.setTextColor(view.getResources().getColor(R.color.color_red_500));
+                break;
+            case WAITING_APPROVE:
+                view.setTextColor(view.getResources().getColor(R.color.color_blue_600));
+                break;
+            case APPROVED:
+                view.setTextColor(view.getResources().getColor(R.color.color_green));
+                break;
+            case WAITING_DONE:
+                view.setTextColor(view.getResources().getColor(R.color.color_teal_700));
+                break;
+            case DONE:
+                view.setTextColor(view.getResources().getColor(R.color.color_orange_800));
                 break;
             default:
                 break;

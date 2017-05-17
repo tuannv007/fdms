@@ -1,12 +1,19 @@
 package com.framgia.fdms.screen.requestmanager;
 
 import android.content.Context;
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+import android.databinding.DataBindingUtil;
 import android.databinding.ObservableField;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import com.android.databinding.library.baseAdapters.BR;
 import com.framgia.fdms.BaseRecyclerViewAdapter;
+import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.databinding.ItemRequestManagerAdapterBinding;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,21 +22,26 @@ import java.util.List;
 
 public class RequestManagerAdapter
         extends BaseRecyclerViewAdapter<Request, RequestManagerAdapter.ViewHolder> {
-    private List<Request> mRequests;
+    private List<Request> mRequests = new ArrayList<>();
 
-    public RequestManagerAdapter(Context context) {
+    public RequestManagerAdapter(Context context, List<Request> requests) {
         super(context);
+        mRequests = requests;
     }
 
     @Override
     public void onUpdatePage(List<Request> datas) {
+        mRequests.clear();
         mRequests.addAll(datas);
         notifyDataSetChanged();
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        ItemRequestManagerAdapterBinding binding =
+                DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
+                        R.layout.item_request_manager_adapter, parent, false);
+        return new ViewHolder(binding);
     }
 
     @Override
@@ -60,7 +72,7 @@ public class RequestManagerAdapter
         }
     }
 
-    public class RequestModel {
+    public class RequestModel extends BaseObservable {
         private Request mRequest;
         private ObservableField<Integer> mStatusRequest = new ObservableField<>();
 
@@ -68,12 +80,14 @@ public class RequestManagerAdapter
             mRequest = request;
         }
 
+        @Bindable
         public Request getRequest() {
             return mRequest;
         }
 
         public void setRequest(Request request) {
             mRequest = request;
+            notifyPropertyChanged(BR.request);
         }
 
         public ObservableField<Integer> getStatusRequest() {

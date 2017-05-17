@@ -75,12 +75,12 @@ final class RequestManagerPresenter implements RequestManagerContract.Presenter 
 
                             @Override
                             public void onError(Throwable e) {
-                                mViewModel.onErrorLoadPage(e.getMessage());
+                                mViewModel.hideProgressbar();
                             }
 
                             @Override
                             public void onNext(List<Request> requests) {
-                                mViewModel.onPageLoad(requests);
+                                mViewModel.onGetRequestSuccess(requests);
                             }
                         });
 
