@@ -58,6 +58,10 @@ public class RequestManagerAdapter
         mRequests = requests;
     }
 
+    public void clear() {
+        if (mRequests != null) mRequests.clear();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ItemRequestManagerAdapterBinding mBinding;
 

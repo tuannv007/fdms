@@ -9,8 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.source.RequestRepository;
+import com.framgia.fdms.data.source.StatusRepository;
 import com.framgia.fdms.data.source.api.service.FDMSServiceClient;
 import com.framgia.fdms.data.source.remote.RequestRemoteDataSource;
+import com.framgia.fdms.data.source.remote.StatusRemoteDataSource;
 import com.framgia.fdms.databinding.FragmentRequestmanagerBinding;
 
 /**
@@ -27,11 +29,13 @@ public class RequestManagerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewModel = new RequestManagerViewModel();
+        mViewModel = new RequestManagerViewModel(getActivity());
         RequestManagerContract.Presenter presenter = new RequestManagerPresenter(mViewModel,
                 RequestRepository.getInstant(
-                        new RequestRemoteDataSource(FDMSServiceClient.getInstance())));
+                        new RequestRemoteDataSource(FDMSServiceClient.getInstance())),
+                new StatusRepository(new StatusRemoteDataSource(FDMSServiceClient.getInstance())));
         mViewModel.setPresenter(presenter);
+        mViewModel.getData();
     }
 
     @Nullable

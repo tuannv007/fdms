@@ -84,4 +84,6 @@
     <string name="title_btn_status">Status</string>
     <string name="title_request_off_your">Request Manager</string>
     <string formatted="false" name="title_request"><![CDATA[<b><i>%s</i></b> request <b>%s</b> for <b>%s</b>]]></string>
+    <string name="action_filter_status">Request</string>
+    <string name="action_filter_relative">Relative</string>
 </resources>

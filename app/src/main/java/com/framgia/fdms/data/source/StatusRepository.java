@@ -16,7 +16,11 @@ public class StatusRepository {
         mStatusRemoteDataSource = statusRemoteDataSource;
     }
 
-    public Observable<List<Status>> getListStatus(){
+    public Observable<List<Status>> getListStatus() {
         return mStatusRemoteDataSource.getListStatus();
+    }
+
+    public Observable<List<Status>> getListStatusRequest() {
+        return mStatusRemoteDataSource.getListStatusRequest();
     }
 }

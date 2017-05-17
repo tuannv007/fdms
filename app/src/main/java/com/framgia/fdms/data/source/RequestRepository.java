@@ -2,7 +2,7 @@ package com.framgia.fdms.data.source;
 
 import com.framgia.fdms.data.model.Dashboard;
 import com.framgia.fdms.data.model.Request;
-import com.framgia.fdms.data.model.Respone;
+import com.framgia.fdms.data.model.Status;
 import java.util.List;
 import rx.Observable;
 
@@ -30,6 +30,11 @@ public class RequestRepository implements RequestRepositoryContract {
     public Observable<List<Request>> getMyRequest(int requestStatusId, int relativeId, int perPage,
             int page) {
         return mRemoteDataSource.getMyRequest(requestStatusId, relativeId, perPage, page);
+    }
+
+    @Override
+    public Observable<List<Status>> getStatus() {
+        return mRemoteDataSource.getStatus();
     }
 
     @Override

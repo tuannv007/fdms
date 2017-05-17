@@ -3,11 +3,12 @@ package com.framgia.fdms.data.source.remote;
 import com.framgia.fdms.data.model.Dashboard;
 import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.data.model.Respone;
+import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.data.source.RequestDataSource;
 import com.framgia.fdms.data.source.api.service.FDMSApi;
 import com.framgia.fdms.utils.Utils;
-import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import rx.Observable;
@@ -44,6 +45,12 @@ public class RequestRemoteDataSource extends BaseRemoteDataSource
                         return Utils.getResponse(listRespone);
                     }
                 });
+    }
+
+    @Override
+    public Observable<List<Status>> getStatus() {
+        List<Status> status = new ArrayList<>();
+        return Observable.just(status);
     }
 
     @Override

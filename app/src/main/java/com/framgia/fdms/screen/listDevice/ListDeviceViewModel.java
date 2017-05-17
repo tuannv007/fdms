@@ -9,8 +9,6 @@ import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -25,7 +23,6 @@ import com.framgia.fdms.screen.devicecreation.CreateDeviceActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.framgia.fdms.utils.Constant.NOT_SEARCH;
 import static com.framgia.fdms.utils.Constant.OUT_OF_INDEX;
 
 /**
@@ -93,7 +90,6 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
         if (mAdapterStatus == null) {
             return;
         }
-
         AlertDialog.Builder builder =
                 new AlertDialog.Builder(mActivity).setTitle(R.string.title_status_device)
                         .setNegativeButton(R.string.action_cancel, null)

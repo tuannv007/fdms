@@ -13,7 +13,8 @@ import rx.functions.Func1;
  * Created by MyPC on 05/05/2017.
  */
 
-public class StatusRemoteDataSource extends BaseRemoteDataSource implements StatusDataSource.RemoteDataSource {
+public class StatusRemoteDataSource extends BaseRemoteDataSource
+        implements StatusDataSource.RemoteDataSource {
 
     public StatusRemoteDataSource(FDMSApi FDMSApi) {
         super(FDMSApi);
@@ -22,6 +23,17 @@ public class StatusRemoteDataSource extends BaseRemoteDataSource implements Stat
     @Override
     public Observable<List<Status>> getListStatus() {
         return mFDMSApi.getListStatus()
+                .flatMap(new Func1<Respone<List<Status>>, Observable<List<Status>>>() {
+                    @Override
+                    public Observable<List<Status>> call(Respone<List<Status>> listRespone) {
+                        return Utils.getResponse(listRespone);
+                    }
+                });
+    }
+
+    @Override
+    public Observable<List<Status>> getListStatusRequest() {
+        return mFDMSApi.getListStatusRequest()
                 .flatMap(new Func1<Respone<List<Status>>, Observable<List<Status>>>() {
                     @Override
                     public Observable<List<Status>> call(Respone<List<Status>> listRespone) {
