@@ -33,10 +33,6 @@ public class DashBoardDetailFragment extends Fragment {
         return boardFragment;
     }
 
-    public static DashBoardDetailFragment newInstance() {
-        return new DashBoardDetailFragment();
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +42,7 @@ public class DashBoardDetailFragment extends Fragment {
             dashboradType = getArguments().getInt(EXTRA_DASHBORAD_TYPE);
         }
 
-        mViewModel = new DashBoardDetailViewModel(getContext());
+        mViewModel = new DashBoardDetailViewModel(getContext(), dashboradType);
         DashBoardDetailContract.Presenter presenter = new DashBoardDetailPresenter(mViewModel,
                 new DeviceRepository(new DeviceRemoteDataSource(FDMSServiceClient.getInstance())),
                 RequestRepository.getInstant(
@@ -62,7 +58,8 @@ public class DashBoardDetailFragment extends Fragment {
             @Nullable Bundle savedInstanceState) {
 
         FragmentDashBoardDetailBinding binding =
-                DataBindingUtil.inflate(inflater, R.layout.fragment_dash_board_detail, container, false);
+                DataBindingUtil.inflate(inflater, R.layout.fragment_dash_board_detail, container,
+                        false);
         binding.setViewModel((DashBoardDetailViewModel) mViewModel);
         return binding.getRoot();
     }

@@ -24,6 +24,7 @@ import com.framgia.fdms.screen.dashboard.DashboardViewModel;
 import com.framgia.fdms.screen.listDevice.ListDeviceViewModel;
 import com.framgia.fdms.screen.newmain.NewMainViewModel;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.formatter.PercentFormatter;
@@ -46,6 +47,11 @@ import static com.framgia.fdms.utils.Constant.DeviceStatus.WAITING_DONE;
  * Created by Age on 4/3/2017.
  */
 public final class BindingUtils {
+    private static final float TEXT_LABLE_SIZE = 11f;
+    private static final float TEXT_CENTER_SIZE = 15f;
+    private static final int HOLE_RADIUS = 60;
+    private static final int ROTATION_ANGLE = 0;
+
     private BindingUtils() {
         // No-op
     }
@@ -147,27 +153,33 @@ public final class BindingUtils {
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    @BindingAdapter({ "pieData", "totalValue" })
-    public static void setData(PieChart view, PieData pieData, int total) {
-        Resources resources = view.getContext().getResources();
+    @BindingAdapter({ "pieData", "totalValue", "description" })
+    public static void setData(PieChart pieChart, PieData pieData, int total, String description) {
+        Resources resources = pieChart.getContext().getResources();
 
         if (pieData.getDataSetCount() > 0) {
-            pieData.setValueFormatter(new PercentFormatter());
-            pieData.setValueTextColor(Color.BLACK);
-            pieData.setValueTextSize(resources.getDimension(R.dimen.sp_8));
+            pieChart.setUsePercentValues(true);
+            pieChart.setHoleRadius(HOLE_RADIUS);
+            pieChart.setDrawCenterText(true);
+            pieChart.setDrawHoleEnabled(true);
+            pieChart.setRotationEnabled(true);
+            pieChart.setDrawEntryLabels(false);
+            pieChart.setRotationAngle(ROTATION_ANGLE);
+            pieChart.setCenterText(resources.getString(R.string.title_total) + total);
+            pieChart.setCenterTextColor(Color.BLUE);
+            pieChart.setCenterTextSize(TEXT_CENTER_SIZE);
+            pieChart.getDescription().setText(description);
 
-            view.setData(pieData);
-            view.setTransparentCircleRadius(resources.getDimension(R.dimen.dp_30));
-            view.setHoleRadius(resources.getDimension(R.dimen.dp_30));
-            view.setDescription(null);
-            view.setDrawEntryLabels(false);
-            view.setCenterText(resources.getString(R.string.title_total) + total);
-            view.setCenterTextSize(resources.getDimension(R.dimen.sp_17));
-            view.setCenterTextColor(Color.BLUE);
-
-            Legend legend = view.getLegend();
+            Legend legend = pieChart.getLegend();
             legend.setEnabled(false);
+
+            pieData.setValueFormatter(new PercentFormatter());
+            pieData.setValueTextSize(TEXT_LABLE_SIZE);
+            pieData.setValueTextColor(Color.WHITE);
+            pieChart.setData(pieData);
+            pieChart.invalidate();
         }
+
     }
 
     @BindingAdapter({ "model" })
@@ -192,21 +204,17 @@ public final class BindingUtils {
 
     @BindingAdapter("tabDashBoard")
     public static void onChangeImage(ImageView image, int tab) {
-        if (image.getId() == R.id.image_device_dashboard) {
-            image.setImageResource(R.drawable.ic_devices);
-        } else if (image.getId() == R.id.image_request_dashboard) {
-            image.setImageResource(R.drawable.ic_request);
-        }
+        image.setImageResource(R.drawable.bg_circle_grey);
 
         switch (tab) {
             case TAB_DEVIVE_DASH_BOARD:
                 if (image.getId() == R.id.image_device_dashboard) {
-                    image.setImageResource(R.drawable.ic_devices_actived);
+                    image.setImageResource(R.drawable.bg_circle_red);
                 }
                 break;
             case TAB_REQUEST_DASH_BOARD:
                 if (image.getId() == R.id.image_request_dashboard) {
-                    image.setImageResource(R.drawable.ic_request_actived);
+                    image.setImageResource(R.drawable.bg_circle_red);
                 }
                 break;
             default:

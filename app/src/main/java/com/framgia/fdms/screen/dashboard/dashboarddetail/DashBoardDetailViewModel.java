@@ -14,25 +14,38 @@ import com.github.mikephil.charting.data.PieEntry;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.framgia.fdms.screen.dashboard.dashboarddetail.DashBoardDetailFragment
+        .DEVICE_DASHBOARD;
+import static com.framgia.fdms.screen.dashboard.dashboarddetail.DashBoardDetailFragment
+        .REQUEST_DASHBOARD;
+
 /**
  * Exposes the data to be used in the Scanner screen.
  */
 
-public class DashBoardDetailViewModel extends BaseObservable implements DashBoardDetailContract.ViewModel {
+public class DashBoardDetailViewModel extends BaseObservable
+        implements DashBoardDetailContract.ViewModel {
 
     private DashBoardDetailContract.Presenter mPresenter;
     private PieData mPieData;
     private Context mContext;
     private int mTotal;
     private DashBoardDetailAdapter mAdapter;
+    private String mDashboardTitle;
 
-    public DashBoardDetailViewModel(Context context) {
+    public DashBoardDetailViewModel(Context context, int dashboardType) {
         mContext = context;
         mPieData = new PieData();
         mAdapter = new DashBoardDetailAdapter(mContext, new ArrayList<Dashboard>(), this);
+        initDashboardTitle(dashboardType);
     }
 
-    public DashBoardDetailViewModel() {
+    private void initDashboardTitle(int dashboardType) {
+        if (dashboardType == DEVICE_DASHBOARD) {
+            setDashboardTitle(mContext.getString(R.string.title_device_dashboard));
+        } else if (dashboardType == REQUEST_DASHBOARD) {
+            setDashboardTitle(mContext.getString(R.string.title_request_dashboard));
+        }
     }
 
     @Override
@@ -84,14 +97,13 @@ public class DashBoardDetailViewModel extends BaseObservable implements DashBoar
         for (int i = 0; i < dashboards.size(); i++) {
             Dashboard dashboard = dashboards.get(i);
             float percent = (float) dashboard.getCount() / total * 100f;
-            if (percent != 0 ) {
+            if (percent != 0) {
                 values.add(new PieEntry(percent, dashboard.getTitle(), i));
                 colors.add(Color.parseColor(dashboard.getBackgroundColor()));
             }
         }
 
-        PieDataSet dataSet =
-                new PieDataSet(values, mContext.getString(R.string.title_chart));
+        PieDataSet dataSet = new PieDataSet(values, mContext.getString(R.string.title_chart));
         dataSet.setColors(colors);
 
         setDataSet(dataSet);
@@ -117,5 +129,15 @@ public class DashBoardDetailViewModel extends BaseObservable implements DashBoar
     @Bindable
     public DashBoardDetailAdapter getAdapter() {
         return mAdapter;
+    }
+
+    @Bindable
+    public String getDashboardTitle() {
+        return mDashboardTitle;
+    }
+
+    public void setDashboardTitle(String dashboardTitle) {
+        mDashboardTitle = dashboardTitle;
+        notifyPropertyChanged(BR.dashboardTitle);
     }
 }

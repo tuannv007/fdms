@@ -1,12 +1,13 @@
 package com.framgia.fdms.screen.dashboard;
 
-import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.support.annotation.IntDef;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import com.framgia.fdms.BR;
+
+import static com.framgia.fdms.screen.dashboard.DashboardViewModel.Tab.TAB_DEVIVE_DASH_BOARD;
+import static com.framgia.fdms.screen.dashboard.DashboardViewModel.Tab.TAB_REQUEST_DASH_BOARD;
 
 /**
  * Exposes the data to be used in the Dashboard screen.
@@ -16,15 +17,17 @@ public class DashboardViewModel extends BaseObservable implements DashboardContr
 
     private DashboardContract.Presenter mPresenter;
     private ViewPagerAdapter mPagerAdapter;
-    private int mTab = Tab.TAB_DEVIVE_DASH_BOARD;
+    private int mTab = TAB_DEVIVE_DASH_BOARD;
 
     public DashboardViewModel(DashboardFragment fragment) {
         mPagerAdapter = new ViewPagerAdapter(fragment.getChildFragmentManager());
     }
 
-    public void onDirectChildTab(@Tab int tab, ViewPager viewPager) {
-        if (mPagerAdapter == null) return;
-        viewPager.setCurrentItem(tab);
+    public void onClickChangeTab(ViewPager viewpager) {
+        int currentPos = viewpager.getCurrentItem();
+        currentPos = currentPos == TAB_DEVIVE_DASH_BOARD ? TAB_REQUEST_DASH_BOARD
+                : TAB_DEVIVE_DASH_BOARD;
+        viewpager.setCurrentItem(currentPos);
     }
 
     @Override
@@ -57,7 +60,7 @@ public class DashboardViewModel extends BaseObservable implements DashboardContr
     }
 
     @IntDef({
-            Tab.TAB_DEVIVE_DASH_BOARD, Tab.TAB_REQUEST_DASH_BOARD
+            TAB_DEVIVE_DASH_BOARD, Tab.TAB_REQUEST_DASH_BOARD
     })
     public @interface Tab {
         int TAB_DEVIVE_DASH_BOARD = 0;
