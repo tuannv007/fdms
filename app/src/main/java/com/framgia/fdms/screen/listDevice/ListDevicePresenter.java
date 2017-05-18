@@ -154,9 +154,11 @@ final class ListDevicePresenter implements ListDeviceContract.Presenter {
         mPage = FIRST_PAGE;
         if (category != null) {
             mCategoryId = category.getId();
-        } else if (status != null){
+        }
+        if (status != null) {
             mStatusId = status.getId();
-        } else if (keyWord != null) {
+        }
+        if (keyWord != null) {
             mKeyWord = keyWord;
         }
         getListDevice(mKeyWord, mCategoryId, mStatusId, mPage, PER_PAGE);
