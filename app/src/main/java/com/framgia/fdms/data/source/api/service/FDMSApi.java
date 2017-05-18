@@ -7,10 +7,16 @@ import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.data.model.User;
+import com.framgia.fdms.data.source.api.request.DeviceRequest;
+import com.framgia.fdms.data.source.api.request.RequestCreatorRequest;
 import java.util.List;
 import java.util.Map;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -63,4 +69,12 @@ public interface FDMSApi {
 
     @GET("api/v1/user_group")
     Observable<Respone<List<Status>>> getListRelative();
+
+    @GET("api/v1/user_assign")
+    Observable<Respone<List<Status>>> getListAssign();
+
+    @POST("api/v1/requests")
+    @FormUrlEncoded
+    Observable<Respone<Request>> registerRequest(@FieldMap Map<String, String> params,
+            @Field("request[request_details_attributes]") List<DeviceRequest> deviceRequests);
 }

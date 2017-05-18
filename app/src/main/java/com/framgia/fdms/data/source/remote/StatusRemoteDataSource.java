@@ -53,4 +53,16 @@ public class StatusRemoteDataSource extends BaseRemoteDataSource
                     }
                 });
     }
+
+    @Override
+    public Observable<List<Status>> getListAssignee() {
+        return mFDMSApi.getListAssign()
+                .flatMap(new Func1<Respone<List<Status>>, Observable<List<Status>>>() {
+
+                    @Override
+                    public Observable<List<Status>> call(Respone<List<Status>> listRespone) {
+                        return Utils.getResponse(listRespone);
+                    }
+                });
+    }
 }

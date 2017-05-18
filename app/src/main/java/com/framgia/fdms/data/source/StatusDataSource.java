@@ -18,5 +18,7 @@ public class StatusDataSource {
         Observable<List<Status>> getListStatusRequest();
 
         Observable<List<Status>> getListRelative();
+
+        Observable<List<Status>> getListAssignee();
     }
 }

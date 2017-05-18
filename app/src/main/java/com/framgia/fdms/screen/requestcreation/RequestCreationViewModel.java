@@ -1,13 +1,17 @@
 package com.framgia.fdms.screen.requestcreation;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 import com.framgia.fdms.BR;
 import com.framgia.fdms.R;
+import com.framgia.fdms.data.model.Category;
+import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.data.source.api.request.RequestCreatorRequest;
 import java.util.List;
@@ -25,15 +29,25 @@ public class RequestCreationViewModel extends BaseObservable
     private String mRequestDescription;
     private Status mAssignee;
     private Status mRelative;
-    private RequestCreatorRequest mRequestCreatorRequest;
+    private RequestCreatorRequest mRequest;
     private ArrayAdapter<Status> mAdapterAssignee;
     private ArrayAdapter<Status> mAdapterRelative;
+    private ArrayAdapter<Category> mAdapterCategory;
+    private RequestCreationAdapter mAdapter;
+    private Context mContext;
+    private String mTitleError;
+    private String mDescriptionError;
+    private String mRelativeError;
 
     public RequestCreationViewModel(AppCompatActivity activity) {
         mActivity = activity;
-        mRequestCreatorRequest = new RequestCreatorRequest();
+        mContext = activity.getApplicationContext();
+        mRequest = new RequestCreatorRequest();
         mAdapterAssignee = new ArrayAdapter<Status>(mActivity, R.layout.select_dialog_item);
         mAdapterRelative = new ArrayAdapter<Status>(mActivity, R.layout.select_dialog_item);
+        mAdapterCategory = new ArrayAdapter<Category>(mActivity,
+                R.layout.support_simple_spinner_dropdown_item);
+        mAdapter = new RequestCreationAdapter(mContext, this);
     }
 
     @Override
@@ -93,7 +107,8 @@ public class RequestCreationViewModel extends BaseObservable
 
     @Override
     public void onCreateRequestClick() {
-        // TODO: later
+        mRequest.setDeviceRequests(mAdapter.getData());
+        mPresenter.registerRequest(mRequest);
     }
 
     @Override
@@ -115,6 +130,61 @@ public class RequestCreationViewModel extends BaseObservable
         updateRelative(relatives);
     }
 
+    @Override
+    public void onGetCategorySuccess(List<Category> categories) {
+        if (categories == null) {
+            return;
+        }
+        mAdapterCategory.clear();
+        mAdapterCategory.addAll(categories);
+        mAdapterCategory.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onLoadError(String message) {
+        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void hideProgressbar() {
+        // TODO: later
+    }
+
+    @Override
+    public void showProgressbar() {
+        // TODO: later
+    }
+
+    @Override
+    public void onAddRequestDetailClick(int position) {
+        if (position == (mAdapter.getItemCount() - 1)) {
+            mAdapter.addItem();
+        }
+    }
+
+    @Override
+    public void onGetRequestSuccess(Request request) {
+        mActivity.finish();
+    }
+
+    @Override
+    public void onInputTitleError() {
+        mTitleError = mContext.getString(R.string.msg_error_user_name);
+        notifyPropertyChanged(BR.titleError);
+    }
+
+    @Override
+    public void onInputDescriptionError() {
+        mDescriptionError = mContext.getString(R.string.msg_error_user_name);
+        notifyPropertyChanged(BR.descriptionError);
+    }
+
+    @Override
+    public void onInputRelativeError() {
+        mRelativeError = mContext.getString(R.string.msg_error_user_name);
+        notifyPropertyChanged(BR.relativeError);
+    }
+
     private void updateRelative(List<Status> relatives) {
         if (relatives == null) {
             return;
@@ -130,7 +200,7 @@ public class RequestCreationViewModel extends BaseObservable
     }
 
     public void setRequestTitle(String requestTitle) {
-        mRequestCreatorRequest.setTitle(requestTitle);
+        mRequest.setTitle(requestTitle);
         mRequestTitle = requestTitle;
     }
 
@@ -140,7 +210,7 @@ public class RequestCreationViewModel extends BaseObservable
     }
 
     public void setRequestDescription(String requestDescription) {
-        mRequestCreatorRequest.setDescription(requestDescription);
+        mRequest.setDescription(requestDescription);
         mRequestDescription = requestDescription;
     }
 
@@ -150,7 +220,7 @@ public class RequestCreationViewModel extends BaseObservable
     }
 
     public void setAssignee(Status assignee) {
-        mRequestCreatorRequest.setAssigneeId(assignee.getId());
+        mRequest.setAssigneeId(assignee.getId());
         mAssignee = assignee;
         notifyPropertyChanged(BR.assignee);
     }
@@ -161,8 +231,31 @@ public class RequestCreationViewModel extends BaseObservable
     }
 
     public void setRelative(Status relative) {
-        mRequestCreatorRequest.setForUserId(relative.getId());
+        mRequest.setForUserId(relative.getId());
         mRelative = relative;
         notifyPropertyChanged(BR.relative);
+    }
+
+    public ArrayAdapter<Category> getAdapterCategory() {
+        return mAdapterCategory;
+    }
+
+    public RequestCreationAdapter getAdapter() {
+        return mAdapter;
+    }
+
+    @Bindable
+    public String getTitleError() {
+        return mTitleError;
+    }
+
+    @Bindable
+    public String getDescriptionError() {
+        return mDescriptionError;
+    }
+
+    @Bindable
+    public String getRelativeError() {
+        return mRelativeError;
     }
 }

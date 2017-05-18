@@ -2,6 +2,8 @@ package com.framgia.fdms.utils.binding;
 
 import android.content.res.Resources;
 import android.databinding.BindingAdapter;
+import android.databinding.InverseBindingAdapter;
+import android.databinding.InverseBindingListener;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
@@ -15,14 +17,24 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.format.DateUtils;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.framgia.fdms.R;
+import com.framgia.fdms.data.model.Category;
+import com.framgia.fdms.data.source.api.request.RequestCreatorRequest;
 import com.framgia.fdms.screen.dashboard.DashboardViewModel;
 import com.framgia.fdms.screen.listDevice.ListDeviceViewModel;
 import com.framgia.fdms.screen.newmain.NewMainViewModel;
+import com.framgia.fdms.screen.requestcreation.RequestCreationViewModel;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
@@ -283,5 +295,43 @@ public final class BindingUtils {
     @BindingAdapter({ "resourceId" })
     public static void setImage(ImageView view, int resource) {
         view.setImageResource(resource);
+    }
+
+    @InverseBindingAdapter(attribute = "deviceCategoryId", event = "deviceCategoryIdAttrChanged")
+    public static int captureDeviceCategoryId(AppCompatSpinner spinner) {
+        Object selectedItem = spinner.getSelectedItem();
+        return ((Category) selectedItem).getId();
+    }
+
+    @BindingAdapter(value = {
+            "deviceCategoryId", "deviceCategoryIdAttrChanged"
+    }, requireAll = false)
+    public static void setCategoryId(AppCompatSpinner view, int newSelectedValue,
+            final InverseBindingListener bindingListener) {
+        AdapterView.OnItemSelectedListener listener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                bindingListener.onChange();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                bindingListener.onChange();
+            }
+        };
+        view.setOnItemSelectedListener(listener);
+    }
+
+    @BindingAdapter({ "position", "viewModel" })
+    public static void setAdapterSpinner(AppCompatSpinner spinner, final int position,
+            final RequestCreationViewModel viewModel) {
+        spinner.setAdapter(viewModel.getAdapterCategory());
+        spinner.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                viewModel.onAddRequestDetailClick(position);
+                return false;
+            }
+        });
     }
 }
