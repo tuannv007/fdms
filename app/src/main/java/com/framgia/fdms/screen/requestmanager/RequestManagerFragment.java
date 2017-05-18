@@ -29,7 +29,9 @@ public class RequestManagerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         mViewModel = new RequestManagerViewModel(getActivity());
+
         RequestManagerContract.Presenter presenter = new RequestManagerPresenter(mViewModel,
                 RequestRepository.getInstant(
                         new RequestRemoteDataSource(FDMSServiceClient.getInstance())),

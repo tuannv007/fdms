@@ -22,6 +22,8 @@ interface RequestManagerContract {
         void onLoadError(String msg);
 
         void getData();
+
+        void onRegisterRequestClick();
     }
 
     /**

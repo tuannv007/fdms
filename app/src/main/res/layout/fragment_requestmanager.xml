@@ -88,6 +88,7 @@
             android:src="@drawable/ic_action_add"
             app:backgroundTint="@color/colorPrimaryDark"
             app:pressedTranslationZ="@dimen/dp_15"
+            android:onClick="@{() -> viewModel.onRegisterRequestClick()}"
             />
     </RelativeLayout>
 </layout>
