@@ -1,6 +1,7 @@
 package com.framgia.fdms.screen.requestmanager;
 
 import android.content.Context;
+
 import android.content.DialogInterface;
 import android.databinding.Bindable;
 import android.support.v4.app.FragmentActivity;
@@ -13,6 +14,7 @@ import com.framgia.fdms.BaseFragmentModel;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.data.model.Status;
+import com.framgia.fdms.screen.requestcreation.RequestCreationActivity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +29,7 @@ public class RequestManagerViewModel extends BaseFragmentModel<Request>
 
     private final Context mContext;
     private RequestManagerAdapter mAdapter;
+
     private ArrayAdapter<Status> mAdapterStatus;
     private ArrayAdapter<Status> mAdapterRealtive;
     private Status mStatus;
@@ -189,5 +192,9 @@ public class RequestManagerViewModel extends BaseFragmentModel<Request>
 
     public void setAdapterRealtive(ArrayAdapter<Status> adapterRealtive) {
         mAdapterRealtive = adapterRealtive;
+    }
+
+    public void onRegisterRequestClick() {
+        mActivity.startActivity(RequestCreationActivity.getInstance(mActivity));
     }
 }
