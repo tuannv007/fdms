@@ -98,7 +98,7 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         setStatus(new Status(OUT_OF_INDEX,
-                                                mContext.getString(R.string.title_btn_status)));
+                                                mContext.getString(R.string.title_request_status)));
                                         mAdapter.clear();
                                         mPresenter.getData(mKeyWord, mCategory, mStatus);
                                     }

@@ -14,13 +14,8 @@ import java.util.List;
  */
 public interface BaseFragmentContract {
     interface ViewModel<T> extends BaseViewModel<BaseFragmentContract.Presenter> {
-        void onPageLoad(List<T> datas);
-
-        void onItemClick(T item);
 
         void showProgressbar();
-
-        void onErrorLoadPage(String msg);
 
         void hideProgressbar();
     }
@@ -28,8 +23,6 @@ public interface BaseFragmentContract {
     interface Presenter<T> extends BasePresenter {
         void onLoadMore();
 
-        void getListData(int page, int perPage);
-
-        void getData(String keyWord, Status relative, Status status);
+        void getData(Status relative, Status status);
     }
 }

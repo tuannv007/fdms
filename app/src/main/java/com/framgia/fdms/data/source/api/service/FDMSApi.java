@@ -60,4 +60,7 @@ public interface FDMSApi {
 
     @GET("api/v1/request_status")
     Observable<Respone<List<Status>>> getListStatusRequest();
+
+    @GET("api/v1/user_group")
+    Observable<Respone<List<Status>>> getListRelative();
 }

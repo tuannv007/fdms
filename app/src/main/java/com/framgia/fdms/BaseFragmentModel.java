@@ -15,11 +15,9 @@ import java.util.List;
 
 public abstract class BaseFragmentModel<T> extends BaseObservable
         implements BaseFragmentContract.ViewModel<T> {
-    protected BaseRecyclerViewAdapter mAdapter;
     protected ObservableField<Boolean> mIsLoadMore = new ObservableField<>(false);
     private ObservableField<Integer> mProgressBarVisibility = new ObservableField<>();
-    private FragmentActivity mActivity;
-    private BaseFragmentContract.Presenter mPresenter;
+    protected BaseFragmentContract.Presenter mPresenter;
     private RecyclerView.OnScrollListener mScrollListenner = new RecyclerView.OnScrollListener() {
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -47,28 +45,10 @@ public abstract class BaseFragmentModel<T> extends BaseObservable
     }
 
     @Override
-    public void onPageLoad(List<T> datas) {
-        mIsLoadMore.set(false);
-        mAdapter.onUpdatePage(datas);
-    }
-
-    @Override
-    public void onItemClick(T item) {
-        //todo overide item click
-    }
-
-    @Override
     public void showProgressbar() {
         mProgressBarVisibility.set(View.VISIBLE);
     }
 
-    @Override
-    public void onErrorLoadPage(String msg) {
-        mIsLoadMore.set(false);
-        if (mActivity == null) return;
-        Snackbar.make(mActivity.findViewById(android.R.id.content), msg, Snackbar.LENGTH_SHORT)
-                .show();
-    }
 
     @Override
     public void hideProgressbar() {
@@ -94,11 +74,4 @@ public abstract class BaseFragmentModel<T> extends BaseObservable
         return mProgressBarVisibility;
     }
 
-    public FragmentActivity getActivity() {
-        return mActivity;
-    }
-
-    public void setActivity(FragmentActivity activity) {
-        mActivity = activity;
-    }
 }

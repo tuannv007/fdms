@@ -38,6 +38,6 @@ public class Status {
 
     @Override
     public String toString() {
-        return  + mId + ". " + mName;
+        return  mName;
     }
 }
