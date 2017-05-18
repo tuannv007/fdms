@@ -2,7 +2,6 @@ package com.framgia.fdms.screen.listDevice;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.ObservableBoolean;
@@ -53,6 +52,8 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
 
         mAdapterCategory = new ArrayAdapter<Category>(mContext, R.layout.select_dialog_item);
         mAdapterStatus = new ArrayAdapter<Status>(mContext, R.layout.select_dialog_item);
+        setCategory(new Category(OUT_OF_INDEX, mContext.getString(R.string.title_btn_category)));
+        setStatus(new Status(OUT_OF_INDEX, mContext.getString(R.string.title_request_status)));
     }
 
     @Override
@@ -170,7 +171,7 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
 
     @Override
     public void onRegisterDeviceClick() {
-        mContext.startActivity(new Intent(mContext, CreateDeviceActivity.class));
+        mContext.startActivity(CreateDeviceActivity.getInstance(mContext));
     }
 
     @Override

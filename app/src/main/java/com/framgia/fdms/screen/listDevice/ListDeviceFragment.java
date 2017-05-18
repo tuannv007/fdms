@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.source.CategoryRepository;
 import com.framgia.fdms.data.source.DeviceRepository;
@@ -16,7 +15,7 @@ import com.framgia.fdms.data.source.api.service.FDMSServiceClient;
 import com.framgia.fdms.data.source.remote.CategoryRemoteDataSource;
 import com.framgia.fdms.data.source.remote.DeviceRemoteDataSource;
 import com.framgia.fdms.data.source.remote.StatusRemoteDataSource;
-import com.framgia.fdms.databinding.FragmentListdeviceBinding;
+import com.framgia.fdms.databinding.FragmentListDeviceBinding;
 
 /**
  * ListDevice Screen.
@@ -48,8 +47,8 @@ public class ListDeviceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
 
-        FragmentListdeviceBinding binding =
-                DataBindingUtil.inflate(inflater, R.layout.fragment_listdevice, container, false);
+        FragmentListDeviceBinding binding =
+                DataBindingUtil.inflate(inflater, R.layout.fragment_list_device, container, false);
         binding.setViewModel((ListDeviceViewModel) mViewModel);
         return binding.getRoot();
     }

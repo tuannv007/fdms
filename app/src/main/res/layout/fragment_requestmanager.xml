@@ -35,25 +35,29 @@
                     android:layout_marginLeft="@dimen/dp_5"
                     android:layout_marginRight="@dimen/dp_10"
                     android:layout_weight="1"
-                    android:textSize="@dimen/sp_13"
                     android:background="@drawable/bg_filter_shape"
                     android:drawableLeft="@drawable/ic_arrow_drop_down_white_24px"
+                    android:ellipsize="end"
                     android:gravity="center_vertical"
+                    android:lines="1"
                     android:onClick="@{() -> viewModel.onSelectStatusClick()}"
                     android:text="@={viewModel.status.name}"
+                    android:textSize="@dimen/sp_13"
                     />
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp_5"
-                    android:textSize="@dimen/sp_13"
                     android:layout_marginRight="@dimen/dp_5"
-                    android:text="@={viewModel.relative.name}"
                     android:layout_weight="1"
                     android:background="@drawable/bg_filter_shape"
-                    android:onClick="@{() -> viewModel.onSelectRelativeClick()}"
                     android:drawableLeft="@drawable/ic_arrow_drop_down_white_24px"
+                    android:ellipsize="end"
                     android:gravity="center_vertical"
+                    android:lines="1"
+                    android:onClick="@{() -> viewModel.onSelectRelativeClick()}"
+                    android:text="@={viewModel.relative.name}"
+                    android:textSize="@dimen/sp_13"
                     />
             </LinearLayout>
             <android.support.v7.widget.RecyclerView
@@ -85,10 +89,10 @@
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginRight="@dimen/dp_20"
             android:elevation="@dimen/dp_5"
+            android:onClick="@{() -> viewModel.onRegisterRequestClick()}"
             android:src="@drawable/ic_action_add"
             app:backgroundTint="@color/colorPrimaryDark"
             app:pressedTranslationZ="@dimen/dp_15"
-            android:onClick="@{() -> viewModel.onRegisterRequestClick()}"
             />
     </RelativeLayout>
 </layout>

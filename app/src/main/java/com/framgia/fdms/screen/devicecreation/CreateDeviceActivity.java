@@ -1,14 +1,10 @@
 package com.framgia.fdms.screen.devicecreation;
 
+import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.widget.Toast;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.source.CategoryRepository;
 import com.framgia.fdms.data.source.DeviceRepository;
@@ -19,12 +15,20 @@ import com.framgia.fdms.data.source.remote.DeviceRemoteDataSource;
 import com.framgia.fdms.data.source.remote.StatusRemoteDataSource;
 import com.framgia.fdms.databinding.ActivityCreatedeviceBinding;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 /**
  * Createdevice Screen.
  */
 public class CreateDeviceActivity extends AppCompatActivity {
 
     private CreateDeviceContract.ViewModel mViewModel;
+
+    public static Intent getInstance(Context context) {
+        Intent intent = new Intent(context, CreateDeviceActivity.class);
+        intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +40,11 @@ public class CreateDeviceActivity extends AppCompatActivity {
                 new DeviceRepository(new DeviceRemoteDataSource(FDMSServiceClient.getInstance()));
         StatusRepository statusRepository =
                 new StatusRepository(new StatusRemoteDataSource(FDMSServiceClient.getInstance()));
-        CategoryRepository categoryRepository =
-                new CategoryRepository(new CategoryRemoteDataSource(FDMSServiceClient.getInstance()));
-        CreateDeviceContract.Presenter presenter = new CreateDevicePresenter(mViewModel,
-                deviceRepository, statusRepository, categoryRepository);
+        CategoryRepository categoryRepository = new CategoryRepository(
+                new CategoryRemoteDataSource(FDMSServiceClient.getInstance()));
+        CreateDeviceContract.Presenter presenter =
+                new CreateDevicePresenter(mViewModel, deviceRepository, statusRepository,
+                        categoryRepository);
         mViewModel.setPresenter(presenter);
 
         ActivityCreatedeviceBinding binding =
