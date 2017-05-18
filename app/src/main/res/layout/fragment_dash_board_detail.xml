@@ -2,7 +2,6 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:bind="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     >
 
     <data>
@@ -15,18 +14,30 @@
     </data>
 
     <LinearLayout
-        android:background="@color/color_white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/color_white"
         android:orientation="vertical"
         >
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="@dimen/dp_5"
+            android:text="@{viewModel.dashboardTitle}"
+            android:textColor="@color/color_grey_700"
+            android:textSize="@dimen/sp_20"
+            android:textStyle="bold"
+            />
+
         <com.github.mikephil.charting.charts.PieChart
-            android:layout_marginTop="@dimen/dp_10"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_300"
+            android:layout_marginTop="@dimen/dp_10"
             bind:pieData="@{viewModel.pieData}"
             bind:totalValue="@{viewModel.total}"
+            bind:description="@{viewModel.dashboardTitle}"
             />
 
         <android.support.v7.widget.RecyclerView
