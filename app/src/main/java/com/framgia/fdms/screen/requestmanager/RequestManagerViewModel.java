@@ -3,12 +3,11 @@ package com.framgia.fdms.screen.requestmanager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.databinding.Bindable;
-import android.databinding.ObservableField;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.widget.ArrayAdapter;
-import com.android.databinding.library.baseAdapters.BR;
+import android.widget.Toast;
+import com.framgia.fdms.BR;
 import com.framgia.fdms.BaseFragmentContract;
 import com.framgia.fdms.BaseFragmentModel;
 import com.framgia.fdms.R;
@@ -27,20 +26,21 @@ public class RequestManagerViewModel extends BaseFragmentModel<Request>
         implements RequestManagerContract.ViewModel {
 
     private final Context mContext;
-    private BaseFragmentContract.Presenter mPresenter;
     private RequestManagerAdapter mAdapter;
-    private ObservableField<Boolean> mIsLoadingMore = new ObservableField<>(false);
     private ArrayAdapter<Status> mAdapterStatus;
+    private ArrayAdapter<Status> mAdapterRealtive;
     private Status mStatus;
     private FragmentActivity mActivity;
     private Status mRelative;
-    private String mKeyWord;
 
     public RequestManagerViewModel(FragmentActivity activity) {
         mContext = activity.getApplicationContext();
         mActivity = activity;
         mAdapter = new RequestManagerAdapter(mContext, new ArrayList<Request>());
         mAdapterStatus = new ArrayAdapter<>(mContext, R.layout.select_dialog_item);
+        mAdapterRealtive = new ArrayAdapter<>(mContext, R.layout.select_dialog_item);
+        setStatus(new Status(OUT_OF_INDEX, mContext.getString(R.string.title_request_status)));
+        setRelative(new Status(OUT_OF_INDEX, mContext.getString(R.string.title_request_relative)));
     }
 
     @Override
@@ -67,13 +67,6 @@ public class RequestManagerViewModel extends BaseFragmentModel<Request>
     }
 
     @Override
-    public void onErrorLoadPage(String msg) {
-        super.onErrorLoadPage(msg);
-        Snackbar.make(getActivity().findViewById(android.R.id.content), msg, Snackbar.LENGTH_LONG)
-                .show();
-    }
-
-    @Override
     public void onGetRequestSuccess(List<Request> requests) {
         mAdapter.onUpdatePage(requests);
     }
@@ -84,24 +77,34 @@ public class RequestManagerViewModel extends BaseFragmentModel<Request>
     }
 
     @Override
-    public void getData() {
-        mPresenter.getData(null, null, null);
+    public void onGetRelativeSuccess(List<Status> relatives) {
+        updateRelative(relatives);
     }
 
-    public void onChooseStatus() {
+    @Override
+    public void onLoadError(String msg) {
+        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void getData() {
+        mPresenter.getData(null, null);
+    }
+
+    public void onSelectStatusClick() {
         if (mAdapterStatus == null) {
             return;
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivity).setTitle(
-                mContext.getString(R.string.title_btn_status))
+                mContext.getString(R.string.title_request_status))
                 .setNegativeButton(mContext.getString(R.string.action_cancel), null)
                 .setPositiveButton(mContext.getString(R.string.action_clear),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 setStatus(new Status(OUT_OF_INDEX,
-                                        mContext.getString(R.string.title_btn_status)));
-                                mPresenter.getData(mKeyWord, mRelative, mStatus);
+                                        mContext.getString(R.string.title_request_status)));
+                                mPresenter.getData(mRelative, mStatus);
                             }
                         })
                 .setAdapter(mAdapterStatus, new DialogInterface.OnClickListener() {
@@ -109,7 +112,34 @@ public class RequestManagerViewModel extends BaseFragmentModel<Request>
                     public void onClick(DialogInterface dialog, int which) {
                         setStatus(mAdapterStatus.getItem(which));
                         mAdapter.clear();
-                        mPresenter.getData(mKeyWord, mRelative, mStatus);
+                        mPresenter.getData(mRelative, mStatus);
+                    }
+                });
+        builder.show();
+    }
+
+    public void onSelectRelativeClick() {
+        if (mAdapterRealtive == null) {
+            return;
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity).setTitle(
+                mContext.getString(R.string.title_request_relative))
+                .setNegativeButton(mContext.getString(R.string.action_cancel), null)
+                .setPositiveButton(mContext.getString(R.string.action_clear),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                setRelative(new Status(OUT_OF_INDEX,
+                                        mContext.getString(R.string.title_request_relative)));
+                                mPresenter.getData(mRelative, mStatus);
+                            }
+                        })
+                .setAdapter(mAdapterRealtive, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        setRelative(mAdapterRealtive.getItem(which));
+                        mAdapter.clear();
+                        mPresenter.getData(mRelative, mStatus);
                     }
                 });
         builder.show();
@@ -124,6 +154,15 @@ public class RequestManagerViewModel extends BaseFragmentModel<Request>
         mAdapterStatus.notifyDataSetChanged();
     }
 
+    public void updateRelative(List<Status> relatives) {
+        if (relatives == null) {
+            return;
+        }
+        mAdapterRealtive.clear();
+        mAdapterRealtive.addAll(relatives);
+        mAdapterRealtive.notifyDataSetChanged();
+    }
+
     @Bindable
     public Status getStatus() {
         return mStatus;
@@ -132,5 +171,23 @@ public class RequestManagerViewModel extends BaseFragmentModel<Request>
     public void setStatus(Status status) {
         mStatus = status;
         notifyPropertyChanged(BR.status);
+    }
+
+    @Bindable
+    public Status getRelative() {
+        return mRelative;
+    }
+
+    public void setRelative(Status relative) {
+        mRelative = relative;
+        notifyPropertyChanged(BR.relative);
+    }
+
+    public ArrayAdapter<Status> getAdapterRealtive() {
+        return mAdapterRealtive;
+    }
+
+    public void setAdapterRealtive(ArrayAdapter<Status> adapterRealtive) {
+        mAdapterRealtive = adapterRealtive;
     }
 }

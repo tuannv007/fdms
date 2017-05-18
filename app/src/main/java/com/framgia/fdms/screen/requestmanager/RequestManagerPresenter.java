@@ -31,7 +31,6 @@ final class RequestManagerPresenter implements RequestManagerContract.Presenter 
     private StatusRepository mRepository;
     private int mRelativeId = ALL_RELATIVE_ID;
     private int mStatusId = ALL_REQUEST_STATUS_ID;
-    private String mKeyWord;
 
     public RequestManagerPresenter(RequestManagerContract.ViewModel viewModel,
             RequestRepositoryContract deviceRepository, StatusRepository statusRepository) {
@@ -39,21 +38,18 @@ final class RequestManagerPresenter implements RequestManagerContract.Presenter 
         mSubscription = new CompositeSubscription();
         mRequestRepository = deviceRepository;
         mRepository = statusRepository;
+        getStatusDevice();
+        getListRelative();
     }
 
     @Override
     public void onLoadMore() {
         mPage++;
-        getListData(mPage, PER_PAGE);
+        getMyRequest(mStatusId, mRelativeId, mPage, PER_PAGE);
     }
 
     @Override
-    public void getListData(int page, int perPage) {
-
-    }
-
-    @Override
-    public void getData(String keyWord, Status relative, Status status) {
+    public void getData(Status relative, Status status) {
         mPage = FIRST_PAGE;
         if (relative != null) {
             mRelativeId = relative.getId();
@@ -61,11 +57,8 @@ final class RequestManagerPresenter implements RequestManagerContract.Presenter 
         if (status != null) {
             mStatusId = status.getId();
         }
-        if (keyWord != null) {
-            mKeyWord = keyWord;
-        }
+
         getMyRequest(mStatusId, mRelativeId, mPage, PER_PAGE);
-        getStatusDevice();
     }
 
     @Override
@@ -130,12 +123,37 @@ final class RequestManagerPresenter implements RequestManagerContract.Presenter 
                     @Override
                     public void onError(Throwable e) {
                         mViewModel.hideProgressbar();
-                        mViewModel.onErrorLoadPage(e.getMessage());
+                        mViewModel.onLoadError(e.getMessage());
                     }
 
                     @Override
                     public void onNext(List<Status> statuses) {
                         mViewModel.onGetStatusSuccess(statuses);
+                    }
+                });
+
+        mSubscription.add(subscription);
+    }
+
+    @Override
+    public void getListRelative() {
+        Subscription subscription = mRepository.getListRelative()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<List<Status>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mViewModel.onLoadError(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(List<Status> statuses) {
+                        mViewModel.onGetRelativeSuccess(statuses);
                     }
                 });
 

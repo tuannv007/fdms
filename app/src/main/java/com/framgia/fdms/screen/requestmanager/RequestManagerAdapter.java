@@ -31,7 +31,7 @@ public class RequestManagerAdapter
 
     @Override
     public void onUpdatePage(List<Request> datas) {
-        mRequests.clear();
+        if (datas == null) return;
         mRequests.addAll(datas);
         notifyDataSetChanged();
     }
@@ -60,6 +60,7 @@ public class RequestManagerAdapter
 
     public void clear() {
         if (mRequests != null) mRequests.clear();
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

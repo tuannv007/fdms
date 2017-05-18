@@ -17,6 +17,10 @@ interface RequestManagerContract {
 
         void onGetStatusSuccess(List<Status> statuses);
 
+        void onGetRelativeSuccess(List<Status> relatives);
+
+        void onLoadError(String msg);
+
         void getData();
     }
 
@@ -27,5 +31,7 @@ interface RequestManagerContract {
         void getMyRequest(int requestStatusId, int relativeId, int perPage, int page);
 
         void getStatusDevice();
+
+        void getListRelative();
     }
 }
