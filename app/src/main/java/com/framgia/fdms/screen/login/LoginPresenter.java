@@ -69,7 +69,7 @@ final class LoginPresenter extends BaseObservable implements LoginContract.Prese
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        mView.onLoginError();
+                        mView.onLoginError(throwable.getMessage());
                     }
                 }, new Action0() {
                     @Override

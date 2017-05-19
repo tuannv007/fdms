@@ -1,10 +1,13 @@
 package com.framgia.fdms.data.source.api.error;
 
 import android.support.annotation.Nullable;
+import com.framgia.fdms.data.model.Respone;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import retrofit2.Response;
+import retrofit2.adapter.rxjava.HttpException;
 
 public final class BaseException extends RuntimeException {
     @Type
@@ -34,6 +37,10 @@ public final class BaseException extends RuntimeException {
         return new BaseException(Type.UNEXPECTED, cause);
     }
 
+    public static BaseException toServerError(Throwable cause) {
+        return new BaseException(Type.SERVER, cause);
+    }
+
     @Type
     public String getErrorType() {
         return mType;
@@ -42,8 +49,19 @@ public final class BaseException extends RuntimeException {
     public String getMessage() {
         switch (mType) {
             case Type.SERVER:
-                // TODO define with server about ErrorResponse
-                return "";
+                try {
+                    HttpException httpException = (HttpException) getCause();
+                    Response response = httpException.response();
+                    String errorResponse = response.errorBody().string();
+                    if (errorResponse != null) {
+                        Respone error = new Gson().fromJson(errorResponse, Respone.class);
+                        if (error != null) {
+                            return error.getMessage();
+                        }
+                    }
+                } catch (IOException e) {
+                }
+                return "Error";
             case Type.NETWORK:
                 return getNetworkErrorMessage(getCause());
             case Type.HTTP:

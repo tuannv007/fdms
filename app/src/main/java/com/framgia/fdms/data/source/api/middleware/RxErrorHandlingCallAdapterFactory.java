@@ -75,11 +75,7 @@ public final class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory
                 HttpException httpException = (HttpException) throwable;
                 Response response = httpException.response();
                 if (response.errorBody() != null) {
-                    try {
-                        String errorResponse = response.errorBody().string();
-                        // TODO define with server about ErrorResponse
-                    } catch (IOException e) {
-                    }
+                    return BaseException.toServerError(throwable);
                 } else {
                     return BaseException.toHttpError(response);
                 }
