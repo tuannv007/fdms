@@ -1,8 +1,11 @@
 package com.framgia.fdms.data.model;
 
+import android.support.annotation.StringDef;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import java.util.Date;
+
+import static com.framgia.fdms.data.model.User.Role.STAFF;
 
 /**
  * Created by levutantuan on 3/31/17.
@@ -263,5 +266,10 @@ public class User {
 
     public void setToken(String token) {
         mToken = token;
+    }
+
+    @StringDef({ STAFF })
+    public @interface Role {
+        String STAFF = "staff";
     }
 }

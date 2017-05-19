@@ -49,8 +49,8 @@ public class LoginViewModel extends BaseObservable implements LoginContract.View
     }
 
     @Override
-    public void onLoginError() {
-        Toast.makeText(mContext, R.string.msg_login_error, Toast.LENGTH_SHORT).show();
+    public void onLoginError(String msg) {
+        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
         hideProgressbar();
     }
 

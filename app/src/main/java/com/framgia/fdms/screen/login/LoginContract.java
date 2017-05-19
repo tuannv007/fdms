@@ -9,7 +9,7 @@ import com.framgia.fdms.BaseViewModel;
 interface LoginContract {
 
     interface ViewModel extends BaseViewModel<Presenter> {
-        void onLoginError();
+        void onLoginError(String msg);
 
         void onLoginSuccess();
 
