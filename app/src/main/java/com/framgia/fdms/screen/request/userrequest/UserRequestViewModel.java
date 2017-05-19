@@ -1,4 +1,4 @@
-package com.framgia.fdms.screen.requestmanager;
+package com.framgia.fdms.screen.request.userrequest;
 
 import android.content.Context;
 
@@ -24,11 +24,11 @@ import static com.framgia.fdms.utils.Constant.OUT_OF_INDEX;
  * Exposes the data to be used in the RequestManager screen.
  */
 
-public class RequestManagerViewModel extends BaseFragmentModel<Request>
-        implements RequestManagerContract.ViewModel {
+public class UserRequestViewModel extends BaseFragmentModel<Request>
+        implements UserRequestContract.ViewModel {
 
     private final Context mContext;
-    private RequestManagerAdapter mAdapter;
+    private UserRequestAdapter mAdapter;
 
     private ArrayAdapter<Status> mAdapterStatus;
     private ArrayAdapter<Status> mAdapterRealtive;
@@ -36,10 +36,10 @@ public class RequestManagerViewModel extends BaseFragmentModel<Request>
     private FragmentActivity mActivity;
     private Status mRelative;
 
-    public RequestManagerViewModel(FragmentActivity activity) {
+    public UserRequestViewModel(FragmentActivity activity) {
         mContext = activity.getApplicationContext();
         mActivity = activity;
-        mAdapter = new RequestManagerAdapter(mContext, new ArrayList<Request>());
+        mAdapter = new UserRequestAdapter(mContext, new ArrayList<Request>());
         mAdapterStatus = new ArrayAdapter<>(mContext, R.layout.select_dialog_item);
         mAdapterRealtive = new ArrayAdapter<>(mContext, R.layout.select_dialog_item);
         setStatus(new Status(OUT_OF_INDEX, mContext.getString(R.string.title_request_status)));
@@ -61,11 +61,11 @@ public class RequestManagerViewModel extends BaseFragmentModel<Request>
         mPresenter = presenter;
     }
 
-    public void setAdapter(RequestManagerAdapter adapter) {
+    public void setAdapter(UserRequestAdapter adapter) {
         mAdapter = adapter;
     }
 
-    public RequestManagerAdapter getAdapter() {
+    public UserRequestAdapter getAdapter() {
         return mAdapter;
     }
 

@@ -1,4 +1,4 @@
-package com.framgia.fdms.screen.requestmanager;
+package com.framgia.fdms.screen.request.userrequest;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -13,26 +13,26 @@ import com.framgia.fdms.data.source.StatusRepository;
 import com.framgia.fdms.data.source.api.service.FDMSServiceClient;
 import com.framgia.fdms.data.source.remote.RequestRemoteDataSource;
 import com.framgia.fdms.data.source.remote.StatusRemoteDataSource;
-import com.framgia.fdms.databinding.FragmentRequestmanagerBinding;
+import com.framgia.fdms.databinding.FragmentUserRequestBinding;
 
 /**
  * RequestManager Screen.
  */
-public class RequestManagerFragment extends Fragment {
+public class UserRequestFragment extends Fragment {
 
-    private RequestManagerContract.ViewModel mViewModel;
+    private UserRequestContract.ViewModel mViewModel;
 
-    public static RequestManagerFragment newInstance() {
-        return new RequestManagerFragment();
+    public static UserRequestFragment newInstance() {
+        return new UserRequestFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mViewModel = new RequestManagerViewModel(getActivity());
+        mViewModel = new UserRequestViewModel(getActivity());
 
-        RequestManagerContract.Presenter presenter = new RequestManagerPresenter(mViewModel,
+        UserRequestContract.Presenter presenter = new UserRequestPresenter(mViewModel,
                 RequestRepository.getInstant(
                         new RequestRemoteDataSource(FDMSServiceClient.getInstance())),
                 new StatusRepository(new StatusRemoteDataSource(FDMSServiceClient.getInstance())));
@@ -45,10 +45,10 @@ public class RequestManagerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
 
-        FragmentRequestmanagerBinding binding =
-                DataBindingUtil.inflate(inflater, R.layout.fragment_requestmanager, container,
+        FragmentUserRequestBinding binding =
+                DataBindingUtil.inflate(inflater, R.layout.fragment_user_request, container,
                         false);
-        binding.setViewModel((RequestManagerViewModel) mViewModel);
+        binding.setViewModel((UserRequestViewModel) mViewModel);
         return binding.getRoot();
     }
 

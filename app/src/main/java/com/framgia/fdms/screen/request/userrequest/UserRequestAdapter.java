@@ -1,4 +1,4 @@
-package com.framgia.fdms.screen.requestmanager;
+package com.framgia.fdms.screen.request.userrequest;
 
 import android.content.Context;
 import android.databinding.BaseObservable;
@@ -20,11 +20,11 @@ import java.util.List;
  * Created by beepi on 09/05/2017.
  */
 
-public class RequestManagerAdapter
-        extends BaseRecyclerViewAdapter<Request, RequestManagerAdapter.ViewHolder> {
+public class UserRequestAdapter
+        extends BaseRecyclerViewAdapter<Request, UserRequestAdapter.ViewHolder> {
     private List<Request> mRequests = new ArrayList<>();
 
-    public RequestManagerAdapter(Context context, List<Request> requests) {
+    public UserRequestAdapter(Context context, List<Request> requests) {
         super(context);
         mRequests = requests;
     }

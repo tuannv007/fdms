@@ -1,4 +1,4 @@
-package com.framgia.fdms.screen.requestmanager;
+package com.framgia.fdms.screen.request.userrequest;
 
 import com.framgia.fdms.BaseFragmentContract;
 import com.framgia.fdms.data.model.Request;
@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * This specifies the contract between the view and the presenter.
  */
-interface RequestManagerContract {
+interface UserRequestContract {
     /**
      * View.
      */
