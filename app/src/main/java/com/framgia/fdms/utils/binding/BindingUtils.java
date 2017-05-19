@@ -24,7 +24,6 @@ import com.framgia.fdms.screen.dashboard.DashboardViewModel;
 import com.framgia.fdms.screen.listDevice.ListDeviceViewModel;
 import com.framgia.fdms.screen.newmain.NewMainViewModel;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.formatter.PercentFormatter;
@@ -89,7 +88,7 @@ public final class BindingUtils {
         recyclerView.addOnScrollListener(listener);
     }
 
-    @BindingAdapter({ "bind:adapter", "model" })
+    @BindingAdapter(value = { "bind:adapter", "model" }, requireAll = false)
     public static void setupViewPager(final ViewPager viewPager, FragmentPagerAdapter adapter,
             final NewMainViewModel viewModel) {
         viewPager.setAdapter(adapter);
@@ -179,7 +178,6 @@ public final class BindingUtils {
             pieChart.setData(pieData);
             pieChart.invalidate();
         }
-
     }
 
     @BindingAdapter({ "model" })

@@ -93,4 +93,6 @@
     <string name="title_create_request">Create Request</string>
     <string name="title_device_dashboard">Device Overview</string>
     <string name="title_request_dashboard">Request Overview</string>
+    <string name="title_manager_request">Manager Request</string>
+    <string name="title_my_request">My request</string>
 </resources>
