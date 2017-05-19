@@ -91,6 +91,6 @@
     <string name="title_number">Number</string>
     <string name="title_request_for">Request for</string>
     <string name="title_create_request">Create Request</string>
-    <string name="title_device_dashboard">Device dashboard</string>
-    <string name="title_request_dashboard">Request dashboard</string>
+    <string name="title_device_dashboard">Device Overview</string>
+    <string name="title_request_dashboard">Request Overview</string>
 </resources>

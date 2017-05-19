@@ -1,4 +1,4 @@
-package com.framgia.fdms.screen.requestmanager;
+package com.framgia.fdms.screen.request.userrequest;
 
 import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.data.model.Status;
@@ -18,21 +18,21 @@ import static com.framgia.fdms.utils.Constant.FIRST_PAGE;
 import static com.framgia.fdms.utils.Constant.PER_PAGE;
 
 /**
- * Listens to user actions from the UI ({@link RequestManagerFragment}), retrieves the data and
+ * Listens to user actions from the UI ({@link UserRequestFragment}), retrieves the data and
  * updates
  * the UI as required.
  */
-final class RequestManagerPresenter implements RequestManagerContract.Presenter {
+final class UserRequestPresenter implements UserRequestContract.Presenter {
 
     private int mPage = FIRST_PAGE;
-    private final RequestManagerContract.ViewModel mViewModel;
+    private final UserRequestContract.ViewModel mViewModel;
     private CompositeSubscription mSubscription;
     private RequestRepositoryContract mRequestRepository;
     private StatusRepository mRepository;
     private int mRelativeId = ALL_RELATIVE_ID;
     private int mStatusId = ALL_REQUEST_STATUS_ID;
 
-    public RequestManagerPresenter(RequestManagerContract.ViewModel viewModel,
+    public UserRequestPresenter(UserRequestContract.ViewModel viewModel,
             RequestRepositoryContract deviceRepository, StatusRepository statusRepository) {
         mViewModel = viewModel;
         mSubscription = new CompositeSubscription();
