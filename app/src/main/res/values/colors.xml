@@ -31,4 +31,8 @@
     <color name="color_teal_700">#1ABB9C</color>
     <color name="color_orange_800">#f9a825</color>
     <color name="color_teal_500">#009688</color>
+
+    <color name="color_seashell">#F1F1F1</color>
+    <color name="color_blued">#1976D2</color>
+    <color name="color_black_transprarent">#B2000000</color>
 </resources>

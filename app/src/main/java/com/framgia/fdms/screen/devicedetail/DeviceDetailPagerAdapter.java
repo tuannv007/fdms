@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import com.framgia.fdms.R;
-import com.framgia.fdms.screen.request.requestmanager.RequestManagerFragment;
+import com.framgia.fdms.screen.historydetail.DeviceDetailHistoryFragment;
 import com.framgia.fdms.screen.usinghistory.DeviceUsingHistoryFragment;
 
 import static com.framgia.fdms.screen.devicedetail.DeviceDetailPagerAdapter.DeviceDetailPage
@@ -35,7 +35,7 @@ public class DeviceDetailPagerAdapter extends FragmentPagerAdapter {
             case DEVICE_INFOMATION:
                 return DeviceUsingHistoryFragment.newInstance();
             case DEVICE_HISTORY:
-                return DeviceUsingHistoryFragment.newInstance();
+                return DeviceDetailHistoryFragment.newInstance();
             case DEVICE_USING_HISTORY:
                 return DeviceUsingHistoryFragment.newInstance();
             default:
