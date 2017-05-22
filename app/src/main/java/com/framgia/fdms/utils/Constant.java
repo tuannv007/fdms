@@ -26,6 +26,7 @@ public class Constant {
         public static final String CATEGORY_ID = "category_id";
         public static final String STATUS_ID = "status_id";
         public static final String PAGE = "page";
+        public static final String REQUEST_TYPE = "manager_request";
         public static final String PER_PAGE = "per_page";
         public static final String PRODUCTION_NAME = "production_name";
         public static final String DEVICE_STATUS_ID = "device_status_id";

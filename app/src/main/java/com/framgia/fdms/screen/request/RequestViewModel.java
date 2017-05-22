@@ -1,5 +1,7 @@
 package com.framgia.fdms.screen.request;
 
+import com.framgia.fdms.screen.requestcreation.RequestCreationActivity;
+
 /**
  * Exposes the data to be used in the Request screen.
  */
@@ -37,5 +39,10 @@ public class RequestViewModel implements RequestContract.ViewModel {
 
     public void setAdapter(RequestPagerAdapter adapter) {
         mAdapter = adapter;
+    }
+
+    @Override
+    public void onRegisterRequestClick() {
+        mFragment.startActivity(RequestCreationActivity.getInstance(mFragment.getActivity()));
     }
 }

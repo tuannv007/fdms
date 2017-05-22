@@ -56,7 +56,7 @@ public class RequestPagerAdapter extends FragmentPagerAdapter {
     }
 
     @IntDef({ MANAGER_REQUEST, USER_REQUEST })
-    @interface RequestPage {
+    public @interface RequestPage {
         int USER_REQUEST = 0;
         int MANAGER_REQUEST = 1;
     }

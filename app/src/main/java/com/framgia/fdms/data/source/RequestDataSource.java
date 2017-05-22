@@ -17,7 +17,7 @@ public interface RequestDataSource {
     interface RemoteDataSource {
         Observable<List<Dashboard>> getDashboardRequest();
 
-        Observable<List<Request>> getMyRequest(int requestStatusId, int relativeId, int perPage,
+        Observable<List<Request>> getRequests(int requestType, int requestStatusId, int relativeId, int perPage,
                 int page);
 
         Observable<List<Status>> getStatus();

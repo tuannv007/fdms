@@ -1,11 +1,11 @@
 package com.framgia.fdms.screen.request.userrequest;
 
 import android.content.Context;
-
 import android.content.DialogInterface;
 import android.databinding.Bindable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 import com.framgia.fdms.BR;
@@ -24,7 +24,7 @@ import static com.framgia.fdms.utils.Constant.OUT_OF_INDEX;
  * Exposes the data to be used in the RequestManager screen.
  */
 
-public class UserRequestViewModel extends BaseFragmentModel<Request>
+public class UserRequestViewModel extends BaseFragmentModel
         implements UserRequestContract.ViewModel {
 
     private final Context mContext;
@@ -192,9 +192,5 @@ public class UserRequestViewModel extends BaseFragmentModel<Request>
 
     public void setAdapterRealtive(ArrayAdapter<Status> adapterRealtive) {
         mAdapterRealtive = adapterRealtive;
-    }
-
-    public void onRegisterRequestClick() {
-        mActivity.startActivity(RequestCreationActivity.getInstance(mActivity));
     }
 }

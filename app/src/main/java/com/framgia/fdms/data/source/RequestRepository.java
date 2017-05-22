@@ -27,9 +27,9 @@ public class RequestRepository implements RequestRepositoryContract {
     }
 
     @Override
-    public Observable<List<Request>> getMyRequest(int requestStatusId, int relativeId, int perPage,
-            int page) {
-        return mRemoteDataSource.getMyRequest(requestStatusId, relativeId, perPage, page);
+    public Observable<List<Request>> getRequests(int requestType, int requestStatusId,
+            int relativeId, int perPage, int page) {
+        return mRemoteDataSource.getRequests(requestType, requestStatusId, relativeId, perPage, page);
     }
 
     @Override

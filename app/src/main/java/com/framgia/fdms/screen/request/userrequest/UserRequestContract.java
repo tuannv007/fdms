@@ -12,7 +12,7 @@ interface UserRequestContract {
     /**
      * View.
      */
-    interface ViewModel extends BaseFragmentContract.ViewModel<Request> {
+    interface ViewModel extends BaseFragmentContract.ViewModel {
         void onGetRequestSuccess(List<Request> requests);
 
         void onGetStatusSuccess(List<Status> statuses);
@@ -22,14 +22,12 @@ interface UserRequestContract {
         void onLoadError(String msg);
 
         void getData();
-
-        void onRegisterRequestClick();
     }
 
     /**
      * Presenter.
      */
-    interface Presenter extends BaseFragmentContract.Presenter<Request> {
+    interface Presenter extends BaseFragmentContract.Presenter {
         void getMyRequest(int requestStatusId, int relativeId, int perPage, int page);
 
         void getStatusDevice();
