@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.databinding.Bindable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.PopupMenu;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
@@ -14,7 +15,7 @@ import com.framgia.fdms.BaseFragmentModel;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.data.model.Status;
-import com.framgia.fdms.screen.requestcreation.RequestCreationActivity;
+import com.framgia.fdms.screen.request.OnMenuClickListenner;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ import static com.framgia.fdms.utils.Constant.OUT_OF_INDEX;
  */
 
 public class UserRequestViewModel extends BaseFragmentModel
-        implements UserRequestContract.ViewModel {
+        implements UserRequestContract.ViewModel, OnMenuClickListenner {
 
     private final Context mContext;
     private UserRequestAdapter mAdapter;
@@ -39,7 +40,7 @@ public class UserRequestViewModel extends BaseFragmentModel
     public UserRequestViewModel(FragmentActivity activity) {
         mContext = activity.getApplicationContext();
         mActivity = activity;
-        mAdapter = new UserRequestAdapter(mContext, new ArrayList<Request>());
+        mAdapter = new UserRequestAdapter(mContext, new ArrayList<Request>(), this);
         mAdapterStatus = new ArrayAdapter<>(mContext, R.layout.select_dialog_item);
         mAdapterRealtive = new ArrayAdapter<>(mContext, R.layout.select_dialog_item);
         setStatus(new Status(OUT_OF_INDEX, mContext.getString(R.string.title_request_status)));
@@ -192,5 +193,12 @@ public class UserRequestViewModel extends BaseFragmentModel
 
     public void setAdapterRealtive(ArrayAdapter<Status> adapterRealtive) {
         mAdapterRealtive = adapterRealtive;
+    }
+
+    @Override
+    public void onMenuClick(View v, UserRequestAdapter.RequestModel request) {
+        PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+        popupMenu.getMenuInflater().inflate(R.menu.menu_request, popupMenu.getMenu());
+        popupMenu.show();
     }
 }

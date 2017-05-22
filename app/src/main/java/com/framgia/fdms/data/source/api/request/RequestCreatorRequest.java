@@ -1,5 +1,7 @@
 package com.framgia.fdms.data.source.api.request;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
@@ -7,10 +9,15 @@ import java.util.List;
  */
 
 public class RequestCreatorRequest extends BaseRequest {
+    @SerializedName("request[title]")
     private String mTitle;
+    @SerializedName("request[description]")
     private String mDescription;
+    @SerializedName("request[for_user_id]")
     private int mForUserId;
+    @SerializedName("request[assignee_id]")
     private int mAssigneeId;
+    @SerializedName("request[request_details_attributes]")
     private List<DeviceRequest> mDeviceRequests;
 
     public String getTitle() {
@@ -51,35 +58,5 @@ public class RequestCreatorRequest extends BaseRequest {
 
     public void setDeviceRequests(List<DeviceRequest> deviceRequests) {
         mDeviceRequests = deviceRequests;
-    }
-
-    public class DeviceRequest {
-        private String mDescription;
-        private int mDeviceCategoryId;
-        private int mNumber;
-
-        public String getDescription() {
-            return mDescription;
-        }
-
-        public void setDescription(String description) {
-            mDescription = description;
-        }
-
-        public int getDeviceCategoryId() {
-            return mDeviceCategoryId;
-        }
-
-        public void setDeviceCategoryId(int deviceCategoryId) {
-            mDeviceCategoryId = deviceCategoryId;
-        }
-
-        public int getNumber() {
-            return mNumber;
-        }
-
-        public void setNumber(int number) {
-            mNumber = number;
-        }
     }
 }

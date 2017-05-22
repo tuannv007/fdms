@@ -13,6 +13,7 @@ import com.framgia.fdms.BaseRecyclerViewAdapter;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.databinding.ItemRequestManagerAdapterBinding;
+import com.framgia.fdms.screen.request.OnMenuClickListenner;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,10 +24,13 @@ import java.util.List;
 public class UserRequestAdapter
         extends BaseRecyclerViewAdapter<Request, UserRequestAdapter.ViewHolder> {
     private List<Request> mRequests = new ArrayList<>();
+    private OnMenuClickListenner mListenner;
 
-    public UserRequestAdapter(Context context, List<Request> requests) {
+    public UserRequestAdapter(Context context, List<Request> requests,
+            OnMenuClickListenner listenner) {
         super(context);
         mRequests = requests;
+        mListenner = listenner;
     }
 
     @Override
@@ -73,6 +77,7 @@ public class UserRequestAdapter
 
         public void bind(RequestModel requestModel) {
             mBinding.setRequestModel(requestModel);
+            mBinding.setListenner(mListenner);
             mBinding.executePendingBindings();
         }
     }

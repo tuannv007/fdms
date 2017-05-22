@@ -3,6 +3,7 @@ package com.framgia.fdms.data.source;
 import com.framgia.fdms.data.model.Dashboard;
 import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.data.model.Status;
+import com.framgia.fdms.data.source.api.request.RequestCreatorRequest;
 import java.util.List;
 import rx.Observable;
 
@@ -22,7 +23,7 @@ public class RequestRepository implements RequestRepositoryContract {
         return requestRepository;
     }
 
-    private RequestRepository(RequestDataSource.RemoteDataSource remoteDataSource) {
+    public RequestRepository(RequestDataSource.RemoteDataSource remoteDataSource) {
         mRemoteDataSource = remoteDataSource;
     }
 
@@ -40,5 +41,10 @@ public class RequestRepository implements RequestRepositoryContract {
     @Override
     public Observable<List<Dashboard>> getDashboardRequest() {
         return mRemoteDataSource.getDashboardRequest();
+    }
+
+    @Override
+    public Observable<Request> registerRequest(RequestCreatorRequest request) {
+        return mRemoteDataSource.registerRequest(request);
     }
 }
