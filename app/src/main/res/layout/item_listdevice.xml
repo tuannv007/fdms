@@ -63,7 +63,7 @@
                     android:lines="1"
                     android:text='@{item.productionName}'
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/sp_17"
+                    android:textSize="@dimen/sp_16"
                     android:textStyle="bold"
                     />
 
@@ -75,7 +75,7 @@
                     android:maxLines="2"
                     android:text='@{item.deviceCode}'
                     android:textColor="@color/color_dark_gray"
-                    android:textSize="@dimen/sp_15"
+                    android:textSize="@dimen/sp_14"
                     android:textStyle="italic"
                     />
 

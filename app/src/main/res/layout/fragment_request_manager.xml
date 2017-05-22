@@ -43,7 +43,7 @@
                     android:lines="1"
                     android:onClick="@{() -> viewModel.onSelectStatusClick()}"
                     android:text="@={viewModel.status.name}"
-                    android:textSize="@dimen/sp_13"
+                    android:textSize="@dimen/sp_14"
                     />
                 <TextView
                     android:layout_width="0dp"
