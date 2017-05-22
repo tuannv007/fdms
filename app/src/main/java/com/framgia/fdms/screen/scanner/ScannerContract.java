@@ -1,28 +1,27 @@
-package com.framgia.fdms.screen.newmain;
+package com.framgia.fdms.screen.scanner;
 
+import android.widget.FrameLayout;
 import com.framgia.fdms.BasePresenter;
 import com.framgia.fdms.BaseViewModel;
-import com.framgia.fdms.data.model.Device;
 
 /**
  * This specifies the contract between the view and the presenter.
  */
-public interface NewMainContract {
+interface ScannerContract {
     /**
      * View.
      */
     interface ViewModel extends BaseViewModel<Presenter> {
-        void getResult(String resultQrCode);
+        void onResume();
 
-        void onGetDecodeSuccess(Device device);
+        void onPause();
 
-        void onGetDeviceError(String error);
+        void init(FrameLayout frameScanner);
     }
 
     /**
      * Presenter.
      */
     interface Presenter extends BasePresenter {
-        void getDevice(String resultQrCode);
     }
 }

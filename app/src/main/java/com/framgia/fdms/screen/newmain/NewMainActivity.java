@@ -1,6 +1,5 @@
 package com.framgia.fdms.screen.newmain;
 
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -28,12 +27,6 @@ public class NewMainActivity extends AppCompatActivity {
         NewMainContract.Presenter presenter = new NewMainPresenter(mViewModel, deviceRepository);
         mViewModel.setPresenter(presenter);
         binding.setViewModel((NewMainViewModel) mViewModel);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        mViewModel.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
