@@ -13,8 +13,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import java.util.List;
 
-public abstract class BaseFragmentModel<T> extends BaseObservable
-        implements BaseFragmentContract.ViewModel<T> {
+public abstract class BaseFragmentModel extends BaseObservable
+        implements BaseFragmentContract.ViewModel {
     protected ObservableField<Boolean> mIsLoadMore = new ObservableField<>(false);
     private ObservableField<Integer> mProgressBarVisibility = new ObservableField<>();
     protected BaseFragmentContract.Presenter mPresenter;

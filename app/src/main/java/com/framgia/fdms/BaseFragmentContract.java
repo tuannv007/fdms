@@ -13,14 +13,14 @@ import java.util.List;
  * to get all data from server into {@link RecyclerView} with load more
  */
 public interface BaseFragmentContract {
-    interface ViewModel<T> extends BaseViewModel<BaseFragmentContract.Presenter> {
+    interface ViewModel extends BaseViewModel<BaseFragmentContract.Presenter> {
 
         void showProgressbar();
 
         void hideProgressbar();
     }
 
-    interface Presenter<T> extends BasePresenter {
+    interface Presenter extends BasePresenter {
         void onLoadMore();
 
         void getData(Status relative, Status status);

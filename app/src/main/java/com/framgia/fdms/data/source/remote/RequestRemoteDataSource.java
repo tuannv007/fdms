@@ -14,12 +14,14 @@ import java.util.Map;
 import rx.Observable;
 import rx.functions.Func1;
 
+import static com.framgia.fdms.screen.request.RequestPagerAdapter.RequestPage.USER_REQUEST;
 import static com.framgia.fdms.utils.Constant.ALL_RELATIVE_ID;
 import static com.framgia.fdms.utils.Constant.ALL_REQUEST_STATUS_ID;
 import static com.framgia.fdms.utils.Constant.ApiParram.PAGE;
 import static com.framgia.fdms.utils.Constant.ApiParram.PER_PAGE;
 import static com.framgia.fdms.utils.Constant.ApiParram.RELATIVE_ID;
 import static com.framgia.fdms.utils.Constant.ApiParram.REQUEST_STATUS_ID;
+import static com.framgia.fdms.utils.Constant.ApiParram.REQUEST_TYPE;
 import static com.framgia.fdms.utils.Constant.OUT_OF_INDEX;
 
 /**
@@ -36,9 +38,10 @@ public class RequestRemoteDataSource extends BaseRemoteDataSource
     }
 
     @Override
-    public Observable<List<Request>> getMyRequest(int requestStatusId, int relativeId, int perPage,
-            int page) {
-        return mFDMSApi.getMyRequest(getRequestParams(requestStatusId, relativeId, page, perPage))
+    public Observable<List<Request>> getRequests(int requestType, int requestStatusId,
+            int relativeId, int perPage, int page) {
+        return mFDMSApi.getRequests(
+                getRequestParams(requestType, requestStatusId, relativeId, page, perPage))
                 .flatMap(new Func1<Respone<List<Request>>, Observable<List<Request>>>() {
                     @Override
                     public Observable<List<Request>> call(Respone<List<Request>> listRespone) {
@@ -63,8 +66,8 @@ public class RequestRemoteDataSource extends BaseRemoteDataSource
         return Observable.just(dashboards);
     }
 
-    private Map<String, Integer> getRequestParams(int requestStatusId, int relativeId, int page,
-            int perPage) {
+    private Map<String, Integer> getRequestParams(int requestType, int requestStatusId,
+            int relativeId, int page, int perPage) {
         Map<String, Integer> parrams = new HashMap<>();
         if (requestStatusId != ALL_REQUEST_STATUS_ID) {
             parrams.put(REQUEST_STATUS_ID, requestStatusId);
@@ -77,6 +80,9 @@ public class RequestRemoteDataSource extends BaseRemoteDataSource
         }
         if (page != OUT_OF_INDEX) {
             parrams.put(PAGE, page);
+        }
+        if (requestType != USER_REQUEST) {
+            parrams.put(REQUEST_TYPE, requestType);
         }
         return parrams;
     }

@@ -12,6 +12,7 @@ import rx.functions.Action0;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
+import static com.framgia.fdms.screen.request.RequestPagerAdapter.RequestPage.USER_REQUEST;
 import static com.framgia.fdms.utils.Constant.ALL_RELATIVE_ID;
 import static com.framgia.fdms.utils.Constant.ALL_REQUEST_STATUS_ID;
 import static com.framgia.fdms.utils.Constant.FIRST_PAGE;
@@ -74,7 +75,8 @@ final class UserRequestPresenter implements UserRequestContract.Presenter {
     @Override
     public void getMyRequest(int requestStatusId, int relativeId, int perPage, int page) {
         Subscription subscription =
-                mRequestRepository.getMyRequest(requestStatusId, relativeId, page, perPage)
+                mRequestRepository.getRequests(USER_REQUEST, requestStatusId, relativeId, page,
+                        perPage)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnSubscribe(new Action0() {

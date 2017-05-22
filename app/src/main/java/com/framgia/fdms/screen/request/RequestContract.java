@@ -11,6 +11,7 @@ interface RequestContract {
      * View.
      */
     interface ViewModel extends BaseViewModel<Presenter> {
+        void onRegisterRequestClick();
     }
 
     /**
