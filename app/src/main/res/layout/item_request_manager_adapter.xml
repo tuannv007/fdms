@@ -6,6 +6,10 @@
     >
     <data>
         <variable
+            name="listenner"
+            type="com.framgia.fdms.screen.request.OnMenuClickListenner"
+            />
+        <variable
             name="requestModel"
             type="com.framgia.fdms.screen.request.userrequest.UserRequestAdapter.RequestModel"
             />
@@ -62,6 +66,7 @@
                 <ImageView
                     android:layout_width="@dimen/dp_20"
                     android:layout_height="@dimen/dp_20"
+                    android:onClick="@{(v)-> listenner.onMenuClick(v, requestModel)}"
                     android:padding="@dimen/dp_3"
                     android:src="@drawable/ic_more_menu"
                     />

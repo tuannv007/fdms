@@ -97,4 +97,5 @@
     <string name="title_my_request">My request</string>
     <string name="title_minus">—</string>
     <string name="title_plus">+</string>
+    <string name="action_approve">Approve</string>
 </resources>

@@ -6,6 +6,9 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.PopupMenu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 import com.framgia.fdms.BR;
@@ -14,6 +17,7 @@ import com.framgia.fdms.BaseFragmentModel;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.data.model.Status;
+import com.framgia.fdms.screen.request.OnMenuClickListenner;
 import com.framgia.fdms.screen.request.userrequest.UserRequestAdapter;
 import com.framgia.fdms.screen.requestcreation.RequestCreationActivity;
 import java.util.ArrayList;
@@ -26,7 +30,7 @@ import static com.framgia.fdms.utils.Constant.OUT_OF_INDEX;
  */
 
 public class RequestManagerViewModel extends BaseFragmentModel
-        implements RequestManagerContract.ViewModel {
+        implements RequestManagerContract.ViewModel, OnMenuClickListenner {
 
     private Context mContext;
     private UserRequestAdapter mAdapter;
@@ -40,7 +44,7 @@ public class RequestManagerViewModel extends BaseFragmentModel
     public RequestManagerViewModel(FragmentActivity activity) {
         mContext = activity.getApplicationContext();
         mActivity = activity;
-        mAdapter = new UserRequestAdapter(mContext, new ArrayList<Request>());
+        mAdapter = new UserRequestAdapter(mContext, new ArrayList<Request>(), this);
         mAdapterStatus = new ArrayAdapter<>(mContext, R.layout.select_dialog_item);
         mAdapterRealtive = new ArrayAdapter<>(mContext, R.layout.select_dialog_item);
         setStatus(new Status(OUT_OF_INDEX, mContext.getString(R.string.title_request_status)));
@@ -193,5 +197,19 @@ public class RequestManagerViewModel extends BaseFragmentModel
 
     public void setAdapterRealtive(ArrayAdapter<Status> adapterRealtive) {
         mAdapterRealtive = adapterRealtive;
+    }
+
+    @Override
+    public void onMenuClick(View v, UserRequestAdapter.RequestModel request) {
+        PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+        popupMenu.getMenuInflater().inflate(R.menu.menu_request, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                //// TODO: 22/05/2017 update request status 
+                return false;
+            }
+        });
+        popupMenu.show();
     }
 }
