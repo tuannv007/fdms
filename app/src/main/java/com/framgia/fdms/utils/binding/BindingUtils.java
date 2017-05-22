@@ -17,20 +17,17 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.format.DateUtils;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
-import android.widget.NumberPicker;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Category;
-import com.framgia.fdms.data.source.api.request.RequestCreatorRequest;
+import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.screen.dashboard.DashboardViewModel;
 import com.framgia.fdms.screen.listDevice.ListDeviceViewModel;
 import com.framgia.fdms.screen.newmain.NewMainViewModel;
@@ -192,6 +189,69 @@ public final class BindingUtils {
         }
     }
 
+    /*
+    * set Toolbar Activity device return
+    * */
+
+    @BindingAdapter({ "view", "titleToolbar" })
+    public static void bindToolbar(Toolbar view, AppCompatActivity activity, String resTitle) {
+        if (activity == null) return;
+        activity.setSupportActionBar(view);
+        if (activity.getSupportActionBar() != null) {
+            activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        activity.setTitle(resTitle);
+    }
+
+    /*
+    * Event Spinner
+    * in Activity Return Device
+    *
+    * */
+    @BindingAdapter(value = {
+            "bind:selectedValue", "bind:selectedValueAttrChanged"
+    }, requireAll = false)
+    public static void bindSpinnerData(AppCompatSpinner view, Status newSelectedValue,
+            final InverseBindingListener newTextAttrChanged) {
+        view.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                newTextAttrChanged.onChange();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        if (newSelectedValue != null) {
+            int pos = ((ArrayAdapter<Status>) view.getAdapter()).getPosition(newSelectedValue);
+            view.setSelection(pos, true);
+        }
+    }
+
+    @InverseBindingAdapter(attribute = "bind:selectedValue", event =
+            "bind:selectedValueAttrChanged")
+    public static Status captureSelectedValue(AppCompatSpinner view) {
+        return (Status) view.getSelectedItem();
+    }
+
+    /*
+    * Bind adapter for Autocomplete TextView
+    * in Activity Return Device
+    * */
+
+    @BindingAdapter({ "autoComplete", "spinnerSetSelection" })
+    public static void autoComplete(AutoCompleteTextView view, ArrayAdapter adapter,
+            final AppCompatSpinner spinner) {
+        view.setAdapter(adapter);
+        view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                spinner.setSelection(position);
+            }
+        });
+    }
+
     @BindingAdapter({ "model" })
     public static void setupViewPagerDashBorad(final ViewPager viewPager,
             final DashboardViewModel viewModel) {
@@ -333,5 +393,14 @@ public final class BindingUtils {
                 return false;
             }
         });
+    }
+
+    /*
+    * bind Spinner Adapter
+    * in Activity Return Device
+    * */
+    @BindingAdapter("spinnerAdapter")
+    public static void spinnerAdapter(AppCompatSpinner spinner, ArrayAdapter adapter) {
+        spinner.setAdapter(adapter);
     }
 }

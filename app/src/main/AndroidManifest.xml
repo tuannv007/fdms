@@ -70,6 +70,7 @@
         <activity
             android:name=".screen.devicedetail.DeviceDetailActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".screen.returndevice.ReturnDeviceActivity"/>
     </application>
-
 </manifest>
+

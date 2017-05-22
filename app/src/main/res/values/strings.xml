@@ -103,4 +103,6 @@
     <string name="title_device_infomation">Infomation</string>
     <string name="title_device_detail">Device Detail</string>
     <string formatted="false" name="using_device_time">%s - %s</string>
+    <string name="title_device_return">Return device</string>
+    <string name="action_return_device">Return device</string>
 </resources>
