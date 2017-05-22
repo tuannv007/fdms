@@ -27,4 +27,8 @@ public class StatusRepository {
     public Observable<List<Status>> getListRelative() {
         return mStatusRemoteDataSource.getListRelative();
     }
+
+    public Observable<List<Status>> getListAssignee() {
+        return mStatusRemoteDataSource.getListAssignee();
+    }
 }

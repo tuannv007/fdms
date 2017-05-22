@@ -3,6 +3,7 @@ package com.framgia.fdms.data.source;
 import com.framgia.fdms.data.model.Dashboard;
 import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.data.model.Status;
+import com.framgia.fdms.data.source.api.request.RequestCreatorRequest;
 import java.util.List;
 import rx.Observable;
 
@@ -21,5 +22,7 @@ public interface RequestDataSource {
                 int page);
 
         Observable<List<Status>> getStatus();
+
+        Observable<Request> registerRequest(RequestCreatorRequest request);
     }
 }

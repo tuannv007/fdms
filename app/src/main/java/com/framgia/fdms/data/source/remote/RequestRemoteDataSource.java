@@ -5,6 +5,7 @@ import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.data.source.RequestDataSource;
+import com.framgia.fdms.data.source.api.request.RequestCreatorRequest;
 import com.framgia.fdms.data.source.api.service.FDMSApi;
 import com.framgia.fdms.utils.Utils;
 import java.util.ArrayList;
@@ -20,8 +21,12 @@ import static com.framgia.fdms.utils.Constant.ALL_REQUEST_STATUS_ID;
 import static com.framgia.fdms.utils.Constant.ApiParram.PAGE;
 import static com.framgia.fdms.utils.Constant.ApiParram.PER_PAGE;
 import static com.framgia.fdms.utils.Constant.ApiParram.RELATIVE_ID;
+import static com.framgia.fdms.utils.Constant.ApiParram.REQUEST_ASSIGNEE_ID;
+import static com.framgia.fdms.utils.Constant.ApiParram.REQUEST_DESCRIPTION;
+import static com.framgia.fdms.utils.Constant.ApiParram.REQUEST_FOR_USER_ID;
 import static com.framgia.fdms.utils.Constant.ApiParram.REQUEST_STATUS_ID;
 import static com.framgia.fdms.utils.Constant.ApiParram.REQUEST_TYPE;
+import static com.framgia.fdms.utils.Constant.ApiParram.REQUEST_TITLE;
 import static com.framgia.fdms.utils.Constant.OUT_OF_INDEX;
 
 /**
@@ -54,6 +59,25 @@ public class RequestRemoteDataSource extends BaseRemoteDataSource
     public Observable<List<Status>> getStatus() {
         List<Status> status = new ArrayList<>();
         return Observable.just(status);
+    }
+
+    @Override
+    public Observable<Request> registerRequest(RequestCreatorRequest request) {
+        Map<String, String> parrams = new HashMap<>();
+
+        parrams.put(REQUEST_TITLE, request.getTitle());
+        parrams.put(REQUEST_DESCRIPTION, request.getDescription());
+        parrams.put(REQUEST_FOR_USER_ID, String.valueOf(request.getForUserId()));
+        parrams.put(REQUEST_ASSIGNEE_ID, String.valueOf(request.getAssigneeId()));
+
+        return mFDMSApi.registerRequest(parrams, request.getDeviceRequests())
+                .flatMap(new Func1<Respone<Request>, Observable<Request>>() {
+
+                    @Override
+                    public Observable<Request> call(Respone<Request> requestRespone) {
+                        return Utils.getResponse(requestRespone);
+                    }
+                });
     }
 
     @Override
