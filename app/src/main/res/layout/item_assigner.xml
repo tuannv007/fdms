@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="assigner"
+            type="com.framgia.fdms.data.model.Status"
+            />
+        <variable
+            name="position"
+            type="int"
+            />
+        <variable
+            name="viewModel"
+            type="com.framgia.fdms.screen.returndevice.ReturnDeviceContract.ViewModel"
+            />
+    </data>
+
+    <TextView
+        android:id="@+id/text_assigner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/dp_48"
+        android:onClick="@{() -> viewModel.onClickItemAssigner(assigner, position)}"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_16"
+        android:text="@{assigner.name}"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        />
+</layout>

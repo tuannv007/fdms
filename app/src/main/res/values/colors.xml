@@ -22,6 +22,7 @@
     <color name="color_green_600">#43A047</color>
     <color name="color_grey_900">#212121</color>
     <color name="color_grey_700">#616161</color>
+    <color name="color_grey_757575">#757575</color>
     <color name="color_grey_100">#F5F5F5</color>
     <color name="color_blue_grey_50">#ECEFF1</color>
     <color name="color_red_500">#E74C3C</color>
@@ -29,4 +30,5 @@
     <color name="color_green">#13ef08</color>
     <color name="color_teal_700">#1ABB9C</color>
     <color name="color_orange_800">#f9a825</color>
+    <color name="color_teal_500">#009688</color>
 </resources>
