@@ -86,6 +86,27 @@ public class ReturnDeviceViewModel implements ReturnDeviceContract.ViewModel {
         mAssignerAdapter.get().update(mAssigners);
     }
 
+    @Override
+    public void onSelectAssigner(int position) {
+        if (mAssigners == null) return;
+        Status assigner = mAssigners.get(position);
+        getAllDeviceBorrowOfUser(assigner);
+    }
+
+    private void getAllDeviceBorrowOfUser(Status assigner) {
+        mPresenter.getDevicesOfBorrower();
+    }
+
+    @Override
+    public void onError(String message) {
+        Toast.makeText(mActivity, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDeviceLoaded(List<Device> devices) {
+        mAdapter.get().update(devices);
+    }
+
     public AppCompatActivity getActivity() {
         return mActivity;
     }

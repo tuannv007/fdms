@@ -27,6 +27,12 @@ public interface ReturnDeviceContract {
         void onLoadError(String message);
 
         void onGetAssignedSuccess(List<Status> statuses);
+
+        void onSelectAssigner(int position);
+
+        void onError(String message);
+
+        void onDeviceLoaded(List<Device> devices);
     }
 
     /**
@@ -34,5 +40,6 @@ public interface ReturnDeviceContract {
      */
     interface Presenter extends BasePresenter {
         void getListAssign();
+        void getDevicesOfBorrower();
     }
 }

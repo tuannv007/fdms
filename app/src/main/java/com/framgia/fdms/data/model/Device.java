@@ -51,6 +51,15 @@ public class Device implements Serializable {
     @SerializedName("device_category_name")
     private String mDeviceCategoryName;
 
+    public Device() {
+    }
+
+    public Device(String deviceCode, String productionName, String deviceCategoryName) {
+        mDeviceCode = deviceCode;
+        mProductionName = productionName;
+        mDeviceCategoryName = deviceCategoryName;
+    }
+
     public int getId() {
         return mId;
     }
