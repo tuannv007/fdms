@@ -1,6 +1,8 @@
 package com.framgia.fdms.screen.returndevice;
 
+import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.data.model.Status;
+import com.framgia.fdms.data.source.DeviceReturnRepository;
 import com.framgia.fdms.data.source.StatusRepository;
 import java.util.List;
 import rx.Subscriber;
@@ -21,17 +23,21 @@ public final class ReturnDevicePresenter implements ReturnDeviceContract.Present
     private final ReturnDeviceContract.ViewModel mViewModel;
     private CompositeSubscription mSubscription;
     private StatusRepository mRepository;
+    private DeviceReturnRepository mDeviceReturnRepository;
 
     public ReturnDevicePresenter(ReturnDeviceContract.ViewModel viewModel,
-            StatusRepository repository) {
+            StatusRepository repository, DeviceReturnRepository deviceReturnRepository) {
         mViewModel = viewModel;
         mRepository = repository;
+        mDeviceReturnRepository = deviceReturnRepository;
         mSubscription = new CompositeSubscription();
+        getListAssign();
+        getDevicesOfBorrower();
     }
 
     @Override
     public void getListAssign() {
-        Subscription subscription = mRepository.getListAssignee()
+        Subscription subscription = mDeviceReturnRepository.getBorrowers()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(new Action0() {
@@ -55,6 +61,36 @@ public final class ReturnDevicePresenter implements ReturnDeviceContract.Present
                     @Override
                     public void onNext(List<Status> statuses) {
                         mViewModel.onGetAssignedSuccess(statuses);
+                    }
+                });
+        mSubscription.add(subscription);
+    }
+
+    @Override
+    public void getDevicesOfBorrower() {
+        Subscription subscription = mDeviceReturnRepository.devicesOfBorrower()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mViewModel.showProgressbar();
+                    }
+                })
+                .subscribe(new Subscriber<List<Device>>() {
+                    @Override
+                    public void onCompleted() {
+                        mViewModel.hideProgressbar();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mViewModel.onError(e.getCause().getMessage());
+                    }
+
+                    @Override
+                    public void onNext(List<Device> devices) {
+                        mViewModel.onDeviceLoaded(devices);
                     }
                 });
         mSubscription.add(subscription);

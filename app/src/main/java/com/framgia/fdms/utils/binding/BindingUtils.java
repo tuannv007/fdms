@@ -27,11 +27,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Category;
-import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.screen.dashboard.DashboardViewModel;
 import com.framgia.fdms.screen.listDevice.ListDeviceViewModel;
 import com.framgia.fdms.screen.newmain.NewMainViewModel;
 import com.framgia.fdms.screen.requestcreation.RequestCreationViewModel;
+import com.framgia.fdms.screen.returndevice.ReturnDeviceViewModel;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
@@ -204,50 +204,16 @@ public final class BindingUtils {
     }
 
     /*
-    * Event Spinner
-    * in Activity Return Device
-    *
-    * */
-    @BindingAdapter(value = {
-            "bind:selectedValue", "bind:selectedValueAttrChanged"
-    }, requireAll = false)
-    public static void bindSpinnerData(AppCompatSpinner view, Status newSelectedValue,
-            final InverseBindingListener newTextAttrChanged) {
-        view.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                newTextAttrChanged.onChange();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-        if (newSelectedValue != null) {
-            int pos = ((ArrayAdapter<Status>) view.getAdapter()).getPosition(newSelectedValue);
-            view.setSelection(pos, true);
-        }
-    }
-
-    @InverseBindingAdapter(attribute = "bind:selectedValue", event =
-            "bind:selectedValueAttrChanged")
-    public static Status captureSelectedValue(AppCompatSpinner view) {
-        return (Status) view.getSelectedItem();
-    }
-
-    /*
     * Bind adapter for Autocomplete TextView
     * in Activity Return Device
     * */
-
-    @BindingAdapter({ "autoComplete", "spinnerSetSelection" })
-    public static void autoComplete(AutoCompleteTextView view, ArrayAdapter adapter,
-            final AppCompatSpinner spinner) {
+    @BindingAdapter({ "autoComplete", "viewModel" })
+    public static void autoComplete(AutoCompleteTextView view, ArrayAdapter adapter, final ReturnDeviceViewModel viewModel) {
         view.setAdapter(adapter);
         view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                spinner.setSelection(position);
+                viewModel.onSelectAssigner(position);
             }
         });
     }

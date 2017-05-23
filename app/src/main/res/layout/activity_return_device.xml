@@ -38,29 +38,19 @@
             <android.support.v7.widget.AppCompatAutoCompleteTextView
                 android:id="@+id/edit_search_name"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:inputType="textAutoComplete|textAutoCorrect"
                 android:paddingLeft="@dimen/dp_3"
                 android:paddingRight="@dimen/dp_3"
                 android:text="@={viewModel.nameUserReturn.name}"
                 bind:autoComplete="@{viewModel.assignerAdapter}"
-                bind:spinnerSetSelection="@{spinnerNameUser}"
+                bind:viewModel="@{viewModel}"
                 />
-
-            <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/spinner_name_user"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="@dimen/dp_5"
-                bind:selectedValue="@={viewModel.nameUserReturn}"
-                bind:spinnerAdapter="@{viewModel.assignerAdapter}"
-                style="@style/Widget.AppCompat.Spinner.Underlined"
-                />
-
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_16"
                 android:layout_weight="1"
                 app:layoutManager="LinearLayoutManager"
                 app:recyclerAdapter="@{viewModel.adapter}"

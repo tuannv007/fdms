@@ -173,12 +173,12 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
 
     @Override
     public void onRegisterDeviceClick() {
-        mContext.startActivity(ReturnDeviceActivity.newIntent(mContext));
+        mContext.startActivity(CreateDeviceActivity.getInstance(mContext));
     }
 
     @Override
     public void onStartReturnDevice() {
-        mContext.startActivity(CreateDeviceActivity.getInstance(mContext));
+        mContext.startActivity(ReturnDeviceActivity.newIntent(mContext));
     }
 
     @Override

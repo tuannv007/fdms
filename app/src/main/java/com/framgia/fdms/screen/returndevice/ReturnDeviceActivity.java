@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import com.framgia.fdms.R;
+import com.framgia.fdms.data.source.DeviceReturnRepository;
 import com.framgia.fdms.data.source.StatusRepository;
 import com.framgia.fdms.data.source.api.service.FDMSServiceClient;
+import com.framgia.fdms.data.source.remote.DeviceReturnRemoteDataSource;
 import com.framgia.fdms.data.source.remote.StatusRemoteDataSource;
 import com.framgia.fdms.databinding.ActivityReturnDeviceBinding;
 
@@ -33,7 +35,8 @@ public class ReturnDeviceActivity extends AppCompatActivity {
         mViewModel = new ReturnDeviceViewModel(this);
 
         ReturnDeviceContract.Presenter presenter = new ReturnDevicePresenter(mViewModel,
-                new StatusRepository(new StatusRemoteDataSource(FDMSServiceClient.getInstance())));
+                new StatusRepository(new StatusRemoteDataSource(FDMSServiceClient.getInstance())),
+                new DeviceReturnRepository(new DeviceReturnRemoteDataSource()));
         mViewModel.setPresenter(presenter);
 
         ActivityReturnDeviceBinding binding =
