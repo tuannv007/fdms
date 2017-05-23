@@ -66,7 +66,7 @@ final class DeviceUsingHistoryPresenter implements DeviceUsingHistoryContract.Pr
     @Override
     public void onLoadMore() {
         // TODO: 23/05/2017 later
-        mViewModel.hideProgressbar();
+      mViewModel.hideProgressbar();
     }
 
     @Override

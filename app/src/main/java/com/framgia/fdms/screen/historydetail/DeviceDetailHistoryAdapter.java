@@ -3,8 +3,9 @@ package com.framgia.fdms.screen.historydetail;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import com.framgia.fdms.data.model.HistoryDetail;
+import com.framgia.fdms.data.model.DeviceHistoryDetail;
 import com.framgia.fdms.databinding.ItemHistoryDetailBinding;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,11 +15,13 @@ import java.util.List;
 
 public class DeviceDetailHistoryAdapter
         extends RecyclerView.Adapter<DeviceDetailHistoryAdapter.HistoryDetailHolder> {
-    private List<HistoryDetail> mHistoryDetails;
+    private List<DeviceHistoryDetail> mDeviceHistoryDetails = new ArrayList<>();
     private LayoutInflater mInflater;
 
-    public DeviceDetailHistoryAdapter(List<HistoryDetail> historyDetails) {
-        mHistoryDetails = historyDetails;
+    public void addData(List<DeviceHistoryDetail> deviceHistoryDetails) {
+        if (deviceHistoryDetails == null) return;
+        mDeviceHistoryDetails.addAll(deviceHistoryDetails);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -31,13 +34,13 @@ public class DeviceDetailHistoryAdapter
 
     @Override
     public void onBindViewHolder(HistoryDetailHolder holder, int position) {
-        HistoryDetail historyDetail = mHistoryDetails.get(position);
-        if (mHistoryDetails != null) holder.bind(historyDetail, position);
+        DeviceHistoryDetail deviceHistoryDetail = mDeviceHistoryDetails.get(position);
+        if (mDeviceHistoryDetails != null) holder.bind(deviceHistoryDetail, position);
     }
 
     @Override
     public int getItemCount() {
-        return mHistoryDetails == null ? 0 : mHistoryDetails.size();
+        return mDeviceHistoryDetails == null ? 0 : mDeviceHistoryDetails.size();
     }
 
     public class HistoryDetailHolder extends RecyclerView.ViewHolder {
@@ -49,8 +52,8 @@ public class DeviceDetailHistoryAdapter
             mBinding = binding;
         }
 
-        private void bind(HistoryDetail historyDetail, int position) {
-            mBinding.setHistoryDetail(historyDetail);
+        private void bind(DeviceHistoryDetail deviceHistoryDetail, int position) {
+            mBinding.setDeviceHistoryDetail(deviceHistoryDetail);
             mBinding.setPosition(position);
             mBinding.executePendingBindings();
         }

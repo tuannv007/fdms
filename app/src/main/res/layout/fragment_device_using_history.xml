@@ -24,6 +24,7 @@
             android:layout_weight="1"
             bind:adapter="@{viewModel.adapter}"
             bind:layoutManager="LinearLayoutManager"
+            bind:scrollListenner="@{viewModel.scrollListenner}"
             />
 
         <ProgressBar
