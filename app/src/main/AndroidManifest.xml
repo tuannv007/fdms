@@ -67,6 +67,9 @@
         <activity
             android:name=".screen.scanner.ScannerActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".screen.devicedetail.DeviceDetailActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

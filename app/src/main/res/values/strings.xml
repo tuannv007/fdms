@@ -98,4 +98,8 @@
     <string name="title_minus">—</string>
     <string name="title_plus">+</string>
     <string name="action_approve">Approve</string>
+    <string name="title_device_history">History</string>
+    <string name="title_using_history">Using History</string>
+    <string name="title_device_infomation">Infomation</string>
+    <string name="title_device_detail">Device Detail</string>
 </resources>
