@@ -9,10 +9,16 @@ import com.framgia.fdms.BR;
  * <></>
  */
 
-public class HistoryDetail extends BaseObservable {
+public class DeviceHistoryDetail extends BaseObservable {
     private String mDate;
     private String mUserRequest;
     private String mUserAssigner;
+
+    public DeviceHistoryDetail(String date, String userRequest, String userAssigner) {
+        mDate = date;
+        mUserRequest = userRequest;
+        mUserAssigner = userAssigner;
+    }
 
     @Bindable
     public String getDate() {

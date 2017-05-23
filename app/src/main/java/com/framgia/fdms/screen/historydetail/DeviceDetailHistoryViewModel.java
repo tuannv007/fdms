@@ -1,22 +1,25 @@
 package com.framgia.fdms.screen.historydetail;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
 import android.databinding.ObservableField;
-import com.framgia.fdms.data.model.HistoryDetail;
+import com.framgia.fdms.BR;
+import com.framgia.fdms.data.model.DeviceHistoryDetail;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Exposes the data to be used in the HistoryDetail screen.
+ * Exposes the data to be used in the DeviceHistoryDetail screen.
  */
 
-public class DeviceDetailHistoryViewModel implements DeviceDetailHistoryContract.ViewModel {
+public class DeviceDetailHistoryViewModel extends BaseObservable
+        implements DeviceDetailHistoryContract.ViewModel {
 
-    private List<HistoryDetail> mHistoryDetails = new ArrayList<>();
     private DeviceDetailHistoryContract.Presenter mPresenter;
-    private ObservableField<DeviceDetailHistoryAdapter> mAdapter = new ObservableField<>();
+    private DeviceDetailHistoryAdapter mAdapter;
 
     public DeviceDetailHistoryViewModel() {
-        mAdapter.set(new DeviceDetailHistoryAdapter(mHistoryDetails));
+        mAdapter= new DeviceDetailHistoryAdapter();
     }
 
     @Override
@@ -34,7 +37,23 @@ public class DeviceDetailHistoryViewModel implements DeviceDetailHistoryContract
         mPresenter = presenter;
     }
 
-    public ObservableField<DeviceDetailHistoryAdapter> getAdapter() {
+    @Override
+    public void onGetDeviceHistoryFailed(String message) {
+        // TODO: 23/05/2017 show snack bar later
+    }
+
+    @Override
+    public void onGetDeviceHistorySuccess(List<DeviceHistoryDetail> deviceHistoryDetails) {
+        mAdapter.addData(deviceHistoryDetails);
+    }
+
+    @Bindable
+    public DeviceDetailHistoryAdapter getAdapter() {
         return mAdapter;
+    }
+
+    public void setAdapter(DeviceDetailHistoryAdapter adapter) {
+        mAdapter = adapter;
+        notifyPropertyChanged(BR.adapter);
     }
 }

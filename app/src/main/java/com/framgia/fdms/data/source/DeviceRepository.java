@@ -3,6 +3,7 @@ package com.framgia.fdms.data.source;
 import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Dashboard;
 import com.framgia.fdms.data.model.Device;
+import com.framgia.fdms.data.model.DeviceHistoryDetail;
 import com.framgia.fdms.data.model.DeviceUsingHistory;
 import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.Status;
@@ -50,5 +51,9 @@ public class DeviceRepository {
 
     public Observable<List<DeviceUsingHistory>> getDeviceUsingHistory(int deviceId){
         return mDeviceRemoteDataSource.getDeviceUsingHistory(deviceId);
+    }
+
+    public Observable<List<DeviceHistoryDetail>> getDeviceDetailHistory(int deviceId){
+        return mDeviceRemoteDataSource.getDeviceDetailHistory(deviceId);
     }
 }

@@ -6,10 +6,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.framgia.fdms.data.source.DeviceRepository;
+import com.framgia.fdms.data.source.api.service.FDMSServiceClient;
+import com.framgia.fdms.data.source.remote.DeviceRemoteDataSource;
 import com.framgia.fdms.databinding.FragmentHistoryDetailBinding;
 
 /**
- * HistoryDetail Screen.
+ * DeviceHistoryDetail Screen.
  */
 public class DeviceDetailHistoryFragment extends Fragment {
 
@@ -24,7 +27,10 @@ public class DeviceDetailHistoryFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mViewModel = new DeviceDetailHistoryViewModel();
 
-        DeviceDetailHistoryContract.Presenter presenter = new DeviceDetailHistoryPresenter(mViewModel);
+        DeviceRepository repository =
+                new DeviceRepository(new DeviceRemoteDataSource(FDMSServiceClient.getInstance()));
+        DeviceDetailHistoryContract.Presenter presenter =
+                new DeviceDetailHistoryPresenter(mViewModel, repository);
         mViewModel.setPresenter(presenter);
     }
 

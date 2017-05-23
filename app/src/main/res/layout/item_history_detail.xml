@@ -4,8 +4,8 @@
     >
     <data>
         <variable
-            name="historyDetail"
-            type="com.framgia.fdms.data.model.HistoryDetail"
+            name="deviceHistoryDetail"
+            type="com.framgia.fdms.data.model.DeviceHistoryDetail"
             />
         <variable
             name="position"
@@ -50,7 +50,7 @@
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{historyDetail.date}"
+                        android:text="@{deviceHistoryDetail.date}"
                         android:textSize="@dimen/sp_18"
                         android:textStyle="bold"
                         />
@@ -94,7 +94,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_5"
-                        android:text="@{historyDetail.userRequest}"
+                        android:text="@{deviceHistoryDetail.userRequest}"
                         android:textSize="@dimen/sp_16"
                         />
                     <android.support.v7.widget.AppCompatTextView
@@ -136,7 +136,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_5"
-                        android:text="@{historyDetail.userAssigner}"
+                        android:text="@{deviceHistoryDetail.userAssigner}"
                         android:textSize="@dimen/sp_16"
                         />
                     <android.support.v7.widget.AppCompatTextView

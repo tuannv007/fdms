@@ -50,7 +50,7 @@
                     android:paddingLeft="@dimen/dp_5"
                     android:text="@{deviceUsingHistory.staffName}"
                     android:textColor="@color/color_black"
-                    android:textSize="@dimen/sp_14"
+                    android:textSize="@dimen/sp_16"
                     android:textStyle="bold"
                     />
 
@@ -78,7 +78,7 @@
                     android:paddingLeft="@dimen/dp_5"
                     android:text="@{@string/using_device_time(deviceUsingHistory.startDate, deviceUsingHistory.endDate)}"
                     android:textColor="@color/color_grey_700"
-                    android:textSize="@dimen/sp_12"
+                    android:textSize="@dimen/sp_14"
                     />
 
             </LinearLayout>
