@@ -27,6 +27,8 @@ interface ListDeviceContract {
 
         void onRegisterDeviceClick();
 
+        void onStartReturnDevice();
+
         void onDeviceCategoryLoaded(List<Category> categories);
 
         void onDeviceStatusLoaded(List<Status> statuses);

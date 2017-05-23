@@ -49,7 +49,7 @@
             android:layout_marginRight="@dimen/dp_20"
             android:elevation="@dimen/dp_5"
             android:onClick="@{() -> viewModel.onRegisterRequestClick()}"
-            android:src="@drawable/ic_action_add"
+            android:src="@drawable/ic_add_white_24dp"
             app:backgroundTint="@color/colorPrimaryDark"
             app:pressedTranslationZ="@dimen/dp_15"
             />

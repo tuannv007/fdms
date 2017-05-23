@@ -2,7 +2,6 @@ package com.framgia.fdms.screen.listDevice;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.ObservableBoolean;
@@ -21,6 +20,7 @@ import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.screen.devicecreation.CreateDeviceActivity;
 import com.framgia.fdms.screen.devicedetail.DeviceDetailActivity;
+import com.framgia.fdms.screen.returndevice.ReturnDeviceActivity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -173,6 +173,11 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
 
     @Override
     public void onRegisterDeviceClick() {
+        mContext.startActivity(ReturnDeviceActivity.newIntent(mContext));
+    }
+
+    @Override
+    public void onStartReturnDevice() {
         mContext.startActivity(CreateDeviceActivity.getInstance(mContext));
     }
 
