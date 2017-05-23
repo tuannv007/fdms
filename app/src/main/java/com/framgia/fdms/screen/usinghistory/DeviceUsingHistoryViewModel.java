@@ -1,20 +1,27 @@
 package com.framgia.fdms.screen.usinghistory;
 
-import android.databinding.BaseObservable;
+import android.content.Context;
 import android.databinding.Bindable;
+import android.widget.Toast;
 import com.android.databinding.library.baseAdapters.BR;
+import com.framgia.fdms.BaseFragmentContract;
+import com.framgia.fdms.BaseFragmentModel;
+import com.framgia.fdms.data.model.DeviceUsingHistory;
+import java.util.List;
 
 /**
  * Exposes the data to be used in the UsingHistory screen.
  */
 
-public class DeviceUsingHistoryViewModel extends BaseObservable
+public class DeviceUsingHistoryViewModel extends BaseFragmentModel
         implements DeviceUsingHistoryContract.ViewModel {
 
-    private DeviceUsingHistoryContract.Presenter mPresenter;
+    private BaseFragmentContract.Presenter mPresenter;
     private DeviceUsingAdapter mAdapter;
+    private Context mContext;
 
-    public DeviceUsingHistoryViewModel() {
+    public DeviceUsingHistoryViewModel(Context context) {
+        mContext = context;
         mAdapter = new DeviceUsingAdapter();
     }
 
@@ -28,8 +35,7 @@ public class DeviceUsingHistoryViewModel extends BaseObservable
         mPresenter.onStop();
     }
 
-    @Override
-    public void setPresenter(DeviceUsingHistoryContract.Presenter presenter) {
+    public void setPresenter(BaseFragmentContract.Presenter presenter) {
         mPresenter = presenter;
     }
 
@@ -41,5 +47,15 @@ public class DeviceUsingHistoryViewModel extends BaseObservable
     public void setAdapter(DeviceUsingAdapter adapter) {
         mAdapter = adapter;
         notifyPropertyChanged(BR.adapter);
+    }
+
+    @Override
+    public void onGetUsingHistoryDeviceSuccess(List<DeviceUsingHistory> histories) {
+        mAdapter.addData(histories);
+    }
+
+    @Override
+    public void onGetUsingHistoryDeviceFailed(String msg) {
+        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
     }
 }

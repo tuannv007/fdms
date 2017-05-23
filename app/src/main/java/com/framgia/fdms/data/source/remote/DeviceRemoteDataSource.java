@@ -3,6 +3,7 @@ package com.framgia.fdms.data.source.remote;
 import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Dashboard;
 import com.framgia.fdms.data.model.Device;
+import com.framgia.fdms.data.model.DeviceUsingHistory;
 import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.data.source.DeviceDataSource;
@@ -138,6 +139,17 @@ public class DeviceRemoteDataSource implements DeviceDataSource.RemoteDataSource
         dashboards.add(new Dashboard("available", 35, "purple", "#9B59B6", "#B370CF"));
         dashboards.add(new Dashboard("broken", 0, "red", "#E74C3C", "#E95E4F"));
         return Observable.just(dashboards);
+    }
+
+    @Override
+    public Observable<List<DeviceUsingHistory>> getDeviceUsingHistory(int deviceId) {
+        // TODO: 23/05/2017 later
+        List<DeviceUsingHistory> tempList = new ArrayList<>();
+        tempList.add(new DeviceUsingHistory("Doan Van Toan 0", "20/10/2016", "Now"));
+        tempList.add(new DeviceUsingHistory("Doan Van Toan 1", "20/7/2016", "19/10/2016"));
+        tempList.add(new DeviceUsingHistory("Doan Van Toan 2", "20/6/2016", "19/7/2016"));
+        tempList.add(new DeviceUsingHistory("Doan Van Toan 3", "01/01/2016", "01/05/2016"));
+        return Observable.just(tempList);
     }
 
     public Map<String, String> getDeviceParams(String deviceName, int categoryId, int statusId,
