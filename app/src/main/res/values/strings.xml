@@ -102,4 +102,5 @@
     <string name="title_using_history">Using History</string>
     <string name="title_device_infomation">Infomation</string>
     <string name="title_device_detail">Device Detail</string>
+    <string formatted="false" name="using_device_time">%s - %s</string>
 </resources>
