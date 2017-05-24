@@ -8,12 +8,10 @@ import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.data.model.User;
 import com.framgia.fdms.data.source.api.request.DeviceRequest;
-import com.framgia.fdms.data.source.api.request.RequestCreatorRequest;
 import java.util.List;
 import java.util.Map;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -27,16 +25,9 @@ import retrofit2.http.QueryMap;
 import rx.Observable;
 
 public interface FDMSApi {
-    @GET("api/v1/search/users")
-    Observable<List<Device>> getListDevice(@Query("per_page") int limit,
-            @Query("q") String searchTerm);
-
     @POST("api/v1/sessions")
     Observable<Respone<User>> login(@Query("user[email]") String userName,
             @Query("user[password]") String passWord);
-
-    @GET("api/v1/search/devices")
-    Observable<List<Device>> searchDevices(@Query("keyWord") String type);
 
     @GET("api/v1/devices")
     Observable<Respone<List<Device>>> getListDevices(@QueryMap Map<String, String> parrams);

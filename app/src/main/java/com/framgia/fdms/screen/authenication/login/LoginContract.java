@@ -1,4 +1,4 @@
-package com.framgia.fdms.screen.login;
+package com.framgia.fdms.screen.authenication.login;
 
 import com.framgia.fdms.BasePresenter;
 import com.framgia.fdms.BaseViewModel;

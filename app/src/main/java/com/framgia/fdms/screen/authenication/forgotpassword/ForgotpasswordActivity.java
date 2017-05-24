@@ -1,4 +1,4 @@
-package com.framgia.fdms.screen.forgotpassword;
+package com.framgia.fdms.screen.authenication.forgotpassword;
 
 import android.content.Context;
 import android.content.Intent;

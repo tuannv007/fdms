@@ -1,12 +1,10 @@
-package com.framgia.fdms.screen.login;
+package com.framgia.fdms.screen.authenication.login;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.source.UserRepository;
 import com.framgia.fdms.data.source.api.service.FDMSServiceClient;

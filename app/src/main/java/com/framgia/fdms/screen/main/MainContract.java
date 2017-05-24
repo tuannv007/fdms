@@ -3,28 +3,26 @@ package com.framgia.fdms.screen.main;
 import com.framgia.fdms.BasePresenter;
 import com.framgia.fdms.BaseViewModel;
 import com.framgia.fdms.data.model.Device;
-import java.util.List;
 
 /**
  * This specifies the contract between the view and the presenter.
  */
-interface MainContract {
+public interface MainContract {
     /**
      * View.
      */
     interface ViewModel extends BaseViewModel<Presenter> {
-        void onDeviceLoaded(List<Device> devices);
+        void getResult(String resultQrCode);
 
-        void onError();
+        void onGetDecodeSuccess(Device device);
 
-        void showProgressbar();
-
-        void hideProgressbar();
+        void onGetDeviceError(String error);
     }
 
     /**
      * Presenter.
      */
     interface Presenter extends BasePresenter {
+        void getDevice(String resultQrCode);
     }
 }

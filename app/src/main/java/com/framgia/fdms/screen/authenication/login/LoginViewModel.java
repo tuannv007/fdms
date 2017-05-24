@@ -1,4 +1,4 @@
-package com.framgia.fdms.screen.login;
+package com.framgia.fdms.screen.authenication.login;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,9 +10,9 @@ import android.view.View;
 import android.widget.Toast;
 import com.android.databinding.library.baseAdapters.BR;
 import com.framgia.fdms.R;
-import com.framgia.fdms.screen.forgotpassword.ForgotpasswordActivity;
-import com.framgia.fdms.screen.newmain.NewMainActivity;
-import com.framgia.fdms.screen.register.RegisterActivity;
+import com.framgia.fdms.screen.authenication.forgotpassword.ForgotpasswordActivity;
+import com.framgia.fdms.screen.main.MainActivity;
+import com.framgia.fdms.screen.authenication.register.RegisterActivity;
 
 /**
  * Exposes the data to be used in the Login screen.
@@ -56,7 +56,7 @@ public class LoginViewModel extends BaseObservable implements LoginContract.View
 
     @Override
     public void onLoginSuccess() {
-        mContext.startActivity(new Intent(mContext, NewMainActivity.class));
+        mContext.startActivity(MainActivity.getInstance(mContext));
         ((Activity) (mContext)).finish();
         isValid = false;
     }

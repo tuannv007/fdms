@@ -6,10 +6,10 @@
 
     <data>
 
-        <import type="com.framgia.fdms.screen.newmain.NewMainViewModel.Tab"/>
+        <import type="com.framgia.fdms.screen.main.MainViewModel.Tab"/>
         <variable
             name="viewModel"
-            type="com.framgia.fdms.screen.newmain.NewMainViewModel"
+            type="com.framgia.fdms.screen.main.MainViewModel"
             />
 
     </data>
