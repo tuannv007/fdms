@@ -1,40 +1,31 @@
 package com.framgia.fdms.screen.main;
 
-import android.content.Context;
-import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-import android.databinding.ObservableField;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import com.framgia.fdms.BaseRecyclerViewAdapter;
+import android.support.annotation.IntDef;
+import android.support.design.widget.Snackbar;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import com.framgia.fdms.BR;
 import com.framgia.fdms.data.model.Device;
-import com.framgia.fdms.screen.detail.DetailActivity;
-import java.util.ArrayList;
-import java.util.List;
+import com.framgia.fdms.screen.scanner.ScannerActivity;
+
+import static com.framgia.fdms.screen.main.MainViewModel.Tab.TAB_DASH_BOARD;
+import static com.framgia.fdms.screen.main.MainViewModel.Tab.TAB_DEVICE_MANAGER;
+import static com.framgia.fdms.screen.main.MainViewModel.Tab.TAB_REQUEST_MANAGER;
 
 /**
- * Exposes the data to be used in the Main screen.
+ * Exposes the data to be used in the Newmain screen.
  */
 public class MainViewModel extends BaseObservable implements MainContract.ViewModel {
-    public final ObservableField<Integer> progressBarVisibility = new ObservableField<>();
-    private Context mContext;
     private MainContract.Presenter mPresenter;
-    private DeviceListAdapter mAdapter;
-    private List<Device> mDevices = new ArrayList<>();
+    private ViewPagerAdapter mPagerAdapter;
+    private int mTab = TAB_DASH_BOARD;
+    private AppCompatActivity mActivity;
 
-    public MainViewModel(Context context) {
-        mContext = context;
-        mAdapter = new DeviceListAdapter(mContext, mDevices);
-        mAdapter.setItemClickListener(
-                new BaseRecyclerViewAdapter.OnRecyclerViewItemClickListener<Device>() {
-
-                    @Override
-                    public void onItemRecyclerViewClick(Device item) {
-                        mContext.startActivity(
-                                new Intent(DetailActivity.getDeviceIntent(mContext, item)));
-                    }
-                });
+    public MainViewModel(ViewPagerAdapter adapter, AppCompatActivity activity) {
+        mPagerAdapter = adapter;
+        mActivity = activity;
     }
 
     @Override
@@ -52,28 +43,55 @@ public class MainViewModel extends BaseObservable implements MainContract.ViewMo
         mPresenter = presenter;
     }
 
-    @Override
-    public void onDeviceLoaded(List<Device> devices) {
-        mAdapter.updateData(devices);
+    public ViewPagerAdapter getPagerAdapter() {
+        return mPagerAdapter;
     }
 
     @Bindable
-    public RecyclerView.Adapter getAdapter() {
-        return mAdapter;
+    public int getTab() {
+        return mTab;
+    }
+
+    public void setTab(int tab) {
+        mTab = tab;
+        notifyPropertyChanged(BR.tab);
+    }
+
+    public void onDirectChildTab(@Tab int tab, ViewPager viewPager) {
+        if (mPagerAdapter == null) return;
+        viewPager.setCurrentItem(tab);
+    }
+
+    public void onStartScannerQrCode() {
+        mActivity.startActivity(ScannerActivity.newIntent(mActivity));
     }
 
     @Override
-    public void onError() {
-        //TODO dev later
+    public void onGetDecodeSuccess(Device device) {
+        // todo direct to detail device screen
+        Snackbar.make(mActivity.findViewById(android.R.id.content), device.getDeviceCategoryName(),
+                Snackbar.LENGTH_LONG).show();
     }
 
     @Override
-    public void showProgressbar() {
-        progressBarVisibility.set(View.VISIBLE);
+    public void onGetDeviceError(String error) {
+        Snackbar.make(mActivity.findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG)
+                .show();
     }
 
     @Override
-    public void hideProgressbar() {
-        progressBarVisibility.set(View.GONE);
+    public void getResult(String resultQrCode) {
+        if (mPresenter == null) return;
+        mPresenter.getDevice(resultQrCode);
+    }
+
+    @IntDef({
+            TAB_DASH_BOARD, TAB_REQUEST_MANAGER, TAB_DEVICE_MANAGER, Tab.TAB_PROFILE
+    })
+    public @interface Tab {
+        int TAB_DASH_BOARD = 0;
+        int TAB_REQUEST_MANAGER = 1;
+        int TAB_DEVICE_MANAGER = 2;
+        int TAB_PROFILE = 3;
     }
 }

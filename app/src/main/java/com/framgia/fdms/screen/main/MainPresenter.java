@@ -2,10 +2,8 @@ package com.framgia.fdms.screen.main;
 
 import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.data.source.DeviceRepository;
-import java.util.List;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
@@ -17,11 +15,13 @@ import rx.subscriptions.CompositeSubscription;
 final class MainPresenter implements MainContract.Presenter {
     private static final String TAG = MainPresenter.class.getName();
     private final MainContract.ViewModel mViewModel;
+    private CompositeSubscription mSubscription;
     private DeviceRepository mDeviceRepository;
-    private CompositeSubscription mCompositeSubscriptions = new CompositeSubscription();
 
-    MainPresenter(MainContract.ViewModel viewModel, DeviceRepository deviceRepository) {
+    public MainPresenter(MainContract.ViewModel viewModel,
+            DeviceRepository deviceRepository) {
         mViewModel = viewModel;
+        mSubscription = new CompositeSubscription();
         mDeviceRepository = deviceRepository;
     }
 
@@ -31,7 +31,25 @@ final class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void onStop() {
-        mCompositeSubscriptions.clear();
+        mSubscription.clear();
     }
 
+    @Override
+    public void getDevice(String resultQrCode) {
+        Subscription subscription = mDeviceRepository.getDeviceByQrCode(resultQrCode)
+                .observeOn(Schedulers.io())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Device>() {
+                    @Override
+                    public void call(Device device) {
+                        mViewModel.onGetDecodeSuccess(device);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        mViewModel.onGetDeviceError(throwable.getMessage());
+                    }
+                });
+        mSubscription.add(subscription);
+    }
 }

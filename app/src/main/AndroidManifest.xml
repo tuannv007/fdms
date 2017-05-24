@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/NoActionBarTheme">
         <activity
-            android:name=".screen.login.LoginActivity"
+            android:name=".screen.authenication.login.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.NoActionBar">
             <intent-filter>
@@ -27,35 +27,21 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".screen.authenication.register.RegisterActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".screen.authenication.login.LoginActivity"/>
+        </activity>
+        <activity
+            android:name=".screen.authenication.forgotpassword.ForgotpasswordActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".screen.authenication.login.LoginActivity"/>
+        </activity>
+        <activity
             android:name=".screen.main.MainActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".screen.register.RegisterActivity"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".screen.login.LoginActivity"/>
-        </activity>
-        <activity
-            android:name=".screen.detail.DetailActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.Design.NoActionBar"/>
-        <activity
-            android:name=".screen.search.SearchActivity"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".screen.main.MainActivity"/>
-        </activity>
-        <activity
-            android:name=".screen.forgotpassword.ForgotpasswordActivity"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".screen.login.LoginActivity"/>
-        </activity>
-        <activity
-            android:name=".screen.newmain.NewMainActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".screen.devicecreation.CreateDeviceActivity"

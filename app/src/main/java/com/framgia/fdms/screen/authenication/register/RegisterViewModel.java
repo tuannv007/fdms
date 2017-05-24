@@ -1,7 +1,6 @@
-package com.framgia.fdms.screen.register;
+package com.framgia.fdms.screen.authenication.register;
 
 import android.content.Context;
-import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.widget.Toast;
@@ -62,7 +61,7 @@ public class RegisterViewModel extends BaseObservable implements RegisterContrac
 
     @Override
     public void onRegisterSuccess() {
-        mContext.startActivity(new Intent(mContext, MainActivity.class));
+        mContext.startActivity(MainActivity.getInstance(mContext));
     }
 
     @Override

@@ -3,15 +3,11 @@ package com.framgia.fdms.screen.devicecreation;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.net.Uri;
-import android.os.Build;
-import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
@@ -22,10 +18,8 @@ import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.data.source.api.request.RegisterDeviceRequest;
 import com.framgia.fdms.screen.main.MainActivity;
-import java.util.ArrayList;
 import java.util.List;
 
-import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.app.Activity.RESULT_OK;
 import static com.framgia.fdms.utils.Constant.PICK_IMAGE_REQUEST;
 

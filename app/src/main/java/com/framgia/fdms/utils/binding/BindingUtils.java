@@ -7,6 +7,7 @@ import android.databinding.InverseBindingListener;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -29,7 +30,7 @@ import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.screen.dashboard.DashboardViewModel;
 import com.framgia.fdms.screen.listDevice.ListDeviceViewModel;
-import com.framgia.fdms.screen.newmain.NewMainViewModel;
+import com.framgia.fdms.screen.main.MainViewModel;
 import com.framgia.fdms.screen.requestcreation.RequestCreationViewModel;
 import com.framgia.fdms.screen.returndevice.ReturnDeviceViewModel;
 import com.github.mikephil.charting.charts.PieChart;
@@ -41,10 +42,10 @@ import java.util.Date;
 
 import static com.framgia.fdms.screen.dashboard.DashboardViewModel.Tab.TAB_DEVIVE_DASH_BOARD;
 import static com.framgia.fdms.screen.dashboard.DashboardViewModel.Tab.TAB_REQUEST_DASH_BOARD;
-import static com.framgia.fdms.screen.newmain.NewMainViewModel.Tab.TAB_DASH_BOARD;
-import static com.framgia.fdms.screen.newmain.NewMainViewModel.Tab.TAB_DEVICE_MANAGER;
-import static com.framgia.fdms.screen.newmain.NewMainViewModel.Tab.TAB_PROFILE;
-import static com.framgia.fdms.screen.newmain.NewMainViewModel.Tab.TAB_REQUEST_MANAGER;
+import static com.framgia.fdms.screen.main.MainViewModel.Tab.TAB_DASH_BOARD;
+import static com.framgia.fdms.screen.main.MainViewModel.Tab.TAB_DEVICE_MANAGER;
+import static com.framgia.fdms.screen.main.MainViewModel.Tab.TAB_PROFILE;
+import static com.framgia.fdms.screen.main.MainViewModel.Tab.TAB_REQUEST_MANAGER;
 import static com.framgia.fdms.utils.Constant.DeviceStatus.APPROVED;
 import static com.framgia.fdms.utils.Constant.DeviceStatus.CANCELLED;
 import static com.framgia.fdms.utils.Constant.DeviceStatus.DONE;
@@ -70,9 +71,21 @@ public final class BindingUtils {
         recyclerView.setAdapter(adapter);
     }
 
-    @BindingAdapter("app:imageUrl")
-    public static void loadImage(ImageView view, String imageUrl) {
-        Glide.with(view.getContext()).load(imageUrl).placeholder(R.drawable.img_framgia).into(view);
+    @BindingAdapter(value = { "app:imageUrl", "app:error" }, requireAll = false)
+    public static void loadImage(ImageView view, String imageUrl, Drawable error) {
+        if (error == null) {
+            Glide.with(view.getContext())
+                    .load(imageUrl)
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_no_image)
+                    .into(view);
+        } else {
+            Glide.with(view.getContext())
+                    .load(imageUrl)
+                    .centerCrop()
+                    .placeholder(error)
+                    .into(view);
+        }
     }
 
     @BindingAdapter("errorText")
@@ -99,7 +112,7 @@ public final class BindingUtils {
 
     @BindingAdapter(value = { "bind:adapter", "model" }, requireAll = false)
     public static void setupViewPager(final ViewPager viewPager, FragmentPagerAdapter adapter,
-            final NewMainViewModel viewModel) {
+            final MainViewModel viewModel) {
         viewPager.setAdapter(adapter);
         if (viewModel == null) return;
         viewPager.setOffscreenPageLimit(adapter.getCount());
@@ -208,7 +221,8 @@ public final class BindingUtils {
     * in Activity Return Device
     * */
     @BindingAdapter({ "autoComplete", "viewModel" })
-    public static void autoComplete(AutoCompleteTextView view, ArrayAdapter adapter, final ReturnDeviceViewModel viewModel) {
+    public static void autoComplete(AutoCompleteTextView view, ArrayAdapter adapter,
+            final ReturnDeviceViewModel viewModel) {
         view.setAdapter(adapter);
         view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

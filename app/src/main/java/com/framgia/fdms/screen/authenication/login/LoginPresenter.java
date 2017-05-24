@@ -1,6 +1,5 @@
-package com.framgia.fdms.screen.login;
+package com.framgia.fdms.screen.authenication.login;
 
-import android.content.SharedPreferences;
 import android.databinding.BaseObservable;
 import android.text.TextUtils;
 import com.framgia.fdms.data.model.Respone;

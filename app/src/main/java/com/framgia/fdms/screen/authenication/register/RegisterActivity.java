@@ -1,4 +1,4 @@
-package com.framgia.fdms.screen.register;
+package com.framgia.fdms.screen.authenication.register;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
