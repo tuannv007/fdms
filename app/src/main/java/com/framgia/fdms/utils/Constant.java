@@ -63,5 +63,6 @@ public class Constant {
 
     public static final class RequestConstant {
         public static final int REQUEST_SELECTION = 1;
+        public static final int REQUEST_STATUS = 2;
     }
 }

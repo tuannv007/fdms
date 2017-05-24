@@ -1,5 +1,6 @@
 package com.framgia.fdms.screen.request.userrequest;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -30,7 +31,7 @@ public class UserRequestFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mViewModel = new UserRequestViewModel(getActivity());
+        mViewModel = new UserRequestViewModel(getActivity(), this);
 
         UserRequestContract.Presenter presenter = new UserRequestPresenter(mViewModel,
                 RequestRepository.getInstant(
@@ -46,8 +47,7 @@ public class UserRequestFragment extends Fragment {
             @Nullable Bundle savedInstanceState) {
 
         FragmentUserRequestBinding binding =
-                DataBindingUtil.inflate(inflater, R.layout.fragment_user_request, container,
-                        false);
+                DataBindingUtil.inflate(inflater, R.layout.fragment_user_request, container, false);
         binding.setViewModel((UserRequestViewModel) mViewModel);
         return binding.getRoot();
     }
@@ -55,6 +55,12 @@ public class UserRequestFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mViewModel.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
