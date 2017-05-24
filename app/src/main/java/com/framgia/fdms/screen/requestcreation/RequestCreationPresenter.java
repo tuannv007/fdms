@@ -13,7 +13,6 @@ import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
@@ -22,7 +21,7 @@ import rx.subscriptions.CompositeSubscription;
  * updates
  * the UI as required.
  */
-final class RequestCreationPresenter implements RequestCreationContract.Presenter {
+public final class RequestCreationPresenter implements RequestCreationContract.Presenter {
     private final RequestCreationContract.ViewModel mViewModel;
     private StatusRepository mRepository;
     private CategoryRepository mCategoryRepository;

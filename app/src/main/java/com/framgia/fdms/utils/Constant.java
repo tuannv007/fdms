@@ -13,11 +13,11 @@ public class Constant {
     public static final int ALL_REQUEST_STATUS_ID = -1;
     public static final int ALL_RELATIVE_ID = -1;
     public static final String PERCENT = " %";
-    public static final String TITLE_UNKNOWN = "Unknown";
     public static final String NOT_SEARCH = "NOT_SEARCH";
     public static final int USING = 1;
     public static final int AVAIABLE = 2;
     public static final int BROKEN = 3;
+    public static final String TITLE_UNKNOWN = "Unknown";
 
     private Constant() {
         // No-op
@@ -64,5 +64,9 @@ public class Constant {
     public static final class RequestConstant {
         public static final int REQUEST_SELECTION = 1;
         public static final int REQUEST_STATUS = 2;
+    }
+
+    public class BundleRequest {
+        public static final String BUND_REQUEST = "BUND_REQUEST";
     }
 }
