@@ -37,5 +37,7 @@ public class DeviceDataSource {
         Observable<List<DeviceUsingHistory>> getDeviceUsingHistory(int deviceId);
 
         Observable<List<DeviceHistoryDetail>> getDeviceDetailHistory(int deviceId);
+
+        Observable<Device> getDevice(int deviceId);
     }
 }

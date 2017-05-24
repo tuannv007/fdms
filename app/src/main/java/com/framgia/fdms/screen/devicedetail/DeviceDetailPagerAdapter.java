@@ -7,7 +7,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import com.framgia.fdms.R;
 import com.framgia.fdms.screen.historydetail.DeviceDetailHistoryFragment;
-import com.framgia.fdms.screen.usinghistory.DeviceUsingHistoryFragment;
+import com.framgia.fdms.screen.devicedetail.infomation.DeviceInfomationFragment;
+import com.framgia.fdms.screen.devicedetail.usinghistory.DeviceUsingHistoryFragment;
 
 import static com.framgia.fdms.screen.devicedetail.DeviceDetailPagerAdapter.DeviceDetailPage
         .DEVICE_HISTORY;
@@ -23,17 +24,19 @@ import static com.framgia.fdms.screen.devicedetail.DeviceDetailPagerAdapter.Devi
 public class DeviceDetailPagerAdapter extends FragmentPagerAdapter {
     private static final int PAGE_COUNT = 3;
     private Context mContext;
+    private int mDeviceId;
 
-    public DeviceDetailPagerAdapter(Context context, FragmentManager fm) {
+    public DeviceDetailPagerAdapter(Context context, FragmentManager fm, int deviceId) {
         super(fm);
         mContext = context;
+        mDeviceId = deviceId;
     }
 
     @Override
     public Fragment getItem(int position) {
         switch (position) {
             case DEVICE_INFOMATION:
-                return DeviceUsingHistoryFragment.newInstance();
+                return DeviceInfomationFragment.newInstance(mDeviceId);
             case DEVICE_HISTORY:
                 return DeviceDetailHistoryFragment.newInstance();
             case DEVICE_USING_HISTORY:

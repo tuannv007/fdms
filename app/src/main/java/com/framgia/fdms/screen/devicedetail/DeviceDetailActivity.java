@@ -25,7 +25,7 @@ public class DeviceDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mViewModel = new DeviceDetailViewModel(this);
+        mViewModel = new DeviceDetailViewModel(this, getIntent().getIntExtra(EXTRA_DEVICE_ID, 0));
 
         DeviceDetailContract.Presenter presenter = new DeviceDetailPresenter(mViewModel);
         mViewModel.setPresenter(presenter);

@@ -14,10 +14,11 @@ public class DeviceDetailViewModel implements DeviceDetailContract.ViewModel {
     private Context mContext;
     private AppCompatActivity mActivity;
 
-    public DeviceDetailViewModel(AppCompatActivity activity) {
+    public DeviceDetailViewModel(AppCompatActivity activity, int deviceId) {
         mActivity = activity;
         mContext = mActivity.getApplicationContext();
-        mAdapter = new DeviceDetailPagerAdapter(mContext, mActivity.getSupportFragmentManager());
+        mAdapter = new DeviceDetailPagerAdapter(mContext, mActivity.getSupportFragmentManager(),
+                deviceId);
     }
 
     @Override

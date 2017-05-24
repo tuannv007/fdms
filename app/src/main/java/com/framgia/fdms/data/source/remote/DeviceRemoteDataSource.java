@@ -174,6 +174,17 @@ public class DeviceRemoteDataSource implements DeviceDataSource.RemoteDataSource
         return Observable.just(tempList);
     }
 
+    @Override
+    public Observable<Device> getDevice(int deviceId) {
+        return mFDMSApi.getDevice(deviceId).flatMap(new Func1<Respone<Device>, Observable<Device>>() {
+
+            @Override
+            public Observable<Device> call(Respone<Device> deviceRespone) {
+                return Utils.getResponse(deviceRespone);
+            }
+        });
+    }
+
     public Map<String, String> getDeviceParams(String deviceName, int categoryId, int statusId,
             int page, int perPage) {
         Map<String, String> parrams = new HashMap<>();

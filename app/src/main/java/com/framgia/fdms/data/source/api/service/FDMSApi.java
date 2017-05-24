@@ -68,4 +68,7 @@ public interface FDMSApi {
     @FormUrlEncoded
     Observable<Respone<Request>> registerRequest(@FieldMap Map<String, String> params,
             @Field("request[request_details_attributes]") List<DeviceRequest> deviceRequests);
+
+    @GET("api/v1/device_code")
+    Observable<Respone<Device>> getDevice(@Query("device_id") int deviceId);
 }
