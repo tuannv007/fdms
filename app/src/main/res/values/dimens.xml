@@ -45,4 +45,5 @@
     <dimen name="dp_4">4dp</dimen>
     <dimen name="sp_10">10sp</dimen>
     <dimen name="dp_250">250dp</dimen>
+    <dimen name="dp_05">0.5dp</dimen>
 </resources>

@@ -115,4 +115,6 @@
     <string name="title_printed_code">Printed Code</string>
     <string name="title_device_category">Device Category</string>
     <string name="title_unknown">Unknown</string>
+    <string formatted="false" name="text_name_status_selection">%d.    %s</string>
+    <string name="hint_search">Search</string>
 </resources>
