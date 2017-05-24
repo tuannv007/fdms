@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools"
     >
     <data>
         <variable
@@ -24,14 +25,46 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/dp_8"
+            android:paddingBottom="@dimen/dp_4"
+            android:paddingTop="@dimen/dp_4"
             >
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:paddingBottom="@dimen/dp_4"
                 android:paddingLeft="@dimen/dp_8"
                 android:paddingRight="@dimen/dp_8"
+                android:paddingTop="@dimen/dp_4"
+                >
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_persion_teal_24dp"
+                    />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:paddingBottom="@dimen/dp_4"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingTop="@dimen/dp_4"
+                    android:text="@{deviceHistoryDetail.userAssigner}"
+                    android:textSize="@dimen/sp_16"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/dp_4"
+                android:paddingLeft="@dimen/dp_8"
+                android:paddingRight="@dimen/dp_8"
+                android:paddingTop="@dimen/dp_4"
                 >
 
                 <android.support.v7.widget.AppCompatImageView
@@ -41,110 +74,44 @@
                     android:src="@drawable/ic_alarm_teal_24dp"
                     />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:paddingBottom="@dimen/dp_4"
                     android:paddingLeft="@dimen/dp_16"
-                    >
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@{deviceHistoryDetail.date}"
-                        android:textSize="@dimen/sp_18"
-                        android:textStyle="bold"
-                        />
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_1"
-                        android:layout_marginTop="@dimen/dp_5"
-                        android:background="@color/color_grey_757575"
-                        />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="@dimen/dp_8"
-                >
-
-                <android.support.v7.widget.AppCompatImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_persion_teal_24dp"
+                    android:paddingTop="@dimen/dp_4"
+                    android:textSize="@dimen/sp_14"
+                    bind:dateCreate="@{deviceHistoryDetail.date}"
                     />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingLeft="@dimen/dp_16"
-                    >
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/text_request_for"
-                        android:textSize="@dimen/sp_18"
-                        android:textStyle="bold"
-                        />
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_5"
-                        android:text="@{deviceHistoryDetail.userRequest}"
-                        android:textSize="@dimen/sp_16"
-                        />
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_1"
-                        android:layout_marginTop="@dimen/dp_5"
-                        android:background="@color/color_grey_757575"
-                        />
-                </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="@dimen/dp_8"
-                >
-
-                <android.support.v7.widget.AppCompatImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_persion_teal_24dp"
-                    />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingLeft="@dimen/dp_16"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
                     >
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/text_assign_to"
-                        android:textSize="@dimen/sp_18"
-                        android:textStyle="bold"
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:lines="1"
+                        android:paddingRight="@dimen/dp_10"
+                        android:text='@{deviceHistoryDetail.statusName}'
+                        android:textColor="@color/color_grey_700"
+                        android:textSize="@dimen/sp_13"
+                        android:textStyle="italic"
                         />
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_5"
-                        android:text="@{deviceHistoryDetail.userAssigner}"
-                        android:textSize="@dimen/sp_16"
+
+                    <ImageView
+                        android:id="@+id/text_status_name"
+                        android:layout_width="@dimen/dp_20"
+                        android:layout_height="@dimen/dp_20"
+                        android:layout_marginRight="@dimen/dp_10"
+                        app:resourceId='@{deviceHistoryDetail.statusImage}'
                         />
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_1"
-                        android:layout_marginTop="@dimen/dp_5"
-                        android:background="@color/color_grey_757575"
-                        />
+
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

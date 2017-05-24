@@ -157,11 +157,20 @@ public class DeviceRemoteDataSource implements DeviceDataSource.RemoteDataSource
     public Observable<List<DeviceHistoryDetail>> getDeviceDetailHistory(int deviceId) {
         // TODO: 23/05/2017 later
         List<DeviceHistoryDetail> tempList = new ArrayList<>();
-        tempList.add(new DeviceHistoryDetail("20/10/2016", "Doan Van Toan 0", "Chu Anh Tuan 0"));
-        tempList.add(new DeviceHistoryDetail("21/10/2016", "Doan Van Toan 1", "Chu Anh Tuan 1"));
-        tempList.add(new DeviceHistoryDetail("22/10/2016", "Doan Van Toan 2", "Chu Anh Tuan 2"));
-        tempList.add(new DeviceHistoryDetail("23/10/2016", "Doan Van Toan 3", "Chu Anh Tuan 3"));
-        tempList.add(new DeviceHistoryDetail("24/10/2016", "Doan Van Toan 4", "Chu Anh Tuan 4"));
+        tempList.add(new DeviceHistoryDetail("2017-05-24",
+                "Device has been Created by Nguyen Thi Minh Ngoc", 1));
+        tempList.add(
+                new DeviceHistoryDetail("2017-05-21", "Device has been Updated by Hoang Thu Hien",
+                        2));
+        tempList.add(
+                new DeviceHistoryDetail("2017-05-24", "Device has been Updated by Hoang Thu Hien",
+                        2));
+        tempList.add(
+                new DeviceHistoryDetail("2017-05-23", "Device has been Updated by Hoang Thu Hien",
+                        3));
+        tempList.add(
+                new DeviceHistoryDetail("2017-05-22", "Device has been Updated by Hoang Thu Hien",
+                        2));
         return Observable.just(tempList);
     }
 
