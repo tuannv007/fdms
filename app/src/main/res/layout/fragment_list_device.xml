@@ -97,7 +97,7 @@
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> viewModel.onStartReturnDevice()}"
+                android:onClick="@{() -> viewModel.onStartReturnDevice(floatActionMenu)}"
                 app:fab_colorNormal="@android:color/white"
                 app:fab_colorPressed="@color/color_seashell"
                 app:fab_icon="@drawable/ic_return_teal_24px"
@@ -107,7 +107,7 @@
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> viewModel.onRegisterDeviceClick()}"
+                android:onClick="@{() -> viewModel.onRegisterDeviceClick(floatActionMenu)}"
                 app:fab_colorNormal="@android:color/white"
                 app:fab_colorPressed="@color/color_seashell"
                 app:fab_icon="@drawable/ic_add_teal_24dp"

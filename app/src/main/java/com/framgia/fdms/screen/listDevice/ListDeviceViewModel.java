@@ -13,7 +13,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 import com.android.databinding.library.baseAdapters.BR;
 import com.framgia.fdms.R;
@@ -25,6 +24,7 @@ import com.framgia.fdms.screen.devicedetail.DeviceDetailActivity;
 import com.framgia.fdms.screen.returndevice.ReturnDeviceActivity;
 import com.framgia.fdms.screen.selection.StatusSelectionActivity;
 import com.framgia.fdms.screen.selection.StatusSelectionType;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,8 +45,6 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
     private ListDeviceContract.Presenter mPresenter;
     private Context mContext;
     private FragmentActivity mActivity;
-    private ArrayAdapter<Category> mAdapterCategory;
-    private ArrayAdapter<Status> mAdapterStatus;
     private List<Category> mCategories;
     private List<Status> mStatuses;
     private Category mCategory;
@@ -63,8 +61,6 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
         mContext = activity.getApplicationContext();
         mAdapter = new ListDeviceAdapter(mContext, new ArrayList<Device>(), this);
 
-        mAdapterCategory = new ArrayAdapter<Category>(mContext, R.layout.item_status_selection);
-        mAdapterStatus = new ArrayAdapter<Status>(mContext, R.layout.item_status_selection);
         setCategory(new Category(OUT_OF_INDEX, mContext.getString(R.string.title_btn_category)));
         setStatus(new Status(OUT_OF_INDEX, mContext.getString(R.string.title_request_status)));
     }
@@ -162,12 +158,14 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
     }
 
     @Override
-    public void onRegisterDeviceClick() {
+    public void onRegisterDeviceClick(FloatingActionsMenu actionsMenu) {
+        actionsMenu.collapse();
         mContext.startActivity(CreateDeviceActivity.getInstance(mContext));
     }
 
     @Override
-    public void onStartReturnDevice() {
+    public void onStartReturnDevice(FloatingActionsMenu actionsMenu) {
+        actionsMenu.collapse();
         mContext.startActivity(ReturnDeviceActivity.newIntent(mContext));
     }
 
@@ -192,9 +190,6 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
         if (list == null) {
             return;
         }
-        mAdapterCategory.clear();
-        mAdapterCategory.addAll(list);
-        mAdapterCategory.notifyDataSetChanged();
         // update list mCategories
         mCategories = list;
     }
@@ -203,9 +198,6 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
         if (list == null) {
             return;
         }
-        mAdapterStatus.clear();
-        mAdapterStatus.addAll(list);
-        mAdapterStatus.notifyDataSetChanged();
         // update list statuses
         mStatuses = list;
     }

@@ -1,16 +1,14 @@
 package com.framgia.fdms.screen.devicecreation;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 import com.framgia.fdms.BR;
 import com.framgia.fdms.R;
@@ -18,10 +16,17 @@ import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.data.source.api.request.RegisterDeviceRequest;
 import com.framgia.fdms.screen.main.MainActivity;
+import com.framgia.fdms.screen.selection.StatusSelectionActivity;
+import com.framgia.fdms.screen.selection.StatusSelectionType;
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
+import static com.framgia.fdms.utils.Constant.BundleConstant.BUNDLE_CATEGORY;
+import static com.framgia.fdms.utils.Constant.BundleConstant.BUNDLE_STATUE;
 import static com.framgia.fdms.utils.Constant.PICK_IMAGE_REQUEST;
+import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_CATEGORY;
+import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_STATUS;
 
 /**
  * Exposes the data to be used in the Createdevice screen.
@@ -38,8 +43,10 @@ public class CreateDeviceViewModel extends BaseObservable
     private String mSerialNumberError;
     private String mModelNumberError;
     private RegisterDeviceRequest mRequest;
-    private ArrayAdapter<Category> mAdapterCategory;
-    private ArrayAdapter<Status> mAdapterStatus;
+
+    private List<Status> mStatuses = new ArrayList<>();
+    private List<Category> mCategories = new ArrayList<>();
+
     private Category mCategory;
     private Status mStatus;
 
@@ -47,9 +54,6 @@ public class CreateDeviceViewModel extends BaseObservable
         mContext = activity.getApplicationContext();
         mActivity = activity;
         mRequest = new RegisterDeviceRequest();
-
-        mAdapterCategory = new ArrayAdapter<Category>(mContext, R.layout.item_status_selection);
-        mAdapterStatus = new ArrayAdapter<Status>(mContext, R.layout.item_status_selection);
     }
 
     @Override
@@ -58,43 +62,17 @@ public class CreateDeviceViewModel extends BaseObservable
     }
 
     public void onChooseCategory() {
-        if (mAdapterCategory == null) {
-            return;
-        }
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
-
-        builder.setTitle(R.string.title_category);
-
-        builder.setNegativeButton(R.string.action_cancel, null);
-
-        builder.setAdapter(mAdapterCategory, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                setCategory(mAdapterCategory.getItem(which));
-            }
-        });
-        builder.show();
+        if (mCategories == null) return;
+        mActivity.startActivityForResult(
+                StatusSelectionActivity.getInstance(mContext, mCategories, mStatuses,
+                        StatusSelectionType.CATEGORY), REQUEST_CATEGORY);
     }
 
     public void onChooseStatus() {
-        if (mAdapterStatus == null) {
-            return;
-        }
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
-
-        builder.setTitle(R.string.title_status_device);
-
-        builder.setNegativeButton(R.string.action_cancel, null);
-
-        builder.setAdapter(mAdapterStatus, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                setStatus(mAdapterStatus.getItem(which));
-            }
-        });
-        builder.show();
+        if (mStatuses == null) return;
+        mActivity.startActivityForResult(
+                StatusSelectionActivity.getInstance(mContext, mCategories, mStatuses,
+                        StatusSelectionType.STATUS), REQUEST_STATUS);
     }
 
     @Override
@@ -121,18 +99,16 @@ public class CreateDeviceViewModel extends BaseObservable
         if (list == null) {
             return;
         }
-        mAdapterCategory.clear();
-        mAdapterCategory.addAll(list);
-        mAdapterCategory.notifyDataSetChanged();
+        mCategories.clear();
+        mCategories.addAll(list);
     }
 
     public void updateStatus(List<Status> list) {
         if (list == null) {
             return;
         }
-        mAdapterStatus.clear();
-        mAdapterStatus.addAll(list);
-        mAdapterStatus.notifyDataSetChanged();
+        mStatuses.clear();
+        mStatuses.addAll(list);
     }
 
     @Override
@@ -198,19 +174,33 @@ public class CreateDeviceViewModel extends BaseObservable
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        mActivity.startActivityForResult(Intent.createChooser(intent,
-                mContext.getString(R.string.title_select_file_upload)),
+        mActivity.startActivityForResult(
+                Intent.createChooser(intent, mContext.getString(R.string.title_select_file_upload)),
                 PICK_IMAGE_REQUEST);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == PICK_IMAGE_REQUEST
-                && resultCode == RESULT_OK
-                && data != null
-                && data.getData() != null) {
-            Uri uri = data.getData();
-            setImageUrl(getRealPathFromURI(uri));
+        if (resultCode != RESULT_OK || data == null) return;
+        switch (requestCode) {
+            case PICK_IMAGE_REQUEST:
+                if (data.getData() != null) {
+                    Uri uri = data.getData();
+                    setImageUrl(getRealPathFromURI(uri));
+                }
+                break;
+            case REQUEST_CATEGORY:
+                Bundle bundle = data.getExtras();
+                Category category = bundle.getParcelable(BUNDLE_CATEGORY);
+                setCategory(category);
+                break;
+            case REQUEST_STATUS:
+                bundle = data.getExtras();
+                Status status = bundle.getParcelable(BUNDLE_STATUE);
+                setStatus(status);
+                break;
+            default:
+                break;
         }
     }
 

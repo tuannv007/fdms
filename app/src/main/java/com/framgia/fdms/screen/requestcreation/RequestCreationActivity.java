@@ -47,6 +47,12 @@ public class RequestCreationActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (mViewModel != null) mViewModel.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         mViewModel.onStart();

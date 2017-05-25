@@ -32,7 +32,7 @@ public class StatusSelectionViewModel implements StatusSelectionContract.ViewMod
         mCategories = categories;
         mStatuses = statuses;
         mSelectionType = selectionType;
-        if (mCategories != null) {
+        if (mSelectionType == StatusSelectionType.CATEGORY) {
             mAdapter.set(new StatusSelectionAdapter(this, categories, mSelectionType));
         } else {
             mAdapter.set(new StatusSelectionAdapter(this, mStatuses));
