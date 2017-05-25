@@ -78,7 +78,6 @@
                     android:layout_marginTop="@dimen/dp_10"
                     android:textColorHint="@color/color_brown"
                     app:errorText="@{viewModel.deviceCodeError}"
-                    app:hintTextAppearance="@color/color_brown"
                     >
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/text_code_device"
@@ -96,7 +95,6 @@
                     android:paddingTop="@dimen/dp_10"
                     android:textColorHint="@color/color_brown"
                     app:errorText="@{viewModel.nameDeviceError}"
-                    app:hintTextAppearance="@color/color_brown"
                     >
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/text_name_device"
@@ -114,7 +112,6 @@
                     android:paddingTop="@dimen/dp_10"
                     android:textColorHint="@color/color_brown"
                     app:errorText="@{viewModel.serialNumberError}"
-                    app:hintTextAppearance="@color/color_brown"
                     >
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/text_serial_number_device"
@@ -132,7 +129,6 @@
                     android:paddingTop="@dimen/dp_10"
                     android:textColorHint="@color/color_brown"
                     app:errorText="@{viewModel.modelNumberError}"
-                    app:hintTextAppearance="@color/color_brown"
                     >
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/text_model_number_device"
@@ -149,7 +145,6 @@
                     android:layout_marginTop="@dimen/dp_10"
                     android:paddingTop="@dimen/dp_10"
                     android:textColorHint="@color/color_brown"
-                    app:hintTextAppearance="@color/color_brown"
                     >
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/text_category_device"
@@ -168,7 +163,6 @@
                     android:layout_marginTop="@dimen/dp_10"
                     android:paddingTop="@dimen/dp_10"
                     android:textColorHint="@color/color_brown"
-                    app:hintTextAppearance="@color/color_brown"
                     >
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/text_status_device"
