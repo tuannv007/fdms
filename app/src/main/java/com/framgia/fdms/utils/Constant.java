@@ -9,7 +9,7 @@ public class Constant {
     public static final int OUT_OF_INDEX = -1;
     public static final int PER_PAGE = 20;
     public static final int FIRST_PAGE = 1;
-    public static final int PICK_IMAGE_REQUEST = 2;
+    public static final int PICK_IMAGE_REQUEST = 4;
     public static final int ALL_REQUEST_STATUS_ID = -1;
     public static final int ALL_RELATIVE_ID = -1;
     public static final String PERCENT = " %";
@@ -64,5 +64,8 @@ public class Constant {
     public static final class RequestConstant {
         public static final int REQUEST_SELECTION = 1;
         public static final int REQUEST_STATUS = 2;
+        public static final int REQUEST_CATEGORY = 3;
+        public static final int REQUEST_RELATIVE = 4;
+        public static final int REQUEST_ASSIGNER = 5;
     }
 }

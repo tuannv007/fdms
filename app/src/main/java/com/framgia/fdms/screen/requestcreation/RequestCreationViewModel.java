@@ -1,10 +1,10 @@
 package com.framgia.fdms.screen.requestcreation;
 
 import android.content.Context;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-import android.support.v7.app.AlertDialog;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
@@ -14,7 +14,16 @@ import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.data.source.api.request.RequestCreatorRequest;
+import com.framgia.fdms.screen.selection.StatusSelectionActivity;
+import com.framgia.fdms.screen.selection.StatusSelectionType;
+import java.util.ArrayList;
 import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
+import static com.framgia.fdms.utils.Constant.BundleConstant.BUNDLE_STATUE;
+import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_ASSIGNER;
+import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_CATEGORY;
+import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_RELATIVE;
 
 /**
  * Exposes the data to be used in the Requestcreation screen.
@@ -23,6 +32,7 @@ import java.util.List;
 public class RequestCreationViewModel extends BaseObservable
         implements RequestCreationContract.ViewModel {
 
+    private ArrayAdapter<Category> mAdapterCategory;
     private RequestCreationContract.Presenter mPresenter;
     private AppCompatActivity mActivity;
     private String mRequestTitle;
@@ -30,9 +40,11 @@ public class RequestCreationViewModel extends BaseObservable
     private Status mAssignee;
     private Status mRelative;
     private RequestCreatorRequest mRequest;
-    private ArrayAdapter<Status> mAdapterAssignee;
-    private ArrayAdapter<Status> mAdapterRelative;
-    private ArrayAdapter<Category> mAdapterCategory;
+
+    private List<Status> mRelatives = new ArrayList<>();
+    private List<Status> mAssigners = new ArrayList<>();
+    private List<Category> mCategories = new ArrayList<>();
+
     private RequestCreationAdapter mAdapter;
     private Context mContext;
     private String mTitleError;
@@ -43,10 +55,8 @@ public class RequestCreationViewModel extends BaseObservable
         mActivity = activity;
         mContext = activity.getApplicationContext();
         mRequest = new RequestCreatorRequest();
-        mAdapterAssignee = new ArrayAdapter<Status>(mActivity, R.layout.item_status_selection);
-        mAdapterRelative = new ArrayAdapter<Status>(mActivity, R.layout.item_status_selection);
-        mAdapterCategory = new ArrayAdapter<Category>(mActivity,
-                R.layout.support_simple_spinner_dropdown_item);
+        mAdapterCategory =
+                new ArrayAdapter<>(mActivity, R.layout.support_simple_spinner_dropdown_item);
         mAdapter = new RequestCreationAdapter(mContext, this);
     }
 
@@ -70,39 +80,41 @@ public class RequestCreationViewModel extends BaseObservable
     }
 
     @Override
-    public void onRelativeClick() {
-        if (mAdapterRelative == null) {
-            return;
-        }
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != RESULT_OK || data == null) return;
 
-        AlertDialog.Builder builder =
-                new AlertDialog.Builder(mActivity).setTitle(R.string.title_request_for)
-                        .setNegativeButton(R.string.action_cancel, null)
-                        .setAdapter(mAdapterRelative, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                setRelative(mAdapterRelative.getItem(which));
-                            }
-                        });
-        builder.show();
+        switch (requestCode) {
+            case REQUEST_RELATIVE:
+                Bundle bundle = data.getExtras();
+                Status status = bundle.getParcelable(BUNDLE_STATUE);
+                setRelative(status);
+                break;
+            case REQUEST_ASSIGNER:
+                bundle = data.getExtras();
+                status = bundle.getParcelable(BUNDLE_STATUE);
+                setAssignee(status);
+                break;
+            case REQUEST_CATEGORY:
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onRelativeClick() {
+        if (mRelatives == null) return;
+        mActivity.startActivityForResult(
+                StatusSelectionActivity.getInstance(mContext, mCategories, mRelatives,
+                        StatusSelectionType.STATUS), REQUEST_RELATIVE);
     }
 
     @Override
     public void onAssigneeClick() {
-        if (mAdapterAssignee == null) {
-            return;
-        }
-
-        AlertDialog.Builder builder =
-                new AlertDialog.Builder(mActivity).setTitle(R.string.title_assign_to)
-                        .setNegativeButton(R.string.action_cancel, null)
-                        .setAdapter(mAdapterAssignee, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                setAssignee(mAdapterAssignee.getItem(which));
-                            }
-                        });
-        builder.show();
+        if (mAssigners == null) return;
+        mActivity.startActivityForResult(
+                StatusSelectionActivity.getInstance(mContext, mCategories, mAssigners,
+                        StatusSelectionType.STATUS), REQUEST_ASSIGNER);
     }
 
     @Override
@@ -120,9 +132,8 @@ public class RequestCreationViewModel extends BaseObservable
         if (assignees == null) {
             return;
         }
-        mAdapterAssignee.clear();
-        mAdapterAssignee.addAll(assignees);
-        mAdapterAssignee.notifyDataSetChanged();
+        mAssigners.clear();
+        mAssigners.addAll(assignees);
     }
 
     @Override
@@ -135,6 +146,8 @@ public class RequestCreationViewModel extends BaseObservable
         if (categories == null) {
             return;
         }
+        mCategories.clear();
+        mCategories.addAll(categories);
         mAdapterCategory.clear();
         mAdapterCategory.addAll(categories);
         mAdapterCategory.notifyDataSetChanged();
@@ -189,9 +202,8 @@ public class RequestCreationViewModel extends BaseObservable
         if (relatives == null) {
             return;
         }
-        mAdapterRelative.clear();
-        mAdapterRelative.addAll(relatives);
-        mAdapterRelative.notifyDataSetChanged();
+        mRelatives.clear();
+        mRelatives.addAll(relatives);
     }
 
     @Bindable
