@@ -131,4 +131,5 @@
     <string name="action_reject">Reject</string>
     <string name="title_serial_number">Serial Number</string>
     <string name="msg_update_device_error">Update device error</string>
+    <string name="title_add_request_detail">Add Request Detail</string>
 </resources>

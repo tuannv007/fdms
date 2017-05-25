@@ -9,18 +9,8 @@
     <data>
 
         <variable
-            name="position"
-            type="Integer"
-            />
-
-        <variable
-            name="viewModel"
-            type="com.framgia.fdms.screen.requestcreation.RequestCreationViewModel"
-            />
-
-        <variable
-            name="deviceRequest"
-            type="com.framgia.fdms.data.source.api.request.DeviceRequest"
+            name="viewHolderModel"
+            type="com.framgia.fdms.screen.requestcreation.RequestCreationAdapter.ViewHolderModel"
             />
 
     </data>
@@ -31,102 +21,170 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dp_3"
         android:elevation="@dimen/dp_5"
-        android:onClick="@{() -> viewModel.onAddRequestDetailClick(position)}"
-        android:padding="@dimen/dp_10"
         car_view:cardCornerRadius="@dimen/dp_5"
         car_view:cardElevation="@dimen/dp1"
         tools:cardCornerRadius="@dimen/dp_5"
         >
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/dp_10"
             >
-
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/title_descriptions"
-                android:onFocusChange="@{() -> viewModel.onAddRequestDetailClick(position)}"
-                android:text="@={deviceRequest.description}"
-                android:textColorHint="@color/color_brown"
-                app:hintTextAppearance="@color/color_brown"
-                />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:weightSum="2"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_15"
                 >
 
-                <android.support.v7.widget.AppCompatSpinner
-                    android:layout_width="@dimen/dp_0"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/dp_10"
-                    android:layout_weight="1"
-                    android:overlapAnchor="false"
-                    android:spinnerMode="dropdown"
-                    app:deviceCategoryId="@={deviceRequest.deviceCategoryId}"
-                    app:position="@{position}"
-                    app:viewModel="@{viewModel}"
-                    />
-
                 <LinearLayout
-                    android:layout_width="@dimen/dp_0"
-                    android:layout_height="@dimen/dp_40"
-                    android:layout_weight="1"
-                    android:background="@drawable/border_number_picker"
-                    android:gravity="center"
-                    android:onClick="@{() -> viewModel.onAddRequestDetailClick(position)}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_5"
                     android:orientation="horizontal"
-                    android:padding="@dimen/dp_3"
                     >
 
-                    <Button
-                        android:id="@+id/decrement"
-                        android:layout_width="@dimen/dp_30"
-                        android:layout_height="match_parent"
-                        android:background="@null"
-                        android:onClick="@{() -> deviceRequest.onDecrement(viewModel, position)}"
-                        android:padding="@dimen/dp_0"
-                        android:text="@string/title_minus"
-                        android:textColor="@color/color_brown"
-                        android:textSize="@dimen/sp_25"
-                        android:textStyle="bold"
+                    <android.support.v7.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_name_24dp"
                         />
 
-                    <android.support.design.widget.TextInputEditText
-                        android:id="@+id/display"
-                        android:layout_width="@dimen/dp_70"
-                        android:layout_height="match_parent"
-                        android:background="@android:color/white"
-                        android:gravity="center"
-                        android:inputType="number"
-                        android:onFocusChange="@{() -> viewModel.onAddRequestDetailClick(position)}"
-                        android:text="@={`` + deviceRequest.number}"
-                        android:textColor="@color/color_brown"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/dp_16"
+                        >
+
+                        <android.support.design.widget.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/title_descriptions"
+                            android:text="@={viewHolderModel.deviceRequest.description}"
+                            android:textColorHint="@color/color_brown"
+                            app:hintTextAppearance="@color/color_brown"
+                            />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:orientation="horizontal"
+                    >
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_device_24dp"
                         />
 
-                    <Button
-                        android:id="@+id/increment"
-                        android:layout_width="@dimen/dp_30"
-                        android:layout_height="match_parent"
-                        android:background="@null"
-                        android:onClick="@{() -> deviceRequest.onIncrement(viewModel, position)}"
-                        android:padding="@dimen/dp_0"
-                        android:text="@string/title_plus"
-                        android:textColor="@color/color_brown"
-                        android:textSize="@dimen/sp_25"
-                        android:textStyle="bold"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/dp_16"
+                        >
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/textInputEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusable="false"
+                            android:hint="Category"
+                            android:onClick="@{() -> viewHolderModel.viewModel.onCategoryClick(viewHolderModel.deviceRequest)}"
+                            android:text="@{viewHolderModel.deviceRequest.category.name}"
+                            android:textColorHint="@color/color_brown"
+                            />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:orientation="horizontal"
+                    >
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_number_24dp"
                         />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/dp_16"
+                        >
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/border_number_picker"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/dp_1"
+                            >
+
+                            <Button
+                                android:layout_width="@dimen/dp_30"
+                                android:layout_height="match_parent"
+                                android:background="@null"
+                                android:onClick="@{() -> viewHolderModel.deviceRequest.onDecrement()}"
+                                android:padding="@dimen/dp_0"
+                                android:text="@string/title_minus"
+                                android:textColor="@color/color_brown"
+                                android:textSize="@dimen/sp_25"
+                                android:textStyle="bold"
+                                />
+
+                            <android.support.design.widget.TextInputEditText
+                                android:layout_width="@dimen/dp_70"
+                                android:layout_height="match_parent"
+                                android:background="@android:color/white"
+                                android:gravity="center"
+                                android:inputType="number"
+                                android:text="@={`` + viewHolderModel.deviceRequest.number}"
+                                android:textColor="@color/color_brown"
+                                />
+
+                            <Button
+                                android:layout_width="@dimen/dp_30"
+                                android:layout_height="match_parent"
+                                android:background="@null"
+                                android:onClick="@{() -> viewHolderModel.deviceRequest.onIncrement()}"
+                                android:padding="@dimen/dp_0"
+                                android:text="@string/title_plus"
+                                android:textColor="@color/color_brown"
+                                android:textSize="@dimen/sp_25"
+                                android:textStyle="bold"
+                                />
+                        </LinearLayout>
+                    </LinearLayout>
                 </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
-
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:onClick="@{viewHolderModel.onDelteClick}"
+                android:paddingRight="@dimen/dp_5"
+                android:paddingTop="@dimen/dp_5"
+                android:src="@drawable/ic_delete_15dp"
+                />
+        </RelativeLayout>
     </android.support.v7.widget.CardView>
 </layout>
+

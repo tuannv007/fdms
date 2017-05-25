@@ -5,18 +5,21 @@ import android.databinding.Bindable;
 import android.graphics.Color;
 import android.widget.NumberPicker;
 import com.framgia.fdms.BR;
+import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.screen.requestcreation.RequestCreationViewModel;
 
 /**
  * Created by MyPC on 19/05/2017.
  */
 
-public class DeviceRequest extends BaseObservable{
+public class DeviceRequest extends BaseObservable {
     private String mDescription;
     private int mDeviceCategoryId;
     private int mNumber;
+    private Category mCategory;
 
-    public DeviceRequest() {
+    public DeviceRequest(int number) {
+        mNumber = number;
     }
 
     public String getDescription() {
@@ -45,15 +48,23 @@ public class DeviceRequest extends BaseObservable{
         notifyPropertyChanged(BR.number);
     }
 
-    public void onDecrement(RequestCreationViewModel viewModel, int position){
-        viewModel.onAddRequestDetailClick(position);
-        if (getNumber() > 0) {
+    @Bindable
+    public Category getCategory() {
+        return mCategory;
+    }
+
+    public void setCategory(Category category) {
+        mCategory = category;
+        notifyPropertyChanged(BR.category);
+    }
+
+    public void onDecrement() {
+        if (getNumber() > 1) {
             setNumber(getNumber() - 1);
         }
     }
 
-    public void onIncrement(RequestCreationViewModel viewModel, int position){
-        viewModel.onAddRequestDetailClick(position);
+    public void onIncrement() {
         setNumber(getNumber() + 1);
     }
 }

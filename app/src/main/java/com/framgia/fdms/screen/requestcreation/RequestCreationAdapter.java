@@ -1,11 +1,15 @@
 package com.framgia.fdms.screen.requestcreation;
 
 import android.content.Context;
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import com.framgia.fdms.BR;
 import com.framgia.fdms.BaseRecyclerViewAdapter;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.source.api.request.DeviceRequest;
@@ -21,22 +25,28 @@ public class RequestCreationAdapter
         extends BaseRecyclerViewAdapter<DeviceRequest, RequestCreationAdapter.ViewHolder> {
     private List<DeviceRequest> mDeviceRequests;
     private RequestCreationViewModel mViewModel;
+    private static final int NUMBER_DEFAULT = 1;
 
     public RequestCreationAdapter(@NonNull Context context,
             @NonNull RequestCreationViewModel viewModel) {
         super(context);
         mViewModel = viewModel;
         mDeviceRequests = new ArrayList<>();
-        addItem();
     }
 
     public void addItem() {
-        mDeviceRequests.add(new DeviceRequest());
-        notifyDataSetChanged();
+        mDeviceRequests.add(new DeviceRequest(NUMBER_DEFAULT));
+        notifyItemInserted(mDeviceRequests.size() - 1);
     }
 
     public List<DeviceRequest> getData() {
-        return mDeviceRequests;
+        List<DeviceRequest> deviceRequests = new ArrayList<>();
+        for (DeviceRequest deviceRequest : mDeviceRequests) {
+            if (deviceRequest.getDescription() != null && deviceRequest.getDeviceCategoryId() > 0) {
+                deviceRequests.add(deviceRequest);
+            }
+        }
+        return deviceRequests;
     }
 
     @Override
@@ -57,8 +67,9 @@ public class RequestCreationAdapter
     }
 
     @Override
-    public void onBindViewHolder(RequestCreationAdapter.ViewHolder holder, int position) {
-        holder.bindData(position, mDeviceRequests.get(position));
+    public void onBindViewHolder(final RequestCreationAdapter.ViewHolder holder,
+            final int position) {
+        holder.bindData(mDeviceRequests.get(position));
     }
 
     @Override
@@ -66,7 +77,7 @@ public class RequestCreationAdapter
         return mDeviceRequests == null ? 0 : mDeviceRequests.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ItemRequestCreationBinding mBinding;
         private RequestCreationViewModel mViewModel;
 
@@ -76,15 +87,66 @@ public class RequestCreationAdapter
             mViewModel = viewModel;
         }
 
-        void bindData(int position, DeviceRequest deviceRequest) {
+        void bindData(DeviceRequest deviceRequest) {
             if (deviceRequest == null) {
                 return;
             }
 
-            mBinding.setPosition(position);
-            mBinding.setViewModel(mViewModel);
-            mBinding.setDeviceRequest(deviceRequest);
+            ViewHolderModel model = new ViewHolderModel(deviceRequest, mViewModel, this);
+            mBinding.setViewHolderModel(model);
             mBinding.executePendingBindings();
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (getAdapterPosition() >= 0 && getAdapterPosition() < mDeviceRequests.size()) {
+                mDeviceRequests.remove(getAdapterPosition());
+                notifyItemRemoved(getAdapterPosition());
+                notifyItemRangeChanged(getAdapterPosition(), mDeviceRequests.size());
+            }
+        }
+    }
+
+    public class ViewHolderModel extends BaseObservable {
+        private DeviceRequest mDeviceRequest;
+        private RequestCreationViewModel mViewModel;
+        private View.OnClickListener mOnDelteClick;
+
+        public ViewHolderModel(DeviceRequest deviceRequest, RequestCreationViewModel viewModel,
+                View.OnClickListener onDelteClick) {
+            mDeviceRequest = deviceRequest;
+            mViewModel = viewModel;
+            mOnDelteClick = onDelteClick;
+        }
+
+        @Bindable
+        public DeviceRequest getDeviceRequest() {
+            return mDeviceRequest;
+        }
+
+        public void setDeviceRequest(DeviceRequest deviceRequest) {
+            mDeviceRequest = deviceRequest;
+            notifyPropertyChanged(BR.deviceRequest);
+        }
+
+        @Bindable
+        public RequestCreationViewModel getViewModel() {
+            return mViewModel;
+        }
+
+        public void setViewModel(RequestCreationViewModel viewModel) {
+            mViewModel = viewModel;
+            notifyPropertyChanged(BR.viewModel);
+        }
+
+        @Bindable
+        public View.OnClickListener getOnDelteClick() {
+            return mOnDelteClick;
+        }
+
+        public void setOnDelteClick(View.OnClickListener onDelteClick) {
+            mOnDelteClick = onDelteClick;
+            notifyPropertyChanged(BR.onDelteClick);
         }
     }
 }
