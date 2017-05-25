@@ -1,4 +1,4 @@
-package com.framgia.fdms.screen.usinghistory;
+package com.framgia.fdms.screen.devicedetail.usinghistory;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

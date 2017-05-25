@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.framgia.fdms.screen.usinghistory.DeviceUsingHistoryViewModel"
+            type="com.framgia.fdms.screen.devicedetail.usinghistory.DeviceUsingHistoryViewModel"
             />
 
     </data>

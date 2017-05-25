@@ -70,7 +70,7 @@
     <string name="title_code">Code</string>
     <string name="msg_create_device_error">Create Device Error</string>
     <string name="title_device_type">Device type</string>
-    <string name="title_device_status">Status of device</string>
+    <string name="title_device_status">Device Status</string>
     <string name="action_cancel">Cancel</string>
     <string name="title_create_device">Create device</string>
     <string name="title_failure_scanner">No QrCode found, please try again!!!</string>
@@ -107,4 +107,10 @@
     <string name="action_return_device">Return device</string>
     <string name="text_assign_to">Assign to</string>
     <string name="text_request_for">Request for</string>
+    <string name="title_two_dot">:</string>
+    <string name="title_original_price">Original Price</string>
+    <string name="title_bought_date">Bought Date</string>
+    <string name="title_printed_code">Printed Code</string>
+    <string name="title_device_category">Device Category</string>
+    <string name="title_unknown">Unknown</string>
 </resources>

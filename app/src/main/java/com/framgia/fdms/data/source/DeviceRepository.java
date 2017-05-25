@@ -56,4 +56,8 @@ public class DeviceRepository {
     public Observable<List<DeviceHistoryDetail>> getDeviceDetailHistory(int deviceId){
         return mDeviceRemoteDataSource.getDeviceDetailHistory(deviceId);
     }
+
+    public Observable<Device> getDevice(int deviceId){
+        return mDeviceRemoteDataSource.getDevice(deviceId);
+    }
 }

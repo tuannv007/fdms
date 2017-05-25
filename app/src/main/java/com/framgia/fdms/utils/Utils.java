@@ -1,9 +1,12 @@
 package com.framgia.fdms.utils;
 
 import com.framgia.fdms.data.model.Respone;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import rx.Observable;
 
 import static com.framgia.fdms.utils.Constant.PERCENT;
+import static com.framgia.fdms.utils.Constant.TITLE_UNKNOWN;
 
 /**
  * Created by MyPC on 05/05/2017.
@@ -28,5 +31,11 @@ public class Utils {
             percent = (float) count / total * 100f;
         }
         return String.format("%.1f", percent) + PERCENT;
+    }
+
+    public static String getStringDate(Date date) {
+        if (date == null) return TITLE_UNKNOWN;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        return formatter.format(date);
     }
 }
