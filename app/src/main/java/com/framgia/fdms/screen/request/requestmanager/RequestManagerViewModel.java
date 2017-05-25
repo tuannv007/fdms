@@ -45,13 +45,11 @@ public class RequestManagerViewModel extends BaseFragmentModel
     private List<Status> mStatuses = new ArrayList<>();
     private List<Status> mRelatives = new ArrayList<>();
     private Status mStatus;
-    private FragmentActivity mActivity;
     private Status mRelative;
 
-    public RequestManagerViewModel(FragmentActivity activity, Fragment fragment) {
+    public RequestManagerViewModel(Fragment fragment) {
         mFragment = fragment;
-        mContext = activity.getApplicationContext();
-        mActivity = activity;
+        mContext = fragment.getContext();
         mAdapter = new UserRequestAdapter(mContext, new ArrayList<Request>(), this);
         setStatus(new Status(OUT_OF_INDEX, mContext.getString(R.string.title_request_status)));
         setRelative(new Status(OUT_OF_INDEX, mContext.getString(R.string.title_request_relative)));
@@ -206,6 +204,6 @@ public class RequestManagerViewModel extends BaseFragmentModel
 
     @Override
     public void onDetailRequestClick(Request request) {
-        mActivity.startActivity(RequestDetailActivity.newInstance(mContext, request));
+        mContext.startActivity(RequestDetailActivity.newInstance(mContext, request));
     }
 }

@@ -41,18 +41,20 @@ final class DeviceUsingHistoryPresenter implements DeviceUsingHistoryContract.Pr
 
     @Override
     public void getUsingHistoryDevice(int deviceID) {
+        mViewModel.showProgressbar();
         Subscription subscription = mRepository.getDeviceUsingHistory(deviceID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<DeviceUsingHistory>>() {
                     @Override
                     public void onCompleted() {
-
+                        mViewModel.hideProgressbar();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         mViewModel.onGetUsingHistoryDeviceFailed(e.getMessage());
+                        mViewModel.hideProgressbar();
                     }
 
                     @Override
