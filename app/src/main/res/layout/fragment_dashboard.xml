@@ -30,7 +30,6 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{()->viewModel.onClickChangeTab(viewpager)}"
                 android:orientation="horizontal"
                 android:padding="@dimen/dp_1"
                 >
@@ -42,6 +41,7 @@
                     android:layout_marginRight="@dimen/dp_2"
                     android:background="@drawable/bg_circle_red"
                     android:gravity="center_vertical"
+                    android:onClick="@{()->viewModel.onClickChangeTab(viewpager, Tab.TAB_DEVIVE_DASH_BOARD)}"
                     android:padding="@dimen/dp_5"
                     android:text="@string/title_device_dashboard"
                     android:textColor="@android:color/white"
@@ -55,6 +55,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="@drawable/bg_circle_grey"
+                    android:onClick="@{()->viewModel.onClickChangeTab(viewpager, Tab.TAB_REQUEST_DASH_BOARD)}"
                     android:padding="@dimen/dp_5"
                     android:text="@string/title_request_dashboard"
                     android:textColor="@android:color/white"

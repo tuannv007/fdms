@@ -4,6 +4,7 @@ import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.graphics.Color;
+import android.view.View;
 import android.widget.Toast;
 import com.framgia.fdms.BR;
 import com.framgia.fdms.R;
@@ -34,6 +35,7 @@ public class DashBoardDetailViewModel extends BaseObservable
     private int mTotal;
     private DashBoardDetailAdapter mAdapter;
     private String mDashboardTitle;
+    private int mEmptyViewVisible = View.GONE;
 
     public DashBoardDetailViewModel(Context context, int dashboardType) {
         mContext = context;
@@ -84,6 +86,7 @@ public class DashBoardDetailViewModel extends BaseObservable
     @Override
     public void onDashBoardError(String error) {
         Toast.makeText(mContext, error, Toast.LENGTH_LONG).show();
+        setEmptyViewVisible(View.VISIBLE);
     }
 
     @Override
@@ -91,6 +94,12 @@ public class DashBoardDetailViewModel extends BaseObservable
         int total = 0;
         List<Integer> colors = new ArrayList<Integer>();
         List<PieEntry> values = new ArrayList<PieEntry>();
+
+        if (dashboards != null && dashboards.size() != 0) {
+            setEmptyViewVisible(View.GONE);
+        } else {
+            setEmptyViewVisible(View.VISIBLE);
+        }
 
         for (Dashboard dashboard : dashboards) {
             total += dashboard.getCount();
@@ -141,5 +150,15 @@ public class DashBoardDetailViewModel extends BaseObservable
     public void setDashboardTitle(String dashboardTitle) {
         mDashboardTitle = dashboardTitle;
         notifyPropertyChanged(BR.dashboardTitle);
+    }
+
+    @Bindable
+    public int getEmptyViewVisible() {
+        return mEmptyViewVisible;
+    }
+
+    public void setEmptyViewVisible(int emptyViewVisible) {
+        mEmptyViewVisible = emptyViewVisible;
+        notifyPropertyChanged(BR.emptyViewVisible);
     }
 }
