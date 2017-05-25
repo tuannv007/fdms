@@ -1,5 +1,6 @@
 package com.framgia.fdms.screen.request.requestmanager;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -29,7 +30,7 @@ public class RequestManagerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewModel = new RequestManagerViewModel(getActivity() );
+        mViewModel = new RequestManagerViewModel(getActivity(), this);
 
         RequestManagerContract.Presenter presenter = new RequestManagerPresenter(mViewModel,
                 RequestRepository.getInstant(
@@ -48,6 +49,12 @@ public class RequestManagerFragment extends Fragment {
                         false);
         binding.setViewModel((RequestManagerViewModel) mViewModel);
         return binding.getRoot();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mViewModel.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

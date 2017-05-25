@@ -1,13 +1,14 @@
 package com.framgia.fdms.screen.request.userrequest;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.databinding.Bindable;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 import com.framgia.fdms.BR;
 import com.framgia.fdms.BaseFragmentContract;
@@ -16,10 +17,15 @@ import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.screen.request.OnMenuClickListenner;
+import com.framgia.fdms.screen.selection.StatusSelectionActivity;
+import com.framgia.fdms.screen.selection.StatusSelectionType;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.framgia.fdms.utils.Constant.BundleConstant.BUNDLE_STATUE;
 import static com.framgia.fdms.utils.Constant.OUT_OF_INDEX;
+import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_SELECTION;
+import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_STATUS;
 
 /**
  * Exposes the data to be used in the RequestManager screen.
@@ -29,20 +35,21 @@ public class UserRequestViewModel extends BaseFragmentModel
         implements UserRequestContract.ViewModel, OnMenuClickListenner {
 
     private final Context mContext;
+    private final Fragment mFragment;
     private UserRequestAdapter mAdapter;
 
-    private ArrayAdapter<Status> mAdapterStatus;
-    private ArrayAdapter<Status> mAdapterRealtive;
+    private List<Status> mStatuses = new ArrayList<>();
+    private List<Status> mRelatives = new ArrayList<>();
+
     private Status mStatus;
     private FragmentActivity mActivity;
     private Status mRelative;
 
-    public UserRequestViewModel(FragmentActivity activity) {
+    public UserRequestViewModel(FragmentActivity activity, Fragment fragment) {
         mContext = activity.getApplicationContext();
         mActivity = activity;
+        mFragment = fragment;
         mAdapter = new UserRequestAdapter(mContext, new ArrayList<Request>(), this);
-        mAdapterStatus = new ArrayAdapter<>(mContext, R.layout.item_status_selection);
-        mAdapterRealtive = new ArrayAdapter<>(mContext, R.layout.item_status_selection);
         setStatus(new Status(OUT_OF_INDEX, mContext.getString(R.string.title_request_status)));
         setRelative(new Status(OUT_OF_INDEX, mContext.getString(R.string.title_request_relative)));
     }
@@ -95,76 +102,59 @@ public class UserRequestViewModel extends BaseFragmentModel
         mPresenter.getData(null, null);
     }
 
-    public void onSelectStatusClick() {
-        if (mAdapterStatus == null) {
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null || data.getExtras() == null || resultCode != Activity.RESULT_OK) {
             return;
         }
-        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity).setTitle(
-                mContext.getString(R.string.title_request_status))
-                .setNegativeButton(mContext.getString(R.string.action_cancel), null)
-                .setPositiveButton(mContext.getString(R.string.action_clear),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                setStatus(new Status(OUT_OF_INDEX,
-                                        mContext.getString(R.string.title_request_status)));
-                                mPresenter.getData(mRelative, mStatus);
-                            }
-                        })
-                .setAdapter(mAdapterStatus, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        setStatus(mAdapterStatus.getItem(which));
-                        mAdapter.clear();
-                        mPresenter.getData(mRelative, mStatus);
-                    }
-                });
-        builder.show();
+        Bundle bundle = data.getExtras();
+        Status status = bundle.getParcelable(BUNDLE_STATUE);
+        switch (requestCode) {
+            case REQUEST_SELECTION:
+                if (status != null) {
+                    setRelative(status);
+                    mAdapter.clear();
+                    mPresenter.getData(mRelative, mStatus);
+                }
+                break;
+            case REQUEST_STATUS:
+                if (status != null) {
+                    setStatus(status);
+                    mAdapter.clear();
+                    mPresenter.getData(mRelative, mStatus);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void onSelectStatusClick() {
+        if (mStatuses == null) return;
+        mFragment.startActivityForResult(
+                StatusSelectionActivity.getInstance(mContext, null, mStatuses,
+                        StatusSelectionType.STATUS), REQUEST_STATUS);
     }
 
     public void onSelectRelativeClick() {
-        if (mAdapterRealtive == null) {
-            return;
-        }
-        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity).setTitle(
-                mContext.getString(R.string.title_request_relative))
-                .setNegativeButton(mContext.getString(R.string.action_cancel), null)
-                .setPositiveButton(mContext.getString(R.string.action_clear),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                setRelative(new Status(OUT_OF_INDEX,
-                                        mContext.getString(R.string.title_request_relative)));
-                                mPresenter.getData(mRelative, mStatus);
-                            }
-                        })
-                .setAdapter(mAdapterRealtive, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        setRelative(mAdapterRealtive.getItem(which));
-                        mAdapter.clear();
-                        mPresenter.getData(mRelative, mStatus);
-                    }
-                });
-        builder.show();
+        if (mRelatives == null) return;
+        mFragment.startActivityForResult(
+                StatusSelectionActivity.getInstance(mContext, null, mRelatives,
+                        StatusSelectionType.STATUS), REQUEST_SELECTION);
     }
 
     public void updateStatus(List<Status> list) {
         if (list == null) {
             return;
         }
-        mAdapterStatus.clear();
-        mAdapterStatus.addAll(list);
-        mAdapterStatus.notifyDataSetChanged();
+        mStatuses = list;
     }
 
     public void updateRelative(List<Status> relatives) {
         if (relatives == null) {
             return;
         }
-        mAdapterRealtive.clear();
-        mAdapterRealtive.addAll(relatives);
-        mAdapterRealtive.notifyDataSetChanged();
+        mRelatives = relatives;
     }
 
     @Bindable
@@ -185,14 +175,6 @@ public class UserRequestViewModel extends BaseFragmentModel
     public void setRelative(Status relative) {
         mRelative = relative;
         notifyPropertyChanged(BR.relative);
-    }
-
-    public ArrayAdapter<Status> getAdapterRealtive() {
-        return mAdapterRealtive;
-    }
-
-    public void setAdapterRealtive(ArrayAdapter<Status> adapterRealtive) {
-        mAdapterRealtive = adapterRealtive;
     }
 
     @Override
