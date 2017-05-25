@@ -20,33 +20,38 @@
         android:orientation="vertical"
         >
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:padding="@dimen/dp_5"
-            android:text="@{viewModel.dashboardTitle}"
-            android:textColor="@color/color_grey_700"
-            android:textSize="@dimen/sp_20"
-            android:textStyle="bold"
-            />
+            android:orientation="vertical"
+            >
+            <com.github.mikephil.charting.charts.PieChart
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_250"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_10"
+                bind:description="@{viewModel.dashboardTitle}"
+                bind:pieData="@{viewModel.pieData}"
+                bind:totalValue="@{viewModel.total}"
+                />
 
-        <com.github.mikephil.charting.charts.PieChart
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_300"
-            android:layout_marginTop="@dimen/dp_10"
-            bind:pieData="@{viewModel.pieData}"
-            bind:totalValue="@{viewModel.total}"
-            bind:description="@{viewModel.dashboardTitle}"
-            />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_green_600"
+                android:paddingBottom="@dimen/dp_3"
+                android:paddingLeft="@dimen/dp_15"
+                android:paddingTop="@dimen/dp_3"
+                android:text="@{viewModel.dashboardTitle}"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp_13"
+                android:textStyle="italic"
+                />
 
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/dp_15"
-            bind:layoutManager="LinearLayoutManager"
-            bind:recyclerAdapter="@{viewModel.adapter}"
-            />
-
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+        </LinearLayout>
     </LinearLayout>
 </layout>

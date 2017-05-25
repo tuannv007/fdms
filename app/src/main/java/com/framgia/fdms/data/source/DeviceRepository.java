@@ -25,10 +25,6 @@ public class DeviceRepository {
                 perPage);
     }
 
-    public Observable<List<Device>> searchDevices(String keyWord) {
-        return mDeviceRemoteDataSource.searchDevices(keyWord);
-    }
-
     public Observable<List<Category>> getListCategory() {
         return mDeviceRemoteDataSource.getListCategory();
     }
