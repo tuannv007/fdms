@@ -7,7 +7,6 @@ import android.support.v4.view.ViewPager;
 import com.framgia.fdms.BR;
 
 import static com.framgia.fdms.screen.dashboard.DashboardViewModel.Tab.TAB_DEVIVE_DASH_BOARD;
-import static com.framgia.fdms.screen.dashboard.DashboardViewModel.Tab.TAB_REQUEST_DASH_BOARD;
 
 /**
  * Exposes the data to be used in the Dashboard screen.
@@ -23,11 +22,8 @@ public class DashboardViewModel extends BaseObservable implements DashboardContr
         mPagerAdapter = new ViewPagerAdapter(fragment.getChildFragmentManager());
     }
 
-    public void onClickChangeTab(ViewPager viewpager) {
-        int currentPos = viewpager.getCurrentItem();
-        currentPos = currentPos == TAB_DEVIVE_DASH_BOARD ? TAB_REQUEST_DASH_BOARD
-                : TAB_DEVIVE_DASH_BOARD;
-        viewpager.setCurrentItem(currentPos);
+    public void onClickChangeTab(ViewPager viewpager, @Tab int tab) {
+        viewpager.setCurrentItem(tab);
     }
 
     @Override

@@ -5,6 +5,7 @@
     >
 
     <data>
+        <import type="android.view.View"/>
 
         <variable
             name="viewModel"
@@ -25,15 +26,26 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             >
-            <com.github.mikephil.charting.charts.PieChart
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_250"
-                android:layout_marginTop="@dimen/dp_10"
-                android:layout_marginBottom="@dimen/dp_10"
-                bind:description="@{viewModel.dashboardTitle}"
-                bind:pieData="@{viewModel.pieData}"
-                bind:totalValue="@{viewModel.total}"
-                />
+                >
+                <com.github.mikephil.charting.charts.PieChart
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    bind:description="@{viewModel.dashboardTitle}"
+                    bind:pieData="@{viewModel.pieData}"
+                    bind:totalValue="@{viewModel.total}"
+                    />
+
+                <include
+                    layout="@layout/empty_state"
+                    bind:visibleState="@{viewModel.emptyViewVisible}"
+                    />
+
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="match_parent"
