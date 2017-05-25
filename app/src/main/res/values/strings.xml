@@ -92,6 +92,8 @@
     <string name="title_request_for">Request for</string>
     <string name="title_create_request">Create Request</string>
     <string name="title_device_dashboard">Device Overview</string>
+    <string name="title_top_requests">Top Requests</string>
+    <string name="title_top_devices">Top Devices</string>
     <string name="title_request_dashboard">Request Overview</string>
     <string name="title_manager_request">Manager Request</string>
     <string name="title_my_request">My request</string>

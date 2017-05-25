@@ -26,6 +26,8 @@ import static com.framgia.fdms.screen.dashboard.dashboarddetail.DashBoardDetailF
 public class DashBoardDetailViewModel extends BaseObservable
         implements DashBoardDetailContract.ViewModel {
 
+    private static final float PIE_DATA_SLICE_SPACE = 3f;
+    private static final float PIE_DATA_SLECTION_SHIFT = 5f;
     private DashBoardDetailContract.Presenter mPresenter;
     private PieData mPieData;
     private Context mContext;
@@ -42,9 +44,9 @@ public class DashBoardDetailViewModel extends BaseObservable
 
     private void initDashboardTitle(int dashboardType) {
         if (dashboardType == DEVICE_DASHBOARD) {
-            setDashboardTitle(mContext.getString(R.string.title_device_dashboard));
+            setDashboardTitle(mContext.getString(R.string.title_top_devices));
         } else if (dashboardType == REQUEST_DASHBOARD) {
-            setDashboardTitle(mContext.getString(R.string.title_request_dashboard));
+            setDashboardTitle(mContext.getString(R.string.title_top_requests));
         }
     }
 
@@ -75,7 +77,7 @@ public class DashBoardDetailViewModel extends BaseObservable
 
     @Override
     public void setDataSet(PieDataSet dataSet) {
-        mPieData.setDataSet(dataSet);
+        mPieData = new PieData(dataSet);
         setPieData(mPieData);
     }
 
@@ -97,13 +99,13 @@ public class DashBoardDetailViewModel extends BaseObservable
         for (int i = 0; i < dashboards.size(); i++) {
             Dashboard dashboard = dashboards.get(i);
             float percent = (float) dashboard.getCount() / total * 100f;
-            if (percent != 0) {
-                values.add(new PieEntry(percent, dashboard.getTitle(), i));
-                colors.add(Color.parseColor(dashboard.getBackgroundColor()));
-            }
+            values.add(new PieEntry(percent, dashboard.getTitle(), i));
+            colors.add(Color.parseColor(dashboard.getBackgroundColor()));
         }
 
         PieDataSet dataSet = new PieDataSet(values, mContext.getString(R.string.title_chart));
+        dataSet.setSliceSpace(PIE_DATA_SLICE_SPACE);
+        dataSet.setSelectionShift(PIE_DATA_SLECTION_SHIFT);
         dataSet.setColors(colors);
 
         setDataSet(dataSet);

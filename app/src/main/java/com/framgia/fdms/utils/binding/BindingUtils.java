@@ -34,6 +34,7 @@ import com.framgia.fdms.screen.listDevice.ListDeviceViewModel;
 import com.framgia.fdms.screen.main.MainViewModel;
 import com.framgia.fdms.screen.requestcreation.RequestCreationViewModel;
 import com.framgia.fdms.screen.returndevice.ReturnDeviceViewModel;
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
@@ -60,8 +61,10 @@ import static com.framgia.fdms.utils.Constant.DeviceStatus.WAITING_DONE;
 public final class BindingUtils {
     private static final float TEXT_LABLE_SIZE = 11f;
     private static final float TEXT_CENTER_SIZE = 15f;
-    private static final int HOLE_RADIUS = 60;
     private static final int ROTATION_ANGLE = 0;
+    private static final int ANIMATE_DURATION = 2000;
+    private static final int CIRCLE_ALPHA = 110;
+    private static final float DECELERATION_FRICTION_COEF = 0.95f;
 
     private BindingUtils() {
         // No-op
@@ -178,23 +181,36 @@ public final class BindingUtils {
 
         if (pieData.getDataSetCount() > 0) {
             pieChart.setUsePercentValues(true);
-            pieChart.setHoleRadius(HOLE_RADIUS);
-            pieChart.setDrawCenterText(true);
-            pieChart.setDrawHoleEnabled(true);
-            pieChart.setRotationEnabled(true);
             pieChart.setDrawEntryLabels(false);
+            pieChart.getDescription().setEnabled(false);
+            pieChart.setDragDecelerationFrictionCoef(DECELERATION_FRICTION_COEF);
+
+            pieChart.setDrawHoleEnabled(true);
+            pieChart.setHoleColor(Color.WHITE);
+            pieChart.setTransparentCircleColor(Color.WHITE);
+            pieChart.setTransparentCircleAlpha(CIRCLE_ALPHA);
+
+            pieChart.setDrawCenterText(true);
             pieChart.setRotationAngle(ROTATION_ANGLE);
+
+            pieChart.setRotationEnabled(true);
+            pieChart.setHighlightPerTapEnabled(true);
             pieChart.setCenterText(resources.getString(R.string.title_total) + total);
             pieChart.setCenterTextColor(Color.BLUE);
             pieChart.setCenterTextSize(TEXT_CENTER_SIZE);
-            pieChart.getDescription().setText(description);
+            pieChart.animateY(ANIMATE_DURATION, Easing.EasingOption.EaseInOutQuad);
 
-            Legend legend = pieChart.getLegend();
-            legend.setEnabled(false);
+            pieChart.getLegend().setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+            pieChart.getLegend().setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+            pieChart.getLegend().setOrientation(Legend.LegendOrientation.VERTICAL);
+            pieChart.getLegend().setDrawInside(false);
 
+            pieChart.setEntryLabelColor(Color.WHITE);
+            pieChart.setEntryLabelTextSize(TEXT_LABLE_SIZE);
             pieData.setValueFormatter(new PercentFormatter());
             pieData.setValueTextSize(TEXT_LABLE_SIZE);
             pieData.setValueTextColor(Color.WHITE);
+
             pieChart.setData(pieData);
             pieChart.invalidate();
         }
@@ -251,18 +267,18 @@ public final class BindingUtils {
     }
 
     @BindingAdapter("tabDashBoard")
-    public static void onChangeImage(ImageView image, int tab) {
-        image.setImageResource(R.drawable.bg_circle_grey);
+    public static void onChangeImage(TextView image, int tab) {
+        image.setBackgroundResource(R.drawable.bg_circle_grey);
 
         switch (tab) {
             case TAB_DEVIVE_DASH_BOARD:
                 if (image.getId() == R.id.image_device_dashboard) {
-                    image.setImageResource(R.drawable.bg_circle_red);
+                    image.setBackgroundResource(R.drawable.bg_circle_red);
                 }
                 break;
             case TAB_REQUEST_DASH_BOARD:
                 if (image.getId() == R.id.image_request_dashboard) {
-                    image.setImageResource(R.drawable.bg_circle_red);
+                    image.setBackgroundResource(R.drawable.bg_circle_red);
                 }
                 break;
             default:

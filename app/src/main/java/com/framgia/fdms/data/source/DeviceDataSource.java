@@ -22,8 +22,6 @@ public class DeviceDataSource {
         Observable<List<Device>> getListDevices(String deviceName, int categoryId, int statusId,
                 int page, int perPage);
 
-        Observable<List<Device>> searchDevices(String keyWord);
-
         Observable<List<Category>> getListCategory();
 
         Observable<List<Status>> getListStatus();
