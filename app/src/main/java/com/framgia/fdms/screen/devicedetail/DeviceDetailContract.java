@@ -11,6 +11,7 @@ interface DeviceDetailContract {
      * View.
      */
     interface ViewModel extends BaseViewModel<Presenter> {
+        void onEditDevice();
     }
 
     /**

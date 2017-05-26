@@ -8,7 +8,6 @@ import com.framgia.fdms.data.model.DeviceUsingHistory;
 import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.data.source.DeviceDataSource;
-import com.framgia.fdms.data.source.api.request.RegisterDeviceRequest;
 import com.framgia.fdms.data.source.api.service.FDMSApi;
 import com.framgia.fdms.utils.Utils;
 import java.io.File;
@@ -74,17 +73,17 @@ public class DeviceRemoteDataSource implements DeviceDataSource.RemoteDataSource
     }
 
     @Override
-    public Observable<Device> registerdevice(RegisterDeviceRequest registerdevice) {
+    public Observable<Device> registerdevice(Device device) {
         Map<String, RequestBody> parrams = new HashMap<>();
 
-        RequestBody productionName = createPartFromString(registerdevice.getProductionName());
+        RequestBody productionName = createPartFromString(device.getProductionName());
         RequestBody deviceStatusId =
-                createPartFromString(String.valueOf(registerdevice.getDeviceStatusId()));
+                createPartFromString(String.valueOf(device.getDeviceStatusId()));
         RequestBody deviceCategoryId =
-                createPartFromString(String.valueOf(registerdevice.getDeviceStatusId()));
-        RequestBody serialNumber = createPartFromString(registerdevice.getSerialNumber());
-        RequestBody modellNumber = createPartFromString(registerdevice.getModellNumber());
-        RequestBody deviceCode = createPartFromString(registerdevice.getDeviceCode());
+                createPartFromString(String.valueOf(device.getDeviceStatusId()));
+        RequestBody serialNumber = createPartFromString(device.getSerialNumber());
+        RequestBody modellNumber = createPartFromString(device.getModelNumber());
+        RequestBody deviceCode = createPartFromString(device.getDeviceCode());
 
         parrams.put(PRODUCTION_NAME, productionName);
         parrams.put(DEVICE_STATUS_ID, deviceStatusId);
@@ -95,8 +94,8 @@ public class DeviceRemoteDataSource implements DeviceDataSource.RemoteDataSource
 
         MultipartBody.Part filePart = null;
 
-        if (registerdevice.getFilePath() != null) {
-            File file = new File(registerdevice.getFilePath());
+        if (device.getPicture() != null && device.getPicture().getUrl() != null) {
+            File file = new File(device.getPicture().getUrl());
 
             if (file.exists()) {
                 RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
@@ -106,6 +105,47 @@ public class DeviceRemoteDataSource implements DeviceDataSource.RemoteDataSource
         }
 
         return mFDMSApi.uploadDevice(parrams, filePart)
+                .flatMap(new Func1<Respone<Device>, Observable<Device>>() {
+                    @Override
+                    public Observable<Device> call(Respone<Device> deviceRespone) {
+                        return Utils.getResponse(deviceRespone);
+                    }
+                });
+    }
+
+    @Override
+    public Observable<Device> updateDevice(Device device) {
+        Map<String, RequestBody> parrams = new HashMap<>();
+
+        RequestBody productionName = createPartFromString(device.getProductionName());
+        RequestBody deviceStatusId =
+                createPartFromString(String.valueOf(device.getDeviceStatusId()));
+        RequestBody deviceCategoryId =
+                createPartFromString(String.valueOf(device.getDeviceStatusId()));
+        RequestBody serialNumber = createPartFromString(device.getSerialNumber());
+        RequestBody modellNumber = createPartFromString(device.getModelNumber());
+        RequestBody deviceCode = createPartFromString(device.getDeviceCode());
+
+        parrams.put(PRODUCTION_NAME, productionName);
+        parrams.put(DEVICE_STATUS_ID, deviceStatusId);
+        parrams.put(DEVICE_CATEGORY_ID, deviceCategoryId);
+        parrams.put(SERIAL_NUMBER, serialNumber);
+        parrams.put(MODEL_NUMBER, modellNumber);
+        parrams.put(DEVICE_CODE, deviceCode);
+
+        MultipartBody.Part filePart = null;
+
+        if (device.getPicture() != null && device.getPicture().getUrl() != null) {
+            File file = new File(device.getPicture().getUrl());
+
+            if (file.exists()) {
+                RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
+
+                filePart = MultipartBody.Part.createFormData(PICTURE, file.getName(), requestBody);
+            }
+        }
+
+        return mFDMSApi.updateDevice(device.getId(), parrams, filePart)
                 .flatMap(new Func1<Respone<Device>, Observable<Device>>() {
                     @Override
                     public Observable<Device> call(Respone<Device> deviceRespone) {
@@ -170,13 +210,14 @@ public class DeviceRemoteDataSource implements DeviceDataSource.RemoteDataSource
 
     @Override
     public Observable<Device> getDevice(int deviceId) {
-        return mFDMSApi.getDevice(deviceId).flatMap(new Func1<Respone<Device>, Observable<Device>>() {
+        return mFDMSApi.getDevice(deviceId)
+                .flatMap(new Func1<Respone<Device>, Observable<Device>>() {
 
-            @Override
-            public Observable<Device> call(Respone<Device> deviceRespone) {
-                return Utils.getResponse(deviceRespone);
-            }
-        });
+                    @Override
+                    public Observable<Device> call(Respone<Device> deviceRespone) {
+                        return Utils.getResponse(deviceRespone);
+                    }
+                });
     }
 
     public Map<String, String> getDeviceParams(String deviceName, int categoryId, int statusId,

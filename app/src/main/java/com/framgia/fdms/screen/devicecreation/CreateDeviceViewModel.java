@@ -2,22 +2,22 @@ package com.framgia.fdms.screen.devicecreation;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 import com.framgia.fdms.BR;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Category;
+import com.framgia.fdms.data.model.Device;
+import com.framgia.fdms.data.model.Picture;
 import com.framgia.fdms.data.model.Status;
-import com.framgia.fdms.data.source.api.request.RegisterDeviceRequest;
 import com.framgia.fdms.screen.main.MainActivity;
 import com.framgia.fdms.screen.selection.StatusSelectionActivity;
 import com.framgia.fdms.screen.selection.StatusSelectionType;
+import com.framgia.fdms.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +35,7 @@ import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_STATUS;
 public class CreateDeviceViewModel extends BaseObservable
         implements CreateDeviceContract.ViewModel {
 
+    private DeviceStatusType mDeviceType = DeviceStatusType.CREATE;
     private Context mContext;
     private AppCompatActivity mActivity;
     private CreateDeviceContract.Presenter mPresenter;
@@ -42,7 +43,8 @@ public class CreateDeviceViewModel extends BaseObservable
     private String mNameDeviceError;
     private String mSerialNumberError;
     private String mModelNumberError;
-    private RegisterDeviceRequest mRequest;
+
+    private Device mDevice;
 
     private List<Status> mStatuses = new ArrayList<>();
     private List<Category> mCategories = new ArrayList<>();
@@ -50,15 +52,26 @@ public class CreateDeviceViewModel extends BaseObservable
     private Category mCategory;
     private Status mStatus;
 
-    public CreateDeviceViewModel(CreateDeviceActivity activity) {
+    public CreateDeviceViewModel(CreateDeviceActivity activity, Device device,
+            DeviceStatusType type) {
         mContext = activity.getApplicationContext();
         mActivity = activity;
-        mRequest = new RegisterDeviceRequest();
+        mDevice = device == null ? new Device() : device;
+        mDeviceType = type;
     }
 
     @Override
     public void onCreateDeviceClick() {
-        mPresenter.registerDevice(mRequest);
+        switch (mDeviceType) {
+            case CREATE:
+                mPresenter.registerDevice(mDevice);
+                break;
+            case EDIT:
+                mPresenter.updateDevice(mDevice);
+                break;
+            default:
+                break;
+        }
     }
 
     public void onChooseCategory() {
@@ -186,7 +199,7 @@ public class CreateDeviceViewModel extends BaseObservable
             case PICK_IMAGE_REQUEST:
                 if (data.getData() != null) {
                     Uri uri = data.getData();
-                    setImageUrl(getRealPathFromURI(uri));
+                    mDevice.setPicture(new Picture(Utils.getPathFromUri(mActivity, uri)));
                 }
                 break;
             case REQUEST_CATEGORY:
@@ -202,18 +215,6 @@ public class CreateDeviceViewModel extends BaseObservable
             default:
                 break;
         }
-    }
-
-    public String getRealPathFromURI(Uri contentUri) {
-        String path = null;
-        String[] proj = { MediaStore.MediaColumns.DATA };
-        Cursor cursor = mContext.getContentResolver().query(contentUri, proj, null, null, null);
-        if (cursor.moveToFirst()) {
-            int colum_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
-            path = cursor.getString(colum_index);
-        }
-        cursor.close();
-        return path;
     }
 
     @Override
@@ -247,7 +248,7 @@ public class CreateDeviceViewModel extends BaseObservable
     }
 
     public void setCategory(Category category) {
-        mRequest.setDeviceCategoryId(category.getId());
+        mDevice.setDeviceCategoryId(category.getId());
         mCategory = category;
         notifyPropertyChanged(BR.category);
     }
@@ -258,58 +259,26 @@ public class CreateDeviceViewModel extends BaseObservable
     }
 
     public void setStatus(Status status) {
-        mRequest.setDeviceStatusId(status.getId());
+        mDevice.setDeviceStatusId(status.getId());
         mStatus = status;
         notifyPropertyChanged(BR.status);
     }
 
-    @Bindable
-    public String getModelNumber() {
-        return mRequest.getModellNumber();
+    @Override
+    public void onUpdateSuccess(Device device) {
+        mDevice = device;
     }
 
-    public void setModelNumber(String modelNumber) {
-        mRequest.setModellNumber(modelNumber);
-    }
-
-    @Bindable
-    public String getSerialNumber() {
-        return mRequest.getSerialNumber();
-    }
-
-    public void setSerialNumber(String serialNumber) {
-        mRequest.setSerialNumber(serialNumber);
-    }
-
-    @Bindable
-    public String getNameDevice() {
-        return mRequest.getProductionName();
-    }
-
-    public void setNameDevice(String nameDevice) {
-        mRequest.setProductionName(nameDevice);
-    }
-
-    @Bindable
-    public String getDeviceCode() {
-        return mRequest.getDeviceCode();
-    }
-
-    public void setDeviceCode(String deviceCode) {
-        mRequest.setDeviceCode(deviceCode);
+    @Override
+    public void onUpdateError() {
+        Toast.makeText(mContext, R.string.msg_update_device_error, Toast.LENGTH_LONG).show();
     }
 
     public AppCompatActivity getActivity() {
         return mActivity;
     }
 
-    @Bindable
-    public String getImageUrl() {
-        return mRequest != null ? mRequest.getFilePath() : null;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        mRequest.setFilePath(imageUrl);
-        notifyPropertyChanged(BR.imageUrl);
+    public Device getDevice() {
+        return mDevice;
     }
 }
