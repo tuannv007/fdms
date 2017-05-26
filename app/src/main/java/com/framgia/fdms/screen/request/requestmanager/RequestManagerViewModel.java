@@ -50,7 +50,7 @@ public class RequestManagerViewModel extends BaseFragmentModel
         mFragment = fragment;
         mContext = activity.getApplicationContext();
         mActivity = activity;
-        mAdapter = new UserRequestAdapter(mContext, new ArrayList<Request>(), this);
+        mAdapter = new UserRequestAdapter(mContext, new ArrayList<Request>(), this, null);
         setStatus(new Status(OUT_OF_INDEX, mContext.getString(R.string.title_request_status)));
         setRelative(new Status(OUT_OF_INDEX, mContext.getString(R.string.title_request_relative)));
     }

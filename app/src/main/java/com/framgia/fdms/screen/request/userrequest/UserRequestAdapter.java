@@ -8,7 +8,7 @@ import android.databinding.ObservableField;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import com.android.databinding.library.baseAdapters.BR;
+import com.framgia.fdms.BR;
 import com.framgia.fdms.BaseRecyclerViewAdapter;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Request;
@@ -25,12 +25,14 @@ public class UserRequestAdapter
         extends BaseRecyclerViewAdapter<Request, UserRequestAdapter.ViewHolder> {
     private List<Request> mRequests = new ArrayList<>();
     private OnMenuClickListenner mListenner;
+    private UserRequestViewModel mViewModel;
 
     public UserRequestAdapter(Context context, List<Request> requests,
-            OnMenuClickListenner listenner) {
+            OnMenuClickListenner listenner, UserRequestViewModel viewModel) {
         super(context);
         mRequests = requests;
         mListenner = listenner;
+        mViewModel = viewModel;
     }
 
     @Override
@@ -46,6 +48,7 @@ public class UserRequestAdapter
         ItemRequestManagerAdapterBinding binding =
                 DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
                         R.layout.item_request_manager_adapter, parent, false);
+        binding.setViewModel(mViewModel);
         return new ViewHolder(binding);
     }
 

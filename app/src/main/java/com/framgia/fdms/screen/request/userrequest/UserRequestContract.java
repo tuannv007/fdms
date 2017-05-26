@@ -25,6 +25,8 @@ interface UserRequestContract {
         void getData();
 
         void onActivityResult(int requestCode, int resultCode, Intent data);
+
+        void viewRequestDetail(Request request);
     }
 
     /**

@@ -31,7 +31,7 @@
     <string name="msg_login_error">Login Error!</string>
     <string name="msg_login_ok">Login Ok !</string>
     <string name="msg_please_input_text"><![CDATA[please input username & password]]></string>
-    <string name="title_description">Description:</string>
+    <string name="title_description">Description</string>
     <string name="title_related_device">Related device:</string>
     <string name="title_status_device">Status:</string>
     <string name="msg_input_text">Please Input Text!</string>
@@ -118,4 +118,15 @@
     <string formatted="false" name="text_name_status_selection">%d.    %s</string>
     <string name="hint_search">Search</string>
     <string name="missing_data">No data to display</string>
+    <string name="title_create_by">Create by</string>
+    <string name="title_update_by">Update by</string>
+    <string name="title_request_for_request_dt">Request for:</string>
+    <string name="title_request_status_request_dt">Status</string>
+    <string name="title_description_request_dt">Description: %s</string>
+    <string name="title_title_request_dt">Title: %s</string>
+    <string name="title_device_request__name">Name </string>
+    <string name="title_device_number_dt">Number: %d </string>
+    <string name="title_request_detail">Request detail</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_reject">Reject</string>
 </resources>

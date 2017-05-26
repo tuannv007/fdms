@@ -64,6 +64,7 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".screen.returndevice.ReturnDeviceActivity"/>
         <activity android:name=".screen.selection.StatusSelectionActivity"/>
+        <activity android:name=".screen.requestdetail.RequestDetailActivity"/>
     </application>
 
 </manifest>

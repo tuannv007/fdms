@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import com.framgia.fdms.BaseRecyclerViewAdapter;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.source.api.request.DeviceRequest;
-import com.framgia.fdms.data.source.api.request.RequestCreatorRequest;
 import com.framgia.fdms.databinding.ItemRequestCreationBinding;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +17,8 @@ import java.util.List;
  * Created by MyPC on 18/05/2017.
  */
 
-public class RequestCreationAdapter extends
-        BaseRecyclerViewAdapter<DeviceRequest, RequestCreationAdapter
-                .ViewHolder> {
+public class RequestCreationAdapter
+        extends BaseRecyclerViewAdapter<DeviceRequest, RequestCreationAdapter.ViewHolder> {
     private List<DeviceRequest> mDeviceRequests;
     private RequestCreationViewModel mViewModel;
 
