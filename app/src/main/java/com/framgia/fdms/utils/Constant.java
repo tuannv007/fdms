@@ -59,6 +59,7 @@ public class Constant {
         public static final String BUNDLE_TYPE = "BUNDLE_TYPE";
         public static final String BUNDLE_CATEGORY = "BUNDLE_CATEGORY";
         public static final String BUNDLE_STATUE = "BUNDLE_STATUE";
+        public static final String BUNDLE_DEVICE = "BUNDLE_DEVICE";
     }
 
     public static final class RequestConstant {

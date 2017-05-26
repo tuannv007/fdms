@@ -17,9 +17,11 @@ import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import rx.Observable;
@@ -45,6 +47,11 @@ public interface FDMSApi {
     @POST("api/v1/devices")
     Observable<Respone<Device>> uploadDevice(@PartMap Map<String, RequestBody> parrams,
             @Part MultipartBody.Part picture);
+
+    @Multipart
+    @PATCH("api/v1/devices/{id}")
+    Observable<Respone<Device>> updateDevice(@Path("id") int id,
+            @PartMap Map<String, RequestBody> params, @Part MultipartBody.Part picture);
 
     @GET("/api/v1/request_dashboard")
     Observable<Respone<List<Dashboard>>> getDashboardRequest();

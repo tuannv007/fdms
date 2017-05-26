@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     >
 
     <data>
@@ -174,7 +172,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="end"
-                            android:text="@{viewModel.device.originalPrice == 0 ? @string/title_unknown : viewModel.device.originalPrice + ``}"
+                            android:text="@{viewModel.device.originalPrice == null ? @string/title_unknown : viewModel.device.originalPrice}"
                             android:textSize="@dimen/sp_16"
                             android:textStyle="bold"
                             />
@@ -226,9 +224,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="end"
+                            android:text="@{Utils.getStringDate(viewModel.device.boughtDate)}"
                             android:textSize="@dimen/sp_16"
                             android:textStyle="bold"
-                            android:text="@{Utils.getStringDate(viewModel.device.boughtDate)}"
                             />
                     </LinearLayout>
                     <android.support.v7.widget.AppCompatTextView
@@ -400,7 +398,5 @@
             android:layout_centerInParent="true"
             android:visibility="@{viewModel.progressBarVisibility}"
             />
-
     </RelativeLayout>
-
 </layout>

@@ -5,9 +5,7 @@ import com.framgia.fdms.data.model.Dashboard;
 import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.data.model.DeviceHistoryDetail;
 import com.framgia.fdms.data.model.DeviceUsingHistory;
-import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.Status;
-import com.framgia.fdms.data.source.api.request.RegisterDeviceRequest;
 import com.framgia.fdms.data.source.remote.DeviceRemoteDataSource;
 import java.util.List;
 import rx.Observable;
@@ -33,8 +31,12 @@ public class DeviceRepository {
         return mDeviceRemoteDataSource.getListStatus();
     }
 
-    public Observable<Device> registerdevice(RegisterDeviceRequest registerdevice) {
-        return mDeviceRemoteDataSource.registerdevice(registerdevice);
+    public Observable<Device> registerdevice(Device device) {
+        return mDeviceRemoteDataSource.registerdevice(device);
+    }
+
+    public Observable<Device> updateDevice(Device device) {
+        return mDeviceRemoteDataSource.updateDevice(device);
     }
 
     public Observable<Device> getDeviceByQrCode(String qrCode) {
@@ -45,15 +47,15 @@ public class DeviceRepository {
         return mDeviceRemoteDataSource.getDashboardDevice();
     }
 
-    public Observable<List<DeviceUsingHistory>> getDeviceUsingHistory(int deviceId){
+    public Observable<List<DeviceUsingHistory>> getDeviceUsingHistory(int deviceId) {
         return mDeviceRemoteDataSource.getDeviceUsingHistory(deviceId);
     }
 
-    public Observable<List<DeviceHistoryDetail>> getDeviceDetailHistory(int deviceId){
+    public Observable<List<DeviceHistoryDetail>> getDeviceDetailHistory(int deviceId) {
         return mDeviceRemoteDataSource.getDeviceDetailHistory(deviceId);
     }
 
-    public Observable<Device> getDevice(int deviceId){
+    public Observable<Device> getDevice(int deviceId) {
         return mDeviceRemoteDataSource.getDevice(deviceId);
     }
 }
