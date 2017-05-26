@@ -391,14 +391,14 @@ public final class BindingUtils {
         });
     }
 
-    @BindingAdapter({ "bind:viewModel" })
+    @BindingAdapter({ "bind:viewModel",})
     public static void setAdapter(AppCompatSpinner spinner,
             final RequestDetailViewModel viewModel) {
         spinner.setAdapter(viewModel.getAdapterCategory());
         spinner.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-               /* viewModel.onAddRequestDetailClick(position);*/
+                /*viewModel.onAddRequestDetailClick(position);*/
                 return false;
             }
         });

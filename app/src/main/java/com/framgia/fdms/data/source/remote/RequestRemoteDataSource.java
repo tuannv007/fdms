@@ -25,8 +25,8 @@ import static com.framgia.fdms.utils.Constant.ApiParram.REQUEST_ASSIGNEE_ID;
 import static com.framgia.fdms.utils.Constant.ApiParram.REQUEST_DESCRIPTION;
 import static com.framgia.fdms.utils.Constant.ApiParram.REQUEST_FOR_USER_ID;
 import static com.framgia.fdms.utils.Constant.ApiParram.REQUEST_STATUS_ID;
-import static com.framgia.fdms.utils.Constant.ApiParram.REQUEST_TYPE;
 import static com.framgia.fdms.utils.Constant.ApiParram.REQUEST_TITLE;
+import static com.framgia.fdms.utils.Constant.ApiParram.REQUEST_TYPE;
 import static com.framgia.fdms.utils.Constant.OUT_OF_INDEX;
 
 /**
@@ -73,6 +73,21 @@ public class RequestRemoteDataSource extends BaseRemoteDataSource
         return mFDMSApi.registerRequest(parrams, request.getDeviceRequests())
                 .flatMap(new Func1<Respone<Request>, Observable<Request>>() {
 
+                    @Override
+                    public Observable<Request> call(Respone<Request> requestRespone) {
+                        return Utils.getResponse(requestRespone);
+                    }
+                });
+    }
+
+    @Override
+    public Observable<Request> updateRequest(int requestId, Request request) {
+        Map<String, Object> params = new HashMap<>();
+        params.put(REQUEST_TITLE, request.getTitle());
+        params.put(REQUEST_DESCRIPTION, request.getDescription());
+        params.put(REQUEST_STATUS_ID, request.getIdStatus());
+        return mFDMSApi.updateRequest(requestId, params, request.getDevices())
+                .flatMap(new Func1<Respone<Request>, Observable<Request>>() {
                     @Override
                     public Observable<Request> call(Respone<Request> requestRespone) {
                         return Utils.getResponse(requestRespone);

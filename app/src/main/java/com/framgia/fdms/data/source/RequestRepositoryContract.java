@@ -15,12 +15,14 @@ public interface RequestRepositoryContract {
     /**
      * Use on remote request to get list request
      */
-    Observable<List<Request>> getRequests(int requestType, int requestStatusId, int relativeId, int perPage,
-            int page);
+    Observable<List<Request>> getRequests(int requestType, int requestStatusId, int relativeId,
+            int perPage, int page);
 
     Observable<List<Status>> getStatus();
 
     Observable<List<Dashboard>> getDashboardRequest();
 
     Observable<Request> registerRequest(RequestCreatorRequest request);
+
+    Observable<Request> updateRequest(int requestId, Request request);
 }

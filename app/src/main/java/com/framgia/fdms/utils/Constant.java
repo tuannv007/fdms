@@ -36,13 +36,14 @@ public class Constant {
         public static final String MODEL_NUMBER = "model_number";
         public static final String DEVICE_CODE = "device_code";
         public static final String PICTURE = "picture";
-        public static final String REQUEST_STATUS_ID = "request_status_id";
+        public static final String REQUEST_STATUS_ID = "request[request_status_id]";
         public static final String RELATIVE_ID = "relative_id";
         public static final String DEVICE_NAME = "device_name";
         public static final String REQUEST_TITLE = "request[title]";
         public static final String REQUEST_DESCRIPTION = "request[description]";
         public static final String REQUEST_FOR_USER_ID = "request[for_user_id]";
         public static final String REQUEST_ASSIGNEE_ID = "request[assignee_id]";
+        public static final String REQUEST_DEVICE = "request[request_details_attributes]";
     }
 
     public class DeviceStatus {

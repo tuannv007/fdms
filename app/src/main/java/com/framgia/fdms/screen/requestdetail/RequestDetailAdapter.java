@@ -4,6 +4,7 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import com.framgia.fdms.BaseRecyclerViewAdapter;
@@ -22,17 +23,24 @@ public class RequestDetailAdapter
     private List<Request.DeviceRequest> mDeviceRequests = new ArrayList<>();
     private RequestDetailViewModel mViewModel;
 
-    protected RequestDetailAdapter(@NonNull Context context, RequestDetailViewModel viewModel) {
+    protected RequestDetailAdapter(@NonNull Context context, RequestDetailViewModel viewModel,
+            List<Request.DeviceRequest> mListRequest) {
         super(context);
         mViewModel = viewModel;
+        mDeviceRequests = mListRequest;
     }
 
     @Override
     public void onUpdatePage(List<Request.DeviceRequest> data) {
-        if (data == null) {
+       /* if (data == null) {
             return;
         }
         mDeviceRequests.addAll(data);
+        notifyDataSetChanged();*/
+    }
+
+    public void addItem() {
+        mDeviceRequests.add(new Request.DeviceRequest());
         notifyDataSetChanged();
     }
 
@@ -48,6 +56,7 @@ public class RequestDetailAdapter
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.bindData(position, mDeviceRequests.get(position));
+        Log.e("dmm", mDeviceRequests.get(position).toString());
     }
 
     @Override

@@ -17,7 +17,7 @@
         <import type="android.view.View"/>
         <variable
             name="position"
-            type="int"
+            type="Integer"
             />
     </data>
     <LinearLayout
@@ -41,6 +41,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> viewModel.onAddRequestDetailClick(position)}"
                 android:orientation="vertical"
                 android:padding="@dimen/dp_10"
                 >
@@ -49,7 +50,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-                    android:text="@{String.format(@string/title_description_request_dt,deviceRequest.description)}"
+                    android:text="@={deviceRequest.description}"
                     android:textColor="@color/color_grey_700"
                     android:textColorHint="@color/color_brown"
                     android:textSize="@dimen/sp_15"
@@ -87,6 +88,7 @@
                             android:layout_width="@dimen/dp_30"
                             android:layout_height="match_parent"
                             android:background="@null"
+                            android:onClick="@{() -> deviceRequest.onDecrement(viewModel, position)}"
                             android:padding="@dimen/dp_0"
                             android:text="@string/title_minus"
                             android:textColor="@color/color_brown"
@@ -108,6 +110,7 @@
                             android:layout_width="@dimen/dp_30"
                             android:layout_height="match_parent"
                             android:background="@null"
+                            android:onClick="@{() -> deviceRequest.onIncrement(viewModel, position)}"
                             android:padding="@dimen/dp_0"
                             android:text="@string/title_plus"
                             android:textColor="@color/color_brown"
@@ -157,6 +160,7 @@
                         style="@style/TextViewRequestDetail"
                         />
                     <EditText
+                        android:enabled="false"
                         android:text="@{deviceRequest.description}"
                         style="@style/EditTextStyleRequestDetail"
                         />
@@ -180,6 +184,7 @@
                         style="@style/TextViewRequestDetail"
                         />
                     <EditText
+                        android:enabled="false"
                         android:text="@{deviceRequest.categoryName}"
                         style="@style/EditTextStyleRequestDetail"
                         />
@@ -203,6 +208,7 @@
                         style="@style/TextViewRequestDetail"
                         />
                     <EditText
+                        android:enabled="false"
                         android:text="@{String.valueOf(deviceRequest.number)}"
                         style="@style/EditTextStyleRequestDetail"
                         />

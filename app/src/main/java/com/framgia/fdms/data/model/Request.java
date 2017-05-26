@@ -5,11 +5,18 @@ import android.databinding.Bindable;
 import com.android.databinding.library.baseAdapters.BR;
 import com.framgia.fdms.FDMSApplication;
 import com.framgia.fdms.R;
+import com.framgia.fdms.screen.requestdetail.RequestDetailViewModel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
+import static com.framgia.fdms.utils.Constant.DeviceStatus.APPROVED;
+import static com.framgia.fdms.utils.Constant.DeviceStatus.CANCELLED;
+import static com.framgia.fdms.utils.Constant.DeviceStatus.DONE;
+import static com.framgia.fdms.utils.Constant.DeviceStatus.WAITING_APPROVE;
+import static com.framgia.fdms.utils.Constant.DeviceStatus.WAITING_DONE;
 
 /**
  * Created by beepi on 09/05/2017.
@@ -46,6 +53,21 @@ public class Request extends BaseObservable implements Serializable {
     @Expose
     @SerializedName("created_at")
     private Date mCreatedAt;
+
+    private int idStatus;
+
+    public int getIdStatus() {
+        if (getRequestStatus().equalsIgnoreCase(CANCELLED)) setIdStatus(1);
+        if (getRequestStatus().equalsIgnoreCase(WAITING_APPROVE)) setIdStatus(2);
+        if (getRequestStatus().equalsIgnoreCase(APPROVED)) setIdStatus(3);
+        if (getRequestStatus().equalsIgnoreCase(WAITING_DONE)) setIdStatus(4);
+        if (getRequestStatus().equalsIgnoreCase(DONE)) setIdStatus(5);
+        return idStatus;
+    }
+
+    public void setIdStatus(int idStatus) {
+        this.idStatus = idStatus;
+    }
 
     @Bindable
     public Date getCreatedAt() {
@@ -152,7 +174,7 @@ public class Request extends BaseObservable implements Serializable {
                 getCreater(), nameDevice, getRequestFor());
     }
 
-    public class DeviceRequest extends BaseObservable implements Serializable {
+    public static class DeviceRequest extends BaseObservable implements Serializable {
         @Expose
         @SerializedName("id")
         private int mId;
@@ -174,20 +196,24 @@ public class Request extends BaseObservable implements Serializable {
             mId = id;
         }
 
+        @Bindable
         public String getDescription() {
             return mDescription;
         }
 
         public void setDescription(String description) {
             mDescription = description;
+            notifyPropertyChanged(BR.descriptionError);
         }
 
+        @Bindable
         public int getNumber() {
             return mNumber;
         }
 
         public void setNumber(int number) {
             mNumber = number;
+            notifyPropertyChanged(BR.number);
         }
 
         @Bindable
@@ -199,5 +225,66 @@ public class Request extends BaseObservable implements Serializable {
             mCategoryName = categoryName;
             notifyPropertyChanged(BR.categoryName);
         }
+
+        public void onDecrement(RequestDetailViewModel viewModel, int position) {
+            viewModel.onAddRequestDetailClick(position);
+            if (getNumber() > 0) {
+                setNumber(getNumber() - 1);
+            }
+        }
+
+        public void onIncrement(RequestDetailViewModel viewModel, int position) {
+            viewModel.onAddRequestDetailClick(position);
+            setNumber(getNumber() + 1);
+        }
+
+        @Override
+        public String toString() {
+            return "DeviceRequest{"
+                    + "mId="
+                    + mId
+                    + ", mDescription='"
+                    + mDescription
+                    + '\''
+                    + ", mNumber="
+                    + mNumber
+                    + ", mCategoryName='"
+                    + mCategoryName
+                    + '\''
+                    + '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Request{"
+                + "mId="
+                + mId
+                + ", mTitle='"
+                + mTitle
+                + '\''
+                + ", mDescription='"
+                + mDescription
+                + '\''
+                + ", mRequestStatus='"
+                + mRequestStatus
+                + '\''
+                + ", mAssignee='"
+                + mAssignee
+                + '\''
+                + ", mRequestFor='"
+                + mRequestFor
+                + '\''
+                + ", mCreater='"
+                + mCreater
+                + '\''
+                + ", mUpdater='"
+                + mUpdater
+                + '\''
+                + ", mDevices="
+                + mDevices
+                + ", mCreatedAt="
+                + mCreatedAt
+                + '}';
     }
 }

@@ -11,6 +11,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Request;
+import com.framgia.fdms.data.source.RequestRepository;
+import com.framgia.fdms.data.source.api.service.FDMSServiceClient;
+import com.framgia.fdms.data.source.remote.RequestRemoteDataSource;
 import com.framgia.fdms.databinding.ActivityRequestDetailBinding;
 
 import static com.framgia.fdms.utils.Constant.BundleRequest.BUND_REQUEST;
@@ -36,6 +39,11 @@ public class RequestDetailActivity extends AppCompatActivity {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_request_detail);
         mBinding.setRequest(getRequestFromIntent());
         mViewModel = new RequestDetailViewModel(this, getRequestFromIntent().getDevices());
+        RequestDetailContract.Presenter presenter =
+                new RequestDetailPresenter(mViewModel, getRequestFromIntent(),
+                        new RequestRepository(
+                                new RequestRemoteDataSource(FDMSServiceClient.getInstance())));
+        mViewModel.setPresenter(presenter);
         mBinding.setViewModel((RequestDetailViewModel) mViewModel);
         initToolbar();
     }

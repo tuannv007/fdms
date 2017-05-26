@@ -81,7 +81,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/ic_device_24dp"
+                        android:src="@drawable/ic_device_24dp"/>
+
+
+                    <Button
+                        android:id="@+id/decrement"
+                        android:layout_width="@dimen/dp_30"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:padding="@dimen/dp_0"
+                        android:text="@string/title_minus"
+                        android:textColor="@color/color_brown"
+                        android:textSize="@dimen/sp_25"
+                        android:textStyle="bold"
                         />
 
                     <LinearLayout

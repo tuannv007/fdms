@@ -18,11 +18,13 @@ public interface RequestDataSource {
     interface RemoteDataSource {
         Observable<List<Dashboard>> getDashboardRequest();
 
-        Observable<List<Request>> getRequests(int requestType, int requestStatusId, int relativeId, int perPage,
-                int page);
+        Observable<List<Request>> getRequests(int requestType, int requestStatusId, int relativeId,
+                int perPage, int page);
 
         Observable<List<Status>> getStatus();
 
         Observable<Request> registerRequest(RequestCreatorRequest request);
+
+        Observable<Request> updateRequest(int requestId, Request request);
     }
 }
