@@ -1,8 +1,14 @@
 package com.framgia.fdms.utils;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.MediaStore;
 import com.framgia.fdms.data.model.Respone;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import rx.Observable;
 
 import static com.framgia.fdms.utils.Constant.PERCENT;
@@ -37,5 +43,27 @@ public class Utils {
         if (date == null) return TITLE_UNKNOWN;
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         return formatter.format(date);
+    }
+
+    public static String dateToString(Date date) {
+        if (date == null) date = new Date();
+        DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        return formatter.format(date);
+    }
+
+    public static String getPathFromUri(Context context, Uri uri) {
+        if (context == null || uri == null) return null;
+        String result = null;
+        Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
+        if (cursor == null) {
+            result = uri.getPath();
+        } else {
+            if (cursor.moveToFirst()) {
+                int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                result = cursor.getString(idx);
+                cursor.close();
+            }
+        }
+        return result;
     }
 }

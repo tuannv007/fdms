@@ -5,9 +5,7 @@ import com.framgia.fdms.data.model.Dashboard;
 import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.data.model.DeviceHistoryDetail;
 import com.framgia.fdms.data.model.DeviceUsingHistory;
-import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.Status;
-import com.framgia.fdms.data.source.api.request.RegisterDeviceRequest;
 import java.util.List;
 import rx.Observable;
 
@@ -26,7 +24,9 @@ public class DeviceDataSource {
 
         Observable<List<Status>> getListStatus();
 
-        Observable<Device> registerdevice(RegisterDeviceRequest registerdevice);
+        Observable<Device> registerdevice(Device registerdevice);
+
+        Observable<Device> updateDevice(Device device);
 
         Observable<Device> getDeviceByQrCode(String qrCode);
 
