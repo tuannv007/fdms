@@ -58,4 +58,8 @@ public class DeviceRepository {
     public Observable<Device> getDevice(int deviceId) {
         return mDeviceRemoteDataSource.getDevice(deviceId);
     }
+
+    public Observable<List<Device>> getTopDevice(int topDevice) {
+        return mDeviceRemoteDataSource.getTopDevice(topDevice);
+    }
 }

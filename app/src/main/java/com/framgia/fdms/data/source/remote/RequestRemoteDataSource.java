@@ -25,8 +25,8 @@ import static com.framgia.fdms.utils.Constant.ApiParram.REQUEST_ASSIGNEE_ID;
 import static com.framgia.fdms.utils.Constant.ApiParram.REQUEST_DESCRIPTION;
 import static com.framgia.fdms.utils.Constant.ApiParram.REQUEST_FOR_USER_ID;
 import static com.framgia.fdms.utils.Constant.ApiParram.REQUEST_STATUS_ID;
-import static com.framgia.fdms.utils.Constant.ApiParram.REQUEST_TYPE;
 import static com.framgia.fdms.utils.Constant.ApiParram.REQUEST_TITLE;
+import static com.framgia.fdms.utils.Constant.ApiParram.REQUEST_TYPE;
 import static com.framgia.fdms.utils.Constant.OUT_OF_INDEX;
 
 /**
@@ -78,6 +78,12 @@ public class RequestRemoteDataSource extends BaseRemoteDataSource
                         return Utils.getResponse(requestRespone);
                     }
                 });
+    }
+
+    @Override
+    public Observable<List<Request>> getTopRequest(int topRequest) {
+        // TODO: 30/05/2017 wait API
+        return null;
     }
 
     @Override

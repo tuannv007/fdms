@@ -9,6 +9,8 @@ import android.widget.Toast;
 import com.framgia.fdms.BR;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Dashboard;
+import com.framgia.fdms.data.model.Request;
+import com.framgia.fdms.data.model.Device;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -125,6 +127,16 @@ public class DashBoardDetailViewModel extends BaseObservable
     @Override
     public void getData() {
         mPresenter.getData();
+    }
+
+    @Override
+    public void onGetTopRequestSuccess(List<Request> requests) {
+        // TODO: 29/05/2017  
+    }
+
+    @Override
+    public void onGetTopDeviceSuccess(List<Device> topDevices) {
+        // TODO: 29/05/2017  
     }
 
     public void setTotal(int total) {
