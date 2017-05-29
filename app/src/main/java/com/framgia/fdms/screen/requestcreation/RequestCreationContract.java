@@ -4,8 +4,10 @@ import android.content.Intent;
 import com.framgia.fdms.BasePresenter;
 import com.framgia.fdms.BaseViewModel;
 import com.framgia.fdms.data.model.Category;
+import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.data.model.Status;
+import com.framgia.fdms.data.source.api.request.DeviceRequest;
 import com.framgia.fdms.data.source.api.request.RequestCreatorRequest;
 import java.util.List;
 
@@ -35,8 +37,6 @@ public interface RequestCreationContract {
 
         void showProgressbar();
 
-        void onAddRequestDetailClick(int position);
-
         void onGetRequestSuccess(Request request);
 
         void onInputTitleError();
@@ -46,6 +46,10 @@ public interface RequestCreationContract {
         void onInputRelativeError();
 
         void onActivityResult(int requestCode, int resultCode, Intent data);
+
+        void onAddItemClick();
+
+        void onCategoryClick(DeviceRequest deviceRequest);
     }
 
     /**

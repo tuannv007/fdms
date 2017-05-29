@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -28,6 +29,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Category;
+import com.framgia.fdms.data.source.api.request.DeviceRequest;
 import com.framgia.fdms.screen.dashboard.DashboardViewModel;
 import com.framgia.fdms.screen.devicedetail.DeviceDetailViewModel;
 import com.framgia.fdms.screen.listDevice.ListDeviceViewModel;
@@ -383,7 +385,7 @@ public final class BindingUtils {
         spinner.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                viewModel.onAddRequestDetailClick(position);
+                /*viewModel.onAddRequestDetailClick(position);*/
                 return false;
             }
         });

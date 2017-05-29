@@ -13,6 +13,7 @@ import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.data.model.Status;
+import com.framgia.fdms.data.source.api.request.DeviceRequest;
 import com.framgia.fdms.data.source.api.request.RequestCreatorRequest;
 import com.framgia.fdms.screen.selection.StatusSelectionActivity;
 import com.framgia.fdms.screen.selection.StatusSelectionType;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
+import static com.framgia.fdms.utils.Constant.BundleConstant.BUNDLE_CATEGORY;
 import static com.framgia.fdms.utils.Constant.BundleConstant.BUNDLE_STATUE;
 import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_ASSIGNER;
 import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_CATEGORY;
@@ -39,7 +41,9 @@ public class RequestCreationViewModel extends BaseObservable
     private String mRequestDescription;
     private Status mAssignee;
     private Status mRelative;
+    private Category mCategory;
     private RequestCreatorRequest mRequest;
+    private DeviceRequest mDeviceRequest;
 
     private List<Status> mRelatives = new ArrayList<>();
     private List<Status> mAssigners = new ArrayList<>();
@@ -95,6 +99,9 @@ public class RequestCreationViewModel extends BaseObservable
                 setAssignee(status);
                 break;
             case REQUEST_CATEGORY:
+                bundle = data.getExtras();
+                Category category = bundle.getParcelable(BUNDLE_CATEGORY);
+                setCategory(category);
                 break;
             default:
                 break;
@@ -118,6 +125,15 @@ public class RequestCreationViewModel extends BaseObservable
     }
 
     @Override
+    public void onCategoryClick(DeviceRequest deviceRequest) {
+        if (mCategories == null) return;
+        mActivity.startActivityForResult(
+                StatusSelectionActivity.getInstance(mContext, mCategories, mAssigners,
+                        StatusSelectionType.CATEGORY), REQUEST_CATEGORY);
+        mDeviceRequest = deviceRequest;
+    }
+
+    @Override
     public void onCreateRequestClick() {
         mRequest.setDeviceRequests(mAdapter.getData());
         mPresenter.registerRequest(mRequest);
@@ -134,6 +150,7 @@ public class RequestCreationViewModel extends BaseObservable
         }
         mAssigners.clear();
         mAssigners.addAll(assignees);
+        notifyPropertyChanged(BR.assigners);
     }
 
     @Override
@@ -143,14 +160,16 @@ public class RequestCreationViewModel extends BaseObservable
 
     @Override
     public void onGetCategorySuccess(List<Category> categories) {
+        updateCategory(categories);
+    }
+
+    private void updateCategory(List<Category> categories) {
         if (categories == null) {
             return;
         }
         mCategories.clear();
         mCategories.addAll(categories);
-        mAdapterCategory.clear();
-        mAdapterCategory.addAll(categories);
-        mAdapterCategory.notifyDataSetChanged();
+        notifyPropertyChanged(BR.categories);
     }
 
     @Override
@@ -169,10 +188,8 @@ public class RequestCreationViewModel extends BaseObservable
     }
 
     @Override
-    public void onAddRequestDetailClick(int position) {
-        if (position == (mAdapter.getItemCount() - 1)) {
-            mAdapter.addItem();
-        }
+    public void onAddItemClick() {
+        mAdapter.addItem();
     }
 
     @Override
@@ -248,6 +265,17 @@ public class RequestCreationViewModel extends BaseObservable
         notifyPropertyChanged(BR.relative);
     }
 
+    @Bindable
+    public Category getCategory() {
+        return mCategory;
+    }
+
+    public void setCategory(Category category) {
+        mDeviceRequest.setCategory(category);
+        mCategory = category;
+        notifyPropertyChanged(BR.category);
+    }
+
     public ArrayAdapter<Category> getAdapterCategory() {
         return mAdapterCategory;
     }
@@ -269,5 +297,15 @@ public class RequestCreationViewModel extends BaseObservable
     @Bindable
     public String getRelativeError() {
         return mRelativeError;
+    }
+
+    @Bindable
+    public List<Status> getAssigners() {
+        return mAssigners;
+    }
+
+    @Bindable
+    public List<Category> getCategories() {
+        return mCategories;
     }
 }
