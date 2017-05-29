@@ -20,6 +20,7 @@ import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.screen.devicecreation.CreateDeviceActivity;
+import com.framgia.fdms.screen.devicecreation.DeviceStatusType;
 import com.framgia.fdms.screen.devicedetail.DeviceDetailActivity;
 import com.framgia.fdms.screen.returndevice.ReturnDeviceActivity;
 import com.framgia.fdms.screen.selection.StatusSelectionActivity;
@@ -160,7 +161,7 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
     @Override
     public void onRegisterDeviceClick(FloatingActionsMenu actionsMenu) {
         actionsMenu.collapse();
-        mContext.startActivity(CreateDeviceActivity.getInstance(mContext));
+        mContext.startActivity(CreateDeviceActivity.getInstance(mContext, DeviceStatusType.CREATE));
     }
 
     @Override

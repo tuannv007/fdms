@@ -4,8 +4,8 @@ import android.content.Intent;
 import com.framgia.fdms.BasePresenter;
 import com.framgia.fdms.BaseViewModel;
 import com.framgia.fdms.data.model.Category;
+import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.data.model.Status;
-import com.framgia.fdms.data.source.api.request.RegisterDeviceRequest;
 import java.util.List;
 
 /**
@@ -45,14 +45,20 @@ interface CreateDeviceContract {
         void onCreateDeviceClick();
 
         void onActivityResult(int requestCode, int resultCode, Intent data);
+
+        void onUpdateError();
+
+        void onUpdateSuccess(Device device);
     }
 
     /**
      * Presenter.
      */
     interface Presenter extends BasePresenter {
-        void registerDevice(RegisterDeviceRequest registerDeviceRequest);
+        void registerDevice(Device device);
 
-        boolean validateDataInput(RegisterDeviceRequest registerDeviceRequest);
+        void updateDevice(Device device);
+
+        boolean validateDataInput(Device device);
     }
 }

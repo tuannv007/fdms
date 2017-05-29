@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import com.framgia.fdms.R;
+import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.data.source.CategoryRepository;
 import com.framgia.fdms.data.source.DeviceRepository;
 import com.framgia.fdms.data.source.StatusRepository;
@@ -16,6 +17,8 @@ import com.framgia.fdms.data.source.remote.StatusRemoteDataSource;
 import com.framgia.fdms.databinding.ActivityCreatedeviceBinding;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import static com.framgia.fdms.utils.Constant.BundleConstant.BUNDLE_DEVICE;
+import static com.framgia.fdms.utils.Constant.BundleConstant.BUNDLE_TYPE;
 
 /**
  * Createdevice Screen.
@@ -23,18 +26,41 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 public class CreateDeviceActivity extends AppCompatActivity {
 
     private CreateDeviceContract.ViewModel mViewModel;
+    private Device mDevice;
+    private DeviceStatusType mDeviceStatusType;
 
-    public static Intent getInstance(Context context) {
+    public static Intent getInstance(Context context, DeviceStatusType type) {
         Intent intent = new Intent(context, CreateDeviceActivity.class);
         intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(BUNDLE_TYPE, type);
+        intent.putExtras(bundle);
         return intent;
+    }
+
+    public static Intent getInstance(Context context, Device device, DeviceStatusType type) {
+        Intent intent = new Intent(context, CreateDeviceActivity.class);
+        intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(BUNDLE_DEVICE, device);
+        bundle.putSerializable(BUNDLE_TYPE, type);
+        intent.putExtras(bundle);
+        return intent;
+    }
+
+    private void getDataFromIntent() {
+        Bundle bundle = getIntent().getExtras();
+        if (bundle == null) return;
+        mDevice = bundle.getParcelable(BUNDLE_DEVICE);
+        mDeviceStatusType = (DeviceStatusType) bundle.getSerializable(BUNDLE_TYPE);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mViewModel = new CreateDeviceViewModel(this);
+        getDataFromIntent();
+        mViewModel = new CreateDeviceViewModel(this, mDevice, mDeviceStatusType);
 
         DeviceRepository deviceRepository =
                 new DeviceRepository(new DeviceRemoteDataSource(FDMSServiceClient.getInstance()));

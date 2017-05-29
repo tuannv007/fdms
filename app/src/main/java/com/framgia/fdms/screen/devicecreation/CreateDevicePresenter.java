@@ -7,9 +7,7 @@ import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.data.source.CategoryRepository;
 import com.framgia.fdms.data.source.DeviceRepository;
 import com.framgia.fdms.data.source.StatusRepository;
-import com.framgia.fdms.data.source.api.request.RegisterDeviceRequest;
 import java.util.List;
-import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
@@ -28,7 +26,6 @@ final class CreateDevicePresenter implements CreateDeviceContract.Presenter {
     private DeviceRepository mDeviceRepository;
     private StatusRepository mStatusRepository;
     private CategoryRepository mCategoryRepository;
-    private RegisterDeviceRequest mRequest;
 
     public CreateDevicePresenter(CreateDeviceContract.ViewModel viewModel,
             DeviceRepository deviceRepository, StatusRepository statusRepository,
@@ -37,7 +34,6 @@ final class CreateDevicePresenter implements CreateDeviceContract.Presenter {
         mDeviceRepository = deviceRepository;
         mCategoryRepository = categoryRepository;
         mStatusRepository = statusRepository;
-        mRequest = new RegisterDeviceRequest();
         mCompositeSubscription = new CompositeSubscription();
     }
 
@@ -53,11 +49,11 @@ final class CreateDevicePresenter implements CreateDeviceContract.Presenter {
     }
 
     @Override
-    public void registerDevice(RegisterDeviceRequest registerDeviceRequest) {
-        if (!validateDataInput(registerDeviceRequest)) {
+    public void registerDevice(Device device) {
+        if (!validateDataInput(device)) {
             return;
         }
-        Subscription subscription = mDeviceRepository.registerdevice(registerDeviceRequest)
+        Subscription subscription = mDeviceRepository.registerdevice(device)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Device>() {
@@ -69,6 +65,28 @@ final class CreateDevicePresenter implements CreateDeviceContract.Presenter {
                     @Override
                     public void call(Throwable throwable) {
                         mViewModel.onRegisterError();
+                    }
+                });
+        mCompositeSubscription.add(subscription);
+    }
+
+    @Override
+    public void updateDevice(Device device) {
+        if (!validateDataInput(device)) {
+            return;
+        }
+        Subscription subscription = mDeviceRepository.updateDevice(device)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Device>() {
+                    @Override
+                    public void call(Device device) {
+                        mViewModel.onUpdateSuccess(device);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        mViewModel.onUpdateError();
                     }
                 });
         mCompositeSubscription.add(subscription);
@@ -133,21 +151,21 @@ final class CreateDevicePresenter implements CreateDeviceContract.Presenter {
     }
 
     @Override
-    public boolean validateDataInput(RegisterDeviceRequest registerDeviceRequest) {
+    public boolean validateDataInput(Device device) {
         boolean isValid = true;
-        if (TextUtils.isEmpty(registerDeviceRequest.getDeviceCode())) {
+        if (TextUtils.isEmpty(device.getDeviceCode())) {
             isValid = false;
             mViewModel.onInputDeviceCodeError();
         }
-        if (TextUtils.isEmpty(registerDeviceRequest.getModellNumber())) {
+        if (TextUtils.isEmpty(device.getModelNumber())) {
             isValid = false;
             mViewModel.onInputModellNumberError();
         }
-        if (TextUtils.isEmpty(registerDeviceRequest.getProductionName())) {
+        if (TextUtils.isEmpty(device.getProductionName())) {
             isValid = false;
             mViewModel.onInputProductionNameError();
         }
-        if (TextUtils.isEmpty(registerDeviceRequest.getSerialNumber())) {
+        if (TextUtils.isEmpty(device.getSerialNumber())) {
             isValid = false;
             mViewModel.onInputSerialNumberError();
         }

@@ -63,6 +63,7 @@
             android:layout_height="match_parent"
             app:adapter="@{viewModel.adapter}"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:bindViewModel="@{viewModel}"
             tools:context="com.framgia.fdms.screen.devicedetail.DeviceDetailActivity"
             >
 
@@ -83,6 +84,7 @@
             android:layout_margin="@dimen/dp_16"
             android:onClick="@{() -> viewModel.onEditDevice()}"
             android:src="@drawable/ic_edit_white_24dp"
+            android:visibility="@{viewModel.floatingVisible}"
             />
     </android.support.design.widget.CoordinatorLayout>
 </layout>

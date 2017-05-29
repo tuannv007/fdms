@@ -69,4 +69,10 @@ public class DeviceInfomationFragment extends Fragment {
         mViewModel.onStop();
         super.onStop();
     }
+
+    public void onStartEditDevice() {
+        if (mViewModel != null) {
+            mViewModel.onEditDevice();
+        }
+    }
 }

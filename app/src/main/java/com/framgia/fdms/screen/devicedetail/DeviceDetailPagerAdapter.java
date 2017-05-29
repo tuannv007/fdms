@@ -6,9 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import com.framgia.fdms.R;
-import com.framgia.fdms.screen.historydetail.DeviceDetailHistoryFragment;
-import com.framgia.fdms.screen.devicedetail.infomation.DeviceInfomationFragment;
-import com.framgia.fdms.screen.devicedetail.usinghistory.DeviceUsingHistoryFragment;
+import java.util.List;
 
 import static com.framgia.fdms.screen.devicedetail.DeviceDetailPagerAdapter.DeviceDetailPage
         .DEVICE_HISTORY;
@@ -22,32 +20,28 @@ import static com.framgia.fdms.screen.devicedetail.DeviceDetailPagerAdapter.Devi
  */
 
 public class DeviceDetailPagerAdapter extends FragmentPagerAdapter {
-    private static final int PAGE_COUNT = 3;
+    public static final int PAGE_COUNT = 3;
     private Context mContext;
     private int mDeviceId;
+    private List<Fragment> mFragments;
+    private int mPosition;
 
-    public DeviceDetailPagerAdapter(Context context, FragmentManager fm, int deviceId) {
+    public DeviceDetailPagerAdapter(Context context, FragmentManager fm, List<Fragment> fragments,
+            int deviceId) {
         super(fm);
         mContext = context;
         mDeviceId = deviceId;
+        mFragments = fragments;
     }
 
     @Override
     public Fragment getItem(int position) {
-        switch (position) {
-            case DEVICE_INFOMATION:
-                return DeviceInfomationFragment.newInstance(mDeviceId);
-            case DEVICE_HISTORY:
-                return DeviceDetailHistoryFragment.newInstance();
-            case DEVICE_USING_HISTORY:
-                return DeviceUsingHistoryFragment.newInstance();
-            default:
-                return null;
-        }
+        return mFragments.get(position);
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
+        mPosition = position;
         switch (position) {
             case DEVICE_INFOMATION:
                 return mContext.getString(R.string.title_device_infomation);
@@ -62,7 +56,11 @@ public class DeviceDetailPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return PAGE_COUNT;
+        return mFragments == null ? 0 : mFragments.size();
+    }
+
+    public int getPositionCurrent() {
+        return mPosition;
     }
 
     @IntDef({ DEVICE_INFOMATION, DEVICE_HISTORY, DEVICE_USING_HISTORY })

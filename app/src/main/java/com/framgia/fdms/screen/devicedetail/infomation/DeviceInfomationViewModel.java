@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Toast;
 import com.android.databinding.library.baseAdapters.BR;
 import com.framgia.fdms.data.model.Device;
+import com.framgia.fdms.screen.devicecreation.CreateDeviceActivity;
+import com.framgia.fdms.screen.devicecreation.DeviceStatusType;
 
 /**
  * Exposes the data to be used in the Deviceinfomation screen.
@@ -43,6 +45,12 @@ public class DeviceInfomationViewModel extends BaseObservable
     @Override
     public void onGetDeviceSuccess(Device device) {
         setDevice(device);
+    }
+
+    @Override
+    public void onEditDevice() {
+        mContext.startActivity(
+                CreateDeviceActivity.getInstance(mContext, mDevice, DeviceStatusType.EDIT));
     }
 
     @Override

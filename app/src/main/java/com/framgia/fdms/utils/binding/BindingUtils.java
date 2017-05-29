@@ -29,6 +29,7 @@ import com.bumptech.glide.Glide;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.screen.dashboard.DashboardViewModel;
+import com.framgia.fdms.screen.devicedetail.DeviceDetailViewModel;
 import com.framgia.fdms.screen.listDevice.ListDeviceViewModel;
 import com.framgia.fdms.screen.main.MainViewModel;
 import com.framgia.fdms.screen.requestcreation.RequestCreationViewModel;
@@ -408,5 +409,31 @@ public final class BindingUtils {
     @BindingAdapter("spinnerAdapter")
     public static void spinnerAdapter(AppCompatSpinner spinner, ArrayAdapter adapter) {
         spinner.setAdapter(adapter);
+    }
+
+    /*
+    * bind ViewPager to Model
+    * Device Detail ViewModel
+    * */
+
+    @BindingAdapter("bindViewModel")
+    public static void bindViewModel(ViewPager view, final DeviceDetailViewModel viewModel) {
+        view.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset,
+                    int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                viewModel.updateFloadtingVisible(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 }

@@ -16,6 +16,8 @@ interface DeviceInfomationContract {
 
         void onError(String msg);
 
+        void onEditDevice();
+
         void showProgressbar();
 
         void hideProgressbar();
