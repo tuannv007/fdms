@@ -83,7 +83,13 @@ public class RequestRemoteDataSource extends BaseRemoteDataSource
     @Override
     public Observable<List<Request>> getTopRequest(int topRequest) {
         // TODO: 30/05/2017 wait API
-        return null;
+        List<Request> requests = new ArrayList<>();
+        Request request = new Request();
+        request.setTitle("aaaa");
+        request.setRequestFor("Toan");
+        request.setRequestStatus("Using");
+        for (int i = 0; i < 10; i++) requests.add(request);
+        return Observable.just(requests);
     }
 
     @Override

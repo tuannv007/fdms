@@ -17,8 +17,9 @@ import com.framgia.fdms.BaseFragmentModel;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.data.model.Status;
-import com.framgia.fdms.screen.request.OnMenuClickListenner;
+import com.framgia.fdms.screen.request.OnRequestClickListenner;
 import com.framgia.fdms.screen.request.userrequest.UserRequestAdapter;
+import com.framgia.fdms.screen.requestdetail.RequestDetailActivity;
 import com.framgia.fdms.screen.selection.StatusSelectionActivity;
 import com.framgia.fdms.screen.selection.StatusSelectionType;
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_STATUS;
  */
 
 public class RequestManagerViewModel extends BaseFragmentModel
-        implements RequestManagerContract.ViewModel, OnMenuClickListenner {
+        implements RequestManagerContract.ViewModel, OnRequestClickListenner {
 
     private final Fragment mFragment;
     private Context mContext;
@@ -50,7 +51,7 @@ public class RequestManagerViewModel extends BaseFragmentModel
         mFragment = fragment;
         mContext = activity.getApplicationContext();
         mActivity = activity;
-        mAdapter = new UserRequestAdapter(mContext, new ArrayList<Request>(), this, null);
+        mAdapter = new UserRequestAdapter(mContext, new ArrayList<Request>(), this);
         setStatus(new Status(OUT_OF_INDEX, mContext.getString(R.string.title_request_status)));
         setRelative(new Status(OUT_OF_INDEX, mContext.getString(R.string.title_request_relative)));
     }
@@ -190,5 +191,10 @@ public class RequestManagerViewModel extends BaseFragmentModel
             }
         });
         popupMenu.show();
+    }
+
+    @Override
+    public void onDetailRequestClick(Request request) {
+        mActivity.startActivity(RequestDetailActivity.newInstance(mContext, request));
     }
 }

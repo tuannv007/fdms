@@ -91,8 +91,10 @@ final class DashBoardDetailPresenter implements DashBoardDetailContract.Presente
     public void getData() {
         if (mDashboardType == DEVICE_DASHBOARD) {
             getDeviceDashboard();
+            getTopDevice();
         } else if (mDashboardType == REQUEST_DASHBOARD) {
             getRequestDashboard();
+            getTopRequest();
         }
     }
 
@@ -122,8 +124,8 @@ final class DashBoardDetailPresenter implements DashBoardDetailContract.Presente
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<Device>>() {
                     @Override
-                    public void call(List<Device> topDevices) {
-                        mViewModel.onGetTopDeviceSuccess(topDevices);
+                    public void call(List<Device> devices) {
+                        mViewModel.onGetTopDeviceSuccess(devices);
                     }
                 }, new Action1<Throwable>() {
                     @Override

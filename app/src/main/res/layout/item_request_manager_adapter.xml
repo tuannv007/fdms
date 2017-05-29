@@ -7,15 +7,11 @@
     <data>
         <variable
             name="listenner"
-            type="com.framgia.fdms.screen.request.OnMenuClickListenner"
+            type="com.framgia.fdms.screen.request.OnRequestClickListenner"
             />
         <variable
             name="requestModel"
             type="com.framgia.fdms.screen.request.userrequest.UserRequestAdapter.RequestModel"
-            />
-        <variable
-            name="viewModel"
-            type="com.framgia.fdms.screen.request.userrequest.UserRequestViewModel"
             />
         <import type="android.text.Html"/>
     </data>
@@ -35,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:onClick="@{() -> viewModel.viewRequestDetail(requestModel.request)}"
+            android:onClick="@{() -> listenner.onDetailRequestClick(requestModel.request)}"
             android:orientation="vertical"
             android:padding="@dimen/dp_7"
             >
@@ -98,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/dp_5"
-                    android:text="@{requestModel.request.creater}"
+                    android:text="@{requestModel.request.requestFor}"
                     android:textColor="@color/color_black"
                     android:textSize="@dimen/sp_14"
                     />

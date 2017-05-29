@@ -16,7 +16,7 @@ import com.framgia.fdms.BaseFragmentModel;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.data.model.Status;
-import com.framgia.fdms.screen.request.OnMenuClickListenner;
+import com.framgia.fdms.screen.request.OnRequestClickListenner;
 import com.framgia.fdms.screen.requestdetail.RequestDetailActivity;
 import com.framgia.fdms.screen.selection.StatusSelectionActivity;
 import com.framgia.fdms.screen.selection.StatusSelectionType;
@@ -33,7 +33,7 @@ import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_STATUS;
  */
 
 public class UserRequestViewModel extends BaseFragmentModel
-        implements UserRequestContract.ViewModel, OnMenuClickListenner {
+        implements UserRequestContract.ViewModel, OnRequestClickListenner {
 
     private final Context mContext;
     private final Fragment mFragment;
@@ -50,7 +50,7 @@ public class UserRequestViewModel extends BaseFragmentModel
         mContext = activity.getApplicationContext();
         mActivity = activity;
         mFragment = fragment;
-        mAdapter = new UserRequestAdapter(mContext, new ArrayList<Request>(), this, this);
+        mAdapter = new UserRequestAdapter(mContext, new ArrayList<Request>(), this);
         setStatus(new Status(OUT_OF_INDEX, mContext.getString(R.string.title_request_status)));
         setRelative(new Status(OUT_OF_INDEX, mContext.getString(R.string.title_request_relative)));
     }
@@ -185,7 +185,8 @@ public class UserRequestViewModel extends BaseFragmentModel
         popupMenu.show();
     }
 
-    public void viewRequestDetail(Request request) {
+    @Override
+    public void onDetailRequestClick(Request request) {
         mActivity.startActivity(RequestDetailActivity.newInstance(mContext, request));
     }
 }
