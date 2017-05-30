@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -29,13 +28,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Category;
-import com.framgia.fdms.data.source.api.request.DeviceRequest;
 import com.framgia.fdms.screen.dashboard.DashboardViewModel;
 import com.framgia.fdms.screen.devicedetail.DeviceDetailViewModel;
 import com.framgia.fdms.screen.listDevice.ListDeviceViewModel;
 import com.framgia.fdms.screen.main.MainViewModel;
 import com.framgia.fdms.screen.requestcreation.RequestCreationViewModel;
-import com.framgia.fdms.screen.requestdetail.RequestDetailViewModel;
 import com.framgia.fdms.screen.returndevice.ReturnDeviceViewModel;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -390,20 +387,6 @@ public final class BindingUtils {
             }
         });
     }
-
-    @BindingAdapter({ "bind:viewModel" })
-    public static void setAdapter(AppCompatSpinner spinner,
-            final RequestDetailViewModel viewModel) {
-        spinner.setAdapter(viewModel.getAdapterCategory());
-        spinner.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-               /* viewModel.onAddRequestDetailClick(position);*/
-                return false;
-            }
-        });
-    }
-
     /*
     * bind Spinner Adapter
     * in Activity Return Device

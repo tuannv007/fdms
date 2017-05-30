@@ -36,6 +36,16 @@ public class RequestDetailAdapter
         notifyDataSetChanged();
     }
 
+    public void removeAt(int position) {
+        mDeviceRequests.remove(position);
+        notifyDataSetChanged();
+    }
+
+    public void addItem() {
+        mDeviceRequests.add(new Request.DeviceRequest());
+        notifyDataSetChanged();
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ItemRequesDetailDeviceBinding binding =

@@ -136,4 +136,5 @@
     <string name="action_dis_agree">DIS AGREE</string>
     <string name="msg_request_read_storage_external">Please grant permission Read storage permission  to open gallery</string>
     <string name="msg_denied_read_storage_permission">You were denied read storage external permission</string>
+    <string name="title_ok">Ok</string>
 </resources>

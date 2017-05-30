@@ -152,7 +152,7 @@ public class Request extends BaseObservable implements Serializable {
                 getCreater(), nameDevice, getRequestFor());
     }
 
-    public class DeviceRequest extends BaseObservable implements Serializable {
+    public static class DeviceRequest extends BaseObservable implements Serializable {
         @Expose
         @SerializedName("id")
         private int mId;
@@ -165,6 +165,17 @@ public class Request extends BaseObservable implements Serializable {
         @Expose
         @SerializedName("category_name")
         private String mCategoryName;
+        private Category mCategory;
+
+        @Bindable
+        public Category getCategory() {
+            return mCategory;
+        }
+
+        public void setCategory(Category category) {
+            mCategory = category;
+            notifyPropertyChanged(BR.category);
+        }
 
         public int getId() {
             return mId;
@@ -174,20 +185,24 @@ public class Request extends BaseObservable implements Serializable {
             mId = id;
         }
 
+        @Bindable
         public String getDescription() {
             return mDescription;
         }
 
         public void setDescription(String description) {
             mDescription = description;
+            notifyPropertyChanged(BR.description);
         }
 
+        @Bindable
         public int getNumber() {
             return mNumber;
         }
 
         public void setNumber(int number) {
             mNumber = number;
+            notifyPropertyChanged(BR.number);
         }
 
         @Bindable
@@ -198,6 +213,16 @@ public class Request extends BaseObservable implements Serializable {
         public void setCategoryName(String categoryName) {
             mCategoryName = categoryName;
             notifyPropertyChanged(BR.categoryName);
+        }
+
+        public void onDecrement() {
+            if (getNumber() > 1) {
+                setNumber(getNumber() - 1);
+            }
+        }
+
+        public void onIncrement() {
+            setNumber(getNumber() + 1);
         }
     }
 }
