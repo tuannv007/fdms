@@ -220,6 +220,12 @@ public class DeviceRemoteDataSource implements DeviceDataSource.RemoteDataSource
                 });
     }
 
+    @Override
+    public Observable<List<Device>> getTopDevice(int topDevice) {
+        // TODO: 30/05/2017 wait API
+        return null;
+    }
+
     public Map<String, String> getDeviceParams(String deviceName, int categoryId, int statusId,
             int page, int perPage) {
         Map<String, String> parrams = new HashMap<>();

@@ -24,5 +24,7 @@ public interface RequestDataSource {
         Observable<List<Status>> getStatus();
 
         Observable<Request> registerRequest(RequestCreatorRequest request);
+
+        Observable<List<Request>> getTopRequest(int topRequest);
     }
 }

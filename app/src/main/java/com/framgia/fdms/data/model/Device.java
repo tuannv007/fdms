@@ -58,6 +58,13 @@ public class Device extends BaseObservable implements Parcelable {
     private String mSerialNumber;
     private String mModelNumber;
 
+    @Expose
+    @SerializedName("status")
+    private int mStatus;
+    @Expose
+    @SerializedName("summary")
+    private Summary mSummary;
+
     public Device() {
     }
 
@@ -232,6 +239,22 @@ public class Device extends BaseObservable implements Parcelable {
     public void setModelNumber(String modelNumber) {
         mModelNumber = modelNumber;
         notifyPropertyChanged(BR.modelNumber);
+    }
+
+    public int getStatus() {
+        return mStatus;
+    }
+
+    public void setStatus(int status) {
+        mStatus = status;
+    }
+
+    public Summary getSummary() {
+        return mSummary;
+    }
+
+    public void setSummary(Summary summary) {
+        mSummary = summary;
     }
 
     @Bindable

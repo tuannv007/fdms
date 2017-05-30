@@ -78,4 +78,10 @@ public interface FDMSApi {
 
     @GET("api/v1/device_code")
     Observable<Respone<Device>> getDevice(@Query("device_id") int deviceId);
+
+    @GET("/api/v1/request_dashboard")
+    Observable<Respone<List<Request>>> getTopRequest(@Query("top_requests") int topRequest);
+
+    @GET("api/v1/device_dashboard")
+    Observable<Respone<List<Device>>> getTopDevice(@Query("top_devices") int topDevice);
 }

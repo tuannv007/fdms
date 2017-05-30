@@ -47,4 +47,9 @@ public class RequestRepository implements RequestRepositoryContract {
     public Observable<Request> registerRequest(RequestCreatorRequest request) {
         return mRemoteDataSource.registerRequest(request);
     }
+
+    @Override
+    public Observable<List<Request>> getTopRequest(int topRequest) {
+        return mRemoteDataSource.getTopRequest(topRequest);
+    }
 }

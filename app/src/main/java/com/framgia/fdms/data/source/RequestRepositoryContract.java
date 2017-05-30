@@ -23,4 +23,6 @@ public interface RequestRepositoryContract {
     Observable<List<Dashboard>> getDashboardRequest();
 
     Observable<Request> registerRequest(RequestCreatorRequest request);
+
+    Observable<List<Request>> getTopRequest(int topRequest);
 }
