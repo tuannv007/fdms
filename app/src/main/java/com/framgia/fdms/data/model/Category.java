@@ -1,7 +1,10 @@
 package com.framgia.fdms.data.model;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
 import android.os.Parcel;
 import android.os.Parcelable;
+import com.android.databinding.library.baseAdapters.BR;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -9,7 +12,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by levutantuan on 4/10/17.
  */
 
-public class Category implements Parcelable {
+public class Category extends BaseObservable implements Parcelable {
     @Expose
     @SerializedName("id")
     private int mId;
@@ -47,12 +50,14 @@ public class Category implements Parcelable {
         mId = id;
     }
 
+    @Bindable
     public String getName() {
         return mName;
     }
 
     public void setName(String name) {
         mName = name;
+        notifyPropertyChanged(BR.name);
     }
 
     @Override

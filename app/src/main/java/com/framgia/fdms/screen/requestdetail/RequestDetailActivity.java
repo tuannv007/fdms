@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -34,9 +35,11 @@ public class RequestDetailActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_request_detail);
-        mBinding.setRequest(getRequestFromIntent());
         mViewModel = new RequestDetailViewModel(this, getRequestFromIntent().getDevices());
         mBinding.setViewModel((RequestDetailViewModel) mViewModel);
+        RequestDetailContract.Presenter presenter = new RequestDetailPresenter(mViewModel);
+        mBinding.setRequest(getRequestFromIntent());
+        mViewModel.setPresenter(presenter);
         initToolbar();
     }
 
@@ -72,5 +75,11 @@ public class RequestDetailActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mViewModel.onActivityResult(requestCode, resultCode, data);
     }
 }
