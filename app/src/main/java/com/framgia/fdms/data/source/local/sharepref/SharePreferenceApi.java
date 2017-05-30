@@ -10,4 +10,6 @@ public interface SharePreferenceApi {
     <T> void put(String key, T data);
 
     void clear();
+
+    void remove(String key);
 }

@@ -52,4 +52,9 @@ public class SharePreferenceImp implements SharePreferenceApi {
     public void clear() {
         mPreferences.edit().clear().apply();
     }
+
+    @Override
+    public void remove(String key) {
+        mPreferences.edit().remove(key).apply();
+    }
 }

@@ -11,6 +11,7 @@ import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Picture;
 import com.framgia.fdms.data.model.User;
 import com.framgia.fdms.data.source.local.sharepref.SharePreferenceImp;
+import com.framgia.fdms.screen.authenication.login.LoginActivity;
 import com.framgia.fdms.utils.Utils;
 import com.google.gson.Gson;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -104,6 +105,14 @@ public class ProfileViewModel extends BaseObservable
     @Override
     public void onClickDoneEditProfile() {
         // TODO: 5/30/2017 work call api update profile
+    }
+
+    @Override
+    public void onClickLogout() {
+        // TODO: 5/30/2017 Call api logout
+        mPreferences.remove(USER_PREFS);
+        mActivity.startActivity(LoginActivity.getInstance(mContext));
+        mActivity.finish();
     }
 
     @Override
