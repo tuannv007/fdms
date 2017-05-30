@@ -132,4 +132,8 @@
     <string name="title_serial_number">Serial Number</string>
     <string name="msg_update_device_error">Update device error</string>
     <string name="title_add_request_detail">Add Request Detail</string>
+    <string name="action_agree">AGREE</string>
+    <string name="action_dis_agree">DIS AGREE</string>
+    <string name="msg_request_read_storage_external">Please grant permission Read storage permission  to open gallery</string>
+    <string name="msg_denied_read_storage_permission">You were denied read storage external permission</string>
 </resources>
