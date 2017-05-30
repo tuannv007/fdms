@@ -292,6 +292,10 @@ public final class BindingUtils {
 
     @BindingAdapter("bind:dateCreate")
     public static void setDate(TextView view, Date dateTime) {
+        if (dateTime == null) {
+            view.setText(view.getContext().getString(R.string.title_unknown));
+            return;
+        }
         String niceDateStr = String.valueOf(DateUtils.getRelativeTimeSpanString(dateTime.getTime(),
                 Calendar.getInstance().getTimeInMillis(), DateUtils.MINUTE_IN_MILLIS));
         view.setText(niceDateStr);

@@ -7,6 +7,7 @@ import com.framgia.fdms.data.model.DeviceHistoryDetail;
 import com.framgia.fdms.data.model.DeviceUsingHistory;
 import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.Status;
+import com.framgia.fdms.data.model.Summary;
 import com.framgia.fdms.data.source.DeviceDataSource;
 import com.framgia.fdms.data.source.api.service.FDMSApi;
 import com.framgia.fdms.utils.Utils;
@@ -223,7 +224,17 @@ public class DeviceRemoteDataSource implements DeviceDataSource.RemoteDataSource
     @Override
     public Observable<List<Device>> getTopDevice(int topDevice) {
         // TODO: 30/05/2017 wait API
-        return null;
+        List<Device> devices = new ArrayList<Device>();
+        Device device = new Device();
+        device.setDeviceCategoryName("Lap Top");
+        device.setStatus(50);
+        Summary summary = new Summary();
+        summary.setAssignment(20);
+        summary.setAvailable(5);
+        summary.setTotal(80);
+        device.setSummary(summary);
+        for (int i = 0; i < 10; i++) devices.add(device);
+        return Observable.just(devices);
     }
 
     public Map<String, String> getDeviceParams(String deviceName, int categoryId, int statusId,

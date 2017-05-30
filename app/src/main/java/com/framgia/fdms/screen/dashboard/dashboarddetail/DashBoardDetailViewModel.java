@@ -4,13 +4,18 @@ import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.graphics.Color;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.PopupMenu;
 import android.view.View;
 import android.widget.Toast;
 import com.framgia.fdms.BR;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Dashboard;
-import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.data.model.Device;
+import com.framgia.fdms.data.model.Request;
+import com.framgia.fdms.screen.request.OnRequestClickListenner;
+import com.framgia.fdms.screen.request.userrequest.UserRequestAdapter;
+import com.framgia.fdms.screen.requestdetail.RequestDetailActivity;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -27,7 +32,7 @@ import static com.framgia.fdms.screen.dashboard.dashboarddetail.DashBoardDetailF
  */
 
 public class DashBoardDetailViewModel extends BaseObservable
-        implements DashBoardDetailContract.ViewModel {
+        implements DashBoardDetailContract.ViewModel, OnRequestClickListenner {
 
     private static final float PIE_DATA_SLICE_SPACE = 3f;
     private static final float PIE_DATA_SLECTION_SHIFT = 5f;
@@ -35,15 +40,21 @@ public class DashBoardDetailViewModel extends BaseObservable
     private PieData mPieData;
     private Context mContext;
     private int mTotal;
-    private DashBoardDetailAdapter mAdapter;
+    private UserRequestAdapter mAdapterTopRequest;
+    private TopDeviceAdapter mAdapterTopDevice;
     private String mDashboardTitle;
     private int mEmptyViewVisible = View.GONE;
+    private int mDashboardType;
+    private FragmentActivity mActivity;
 
-    public DashBoardDetailViewModel(Context context, int dashboardType) {
-        mContext = context;
+    public DashBoardDetailViewModel(FragmentActivity activity, int dashboardType) {
+        mActivity = activity;
+        mContext = activity.getApplicationContext();
         mPieData = new PieData();
-        mAdapter = new DashBoardDetailAdapter(mContext, new ArrayList<Dashboard>(), this);
+        mAdapterTopRequest = new UserRequestAdapter(mContext, new ArrayList<Request>(), this);
+        mAdapterTopDevice = new TopDeviceAdapter(mContext, new ArrayList<Device>());
         initDashboardTitle(dashboardType);
+        mDashboardType = dashboardType;
     }
 
     private void initDashboardTitle(int dashboardType) {
@@ -121,7 +132,6 @@ public class DashBoardDetailViewModel extends BaseObservable
 
         setDataSet(dataSet);
         setTotal(total);
-        mAdapter.onUpdatePage(dashboards);
     }
 
     @Override
@@ -131,12 +141,16 @@ public class DashBoardDetailViewModel extends BaseObservable
 
     @Override
     public void onGetTopRequestSuccess(List<Request> requests) {
-        // TODO: 29/05/2017  
+        // TODO: 29/05/2017
+        if (requests == null) return;
+        mAdapterTopRequest.onUpdatePage(requests);
     }
 
     @Override
-    public void onGetTopDeviceSuccess(List<Device> topDevices) {
-        // TODO: 29/05/2017  
+    public void onGetTopDeviceSuccess(List<Device> devices) {
+        // TODO: 29/05/2017
+        if (devices == null) return;
+        mAdapterTopDevice.onUpdatePage(devices);
     }
 
     public void setTotal(int total) {
@@ -149,9 +163,12 @@ public class DashBoardDetailViewModel extends BaseObservable
         return mTotal;
     }
 
-    @Bindable
-    public DashBoardDetailAdapter getAdapter() {
-        return mAdapter;
+    public UserRequestAdapter getAdapterTopRequest() {
+        return mAdapterTopRequest;
+    }
+
+    public TopDeviceAdapter getAdapterTopDevice() {
+        return mAdapterTopDevice;
     }
 
     @Bindable
@@ -172,5 +189,21 @@ public class DashBoardDetailViewModel extends BaseObservable
     public void setEmptyViewVisible(int emptyViewVisible) {
         mEmptyViewVisible = emptyViewVisible;
         notifyPropertyChanged(BR.emptyViewVisible);
+    }
+
+    public int getDashboardType() {
+        return mDashboardType;
+    }
+
+    @Override
+    public void onMenuClick(View v, UserRequestAdapter.RequestModel request) {
+        PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+        popupMenu.getMenuInflater().inflate(R.menu.menu_request, popupMenu.getMenu());
+        popupMenu.show();
+    }
+
+    @Override
+    public void onDetailRequestClick(Request request) {
+        mActivity.startActivity(RequestDetailActivity.newInstance(mContext, request));
     }
 }

@@ -42,7 +42,7 @@ public class DashBoardDetailFragment extends Fragment {
             dashboradType = getArguments().getInt(EXTRA_DASHBORAD_TYPE);
         }
 
-        mViewModel = new DashBoardDetailViewModel(getContext(), dashboradType);
+        mViewModel = new DashBoardDetailViewModel(getActivity(), dashboradType);
         DashBoardDetailContract.Presenter presenter = new DashBoardDetailPresenter(mViewModel,
                 new DeviceRepository(new DeviceRemoteDataSource(FDMSServiceClient.getInstance())),
                 RequestRepository.getInstant(
