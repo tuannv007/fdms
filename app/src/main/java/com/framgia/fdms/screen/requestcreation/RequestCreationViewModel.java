@@ -272,6 +272,7 @@ public class RequestCreationViewModel extends BaseObservable
 
     public void setCategory(Category category) {
         mDeviceRequest.setCategory(category);
+        mDeviceRequest.setDeviceCategoryId(category.getId());
         mCategory = category;
         notifyPropertyChanged(BR.category);
     }
