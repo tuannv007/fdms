@@ -73,6 +73,13 @@ public class RequestDetailActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        if (mViewModel.onBackPressed()) {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
     }
