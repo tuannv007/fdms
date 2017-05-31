@@ -1,6 +1,7 @@
 package com.framgia.fdms.screen.requestdetail;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.framgia.fdms.BasePresenter;
@@ -27,6 +28,12 @@ public interface RequestDetailContract {
         void onGetCategorySuccess(List<Category> categories);
 
         void onActivityResult(int requestCode, int resultCode, Intent data);
+
+        void onSubmitEditClick();
+
+        void onCancelEditClick();
+
+        boolean onBackPressed();
     }
 
     interface Presenter extends BasePresenter {

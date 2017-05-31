@@ -6,6 +6,7 @@ import android.databinding.BaseObservable;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -66,6 +67,9 @@ public class RequestDetailViewModel extends BaseObservable
         switch (item.getItemId()) {
             case R.id.item_edit:
                 mIsEdit.set(true);
+                break;
+            case android.R.id.home:
+                mActivity.onBackPressed();
                 break;
         }
         return true;
@@ -143,6 +147,25 @@ public class RequestDetailViewModel extends BaseObservable
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onSubmitEditClick() {
+        // TODO: 31/05/2017  call api update request
+    }
+
+    @Override
+    public void onCancelEditClick() {
+        mIsEdit.set(false);
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        if (mIsEdit.get()) {
+            mIsEdit.set(false);
+            return false;
+        }
+        return true;
     }
 
     public ObservableField<Category> getCategory() {

@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -391,6 +392,7 @@ public final class BindingUtils {
             }
         });
     }
+
     /*
     * bind Spinner Adapter
     * in Activity Return Device
@@ -424,5 +426,14 @@ public final class BindingUtils {
 
             }
         });
+    }
+
+    @BindingAdapter("visibleAnim")
+    public static void setVisibleFab(FloatingActionButton fab, boolean isVisible) {
+        if (isVisible) {
+            fab.show();
+        } else {
+            fab.hide();
+        }
     }
 }
