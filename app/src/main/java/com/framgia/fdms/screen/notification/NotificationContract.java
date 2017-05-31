@@ -1,0 +1,23 @@
+package com.framgia.fdms.screen.notification;
+
+import com.framgia.fdms.BasePresenter;
+import com.framgia.fdms.BaseViewModel;
+import com.framgia.fdms.data.model.Notification;
+
+/**
+ * This specifies the contract between the view and the presenter.
+ */
+public interface NotificationContract {
+    /**
+     * View.
+     */
+    interface ViewModel extends BaseViewModel<Presenter> {
+        void onClickNotification(Notification notification, int position);
+    }
+
+    /**
+     * Presenter.
+     */
+    interface Presenter extends BasePresenter {
+    }
+}

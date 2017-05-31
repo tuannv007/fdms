@@ -51,7 +51,7 @@ public class Utils {
 
     public static String dateToString(Date date) {
         if (date == null) date = new Date();
-        DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault());
         return formatter.format(date);
     }
 
