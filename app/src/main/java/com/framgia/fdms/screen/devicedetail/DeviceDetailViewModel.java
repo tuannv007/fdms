@@ -1,10 +1,16 @@
 package com.framgia.fdms.screen.devicedetail;
 
 import android.content.Context;
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
+import com.android.databinding.library.baseAdapters.BR;
+import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.screen.devicedetail.infomation.DeviceInfomationFragment;
 import com.framgia.fdms.screen.devicedetail.usinghistory.DeviceUsingHistoryFragment;
 import com.framgia.fdms.screen.historydetail.DeviceDetailHistoryFragment;
@@ -18,7 +24,7 @@ import static com.framgia.fdms.screen.devicedetail.DeviceDetailPagerAdapter.Devi
  * Exposes the data to be used in the Devicedetail screen.
  */
 
-public class DeviceDetailViewModel implements DeviceDetailContract.ViewModel {
+public class DeviceDetailViewModel extends BaseObservable implements DeviceDetailContract.ViewModel {
 
     private DeviceDetailContract.Presenter mPresenter;
     private DeviceDetailPagerAdapter mAdapter;
@@ -26,6 +32,8 @@ public class DeviceDetailViewModel implements DeviceDetailContract.ViewModel {
     private AppCompatActivity mActivity;
     private DeviceInfomationFragment mInfomationFragment;
     private ObservableInt mFloatingVisible = new ObservableInt(View.VISIBLE);
+    private Device mDevice = new Device();
+    private ObservableField<Integer> mProgressBarVisibility = new ObservableField<>();
 
     public DeviceDetailViewModel(AppCompatActivity activity, int deviceId) {
         mActivity = activity;
@@ -58,6 +66,25 @@ public class DeviceDetailViewModel implements DeviceDetailContract.ViewModel {
     @Override
     public void onEditDevice() {
         if (mInfomationFragment != null) mInfomationFragment.onStartEditDevice();
+    }
+
+    @Override
+    public void onGetDeviceSuccess(Device device) {
+        setDevice(device);
+    }
+
+    public ObservableField<Integer> getProgressBarVisibility() {
+        return mProgressBarVisibility;
+    }
+
+    @Bindable
+    public Device getDevice() {
+        return mDevice;
+    }
+
+    public void setDevice(Device device) {
+        mDevice = device;
+        notifyPropertyChanged(BR.device);
     }
 
     public void updateFloadtingVisible(int position) {

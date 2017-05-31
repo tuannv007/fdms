@@ -7,6 +7,8 @@
 
     <data>
 
+        <import type="com.framgia.fdms.utils.Constant"/>
+
         <variable
             name="viewModel"
             type="com.framgia.fdms.screen.devicedetail.DeviceDetailViewModel"
@@ -44,6 +46,7 @@
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_no_image"
+                    app:imageUrl="@{Constant.END_POINT_URL + viewModel.device.picture.url}"
                     />
 
                 <android.support.v7.widget.Toolbar
