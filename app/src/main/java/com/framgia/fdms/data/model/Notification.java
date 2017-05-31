@@ -15,6 +15,15 @@ public class Notification extends BaseObservable {
     private String mUserRequest;
     private Date mDateTime;
 
+    public Notification() {
+    }
+
+    public Notification(String title, String userRequest, Date dateTime) {
+        mTitle = title;
+        mUserRequest = userRequest;
+        mDateTime = dateTime;
+    }
+
     @Bindable
     public String getTitle() {
         return mTitle;

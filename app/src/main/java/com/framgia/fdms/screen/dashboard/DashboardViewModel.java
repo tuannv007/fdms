@@ -9,10 +9,8 @@ import android.support.v4.view.ViewPager;
 import android.widget.Toast;
 import com.framgia.fdms.BR;
 import com.framgia.fdms.data.model.User;
-import com.framgia.fdms.data.source.local.UserLocalDataSource;
-import com.framgia.fdms.data.source.local.sharepref.SharePreferenceImp;
 import com.framgia.fdms.screen.dashboard.dashboarddetail.DashBoardDetailFragment;
-import com.framgia.fdms.utils.Utils;
+import com.framgia.fdms.screen.notification.NotificationActivity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,6 +107,11 @@ public class DashboardViewModel extends BaseObservable implements DashboardContr
     @Override
     public void onError(String message) {
         Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onStartNotificationView() {
+        mFragment.startActivity(NotificationActivity.getInstances(mContext));
     }
 
     @IntDef({

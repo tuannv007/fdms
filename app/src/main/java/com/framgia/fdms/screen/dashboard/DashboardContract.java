@@ -15,6 +15,8 @@ interface DashboardContract {
         void setupViewPager(User user);
 
         void onError(String message);
+
+        void onStartNotificationView();
     }
 
     /**
