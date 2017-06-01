@@ -25,6 +25,7 @@ import java.util.List;
 
 import static com.framgia.fdms.utils.Constant.BundleConstant.BUNDLE_STATUE;
 import static com.framgia.fdms.utils.Constant.OUT_OF_INDEX;
+import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_DETAIL;
 import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_SELECTION;
 import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_STATUS;
 
@@ -125,6 +126,12 @@ public class UserRequestViewModel extends BaseFragmentModel
                     mPresenter.getData(mRelative, mStatus);
                 }
                 break;
+            case REQUEST_DETAIL:
+                if (status != null) {
+                    mAdapter.clear();
+                    mPresenter.getData(mRelative, mStatus);
+                }
+                break;
             default:
                 break;
         }
@@ -187,6 +194,7 @@ public class UserRequestViewModel extends BaseFragmentModel
 
     @Override
     public void onDetailRequestClick(Request request) {
-        mActivity.startActivity(RequestDetailActivity.newInstance(mContext, request));
+        mActivity.startActivityForResult(RequestDetailActivity.newInstance(mContext, request),
+                REQUEST_DETAIL);
     }
 }

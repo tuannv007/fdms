@@ -68,6 +68,7 @@ public class Constant {
         public static final int REQUEST_CATEGORY = 3;
         public static final int REQUEST_RELATIVE = 4;
         public static final int REQUEST_ASSIGNER = 5;
+        public static final int REQUEST_DETAIL = 6;
     }
 
     public class BundleRequest {

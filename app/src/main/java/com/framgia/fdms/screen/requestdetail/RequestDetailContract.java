@@ -36,9 +36,11 @@ public interface RequestDetailContract {
         boolean onBackPressed();
 
         void initFloatActionButton(FloatingActionMenu menu);
+
+        void editActionSuccess();
     }
 
     interface Presenter extends BasePresenter {
-
+        void sentAction(int requestId, int actionId);
     }
 }
