@@ -46,8 +46,22 @@ public class Request extends BaseObservable implements Serializable {
     @Expose
     @SerializedName("created_at")
     private Date mCreatedAt;
+    @Expose
+    @SerializedName("list_action")
+    private List<RequestAction> mRequestActionList;
 
     @Bindable
+    public List<RequestAction> getRequestActionList() {
+        return mRequestActionList;
+    }
+
+    public void setRequestActionList(List<RequestAction> requestActionList) {
+        mRequestActionList = requestActionList;
+        notifyPropertyChanged(BR.requestActionList);
+    }
+
+    @Bindable
+
     public Date getCreatedAt() {
         return mCreatedAt;
     }
@@ -223,6 +237,35 @@ public class Request extends BaseObservable implements Serializable {
 
         public void onIncrement() {
             setNumber(getNumber() + 1);
+        }
+    }
+
+    public class RequestAction extends BaseObservable implements Serializable {
+        @Expose
+        @SerializedName("value")
+        private int mValue;
+        @Expose
+        @SerializedName("name")
+        private String mName;
+
+        @Bindable
+        public int getValue() {
+            return mValue;
+        }
+
+        public void setValue(int value) {
+            mValue = value;
+            notifyPropertyChanged(BR.value);
+        }
+
+        @Bindable
+        public String getName() {
+            return mName;
+        }
+
+        public void setName(String name) {
+            mName = name;
+            notifyPropertyChanged(BR.name);
         }
     }
 }

@@ -1,12 +1,12 @@
 package com.framgia.fdms.screen.requestdetail;
 
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.framgia.fdms.BasePresenter;
 import com.framgia.fdms.BaseViewModel;
 import com.framgia.fdms.data.model.Category;
+import com.github.clans.fab.FloatingActionMenu;
 import java.util.List;
 
 /**
@@ -34,6 +34,8 @@ public interface RequestDetailContract {
         void onCancelEditClick();
 
         boolean onBackPressed();
+
+        void initFloatActionButton(FloatingActionMenu menu);
     }
 
     interface Presenter extends BasePresenter {

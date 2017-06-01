@@ -6,7 +6,6 @@ import android.databinding.BaseObservable;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -21,13 +20,21 @@ import com.framgia.fdms.data.source.api.service.FDMSServiceClient;
 import com.framgia.fdms.data.source.remote.CategoryRemoteDataSource;
 import com.framgia.fdms.screen.selection.StatusSelectionActivity;
 import com.framgia.fdms.screen.selection.StatusSelectionType;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import java.util.ArrayList;
 import java.util.List;
 import rx.subscriptions.CompositeSubscription;
 
 import static android.app.Activity.RESULT_OK;
 import static com.framgia.fdms.utils.Constant.BundleConstant.BUNDLE_CATEGORY;
+import static com.framgia.fdms.utils.Constant.RequestAction.APPROVED;
+import static com.framgia.fdms.utils.Constant.RequestAction.CANCEL;
+import static com.framgia.fdms.utils.Constant.RequestAction.DONE;
+import static com.framgia.fdms.utils.Constant.RequestAction.WAITING_APPROVE;
+import static com.framgia.fdms.utils.Constant.RequestAction.WAITING_DONE;
 import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_CATEGORY;
+import static com.github.clans.fab.FloatingActionButton.SIZE_MINI;
 
 /**
  * Created by tuanbg on 5/24/17.
@@ -44,14 +51,20 @@ public class RequestDetailViewModel extends BaseObservable
     private List<Category> mCategories = new ArrayList<>();
     private RequestDetailContract.Presenter mPresenter;
     private ObservableField<Category> mCategory = new ObservableField<>();
+    private List<Request.RequestAction> mListAction = new ArrayList<>();
+    private FloatingActionMenu mActionMenu;
+    private String mStatusRequest;
 
-    public RequestDetailViewModel(AppCompatActivity activity, List<Request.DeviceRequest> request) {
+    public RequestDetailViewModel(AppCompatActivity activity, List<Request.DeviceRequest> request,
+            List<Request.RequestAction> actions, String statusRequest) {
         mContext = activity;
         mActivity = activity;
+        mStatusRequest = statusRequest;
         mIsEdit.set(false);
         mAdapter = new RequestDetailAdapter(activity, this);
         mAdapter.onUpdatePage(request);
         mSubscription = new CompositeSubscription();
+        mListAction.addAll(actions);
         mCategoryRepository = new CategoryRepository(
                 new CategoryRemoteDataSource(FDMSServiceClient.getInstance()));
     }
@@ -152,11 +165,13 @@ public class RequestDetailViewModel extends BaseObservable
     @Override
     public void onSubmitEditClick() {
         // TODO: 31/05/2017  call api update request
+        mActionMenu.showMenu(true);
     }
 
     @Override
     public void onCancelEditClick() {
         mIsEdit.set(false);
+        mActionMenu.showMenu(true);
     }
 
     @Override
@@ -168,6 +183,35 @@ public class RequestDetailViewModel extends BaseObservable
         return true;
     }
 
+    public void initFloatActionButton(FloatingActionMenu menu) {
+        mActionMenu = menu;
+        for (int i = 0; i < mListAction.size(); i++) {
+            FloatingActionButton button = new FloatingActionButton(mContext);
+            button.setLabelText(mListAction.get(i).getName());
+            switch (mListAction.get(i).getValue()) {
+                case CANCEL:
+                    button.setImageResource(R.drawable.ic_cancel_white_24px);
+                    break;
+                case WAITING_APPROVE:
+                    button.setImageResource(R.drawable.ic_timer);
+                    break;
+                case APPROVED:
+                    button.setImageResource(R.drawable.ic_done_white_24dp);
+                    break;
+                case WAITING_DONE:
+                    button.setImageResource(R.drawable.ic_timer);
+                    break;
+                case DONE:
+                    button.setImageResource(R.drawable.ic_done_white_24dp);
+                    break;
+                default:
+                    break;
+            }
+            button.setButtonSize(SIZE_MINI);
+            menu.addMenuButton(button);
+        }
+    }
+
     public ObservableField<Category> getCategory() {
         return mCategory;
     }
@@ -175,5 +219,14 @@ public class RequestDetailViewModel extends BaseObservable
     public void setCategory(Category category) {
         mCategory.set(category);
         notifyPropertyChanged(BR.category);
+    }
+
+    public void initEditRequest() {
+        mIsEdit.set(true);
+        mActionMenu.hideMenu(true);
+    }
+
+    public String getStatusRequest() {
+        return mStatusRequest;
     }
 }
