@@ -10,6 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.framgia.fdms.R;
+import com.framgia.fdms.data.source.UserRepository;
+import com.framgia.fdms.data.source.local.UserLocalDataSource;
+import com.framgia.fdms.data.source.local.sharepref.SharePreferenceImp;
+import com.framgia.fdms.data.source.remote.UserRemoteDataSource;
 import com.framgia.fdms.databinding.FragmentDashboardBinding;
 
 /**
@@ -27,7 +31,8 @@ public class DashboardFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mViewModel = new DashboardViewModel(this);
-        DashboardContract.Presenter presenter = new DashboardPresenter(mViewModel);
+        DashboardContract.Presenter presenter = new DashboardPresenter(mViewModel,
+                new UserRepository(new UserLocalDataSource(new SharePreferenceImp(getContext()))));
         mViewModel.setPresenter(presenter);
     }
 

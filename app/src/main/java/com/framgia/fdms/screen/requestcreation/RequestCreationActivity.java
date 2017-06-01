@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.source.CategoryRepository;
 import com.framgia.fdms.data.source.RequestRepository;
@@ -50,6 +51,12 @@ public class RequestCreationActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (mViewModel != null) mViewModel.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) onBackPressed();
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

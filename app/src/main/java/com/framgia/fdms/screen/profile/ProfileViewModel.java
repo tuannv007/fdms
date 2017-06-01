@@ -6,6 +6,7 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 import com.framgia.fdms.BR;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Picture;
@@ -13,7 +14,6 @@ import com.framgia.fdms.data.model.User;
 import com.framgia.fdms.data.source.local.sharepref.SharePreferenceImp;
 import com.framgia.fdms.screen.authenication.login.LoginActivity;
 import com.framgia.fdms.utils.Utils;
-import com.google.gson.Gson;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -45,12 +45,6 @@ public class ProfileViewModel extends BaseObservable
         mActivity = activity;
         mContext = activity.getApplicationContext();
         mFragment = fragment;
-        mPreferences = new SharePreferenceImp(mActivity.getApplicationContext());
-        mUser = new Gson().fromJson(mPreferences.get(USER_PREFS, String.class), User.class);
-        if (mUser == null) mUser = new User();
-
-        DateFormat format = new SimpleDateFormat("dd - MM - yyyy", Locale.getDefault());
-        mBirthDay = mUser.getBirthday() == null ? "" : format.format(mUser.getBirthday());
     }
 
     @Override
@@ -75,6 +69,22 @@ public class ProfileViewModel extends BaseObservable
             mUser.setAvatar(new Picture(Utils.getPathFromUri(mActivity, uri)));
             notifyChange();
         }
+    }
+
+    @Override
+    public void setCurrentUser(User user) {
+        mUser = user;
+        if (mUser == null) mUser = new User();
+
+        DateFormat format = new SimpleDateFormat("dd - MM - yyyy", Locale.getDefault());
+        mBirthDay = mUser.getBirthday() == null ? "" : format.format(mUser.getBirthday());
+
+        setUser(user);
+    }
+
+    @Override
+    public void onError(String message) {
+        Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
     }
 
     @Override
