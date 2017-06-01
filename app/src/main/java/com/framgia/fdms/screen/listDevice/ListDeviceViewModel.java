@@ -19,6 +19,7 @@ import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.data.model.Status;
+import com.framgia.fdms.data.model.User;
 import com.framgia.fdms.screen.devicecreation.CreateDeviceActivity;
 import com.framgia.fdms.screen.devicecreation.DeviceStatusType;
 import com.framgia.fdms.screen.devicedetail.DeviceDetailActivity;
@@ -33,6 +34,8 @@ import static com.framgia.fdms.utils.Constant.BundleConstant.BUNDLE_CATEGORY;
 import static com.framgia.fdms.utils.Constant.BundleConstant.BUNDLE_STATUE;
 import static com.framgia.fdms.utils.Constant.OUT_OF_INDEX;
 import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_SELECTION;
+import static com.framgia.fdms.utils.Constant.Role.BO_MANAGER;
+import static com.framgia.fdms.utils.Constant.Role.BO_STAFF;
 
 /**
  * Exposes the data to be used in the ListDevice screen.
@@ -51,6 +54,7 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
     private Category mCategory;
     private Status mStatus;
     private String mKeyWord;
+    private boolean mIsBo = false;
 
     public ObservableBoolean getIsLoadingMore() {
         return mIsLoadingMore;
@@ -86,6 +90,14 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
             mAdapter.clear();
         }
         mPresenter.getData(mKeyWord, mCategory, mStatus);
+    }
+
+    @Override
+    public void setupFloatingActionsMenu(User user) {
+        String role = user.getRole();
+        if (role == null) return;
+
+        if (role.equals(BO_STAFF) || role.equals(BO_MANAGER)) setBo(true);
     }
 
     @Override
@@ -256,5 +268,15 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
     public void setStatus(Status status) {
         mStatus = status;
         notifyPropertyChanged(BR.status);
+    }
+
+    @Bindable
+    public boolean isBo() {
+        return mIsBo;
+    }
+
+    public void setBo(boolean bo) {
+        mIsBo = bo;
+        notifyPropertyChanged(BR.bo);
     }
 }

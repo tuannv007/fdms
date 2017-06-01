@@ -6,6 +6,7 @@ import com.framgia.fdms.BaseViewModel;
 import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.data.model.Status;
+import com.framgia.fdms.data.model.User;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import java.util.List;
 
@@ -46,6 +47,8 @@ interface ListDeviceContract {
         void getData();
 
         void onActivityResult(int requestCode, int resultCode, Intent data);
+
+        void setupFloatingActionsMenu(User user);
     }
 
     /**
@@ -55,5 +58,7 @@ interface ListDeviceContract {
         void loadMoreData();
 
         void getData(String keyWord, Category category, Status status);
+
+        void getCurrentUser();
     }
 }
