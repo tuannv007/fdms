@@ -73,4 +73,12 @@ public class Constant {
     public class BundleRequest {
         public static final String BUND_REQUEST = "BUND_REQUEST";
     }
+
+    public static final class Role {
+        public static final String STAFF = "staff";
+        public static final String DIVISION_MANAGER = "division_manager";
+        public static final String BO_MANAGER = "bo_manager";
+        public static final String BO_STAFF = "bo_staff";
+        public static final String ADMIN = "admin";
+    }
 }

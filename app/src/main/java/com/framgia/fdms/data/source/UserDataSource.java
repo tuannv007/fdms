@@ -12,6 +12,7 @@ import rx.Observable;
 public class UserDataSource {
 
     public interface LocalDataSource {
+        Observable<User> getCurrentUser();
     }
 
     public interface RemoteDataSource {

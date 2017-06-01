@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import com.framgia.fdms.screen.dashboard.dashboarddetail.DashBoardDetailFragment;
+import java.util.List;
 
 import static com.framgia.fdms.screen.dashboard.DashboardViewModel.Tab.TAB_DEVIVE_DASH_BOARD;
 import static com.framgia.fdms.screen.dashboard.DashboardViewModel.Tab.TAB_REQUEST_DASH_BOARD;
@@ -18,26 +19,20 @@ import static com.framgia.fdms.screen.dashboard.dashboarddetail.DashBoardDetailF
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
     private static final int TAB_NUMBER = 2;
+    private List<Fragment> mFragments;
 
-    public ViewPagerAdapter(FragmentManager fm) {
+    public ViewPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
         super(fm);
+        mFragments = fragments;
     }
 
     @Override
     public Fragment getItem(int position) {
-        switch (position) {
-            case TAB_DEVIVE_DASH_BOARD:
-                return DashBoardDetailFragment.newInstance(DEVICE_DASHBOARD);
-            case TAB_REQUEST_DASH_BOARD:
-                return DashBoardDetailFragment.newInstance(REQUEST_DASHBOARD);
-            default:
-                break;
-        }
-        return null;
+        return mFragments.get(position);
     }
 
     @Override
     public int getCount() {
-        return TAB_NUMBER;
+        return mFragments.size();
     }
 }
