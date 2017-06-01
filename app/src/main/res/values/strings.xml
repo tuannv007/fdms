@@ -140,4 +140,8 @@
     <string name="title_assignt">Assignt</string>
     <string name="title_available">Available</string>
     <string name="title_using">\tUsing</string>
+    <string formatted="false" name="text_request_title_notification">Request %s is created</string>
+    <string formatted="false" name="text_from_notification">From %s</string>
+    <string formatted="false" name="text_date_time_notification">At %s</string>
+    <string name="title_notification">Notification</string>
 </resources>
