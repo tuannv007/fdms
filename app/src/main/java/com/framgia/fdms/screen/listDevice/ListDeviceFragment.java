@@ -12,7 +12,10 @@ import com.framgia.fdms.R;
 import com.framgia.fdms.data.source.CategoryRepository;
 import com.framgia.fdms.data.source.DeviceRepository;
 import com.framgia.fdms.data.source.StatusRepository;
+import com.framgia.fdms.data.source.UserRepository;
 import com.framgia.fdms.data.source.api.service.FDMSServiceClient;
+import com.framgia.fdms.data.source.local.UserLocalDataSource;
+import com.framgia.fdms.data.source.local.sharepref.SharePreferenceImp;
 import com.framgia.fdms.data.source.remote.CategoryRemoteDataSource;
 import com.framgia.fdms.data.source.remote.DeviceRemoteDataSource;
 import com.framgia.fdms.data.source.remote.StatusRemoteDataSource;
@@ -38,7 +41,8 @@ public class ListDeviceFragment extends Fragment {
                 new DeviceRepository(new DeviceRemoteDataSource(FDMSServiceClient.getInstance())),
                 new CategoryRepository(
                         new CategoryRemoteDataSource(FDMSServiceClient.getInstance())),
-                new StatusRepository(new StatusRemoteDataSource(FDMSServiceClient.getInstance())));
+                new StatusRepository(new StatusRemoteDataSource(FDMSServiceClient.getInstance())),
+                new UserRepository(new UserLocalDataSource(new SharePreferenceImp(getContext()))));
         mViewModel.setPresenter(presenter);
         mViewModel.getData();
     }

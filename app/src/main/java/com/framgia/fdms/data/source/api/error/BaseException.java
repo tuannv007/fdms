@@ -3,6 +3,7 @@ package com.framgia.fdms.data.source.api.error;
 import android.support.annotation.Nullable;
 import com.framgia.fdms.data.model.Respone;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -54,7 +55,12 @@ public final class BaseException extends RuntimeException {
                     Response response = httpException.response();
                     String errorResponse = response.errorBody().string();
                     if (errorResponse != null) {
-                        Respone error = new Gson().fromJson(errorResponse, Respone.class);
+                        Respone error = null;
+                        try {
+                            error = new Gson().fromJson(errorResponse, Respone.class);
+                        } catch (JsonSyntaxException e) {
+                            e.printStackTrace();
+                        }
                         if (error != null) {
                             return error.getMessage();
                         }

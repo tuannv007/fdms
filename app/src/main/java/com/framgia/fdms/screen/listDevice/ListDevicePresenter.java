@@ -3,9 +3,11 @@ package com.framgia.fdms.screen.listDevice;
 import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.data.model.Status;
+import com.framgia.fdms.data.model.User;
 import com.framgia.fdms.data.source.CategoryRepository;
 import com.framgia.fdms.data.source.DeviceRepository;
 import com.framgia.fdms.data.source.StatusRepository;
+import com.framgia.fdms.data.source.UserRepository;
 import java.util.List;
 import rx.Subscriber;
 import rx.Subscription;
@@ -35,14 +37,16 @@ final class ListDevicePresenter implements ListDeviceContract.Presenter {
     private String mKeyWord = NOT_SEARCH;
     private int mCategoryId = OUT_OF_INDEX;
     private int mStatusId = OUT_OF_INDEX;
+    private UserRepository mUserRepository;
 
     public ListDevicePresenter(ListDeviceContract.ViewModel viewModel,
             DeviceRepository deviceRepository, CategoryRepository categoryRepository,
-            StatusRepository statusRepository) {
+            StatusRepository statusRepository, UserRepository userRepository) {
         mViewModel = viewModel;
         mDeviceRepository = deviceRepository;
         mCategoryRepository = categoryRepository;
         mStatusRepository = statusRepository;
+        mUserRepository = userRepository;
     }
 
     @Override
@@ -164,5 +168,25 @@ final class ListDevicePresenter implements ListDeviceContract.Presenter {
         getListDevice(mKeyWord, mCategoryId, mStatusId, mPage, PER_PAGE);
         getListCategories();
         getListStatuses();
+        getCurrentUser();
+    }
+
+    @Override
+    public void getCurrentUser() {
+        Subscription subscription = mUserRepository.getCurrentUser()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<User>() {
+                    @Override
+                    public void call(User user) {
+                        mViewModel.setupFloatingActionsMenu(user);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        mViewModel.onError(throwable.getMessage());
+                    }
+                });
+        mCompositeSubscriptions.add(subscription);
     }
 }
