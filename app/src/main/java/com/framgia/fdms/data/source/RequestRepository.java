@@ -30,7 +30,8 @@ public class RequestRepository implements RequestRepositoryContract {
     @Override
     public Observable<List<Request>> getRequests(int requestType, int requestStatusId,
             int relativeId, int perPage, int page) {
-        return mRemoteDataSource.getRequests(requestType, requestStatusId, relativeId, perPage, page);
+        return mRemoteDataSource.getRequests(requestType, requestStatusId, relativeId, perPage,
+                page);
     }
 
     @Override
@@ -51,5 +52,10 @@ public class RequestRepository implements RequestRepositoryContract {
     @Override
     public Observable<List<Request>> getTopRequest(int topRequest) {
         return mRemoteDataSource.getTopRequest(topRequest);
+    }
+
+    @Override
+    public Observable<List<Request>> updateAction(int requestId, int statusId) {
+        return mRemoteDataSource.sendAction(requestId, statusId);
     }
 }
