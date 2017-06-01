@@ -1,5 +1,7 @@
 package com.framgia.fdms.screen.notification;
 
+import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +15,10 @@ import com.framgia.fdms.databinding.ActivityNotificationBinding;
 public class NotificationActivity extends AppCompatActivity {
 
     private NotificationContract.ViewModel mViewModel;
+
+    public static Intent getInstances(Context context) {
+        return new Intent(context, NotificationActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

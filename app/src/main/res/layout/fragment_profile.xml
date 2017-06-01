@@ -249,22 +249,20 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_logout_white_24dp"
-                        android:visibility="invisible"
                         />
 
-                    <android.support.v7.widget.AppCompatButton
+                    <android.support.v7.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp_16"
                         android:layout_marginRight="@dimen/dp_16"
-                        android:background="@color/color_deep_oragen_600"
                         android:clickable="@{viewModel.edit}"
                         android:onClick="@{() -> viewModel.onPickDateTime()}"
                         android:paddingLeft="@dimen/dp_25"
                         android:paddingRight="@dimen/dp_25"
                         android:text="@string/title_logout"
-                        android:textAllCaps="false"
-                        android:textColor="@color/color_white"
+                        android:textAllCaps="true"
+                        android:textColor="@color/color_grey_757575"
                         android:textSize="@dimen/sp_18"
                         />
                 </LinearLayout>
