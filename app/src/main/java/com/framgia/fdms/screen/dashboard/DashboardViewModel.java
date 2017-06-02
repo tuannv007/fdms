@@ -32,7 +32,7 @@ public class DashboardViewModel extends BaseObservable implements DashboardContr
     private DashboardContract.Presenter mPresenter;
     private ViewPagerAdapter mPagerAdapter;
     private int mTab = TAB_REQUEST_DASH_BOARD;
-    private boolean mIsBoRole = false;
+    private boolean mIsBoRole;
     private Fragment mFragment;
     private Context mContext;
 
@@ -95,7 +95,7 @@ public class DashboardViewModel extends BaseObservable implements DashboardContr
         String role = user.getRole();
         if (role == null) return;
 
-        if (role.equals(BO_MANAGER) || role.equals(BO_STAFF)) setBoRole(true);
+        if (user.isBo()) setBoRole(true);
 
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(DashBoardDetailFragment.newInstance(REQUEST_DASHBOARD));

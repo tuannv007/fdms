@@ -51,7 +51,7 @@
                     android:layout_marginTop="@dimen/dp_5"
                     android:paddingLeft="@dimen/dp_16"
                     android:paddingTop="@dimen/dp_4"
-                    android:text="@{device.deviceCategoryName}"
+                    android:text="@{device.categoryName}"
                     android:textSize="@dimen/sp_16"
                     android:textStyle="bold"
                     />
@@ -60,7 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="end"
-                    android:text="@{Utils.getStringPercent(device.summary.available, device.summary.total) + @string/title_using}"
+                    android:text="@{device.status + @string/title_percent + @string/title_using}"
                     android:textSize="@dimen/sp_12"
                     android:textStyle="bold"
                     />

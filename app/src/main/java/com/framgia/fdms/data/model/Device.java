@@ -59,6 +59,9 @@ public class Device extends BaseObservable implements Parcelable {
     private String mModelNumber;
 
     @Expose
+    @SerializedName("category_name")
+    private String mCategoryName;
+    @Expose
     @SerializedName("status")
     private int mStatus;
     @Expose
@@ -239,6 +242,14 @@ public class Device extends BaseObservable implements Parcelable {
     public void setModelNumber(String modelNumber) {
         mModelNumber = modelNumber;
         notifyPropertyChanged(BR.modelNumber);
+    }
+
+    public String getCategoryName() {
+        return mCategoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        mCategoryName = categoryName;
     }
 
     public int getStatus() {

@@ -7,6 +7,7 @@
     >
 
     <data>
+        <import type="android.view.View"/>
 
         <variable
             name="viewModel"
@@ -30,6 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
+                android:visibility="@{viewModel.bo ? View.VISIBLE : View.GONE}"
                 bind:tabIndicatorColor="@android:color/white"
                 bind:tabSelectedTextColor="@android:color/white"
                 bind:tabTextColor="@android:color/darker_gray"
