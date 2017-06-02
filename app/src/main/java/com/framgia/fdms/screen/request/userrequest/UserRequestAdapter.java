@@ -36,7 +36,7 @@ public class UserRequestAdapter
     @Override
     public void onUpdatePage(List<Request> datas) {
         if (datas != null) {
-            mRequests = datas;
+            mRequests.addAll(datas);
             notifyDataSetChanged();
         }
     }

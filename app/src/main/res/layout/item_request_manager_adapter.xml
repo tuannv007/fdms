@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/apk/res-auto"
     >
     <data>
+        <import type="android.view.View"/>
         <variable
             name="listenner"
             type="com.framgia.fdms.screen.request.OnRequestClickListenner"
@@ -70,6 +71,7 @@
                     android:onClick="@{(v)-> listenner.onMenuClick(v, requestModel)}"
                     android:padding="@dimen/dp_3"
                     android:src="@drawable/ic_more_menu"
+                    android:visibility="@{requestModel.request.requestActionList.size()>0 ? View.VISIBLE: View.GONE}"
                     />
 
             </LinearLayout>
