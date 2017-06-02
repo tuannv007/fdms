@@ -145,4 +145,5 @@
     <string formatted="false" name="text_date_time_notification">At %s</string>
     <string name="title_notification">Notification</string>
     <string name="msg_load_data_fails">Load data fails</string>
+    <string name="action_user_return_device">User return device</string>
 </resources>

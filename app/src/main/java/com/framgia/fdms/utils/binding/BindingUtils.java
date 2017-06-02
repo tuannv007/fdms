@@ -23,7 +23,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
@@ -34,7 +33,6 @@ import com.framgia.fdms.screen.devicedetail.DeviceDetailViewModel;
 import com.framgia.fdms.screen.listDevice.ListDeviceViewModel;
 import com.framgia.fdms.screen.main.MainViewModel;
 import com.framgia.fdms.screen.requestcreation.RequestCreationViewModel;
-import com.framgia.fdms.screen.returndevice.ReturnDeviceViewModel;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -228,22 +226,6 @@ public final class BindingUtils {
             activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         activity.setTitle(resTitle);
-    }
-
-    /*
-    * Bind adapter for Autocomplete TextView
-    * in Activity Return Device
-    * */
-    @BindingAdapter({ "autoComplete", "viewModel" })
-    public static void autoComplete(AutoCompleteTextView view, ArrayAdapter adapter,
-            final ReturnDeviceViewModel viewModel) {
-        view.setAdapter(adapter);
-        view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                viewModel.onSelectAssigner(position);
-            }
-        });
     }
 
     @BindingAdapter({ "model" })
