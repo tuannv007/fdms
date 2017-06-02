@@ -45,6 +45,7 @@ public class ProfileViewModel extends BaseObservable
         mActivity = activity;
         mContext = activity.getApplicationContext();
         mFragment = fragment;
+        mPreferences = new SharePreferenceImp(mContext);
     }
 
     @Override

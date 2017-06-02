@@ -1,5 +1,6 @@
 package com.framgia.fdms.screen.returndevice;
 
+import android.content.Intent;
 import com.framgia.fdms.BasePresenter;
 import com.framgia.fdms.BaseViewModel;
 import com.framgia.fdms.data.model.Device;
@@ -16,7 +17,7 @@ public interface ReturnDeviceContract {
     interface ViewModel extends BaseViewModel<Presenter> {
         void onCheckedChanged(boolean checked, Device device, int position);
 
-        void onClickItemAssigner(Status status, int position);
+        void onSelectedUserReturn();
 
         void onReturnDevice();
 
@@ -28,11 +29,13 @@ public interface ReturnDeviceContract {
 
         void onGetAssignedSuccess(List<Status> statuses);
 
-        void onSelectAssigner(int position);
-
         void onError(String message);
 
         void onDeviceLoaded(List<Device> devices);
+
+        void onActivityResult(int requestCode, int resultCode, Intent data);
+
+        void onStartScannerDevice();
     }
 
     /**
@@ -40,6 +43,7 @@ public interface ReturnDeviceContract {
      */
     interface Presenter extends BasePresenter {
         void getListAssign();
+
         void getDevicesOfBorrower();
     }
 }
