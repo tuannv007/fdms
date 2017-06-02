@@ -9,6 +9,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 
 import static com.framgia.fdms.data.model.User.Role.STAFF;
+import static com.framgia.fdms.utils.Constant.Role.BO_MANAGER;
+import static com.framgia.fdms.utils.Constant.Role.BO_STAFF;
 
 /**
  * Created by levutantuan on 3/31/17.
@@ -320,5 +322,9 @@ public class User extends BaseObservable {
     @StringDef({ STAFF })
     public @interface Role {
         String STAFF = "staff";
+    }
+
+    public boolean isBo(){
+        return mRole.equals(BO_MANAGER) || mRole.equals(BO_STAFF);
     }
 }

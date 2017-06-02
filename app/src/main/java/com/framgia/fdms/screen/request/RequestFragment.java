@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.framgia.fdms.R;
+import com.framgia.fdms.data.source.UserRepository;
+import com.framgia.fdms.data.source.local.UserLocalDataSource;
+import com.framgia.fdms.data.source.local.sharepref.SharePreferenceImp;
 import com.framgia.fdms.databinding.FragmentRequestBinding;
 
 ;
@@ -28,7 +31,8 @@ public class RequestFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mViewModel = new RequestViewModel(this);
 
-        RequestContract.Presenter presenter = new RequestPresenter(mViewModel);
+        RequestContract.Presenter presenter = new RequestPresenter(mViewModel,
+                new UserRepository(new UserLocalDataSource(new SharePreferenceImp(getContext()))));
         mViewModel.setPresenter(presenter);
     }
 

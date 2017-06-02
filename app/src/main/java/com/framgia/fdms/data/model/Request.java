@@ -8,6 +8,7 @@ import com.framgia.fdms.R;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -48,7 +49,7 @@ public class Request extends BaseObservable implements Serializable {
     private Date mCreatedAt;
     @Expose
     @SerializedName("list_action")
-    private List<RequestAction> mRequestActionList;
+    private List<RequestAction> mRequestActionList = new ArrayList<>();
 
     @Bindable
     public List<RequestAction> getRequestActionList() {
