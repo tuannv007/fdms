@@ -252,18 +252,16 @@
                         />
 
                     <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp_16"
                         android:layout_marginRight="@dimen/dp_16"
                         android:clickable="@{viewModel.edit}"
                         android:onClick="@{() -> viewModel.onPickDateTime()}"
-                        android:paddingLeft="@dimen/dp_25"
                         android:paddingRight="@dimen/dp_25"
                         android:text="@string/title_logout"
-                        android:textAllCaps="true"
-                        android:textColor="@color/color_grey_757575"
-                        android:textSize="@dimen/sp_18"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/sp_16"
                         />
                 </LinearLayout>
             </LinearLayout>
