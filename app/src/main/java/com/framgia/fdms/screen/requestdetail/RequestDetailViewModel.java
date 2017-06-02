@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 import com.android.databinding.library.baseAdapters.BR;
 import com.framgia.fdms.R;
@@ -20,6 +21,7 @@ import com.framgia.fdms.data.source.api.service.FDMSServiceClient;
 import com.framgia.fdms.data.source.remote.CategoryRemoteDataSource;
 import com.framgia.fdms.screen.selection.StatusSelectionActivity;
 import com.framgia.fdms.screen.selection.StatusSelectionType;
+import com.framgia.fdms.widget.FdmsProgressDialog;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import java.util.ArrayList;
@@ -54,11 +56,15 @@ public class RequestDetailViewModel extends BaseObservable
     private List<Request.RequestAction> mListAction = new ArrayList<>();
     private FloatingActionMenu mActionMenu;
     private String mStatusRequest;
+    private Request mRequest;
+    private int mPosition;
+    private FdmsProgressDialog mProgressDialog;
 
     public RequestDetailViewModel(AppCompatActivity activity, List<Request.DeviceRequest> request,
-            List<Request.RequestAction> actions, String statusRequest) {
+            List<Request.RequestAction> actions, String statusRequest, Request actionRequest) {
         mContext = activity;
         mActivity = activity;
+        mRequest = actionRequest;
         mStatusRequest = statusRequest;
         mIsEdit.set(false);
         mAdapter = new RequestDetailAdapter(activity, this);
@@ -90,12 +96,13 @@ public class RequestDetailViewModel extends BaseObservable
 
     @Override
     public void showProgressbar() {
-        // TODO: 5/30/17 show progress bar
+        mProgressDialog = FdmsProgressDialog.getInstance(mContext);
+        mProgressDialog.show();
     }
 
     @Override
     public void hideProgressbar() {
-        // TODO: 5/30/17 hide progress bar
+        if (mProgressDialog != null && mProgressDialog.isShowing()) mProgressDialog.dismiss();
     }
 
     @Override
@@ -183,12 +190,13 @@ public class RequestDetailViewModel extends BaseObservable
         return true;
     }
 
-    public void initFloatActionButton(FloatingActionMenu menu) {
+    public void initFloatActionButton(final FloatingActionMenu menu) {
         mActionMenu = menu;
         for (int i = 0; i < mListAction.size(); i++) {
+            mPosition = i;
             FloatingActionButton button = new FloatingActionButton(mContext);
             button.setLabelText(mListAction.get(i).getName());
-            switch (mListAction.get(i).getValue()) {
+            switch (mListAction.get(i).getId()) {
                 case CANCEL:
                     button.setImageResource(R.drawable.ic_cancel_white_24px);
                     break;
@@ -209,7 +217,20 @@ public class RequestDetailViewModel extends BaseObservable
             }
             button.setButtonSize(SIZE_MINI);
             menu.addMenuButton(button);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mPresenter.sentAction(mRequest.getId(), mListAction.get(mPosition).getId());
+                    menu.hideMenu(true);
+                }
+            });
         }
+    }
+
+    @Override
+    public void editActionSuccess() {
+        mActivity.setResult(RESULT_OK);
+        mActivity.finish();
     }
 
     public ObservableField<Category> getCategory() {

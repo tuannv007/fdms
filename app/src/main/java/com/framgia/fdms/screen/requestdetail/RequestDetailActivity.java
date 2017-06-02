@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.databinding.ActivityRequestDetailBinding;
@@ -23,6 +24,7 @@ public class RequestDetailActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private RequestDetailContract.ViewModel mViewModel;
     private FloatingActionMenu mFloatingActionsMenu;
+    private Request mRequest;
 
     public static Intent newInstance(Context context, Request request) {
         Intent intent = new Intent(context, RequestDetailActivity.class);
@@ -33,21 +35,21 @@ public class RequestDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getRequestFromIntent();
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_request_detail);
-        mViewModel = new RequestDetailViewModel(this, getRequestFromIntent().getDevices(),
-                getRequestFromIntent().getRequestActionList(),
-                getRequestFromIntent().getRequestStatus());
+        mViewModel = new RequestDetailViewModel(this, mRequest.getDevices(),
+                mRequest.getRequestActionList(), mRequest.getRequestStatus(), mRequest);
         mBinding.setViewModel((RequestDetailViewModel) mViewModel);
         RequestDetailContract.Presenter presenter = new RequestDetailPresenter(mViewModel);
-        mBinding.setRequest(getRequestFromIntent());
+        mBinding.setRequest(mRequest);
         mViewModel.setPresenter(presenter);
         mFloatingActionsMenu = mBinding.floatActionMenu;
         setFloatingActionButton();
         initToolbar();
     }
 
-    public Request getRequestFromIntent() {
-        return (Request) getIntent().getSerializableExtra(BUND_REQUEST);
+    public void getRequestFromIntent() {
+        mRequest = (Request) getIntent().getSerializableExtra(BUND_REQUEST);
     }
 
     public void initToolbar() {
@@ -83,5 +85,11 @@ public class RequestDetailActivity extends AppCompatActivity {
 
     public void setFloatingActionButton() {
         mViewModel.initFloatActionButton(mFloatingActionsMenu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        mViewModel.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -242,20 +242,20 @@ public class Request extends BaseObservable implements Serializable {
 
     public class RequestAction extends BaseObservable implements Serializable {
         @Expose
-        @SerializedName("value")
-        private int mValue;
+        @SerializedName("id")
+        private int mId;
         @Expose
         @SerializedName("name")
         private String mName;
 
         @Bindable
-        public int getValue() {
-            return mValue;
+        public int getId() {
+            return mId;
         }
 
-        public void setValue(int value) {
-            mValue = value;
-            notifyPropertyChanged(BR.value);
+        public void setId(int id) {
+            mId = id;
+            notifyPropertyChanged(BR.id);
         }
 
         @Bindable
