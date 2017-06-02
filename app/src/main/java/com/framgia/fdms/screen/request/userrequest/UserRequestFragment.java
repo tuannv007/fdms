@@ -38,7 +38,6 @@ public class UserRequestFragment extends Fragment {
                         new RequestRemoteDataSource(FDMSServiceClient.getInstance())),
                 new StatusRepository(new StatusRemoteDataSource(FDMSServiceClient.getInstance())));
         mViewModel.setPresenter(presenter);
-        mViewModel.getData();
     }
 
     @Nullable

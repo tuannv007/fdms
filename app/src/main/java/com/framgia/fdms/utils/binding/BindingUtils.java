@@ -30,7 +30,7 @@ import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.screen.dashboard.DashboardViewModel;
 import com.framgia.fdms.screen.devicedetail.DeviceDetailViewModel;
-import com.framgia.fdms.screen.listDevice.ListDeviceViewModel;
+import com.framgia.fdms.screen.listdevice.ListDeviceViewModel;
 import com.framgia.fdms.screen.main.MainViewModel;
 import com.framgia.fdms.screen.requestcreation.RequestCreationViewModel;
 import com.github.mikephil.charting.animation.Easing;

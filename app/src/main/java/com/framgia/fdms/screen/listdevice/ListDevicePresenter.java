@@ -1,4 +1,4 @@
-package com.framgia.fdms.screen.listDevice;
+package com.framgia.fdms.screen.listdevice;
 
 import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Device;

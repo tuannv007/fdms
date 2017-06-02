@@ -8,7 +8,7 @@
     <data class="ItemListDataBinding">
         <variable
             name="viewModel"
-            type="com.framgia.fdms.screen.listDevice.ListDeviceViewModel"
+            type="com.framgia.fdms.screen.listdevice.ListDeviceViewModel"
             />
         <variable
             name="item"
@@ -74,10 +74,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_10"
                     android:maxLines="2"
-                    android:text='@{item.deviceCode}'
+                    android:text='@{item.deviceCategoryName}'
                     android:textColor="@color/color_dark_gray"
                     android:textSize="@dimen/sp_14"
-                    android:textStyle="italic"
                     />
 
 
