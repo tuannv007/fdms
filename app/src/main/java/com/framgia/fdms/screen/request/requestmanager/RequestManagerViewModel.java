@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.PopupMenu;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -181,15 +182,25 @@ public class RequestManagerViewModel extends BaseFragmentModel
 
     @Override
     public void onMenuClick(View v, UserRequestAdapter.RequestModel request) {
+        if (request == null
+                || request.getRequest() == null
+                || request.getRequest().getRequestActionList() == null) {
+            return;
+        }
+        Request requestModel = request.getRequest();
         PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
-        popupMenu.getMenuInflater().inflate(R.menu.menu_request, popupMenu.getMenu());
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                //// TODO: 22/05/2017 update request status 
-                return false;
-            }
-        });
+        for (int i = 0; i < requestModel.getRequestActionList().size(); i++) {
+            final Request.RequestAction action = requestModel.getRequestActionList().get(i);
+            popupMenu.getMenu()
+                    .add(action.getName())
+                    .setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem menuItem) {
+                            // TODO: 22/05/2017 update request status
+                            return false;
+                        }
+                    });
+        }
         popupMenu.show();
     }
 
