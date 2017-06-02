@@ -4,6 +4,7 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.support.annotation.StringDef;
 import com.android.databinding.library.baseAdapters.BR;
+import com.framgia.fdms.utils.Constant;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import java.util.Date;
@@ -324,7 +325,8 @@ public class User extends BaseObservable {
         String STAFF = "staff";
     }
 
-    public boolean isBo(){
-        return mRole.equals(BO_MANAGER) || mRole.equals(BO_STAFF);
+    public boolean isBo() {
+        return mRole.equals(BO_MANAGER) || mRole.equals(BO_STAFF) || mRole.equals(
+                Constant.Role.STAFF);
     }
 }

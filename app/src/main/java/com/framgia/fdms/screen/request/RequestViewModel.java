@@ -65,7 +65,7 @@ public class RequestViewModel extends BaseObservable implements RequestContract.
         String role = user.getRole();
         if (role == null) return;
 
-        if (user.isBo()) setBo(true);
+        setBo(user.isBo());
 
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(UserRequestFragment.newInstance());
