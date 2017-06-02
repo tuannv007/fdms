@@ -48,4 +48,7 @@
     <dimen name="dp_05">0.5dp</dimen>
     <dimen name="dp_24">24dp</dimen>
     <dimen name="dp_54">54dp</dimen>
+    <dimen name="dp_18">18dp</dimen>
+    <dimen name="dp_32">32dp</dimen>
+    <dimen name="dp_21">21dp</dimen>
 </resources>

@@ -147,4 +147,5 @@
     <string name="msg_load_data_fails">Load data fails</string>
     <string name="action_user_return_device">User return device</string>
     <string name="title_percent">\t%\t</string>
+    <string name="text_number_notification_more">99+</string>
 </resources>

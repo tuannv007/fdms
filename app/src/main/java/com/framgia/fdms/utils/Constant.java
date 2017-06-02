@@ -17,6 +17,7 @@ public class Constant {
     public static final int USING = 1;
     public static final int AVAIABLE = 2;
     public static final int BROKEN = 3;
+    public static final int MAX_NOTIFICATION = 99;
     public static final String TITLE_UNKNOWN = "Unknown";
 
     private Constant() {
