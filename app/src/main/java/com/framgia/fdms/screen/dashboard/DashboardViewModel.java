@@ -95,7 +95,7 @@ public class DashboardViewModel extends BaseObservable implements DashboardContr
         String role = user.getRole();
         if (role == null) return;
 
-        if (user.isBo()) setBoRole(true);
+        setBoRole(user.isBo());
 
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(DashBoardDetailFragment.newInstance(REQUEST_DASHBOARD));

@@ -97,7 +97,7 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
         String role = user.getRole();
         if (role == null) return;
 
-        if (role.equals(BO_STAFF) || role.equals(BO_MANAGER)) setBo(true);
+        setBo(user.isBo());
     }
 
     @Override
