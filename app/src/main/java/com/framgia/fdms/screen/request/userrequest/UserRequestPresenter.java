@@ -41,6 +41,7 @@ final class UserRequestPresenter implements UserRequestContract.Presenter {
         mRepository = statusRepository;
         getStatusDevice();
         getListRelative();
+        getMyRequest(ALL_REQUEST_STATUS_ID, ALL_RELATIVE_ID, mPage, PER_PAGE);
     }
 
     @Override
@@ -64,7 +65,7 @@ final class UserRequestPresenter implements UserRequestContract.Presenter {
 
     @Override
     public void onStart() {
-        getMyRequest(ALL_REQUEST_STATUS_ID, ALL_RELATIVE_ID, mPage, PER_PAGE);
+
     }
 
     @Override

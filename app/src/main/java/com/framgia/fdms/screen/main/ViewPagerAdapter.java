@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import com.framgia.fdms.screen.dashboard.DashboardFragment;
-import com.framgia.fdms.screen.listDevice.ListDeviceFragment;
+import com.framgia.fdms.screen.listdevice.ListDeviceFragment;
 import com.framgia.fdms.screen.profile.ProfileFragment;
 import com.framgia.fdms.screen.request.RequestFragment;
 

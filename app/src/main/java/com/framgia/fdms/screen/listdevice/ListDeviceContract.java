@@ -1,4 +1,4 @@
-package com.framgia.fdms.screen.listDevice;
+package com.framgia.fdms.screen.listdevice;
 
 import android.content.Intent;
 import com.framgia.fdms.BasePresenter;
