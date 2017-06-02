@@ -50,6 +50,9 @@ public class Request extends BaseObservable implements Serializable {
     @Expose
     @SerializedName("list_action")
     private List<RequestAction> mRequestActionList = new ArrayList<>();
+    @Expose
+    @SerializedName("create_at")
+    private Date mCreatAt;
 
     @Bindable
     public List<RequestAction> getRequestActionList() {
@@ -153,6 +156,16 @@ public class Request extends BaseObservable implements Serializable {
     public void setDevices(List<DeviceRequest> devices) {
         mDevices = devices;
         notifyPropertyChanged(BR.devices);
+    }
+
+    @Bindable
+    public Date getCreatAt() {
+        return mCreatAt;
+    }
+
+    public void setCreatAt(Date creatAt) {
+        mCreatAt = creatAt;
+        notifyPropertyChanged(BR.creatAt);
     }
 
     @Bindable
