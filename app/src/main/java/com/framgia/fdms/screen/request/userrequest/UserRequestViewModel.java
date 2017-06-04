@@ -115,6 +115,9 @@ public class UserRequestViewModel extends BaseFragmentModel
         switch (requestCode) {
             case REQUEST_SELECTION:
                 if (status != null) {
+                    if (status.getName().equals(mContext.getString(R.string.action_clear))) {
+                        status.setName(mContext.getString(R.string.title_request_relative));
+                    }
                     setRelative(status);
                     mAdapter.clear();
                     mPresenter.getData(mRelative, mStatus);
@@ -122,6 +125,9 @@ public class UserRequestViewModel extends BaseFragmentModel
                 break;
             case REQUEST_STATUS:
                 if (status != null) {
+                    if (status.getName().equals(mContext.getString(R.string.action_clear))) {
+                        status.setName(mContext.getString(R.string.title_request_status));
+                    }
                     setStatus(status);
                     mAdapter.clear();
                     mPresenter.getData(mRelative, mStatus);

@@ -82,10 +82,16 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
         Category category = bundle.getParcelable(BUNDLE_CATEGORY);
         Status status = bundle.getParcelable(BUNDLE_STATUE);
         if (category != null) {
+            if (category.getName().equals(mContext.getString(R.string.action_clear))) {
+                category.setName(mContext.getString(R.string.title_btn_category));
+            }
             setCategory(category);
             mAdapter.clear();
         }
         if (status != null) {
+            if (status.getName().equals(mContext.getString(R.string.action_clear))) {
+                status.setName(mContext.getString(R.string.title_request_status));
+            }
             setStatus(status);
             mAdapter.clear();
         }

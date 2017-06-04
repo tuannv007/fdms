@@ -205,11 +205,17 @@ public class CreateDeviceViewModel extends BaseObservable
             case REQUEST_CATEGORY:
                 Bundle bundle = data.getExtras();
                 Category category = bundle.getParcelable(BUNDLE_CATEGORY);
+                if (category.getName().equals(mContext.getString(R.string.action_clear))) {
+                    category.setName(mContext.getString(R.string.title_empty));
+                }
                 setCategory(category);
                 break;
             case REQUEST_STATUS:
                 bundle = data.getExtras();
                 Status status = bundle.getParcelable(BUNDLE_STATUE);
+                if (status.getName().equals(mContext.getString(R.string.action_clear))) {
+                    status.setName(mContext.getString(R.string.title_empty));
+                }
                 setStatus(status);
                 break;
             default:
