@@ -16,6 +16,7 @@ import com.framgia.fdms.screen.selection.StatusSelectionType;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.framgia.fdms.utils.Constant.BundleConstant.BUNDLE_CONTENT;
 import static com.framgia.fdms.utils.Constant.BundleConstant.BUNDLE_STATUE;
 import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_SCANNER;
 import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_SELECTION;
@@ -26,7 +27,7 @@ import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_SELECTION;
 
 public class ReturnDeviceViewModel implements ReturnDeviceContract.ViewModel {
 
-    private AppCompatActivity mActivity;
+    private ReturnDeviceActivity mActivity;
     private ReturnDeviceContract.Presenter mPresenter;
     private ObservableList<Device> mDevices = new ObservableArrayList<>();
     private ObservableField<DeviceReturnAdapter> mAdapter = new ObservableField<>();
@@ -34,7 +35,7 @@ public class ReturnDeviceViewModel implements ReturnDeviceContract.ViewModel {
     private List<Status> mAssigners = new ArrayList<>();
     private ObservableField<Status> mNameUserReturn = new ObservableField<>();
 
-    public ReturnDeviceViewModel(AppCompatActivity activity) {
+    public ReturnDeviceViewModel(ReturnDeviceActivity activity) {
         mActivity = activity;
         mAdapter.set(new DeviceReturnAdapter(this, mDevices));
     }
@@ -56,10 +57,7 @@ public class ReturnDeviceViewModel implements ReturnDeviceContract.ViewModel {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode != REQUEST_SELECTION
-                || data == null
-                || data.getExtras() == null
-                || resultCode != Activity.RESULT_OK) {
+        if (data == null || data.getExtras() == null || resultCode != Activity.RESULT_OK) {
             return;
         }
         Bundle bundle = data.getExtras();
@@ -73,7 +71,19 @@ public class ReturnDeviceViewModel implements ReturnDeviceContract.ViewModel {
                 }
                 break;
             case REQUEST_SCANNER:
-                // TODO: 6/2/2017 handle when qrcode
+                String contextQrCode = bundle.getString(BUNDLE_CONTENT);
+                if (mNameUserReturn.get() == null) {
+                    mPresenter.getDeviceByCode(contextQrCode, false);
+                } else {
+                    for (Device item : mDevices) {
+                        if (item.getDeviceCode().equals(contextQrCode)) {
+                            item.setSelected(true);
+                            mAdapter.get().notifyDataSetChanged();
+                            return;
+                        }
+                    }
+                    mPresenter.getDeviceByCode(contextQrCode, true);
+                }
                 break;
             default:
                 break;
@@ -96,6 +106,21 @@ public class ReturnDeviceViewModel implements ReturnDeviceContract.ViewModel {
     public void onStartScannerDevice() {
         mActivity.startActivityForResult(
                 ScannerActivity.newIntent(mActivity.getApplicationContext()), REQUEST_SCANNER);
+    }
+
+    @Override
+    public void onGetDeviceSuccess(Device device) {
+        mDevices.clear();
+        device.setSelected(true);
+        mDevices.add(device);
+        mAdapter.get().notifyDataSetChanged();
+    }
+
+    @Override
+    public void onGetDeviceUserOtherSuccess(Device device) {
+        if (mNameUserReturn.get() != null) {
+            mActivity.show(mNameUserReturn.get().getName(), device);
+        }
     }
 
     @Override

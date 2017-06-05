@@ -16,7 +16,7 @@ interface ScannerContract {
 
         void onPause();
 
-        void init(FrameLayout frameScanner);
+        void bindView(FrameLayout view);
     }
 
     /**

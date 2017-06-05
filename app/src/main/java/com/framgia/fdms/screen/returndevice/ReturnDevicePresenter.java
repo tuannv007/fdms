@@ -2,6 +2,7 @@ package com.framgia.fdms.screen.returndevice;
 
 import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.data.model.Status;
+import com.framgia.fdms.data.source.DeviceRepository;
 import com.framgia.fdms.data.source.DeviceReturnRepository;
 import com.framgia.fdms.data.source.StatusRepository;
 import java.util.List;
@@ -23,16 +24,18 @@ public final class ReturnDevicePresenter implements ReturnDeviceContract.Present
     private final ReturnDeviceContract.ViewModel mViewModel;
     private CompositeSubscription mSubscription;
     private StatusRepository mRepository;
+    private DeviceRepository mDeviceRepository;
     private DeviceReturnRepository mDeviceReturnRepository;
 
     public ReturnDevicePresenter(ReturnDeviceContract.ViewModel viewModel,
-            StatusRepository repository, DeviceReturnRepository deviceReturnRepository) {
+            StatusRepository repository, DeviceReturnRepository deviceReturnRepository,
+            DeviceRepository deviceRepository) {
         mViewModel = viewModel;
         mRepository = repository;
         mDeviceReturnRepository = deviceReturnRepository;
+        mDeviceRepository = deviceRepository;
         mSubscription = new CompositeSubscription();
         getListAssign();
-        getDevicesOfBorrower();
     }
 
     @Override
@@ -91,6 +94,40 @@ public final class ReturnDevicePresenter implements ReturnDeviceContract.Present
                     @Override
                     public void onNext(List<Device> devices) {
                         mViewModel.onDeviceLoaded(devices);
+                    }
+                });
+        mSubscription.add(subscription);
+    }
+
+    @Override
+    public void getDeviceByCode(String codeDevice, final boolean isUserOther) {
+        Subscription subscription = mDeviceRepository.getDeviceByQrCode(codeDevice)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mViewModel.showProgressbar();
+                    }
+                })
+                .subscribe(new Subscriber<Device>() {
+                    @Override
+                    public void onCompleted() {
+                        mViewModel.hideProgressbar();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mViewModel.hideProgressbar();
+                    }
+
+                    @Override
+                    public void onNext(Device device) {
+                        if (isUserOther) {
+                            mViewModel.onGetDeviceUserOtherSuccess(device);
+                        } else {
+                            mViewModel.onGetDeviceSuccess(device);
+                        }
                     }
                 });
         mSubscription.add(subscription);
