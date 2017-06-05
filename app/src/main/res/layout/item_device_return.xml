@@ -18,7 +18,7 @@
     </data>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_100"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         >
         <LinearLayout
@@ -46,34 +46,31 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:gravity="center_vertical"
                     android:text="@{device.deviceCode}"
                     />
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:gravity="center_vertical"
                     android:text="@{device.productionName}"
-                    />
-                <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:text="@{device.deviceCategoryName}"
                     />
             </LinearLayout>
             <android.support.v7.widget.AppCompatCheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:onCheckedChanged="@{(switch, checked) -> viewModel.onCheckedChanged(checked, device, position)}"
+                android:onCheckedChanged="@{(switch, selected) -> viewModel.onCheckedChanged(selected, device, position)}"
+                android:checked="@{device.selected}"
                 app:buttonTint="@color/state_check_box"
                 />
         </LinearLayout>
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_1"
+            android:layout_height="@dimen/dp_05"
             android:layout_marginTop="@dimen/dp_3"
-            android:background="@color/color_grey_757575"
+            android:background="@color/color_brown_100"
             />
     </LinearLayout>
 </layout>

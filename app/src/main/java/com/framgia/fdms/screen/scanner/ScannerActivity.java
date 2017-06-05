@@ -22,7 +22,6 @@ public class ScannerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         ActivityScannerBinding binding =
                 DataBindingUtil.setContentView(this, R.layout.activity_scanner);
         mViewModel = new ScannerViewModel(this);
@@ -31,7 +30,7 @@ public class ScannerActivity extends AppCompatActivity {
         mViewModel.setPresenter(presenter);
 
         binding.setViewModel((ScannerViewModel) mViewModel);
-        mViewModel.init(binding.frameScanner);
+        mViewModel.bindView(binding.frameScanner);
     }
 
     @Override
@@ -43,13 +42,13 @@ public class ScannerActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mViewModel.onResume();
+        if (mViewModel != null) mViewModel.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mViewModel.onPause();
+        if (mViewModel != null) mViewModel.onPause();
     }
 
     @Override

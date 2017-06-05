@@ -36,6 +36,10 @@ public interface ReturnDeviceContract {
         void onActivityResult(int requestCode, int resultCode, Intent data);
 
         void onStartScannerDevice();
+
+        void onGetDeviceSuccess(Device device);
+
+        void onGetDeviceUserOtherSuccess(Device device);
     }
 
     /**
@@ -45,5 +49,7 @@ public interface ReturnDeviceContract {
         void getListAssign();
 
         void getDevicesOfBorrower();
+
+        void getDeviceByCode(String codeDevice, boolean isUserOther);
     }
 }

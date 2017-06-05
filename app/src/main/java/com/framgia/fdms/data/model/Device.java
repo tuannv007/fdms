@@ -18,6 +18,17 @@ import static com.framgia.fdms.utils.Constant.USING;
  * Created by Age on 4/1/2017.
  */
 public class Device extends BaseObservable implements Parcelable {
+    public static final Creator<Device> CREATOR = new Creator<Device>() {
+        @Override
+        public Device createFromParcel(Parcel in) {
+            return new Device(in);
+        }
+
+        @Override
+        public Device[] newArray(int size) {
+            return new Device[size];
+        }
+    };
     @Expose
     @SerializedName("id")
     private int mId;
@@ -54,10 +65,8 @@ public class Device extends BaseObservable implements Parcelable {
     @Expose
     @SerializedName("device_category_name")
     private String mDeviceCategoryName;
-
     private String mSerialNumber;
     private String mModelNumber;
-
     @Expose
     @SerializedName("category_name")
     private String mCategoryName;
@@ -67,6 +76,9 @@ public class Device extends BaseObservable implements Parcelable {
     @Expose
     @SerializedName("summary")
     private Summary mSummary;
+    private boolean mIsSelected;
+    @SerializedName("user")
+    private UserBorrow mUser;
 
     public Device() {
     }
@@ -91,19 +103,32 @@ public class Device extends BaseObservable implements Parcelable {
         mDeviceCategoryName = in.readString();
         mSerialNumber = in.readString();
         mModelNumber = in.readString();
+        mCategoryName = in.readString();
+        mStatus = in.readInt();
+        mIsSelected = in.readByte() != 0;
+        mUser = in.readParcelable(UserBorrow.class.getClassLoader());
     }
 
-    public static final Creator<Device> CREATOR = new Creator<Device>() {
-        @Override
-        public Device createFromParcel(Parcel in) {
-            return new Device(in);
-        }
-
-        @Override
-        public Device[] newArray(int size) {
-            return new Device[size];
-        }
-    };
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mId);
+        dest.writeString(mDeviceCode);
+        dest.writeString(mProductionName);
+        dest.writeInt(mDeviceStatusId);
+        dest.writeInt(mDeviceCategoryId);
+        dest.writeParcelable(mPicture, flags);
+        dest.writeString(mOriginalPrice);
+        dest.writeString(mPrintedCode);
+        dest.writeByte((byte) (mIsBarcode ? 1 : 0));
+        dest.writeString(mDeviceStatusName);
+        dest.writeString(mDeviceCategoryName);
+        dest.writeString(mSerialNumber);
+        dest.writeString(mModelNumber);
+        dest.writeString(mCategoryName);
+        dest.writeInt(mStatus);
+        dest.writeByte((byte) (mIsSelected ? 1 : 0));
+        dest.writeParcelable(mUser, flags);
+    }
 
     @Bindable
     public int getId() {
@@ -269,6 +294,26 @@ public class Device extends BaseObservable implements Parcelable {
     }
 
     @Bindable
+    public boolean isSelected() {
+        return mIsSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        mIsSelected = selected;
+        notifyPropertyChanged(BR.selected);
+    }
+
+    @Bindable
+    public UserBorrow getUser() {
+        return mUser;
+    }
+
+    public void setUser(UserBorrow user) {
+        mUser = user;
+        notifyPropertyChanged(BR.user);
+    }
+
+    @Bindable
     public int getResourceId() {
         switch (mDeviceStatusId) {
             case USING:
@@ -287,21 +332,53 @@ public class Device extends BaseObservable implements Parcelable {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public class UserBorrow implements Parcelable {
+        public final Creator<UserBorrow> CREATOR = new Creator<UserBorrow>() {
+            @Override
+            public UserBorrow createFromParcel(Parcel in) {
+                return new UserBorrow(in);
+            }
 
-        dest.writeInt(mId);
-        dest.writeString(mDeviceCode);
-        dest.writeString(mProductionName);
-        dest.writeInt(mDeviceStatusId);
-        dest.writeInt(mDeviceCategoryId);
-        dest.writeParcelable(mPicture, flags);
-        dest.writeString(mOriginalPrice);
-        dest.writeString(mPrintedCode);
-        dest.writeByte((byte) (mIsBarcode ? 1 : 0));
-        dest.writeString(mDeviceStatusName);
-        dest.writeString(mDeviceCategoryName);
-        dest.writeString(mSerialNumber);
-        dest.writeString(mModelNumber);
+            @Override
+            public UserBorrow[] newArray(int size) {
+                return new UserBorrow[size];
+            }
+        };
+        @SerializedName("id")
+        private String mId;
+        @SerializedName("name")
+        private String mName;
+
+        protected UserBorrow(Parcel in) {
+            mId = in.readString();
+            mName = in.readString();
+        }
+
+        public String getId() {
+            return mId;
+        }
+
+        public void setId(String id) {
+            mId = id;
+        }
+
+        public String getName() {
+            return mName;
+        }
+
+        public void setName(String name) {
+            mName = name;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(mId);
+            dest.writeString(mName);
+        }
     }
 }
