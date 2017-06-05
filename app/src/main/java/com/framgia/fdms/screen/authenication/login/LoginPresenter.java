@@ -14,6 +14,8 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
+import static com.framgia.fdms.data.source.local.sharepref.SharePreferenceKey.PASS_WORD_PREFS;
+import static com.framgia.fdms.data.source.local.sharepref.SharePreferenceKey.USER_NAME_PREFS;
 import static com.framgia.fdms.data.source.local.sharepref.SharePreferenceKey.USER_PREFS;
 
 /**
@@ -39,6 +41,12 @@ final class LoginPresenter extends BaseObservable implements LoginContract.Prese
         if (mSharedPreferences.get(USER_PREFS, String.class) != null) {
             mView.onLoginSuccess();
         }
+
+        String userName = mSharedPreferences.get(USER_NAME_PREFS, String.class);
+        String passWord = mSharedPreferences.get(PASS_WORD_PREFS, String.class);
+        if (userName != null && passWord != null) {
+            mView.onCachedAccountLoaded(userName, passWord);
+        }
     }
 
     @Override
@@ -47,7 +55,7 @@ final class LoginPresenter extends BaseObservable implements LoginContract.Prese
     }
 
     @Override
-    public void login(String userName, String passWord) {
+    public void login(final String userName, final String passWord) {
         Subscription subscription = mUserRepository.login(userName, passWord)
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
@@ -63,6 +71,11 @@ final class LoginPresenter extends BaseObservable implements LoginContract.Prese
                         User user = userRespone.getData();
                         user.setToken(userRespone.getToken());
                         saveUser(user);
+                        if (mView.isRememberAccount()) {
+                            saveRememberAccount(userName, passWord);
+                        } else {
+                            removeRememberAccount();
+                        }
                         mView.onLoginSuccess();
                     }
                 }, new Action1<Throwable>() {
@@ -91,6 +104,16 @@ final class LoginPresenter extends BaseObservable implements LoginContract.Prese
             mView.onInputPasswordError();
         }
         return isValid;
+    }
+
+    public void saveRememberAccount(String user, String passWord) {
+        mSharedPreferences.put(USER_NAME_PREFS, user);
+        mSharedPreferences.put(PASS_WORD_PREFS, passWord);
+    }
+
+    public void removeRememberAccount() {
+        mSharedPreferences.remove(USER_NAME_PREFS);
+        mSharedPreferences.remove(PASS_WORD_PREFS);
     }
 
     private void saveUser(User user) {

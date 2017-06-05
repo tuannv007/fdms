@@ -48,8 +48,8 @@
                 android:layout_marginTop="@dimen/dp_10"
                 android:textColorHighlight="#ff0000"
                 android:textColorHint="@color/color_gray_"
-                bind:errorText="@{viewModel.usernameError}"
                 android:transitionName="@string/title_user_name"
+                bind:errorText="@{viewModel.usernameError}"
                 >
 
                 <android.support.design.widget.TextInputEditText
@@ -69,9 +69,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
-                bind:errorText="@{viewModel.passwordError}"
                 android:textColorHint="@color/color_gray_"
                 android:transitionName="@string/title_password"
+                bind:errorText="@{viewModel.passwordError}"
                 >
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/text_password"
@@ -86,6 +86,16 @@
                     android:textColorHint="@color/color_gray_"
                     />
             </android.support.design.widget.TextInputLayout>
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/color_blue_207"
+                android:checked="@={viewModel.rememberAccount}"
+                android:text="@string/title_remember_me"
+                android:textColor="@color/color_blue_207"
+                android:textSize="@dimen/sp_20"
+                />
 
             <TextView
                 android:id="@+id/button_login"

@@ -20,6 +20,10 @@ interface LoginContract {
         void showProgressbar();
 
         void hideProgressbar();
+
+        void onCachedAccountLoaded(String user, String passWord);
+
+        boolean isRememberAccount();
     }
 
     interface Presenter extends BasePresenter {
