@@ -162,6 +162,9 @@ public class RequestDetailViewModel extends BaseObservable
             case REQUEST_CATEGORY:
                 Bundle bundle = data.getExtras();
                 Category category = bundle.getParcelable(BUNDLE_CATEGORY);
+                if (category.getName().equals(mContext.getString(R.string.action_clear))) {
+                    category.setName(mContext.getString(R.string.title_empty));
+                }
                 setCategory(category);
                 break;
             default:

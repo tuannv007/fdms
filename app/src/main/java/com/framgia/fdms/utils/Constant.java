@@ -19,6 +19,7 @@ public class Constant {
     public static final int BROKEN = 3;
     public static final int MAX_NOTIFICATION = 99;
     public static final String TITLE_UNKNOWN = "Unknown";
+    public static final String ACTION_CLEAR = "Clear";
 
     private Constant() {
         // No-op

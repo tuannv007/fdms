@@ -40,7 +40,7 @@
             android:ellipsize="marquee"
             android:gravity="center_vertical"
             android:minHeight="?android:attr/listPreferredItemHeight"
-            android:text="@{type == StatusSelectionType.STATUS ? status.name : @string/text_name_status_selection(position, category.name)}"
+            android:text="@{type == StatusSelectionType.STATUS ? status.name : category.name}"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/color_brown"
             android:textSize="@dimen/sp_17"

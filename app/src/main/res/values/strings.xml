@@ -148,4 +148,5 @@
     <string name="action_user_return_device">User return device</string>
     <string name="title_percent">\t%\t</string>
     <string name="text_number_notification_more">99+</string>
+    <string name="title_empty">""</string>
 </resources>

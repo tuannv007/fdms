@@ -91,16 +91,25 @@ public class RequestCreationViewModel extends BaseObservable
             case REQUEST_RELATIVE:
                 Bundle bundle = data.getExtras();
                 Status status = bundle.getParcelable(BUNDLE_STATUE);
+                if (status.getName().equals(mContext.getString(R.string.action_clear))) {
+                    status.setName(mContext.getString(R.string.title_empty));
+                }
                 setRelative(status);
                 break;
             case REQUEST_ASSIGNER:
                 bundle = data.getExtras();
                 status = bundle.getParcelable(BUNDLE_STATUE);
+                if (status.getName().equals(mContext.getString(R.string.action_clear))) {
+                    status.setName(mContext.getString(R.string.title_empty));
+                }
                 setAssignee(status);
                 break;
             case REQUEST_CATEGORY:
                 bundle = data.getExtras();
                 Category category = bundle.getParcelable(BUNDLE_CATEGORY);
+                if (category.getName().equals(mContext.getString(R.string.action_clear))) {
+                    category.setName(mContext.getString(R.string.title_empty));
+                }
                 setCategory(category);
                 break;
             default:
