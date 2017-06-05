@@ -189,23 +189,15 @@ public class DeviceRemoteDataSource implements DeviceDataSource.RemoteDataSource
 
     @Override
     public Observable<List<DeviceHistoryDetail>> getDeviceDetailHistory(int deviceId) {
-        // TODO: 23/05/2017 later
-        List<DeviceHistoryDetail> tempList = new ArrayList<>();
-        tempList.add(new DeviceHistoryDetail("2017-05-24",
-                "Device has been Created by Nguyen Thi Minh Ngoc", 1));
-        tempList.add(
-                new DeviceHistoryDetail("2017-05-21", "Device has been Updated by Hoang Thu Hien",
-                        2));
-        tempList.add(
-                new DeviceHistoryDetail("2017-05-24", "Device has been Updated by Hoang Thu Hien",
-                        2));
-        tempList.add(
-                new DeviceHistoryDetail("2017-05-23", "Device has been Updated by Hoang Thu Hien",
-                        3));
-        tempList.add(
-                new DeviceHistoryDetail("2017-05-22", "Device has been Updated by Hoang Thu Hien",
-                        2));
-        return Observable.just(tempList);
+        return mFDMSApi.getDeviceDetailHistory(deviceId)
+                .flatMap(new Func1<Respone<List<DeviceHistoryDetail>>,
+                                Observable<List<DeviceHistoryDetail>>>() {
+                            @Override
+                            public Observable<List<DeviceHistoryDetail>> call(
+                                    Respone<List<DeviceHistoryDetail>> listRespone) {
+                                return Utils.getResponse(listRespone);
+                            }
+                        });
     }
 
     @Override

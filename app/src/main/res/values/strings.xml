@@ -151,4 +151,5 @@
     <string name="title_empty">""</string>
     <string name="title_remember_me">Remember Me</string>
     <string formatted="false" name="msg_not_device_in_device_brorows">This device is on the list of staff %s who is on the staff %s</string>
+    <string name="title_no_history">No history to display</string>
 </resources>

@@ -5,6 +5,13 @@
             name="visibleState"
             type="int"
             />
+        <variable
+            name="text"
+            type="String"
+            />
+        <variable
+            name="image"
+            type="android.graphics.drawable.Drawable"/>
     </data>
     <LinearLayout
         android:id="@+id/linear_empty_item"
@@ -19,7 +26,7 @@
             android:layout_width="@dimen/dp_100"
             android:layout_height="@dimen/dp_100"
             android:layout_gravity="center"
-            android:src="@drawable/ic_no_report"
+            android:src="@{image}"
             />
         <TextView
             android:layout_width="match_parent"
@@ -37,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
             android:gravity="center"
-            android:text="@string/missing_data"
+            android:text="@{text}"
             android:textSize="@dimen/sp_15"
             />
     </LinearLayout>
