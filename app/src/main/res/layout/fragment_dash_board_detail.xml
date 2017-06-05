@@ -43,6 +43,8 @@
 
                 <include
                     layout="@layout/empty_state"
+                    bind:text="@{@string/missing_data}"
+                    bind:image="@{@drawable/ic_no_report}"
                     bind:visibleState="@{viewModel.emptyViewVisible}"
                     />
 

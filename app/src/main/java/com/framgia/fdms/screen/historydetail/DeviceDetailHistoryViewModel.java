@@ -3,6 +3,7 @@ package com.framgia.fdms.screen.historydetail;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.ObservableField;
+import android.view.View;
 import com.framgia.fdms.BR;
 import com.framgia.fdms.data.model.DeviceHistoryDetail;
 import java.util.ArrayList;
@@ -17,9 +18,10 @@ public class DeviceDetailHistoryViewModel extends BaseObservable
 
     private DeviceDetailHistoryContract.Presenter mPresenter;
     private DeviceDetailHistoryAdapter mAdapter;
+    private int mEmptyViewVisible = View.GONE;
 
     public DeviceDetailHistoryViewModel() {
-        mAdapter= new DeviceDetailHistoryAdapter();
+        mAdapter = new DeviceDetailHistoryAdapter();
     }
 
     @Override
@@ -44,7 +46,12 @@ public class DeviceDetailHistoryViewModel extends BaseObservable
 
     @Override
     public void onGetDeviceHistorySuccess(List<DeviceHistoryDetail> deviceHistoryDetails) {
-        mAdapter.addData(deviceHistoryDetails);
+        if (deviceHistoryDetails != null && deviceHistoryDetails.size() != 0) {
+            setEmptyViewVisible(View.GONE);
+            mAdapter.addData(deviceHistoryDetails);
+        } else {
+            setEmptyViewVisible(View.VISIBLE);
+        }
     }
 
     @Bindable
@@ -55,5 +62,15 @@ public class DeviceDetailHistoryViewModel extends BaseObservable
     public void setAdapter(DeviceDetailHistoryAdapter adapter) {
         mAdapter = adapter;
         notifyPropertyChanged(BR.adapter);
+    }
+
+    @Bindable
+    public int getEmptyViewVisible() {
+        return mEmptyViewVisible;
+    }
+
+    public void setEmptyViewVisible(int emptyViewVisible) {
+        mEmptyViewVisible = emptyViewVisible;
+        notifyPropertyChanged(BR.emptyViewVisible);
     }
 }

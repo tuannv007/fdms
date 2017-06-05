@@ -20,14 +20,15 @@ public final class DeviceDetailHistoryPresenter implements DeviceDetailHistoryCo
     private int mDeviceId = -1;
 
     public DeviceDetailHistoryPresenter(DeviceDetailHistoryContract.ViewModel viewModel,
-            DeviceRepository repository) {
+            DeviceRepository repository, int deviceId) {
         mViewModel = viewModel;
         mRepository = repository;
-        getDetailHistory(-1);
+        mDeviceId = deviceId;
     }
 
     @Override
     public void onStart() {
+        getDetailHistory(mDeviceId);
     }
 
     @Override
@@ -36,7 +37,7 @@ public final class DeviceDetailHistoryPresenter implements DeviceDetailHistoryCo
 
     @Override
     public void getDetailHistory(int deviceId) {
-        mRepository.getDeviceDetailHistory(mDeviceId)
+        mRepository.getDeviceDetailHistory(deviceId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<DeviceHistoryDetail>>() {

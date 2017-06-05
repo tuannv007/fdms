@@ -2,6 +2,7 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools"
     >
 
     <data>
@@ -13,10 +14,22 @@
 
     </data>
 
-    <android.support.v7.widget.RecyclerView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutManager="LinearLayoutManager"
-        app:recyclerAdapter="@{viewModel.adapter}"
-        />
+        >
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="LinearLayoutManager"
+            app:recyclerAdapter="@{viewModel.adapter}"
+            />
+
+        <include
+            layout="@layout/empty_state"
+            bind:text="@{@string/title_no_history}"
+            bind:image="@{@drawable/ic_history_24dp}"
+            bind:visibleState="@{viewModel.emptyViewVisible}"
+            />
+    </RelativeLayout>
 </layout>

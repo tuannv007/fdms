@@ -17,9 +17,18 @@ import com.framgia.fdms.databinding.FragmentHistoryDetailBinding;
 public class DeviceDetailHistoryFragment extends Fragment {
 
     private DeviceDetailHistoryContract.ViewModel mViewModel;
+    private static final String EXTRA_DEVICE_ID = "EXTRA_DEVICE_ID";
 
     public static DeviceDetailHistoryFragment newInstance() {
         return new DeviceDetailHistoryFragment();
+    }
+
+    public static DeviceDetailHistoryFragment newInstance(int deviceId) {
+        DeviceDetailHistoryFragment fragment = new DeviceDetailHistoryFragment();
+        Bundle args = new Bundle();
+        args.putInt(EXTRA_DEVICE_ID, deviceId);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -30,7 +39,8 @@ public class DeviceDetailHistoryFragment extends Fragment {
         DeviceRepository repository =
                 new DeviceRepository(new DeviceRemoteDataSource(FDMSServiceClient.getInstance()));
         DeviceDetailHistoryContract.Presenter presenter =
-                new DeviceDetailHistoryPresenter(mViewModel, repository);
+                new DeviceDetailHistoryPresenter(mViewModel, repository,
+                        getArguments().getInt(EXTRA_DEVICE_ID));
         mViewModel.setPresenter(presenter);
     }
 

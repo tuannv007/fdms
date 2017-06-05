@@ -4,6 +4,8 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import com.framgia.fdms.BR;
 import com.framgia.fdms.R;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,66 +25,54 @@ public class DeviceHistoryDetail extends BaseObservable {
     private final String STATUS_USING = "using";
     private final String STATUS_AVAILABLE = "available";
     private final String STATUS_BROKEN = "broken";
-    private Date mDate;
-    private int mState;
-    private String mUserAssigner;
 
-    public DeviceHistoryDetail(String date, String userAssigner, int state) {
-        mDate = convertToDate(date);
-        mState = state;
-        mUserAssigner = userAssigner;
+    @Expose
+    @SerializedName("date_time")
+    private Date mDateTime;
+    @Expose
+    @SerializedName("description")
+    private String mDescription;
+    @Expose
+    @SerializedName("device_status")
+    private String mDeviceStatus;
+
+    @Bindable
+    public Date getDateTime() {
+        return mDateTime;
+    }
+
+    public void setDateTime(Date dateTime) {
+        mDateTime = dateTime;
+        notifyPropertyChanged(BR.dateTime);
     }
 
     @Bindable
-    public Date getDate() {
-        return mDate;
+    public String getDescription() {
+        return mDescription;
     }
 
-    public void setDate(Date date) {
-        mDate = date;
-        notifyPropertyChanged(BR.date);
-    }
-
-    @Bindable
-    public int getState() {
-        return mState;
-    }
-
-    public void setState(int state) {
-        mState = state;
-        notifyPropertyChanged(BR.state);
+    public void setDescription(String description) {
+        mDescription = description;
+        notifyPropertyChanged(BR.description);
     }
 
     @Bindable
-    public String getUserAssigner() {
-        return mUserAssigner;
+    public String getDeviceStatus() {
+        return mDeviceStatus;
     }
 
-    public void setUserAssigner(String userAssigner) {
-        mUserAssigner = userAssigner;
-        notifyPropertyChanged(BR.userAssigner);
-    }
-
-    public String getStatusName() {
-        switch (mState) {
-            case USING:
-                return STATUS_USING;
-            case AVAIABLE:
-                return STATUS_AVAILABLE;
-            case BROKEN:
-                return STATUS_BROKEN;
-            default:
-                return STATUS_USING;
-        }
+    public void setDeviceStatus(String deviceStatus) {
+        mDeviceStatus = deviceStatus;
+        notifyPropertyChanged(BR.deviceStatus);
     }
 
     public int getStatusImage() {
-        switch (mState) {
-            case USING:
+        switch (mDeviceStatus) {
+            case STATUS_USING:
                 return R.drawable.ic_using;
-            case AVAIABLE:
+            case STATUS_AVAILABLE:
                 return R.drawable.ic_avaiable;
-            case BROKEN:
+            case STATUS_BROKEN:
                 return R.drawable.ic_broken;
             default:
                 return R.drawable.ic_avaiable;

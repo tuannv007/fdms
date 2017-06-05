@@ -3,6 +3,7 @@ package com.framgia.fdms.data.source.api.service;
 import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Dashboard;
 import com.framgia.fdms.data.model.Device;
+import com.framgia.fdms.data.model.DeviceHistoryDetail;
 import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.Status;
@@ -89,4 +90,7 @@ public interface FDMSApi {
     @FormUrlEncoded
     Observable<Respone<List<Request>>> updateActionRequest(@Path("id") int requestId,
             @Field("request[request_status_id]") int actionId);
+
+    @GET("api/v1/device_history/{id}")
+    Observable<Respone<List<DeviceHistoryDetail>>> getDeviceDetailHistory(@Path("id") int deviceId);
 }
