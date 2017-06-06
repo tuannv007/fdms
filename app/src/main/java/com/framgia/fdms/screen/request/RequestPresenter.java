@@ -23,11 +23,11 @@ final class RequestPresenter implements RequestContract.Presenter {
         mViewModel = viewModel;
         mRepository = repository;
         mCompositeSubscription = new CompositeSubscription();
+        getCurrentUser();
     }
 
     @Override
     public void onStart() {
-        getCurrentUser();
     }
 
     @Override
