@@ -8,7 +8,6 @@ import android.databinding.ObservableInt;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Toast;
 import com.android.databinding.library.baseAdapters.BR;
 import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.screen.devicedetail.infomation.DeviceInfomationFragment;
@@ -24,7 +23,8 @@ import static com.framgia.fdms.screen.devicedetail.DeviceDetailPagerAdapter.Devi
  * Exposes the data to be used in the Devicedetail screen.
  */
 
-public class DeviceDetailViewModel extends BaseObservable implements DeviceDetailContract.ViewModel {
+public class DeviceDetailViewModel extends BaseObservable
+        implements DeviceDetailContract.ViewModel {
 
     private DeviceDetailContract.Presenter mPresenter;
     private DeviceDetailPagerAdapter mAdapter;
@@ -71,6 +71,7 @@ public class DeviceDetailViewModel extends BaseObservable implements DeviceDetai
     @Override
     public void onGetDeviceSuccess(Device device) {
         setDevice(device);
+        mActivity.setTitle(device.getProductionName());
     }
 
     public ObservableField<Integer> getProgressBarVisibility() {
