@@ -56,7 +56,13 @@ public class CreateDeviceViewModel extends BaseObservable
             DeviceStatusType type) {
         mContext = activity.getApplicationContext();
         mActivity = activity;
-        mDevice = device == null ? new Device() : device;
+        if (device == null) {
+            mDevice = new Device();
+        } else {
+            mDevice = device;
+            mCategory = new Category(device.getDeviceCategoryId(), device.getDeviceCategoryName());
+            mStatus = new Status(device.getDeviceStatusId(), device.getDeviceStatusName());
+        }
         mDeviceType = type;
     }
 
@@ -286,5 +292,9 @@ public class CreateDeviceViewModel extends BaseObservable
 
     public Device getDevice() {
         return mDevice;
+    }
+
+    public DeviceStatusType getDeviceType() {
+        return mDeviceType;
     }
 }

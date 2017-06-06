@@ -72,9 +72,6 @@ final class CreateDevicePresenter implements CreateDeviceContract.Presenter {
 
     @Override
     public void updateDevice(Device device) {
-        if (!validateDataInput(device)) {
-            return;
-        }
         Subscription subscription = mDeviceRepository.updateDevice(device)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

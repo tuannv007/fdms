@@ -122,15 +122,11 @@ public class DeviceRemoteDataSource implements DeviceDataSource.RemoteDataSource
                 createPartFromString(String.valueOf(device.getDeviceStatusId()));
         RequestBody deviceCategoryId =
                 createPartFromString(String.valueOf(device.getDeviceStatusId()));
-        RequestBody serialNumber = createPartFromString(device.getSerialNumber());
-        RequestBody modellNumber = createPartFromString(device.getModelNumber());
         RequestBody deviceCode = createPartFromString(device.getDeviceCode());
 
         parrams.put(PRODUCTION_NAME, productionName);
         parrams.put(DEVICE_STATUS_ID, deviceStatusId);
         parrams.put(DEVICE_CATEGORY_ID, deviceCategoryId);
-        parrams.put(SERIAL_NUMBER, serialNumber);
-        parrams.put(MODEL_NUMBER, modellNumber);
         parrams.put(DEVICE_CODE, deviceCode);
 
         MultipartBody.Part filePart = null;
@@ -190,7 +186,8 @@ public class DeviceRemoteDataSource implements DeviceDataSource.RemoteDataSource
     @Override
     public Observable<List<DeviceHistoryDetail>> getDeviceDetailHistory(int deviceId) {
         return mFDMSApi.getDeviceDetailHistory(deviceId)
-                .flatMap(new Func1<Respone<List<DeviceHistoryDetail>>,
+                .flatMap(
+                        new Func1<Respone<List<DeviceHistoryDetail>>,
                                 Observable<List<DeviceHistoryDetail>>>() {
                             @Override
                             public Observable<List<DeviceHistoryDetail>> call(
