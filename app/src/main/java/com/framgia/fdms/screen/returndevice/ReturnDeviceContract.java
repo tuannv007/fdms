@@ -40,6 +40,8 @@ public interface ReturnDeviceContract {
         void onGetDeviceSuccess(Device device);
 
         void onGetDeviceUserOtherSuccess(Device device);
+
+        void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults);
     }
 
     /**

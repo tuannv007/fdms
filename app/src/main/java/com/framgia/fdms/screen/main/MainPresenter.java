@@ -18,8 +18,7 @@ final class MainPresenter implements MainContract.Presenter {
     private CompositeSubscription mSubscription;
     private DeviceRepository mDeviceRepository;
 
-    public MainPresenter(MainContract.ViewModel viewModel,
-            DeviceRepository deviceRepository) {
+    public MainPresenter(MainContract.ViewModel viewModel, DeviceRepository deviceRepository) {
         mViewModel = viewModel;
         mSubscription = new CompositeSubscription();
         mDeviceRepository = deviceRepository;
@@ -37,8 +36,8 @@ final class MainPresenter implements MainContract.Presenter {
     @Override
     public void getDevice(String resultQrCode) {
         Subscription subscription = mDeviceRepository.getDeviceByQrCode(resultQrCode)
-                .observeOn(Schedulers.io())
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
                 .subscribe(new Action1<Device>() {
                     @Override
                     public void call(Device device) {

@@ -2,17 +2,21 @@ package com.framgia.fdms.screen.returndevice;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 import android.databinding.ObservableList;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
+import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.screen.scanner.ScannerActivity;
 import com.framgia.fdms.screen.selection.StatusSelectionActivity;
 import com.framgia.fdms.screen.selection.StatusSelectionType;
+import com.framgia.fdms.utils.permission.PermissionUtil;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +24,7 @@ import static com.framgia.fdms.utils.Constant.BundleConstant.BUNDLE_CONTENT;
 import static com.framgia.fdms.utils.Constant.BundleConstant.BUNDLE_STATUE;
 import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_SCANNER;
 import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_SELECTION;
+import static com.framgia.fdms.utils.permission.PermissionUtil.MY_PERMISSIONS_REQUEST_CAMERA;
 
 /**
  * Exposes the data to be used in the ReturnDevice screen.
@@ -103,7 +108,26 @@ public class ReturnDeviceViewModel implements ReturnDeviceContract.ViewModel {
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            int[] grantResults) {
+        if (requestCode == MY_PERMISSIONS_REQUEST_CAMERA
+                && grantResults.length > 0
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            startScannerActivity();
+        } else {
+            Snackbar.make(mActivity.findViewById(android.R.id.content),
+                    R.string.msg_denied_read_camera, Snackbar.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
     public void onStartScannerDevice() {
+        if (PermissionUtil.checkCameraPermission(mActivity)) {
+            startScannerActivity();
+        }
+    }
+
+    private void startScannerActivity() {
         mActivity.startActivityForResult(
                 ScannerActivity.newIntent(mActivity.getApplicationContext()), REQUEST_SCANNER);
     }

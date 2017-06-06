@@ -5,16 +5,12 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 import com.framgia.fdms.data.model.Respone;
-import com.framgia.fdms.data.model.User;
-import com.framgia.fdms.data.source.local.sharepref.SharePreferenceImp;
-import com.google.gson.Gson;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import rx.Observable;
 
-import static com.framgia.fdms.data.source.local.sharepref.SharePreferenceKey.USER_PREFS;
 import static com.framgia.fdms.utils.Constant.PERCENT;
 import static com.framgia.fdms.utils.Constant.TITLE_UNKNOWN;
 

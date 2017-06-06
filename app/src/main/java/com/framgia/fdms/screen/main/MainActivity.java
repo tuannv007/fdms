@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.source.DeviceRepository;
@@ -47,5 +48,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         mViewModel.onStop();
         super.onStop();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (mViewModel != null) mViewModel.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+            @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (mViewModel != null) {
+            mViewModel.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 }

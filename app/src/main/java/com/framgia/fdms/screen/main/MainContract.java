@@ -1,5 +1,6 @@
 package com.framgia.fdms.screen.main;
 
+import android.content.Intent;
 import com.framgia.fdms.BasePresenter;
 import com.framgia.fdms.BaseViewModel;
 import com.framgia.fdms.data.model.Device;
@@ -17,6 +18,10 @@ public interface MainContract {
         void onGetDecodeSuccess(Device device);
 
         void onGetDeviceError(String error);
+
+        void onActivityResult(int requestCode, int resultCode, Intent data);
+
+        void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults);
     }
 
     /**
