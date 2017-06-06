@@ -9,6 +9,8 @@
 
         <import type="com.framgia.fdms.utils.Utils"/>
         <import type="java.lang.String"/>
+        <import type="com.framgia.fdms.screen.devicecreation.DeviceStatusType"/>
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.framgia.fdms.screen.devicecreation.CreateDeviceViewModel"
@@ -113,6 +115,7 @@
                     android:layout_marginTop="@dimen/dp_10"
                     android:paddingTop="@dimen/dp_10"
                     android:textColorHint="@color/color_brown"
+                    android:visibility="@{viewModel.deviceType.equals(DeviceStatusType.CREATE) ? View.VISIBLE : View.GONE}"
                     app:errorText="@{viewModel.serialNumberError}"
                     >
                     <android.support.design.widget.TextInputEditText
@@ -148,6 +151,7 @@
                     android:layout_marginTop="@dimen/dp_10"
                     android:paddingTop="@dimen/dp_10"
                     android:textColorHint="@color/color_brown"
+                    android:visibility="@{viewModel.deviceType.equals(DeviceStatusType.CREATE) ? View.VISIBLE : View.GONE}"
                     app:errorText="@{viewModel.modelNumberError}"
                     >
                     <android.support.design.widget.TextInputEditText
