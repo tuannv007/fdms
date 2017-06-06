@@ -3,6 +3,7 @@ package com.framgia.fdms.screen.requestdetail;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.BaseObservable;
+import android.databinding.Bindable;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.os.Bundle;
@@ -59,6 +60,7 @@ public class RequestDetailViewModel extends BaseObservable
     private Request mRequest;
     private int mPosition;
     private FdmsProgressDialog mProgressDialog;
+    private int mProgressBarVisibility = View.GONE;
 
     public RequestDetailViewModel(AppCompatActivity activity, List<Request.DeviceRequest> request,
             List<Request.RequestAction> actions, String statusRequest, Request actionRequest) {
@@ -96,13 +98,12 @@ public class RequestDetailViewModel extends BaseObservable
 
     @Override
     public void showProgressbar() {
-        mProgressDialog = FdmsProgressDialog.getInstance(mContext);
-        mProgressDialog.show();
+        setProgressBarVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgressbar() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) mProgressDialog.dismiss();
+        setProgressBarVisibility(View.GONE);
     }
 
     @Override
@@ -252,5 +253,15 @@ public class RequestDetailViewModel extends BaseObservable
 
     public String getStatusRequest() {
         return mStatusRequest;
+    }
+
+    @Bindable
+    public int getProgressBarVisibility() {
+        return mProgressBarVisibility;
+    }
+
+    public void setProgressBarVisibility(int progressBarVisibility) {
+        mProgressBarVisibility = progressBarVisibility;
+        notifyPropertyChanged(BR.progressBarVisibility);
     }
 }

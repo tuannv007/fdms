@@ -32,6 +32,7 @@ public class RequestDetailPresenter implements RequestDetailContract.Presenter {
                 new CategoryRemoteDataSource(FDMSServiceClient.getInstance()));
         mRequestRepository =
                 new RequestRepository(new RequestRemoteDataSource(FDMSServiceClient.getInstance()));
+        getListCategory();
     }
 
     public void getListCategory() {
@@ -96,11 +97,11 @@ public class RequestDetailPresenter implements RequestDetailContract.Presenter {
 
     @Override
     public void onStart() {
-        getListCategory();
+
     }
 
     @Override
     public void onStop() {
-
+        mSubscription.clear();
     }
 }
