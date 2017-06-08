@@ -1,6 +1,5 @@
 package com.framgia.fdms.screen.requestdetail;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.BaseObservable;
@@ -18,6 +17,7 @@ import com.android.databinding.library.baseAdapters.BR;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Request;
+import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.source.CategoryRepository;
 import com.framgia.fdms.data.source.api.service.FDMSServiceClient;
 import com.framgia.fdms.data.source.remote.CategoryRemoteDataSource;
@@ -32,6 +32,7 @@ import rx.subscriptions.CompositeSubscription;
 
 import static android.app.Activity.RESULT_OK;
 import static com.framgia.fdms.utils.Constant.BundleConstant.BUNDLE_CATEGORY;
+import static com.framgia.fdms.utils.Constant.BundleConstant.BUNDLE_RESPONE;
 import static com.framgia.fdms.utils.Constant.RequestAction.APPROVED;
 import static com.framgia.fdms.utils.Constant.RequestAction.CANCEL;
 import static com.framgia.fdms.utils.Constant.RequestAction.DONE;
@@ -234,8 +235,12 @@ public class RequestDetailViewModel extends BaseObservable
     }
 
     @Override
-    public void editActionSuccess() {
-        mActivity.setResult(Activity.RESULT_OK);
+    public void editActionSuccess(Respone<Request> requestRespone) {
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(BUNDLE_RESPONE, requestRespone);
+        intent.putExtras(bundle);
+        mActivity.setResult(RESULT_OK, intent);
         mActivity.finish();
     }
 

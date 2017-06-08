@@ -1,5 +1,6 @@
 package com.framgia.fdms.screen.dashboard.dashboarddetail;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -42,7 +43,7 @@ public class DashBoardDetailFragment extends Fragment {
             dashboradType = getArguments().getInt(EXTRA_DASHBORAD_TYPE);
         }
 
-        mViewModel = new DashBoardDetailViewModel(getActivity(), dashboradType);
+        mViewModel = new DashBoardDetailViewModel(this, dashboradType);
         DashBoardDetailContract.Presenter presenter = new DashBoardDetailPresenter(mViewModel,
                 new DeviceRepository(new DeviceRemoteDataSource(FDMSServiceClient.getInstance())),
                 RequestRepository.getInstant(
@@ -62,6 +63,12 @@ public class DashBoardDetailFragment extends Fragment {
                         false);
         binding.setViewModel((DashBoardDetailViewModel) mViewModel);
         return binding.getRoot();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mViewModel.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

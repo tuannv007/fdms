@@ -1,9 +1,13 @@
 package com.framgia.fdms.screen.dashboard.dashboarddetail;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.graphics.Color;
+import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.PopupMenu;
 import android.view.MenuItem;
@@ -14,6 +18,7 @@ import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Dashboard;
 import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.data.model.Request;
+import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.screen.request.OnRequestClickListenner;
 import com.framgia.fdms.screen.request.userrequest.UserRequestAdapter;
 import com.framgia.fdms.screen.requestdetail.RequestDetailActivity;
@@ -23,10 +28,13 @@ import com.github.mikephil.charting.data.PieEntry;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
 import static com.framgia.fdms.screen.dashboard.dashboarddetail.DashBoardDetailFragment
         .DEVICE_DASHBOARD;
 import static com.framgia.fdms.screen.dashboard.dashboarddetail.DashBoardDetailFragment
         .REQUEST_DASHBOARD;
+import static com.framgia.fdms.utils.Constant.BundleConstant.BUNDLE_RESPONE;
+import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_DETAIL;
 
 /**
  * Exposes the data to be used in the Scanner screen.
@@ -46,11 +54,11 @@ public class DashBoardDetailViewModel extends BaseObservable
     private String mDashboardTitle;
     private int mEmptyViewVisible = View.GONE;
     private int mDashboardType;
-    private FragmentActivity mActivity;
+    private Fragment mFragment;
 
-    public DashBoardDetailViewModel(FragmentActivity activity, int dashboardType) {
-        mActivity = activity;
-        mContext = activity.getApplicationContext();
+    public DashBoardDetailViewModel(Fragment fragment, int dashboardType) {
+        mFragment = fragment;
+        mContext = fragment.getContext();
         mPieData = new PieData();
         mAdapterTopRequest = new UserRequestAdapter(mContext, new ArrayList<Request>(), this);
         mAdapterTopDevice = new TopDeviceAdapter(mContext, new ArrayList<Device>());
@@ -79,6 +87,22 @@ public class DashBoardDetailViewModel extends BaseObservable
     @Override
     public void setPresenter(DashBoardDetailContract.Presenter presenter) {
         mPresenter = presenter;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null || data.getExtras() == null || resultCode != RESULT_OK) {
+            return;
+        }
+        Bundle bundle = data.getExtras();
+
+        if (requestCode == REQUEST_DETAIL) {
+            Respone<Request> requestRespone =
+                    (Respone<Request>) bundle.getSerializable(BUNDLE_RESPONE);
+            if (requestRespone != null) {
+                onUpdateActionSuccess(requestRespone);
+            }
+        }
     }
 
     @Bindable
@@ -154,6 +178,24 @@ public class DashBoardDetailViewModel extends BaseObservable
         mAdapterTopDevice.onUpdatePage(devices);
     }
 
+    @Override
+    public void onUpdateActionSuccess(Respone<Request> requestRespone) {
+        if (requestRespone == null || requestRespone.getData() == null) return;
+        mAdapterTopRequest.updateItem(requestRespone.getData());
+        Snackbar.make(mFragment.getView(), requestRespone.getMessage(), Snackbar.LENGTH_LONG)
+                .show();
+    }
+
+    @Override
+    public void showProgressbar() {
+        // TODO: 08/06/2017
+    }
+
+    @Override
+    public void hideProgressbar() {
+        // TODO: 08/06/2017
+    }
+
     public void setTotal(int total) {
         mTotal = total;
         notifyPropertyChanged(BR.total);
@@ -197,7 +239,7 @@ public class DashBoardDetailViewModel extends BaseObservable
     }
 
     @Override
-    public void onMenuClick(View v, UserRequestAdapter.RequestModel request) {
+    public void onMenuClick(View v, final UserRequestAdapter.RequestModel request) {
         if (request == null
                 || request.getRequest() == null
                 || request.getRequest().getRequestActionList() == null) {
@@ -213,6 +255,8 @@ public class DashBoardDetailViewModel extends BaseObservable
                         @Override
                         public boolean onMenuItemClick(MenuItem menuItem) {
                             // TODO: 22/05/2017 update request status
+                            mPresenter.updateActionRequest(request.getRequest().getId(),
+                                    action.getId());
                             return false;
                         }
                     });
@@ -222,6 +266,7 @@ public class DashBoardDetailViewModel extends BaseObservable
 
     @Override
     public void onDetailRequestClick(Request request) {
-        mActivity.startActivity(RequestDetailActivity.newInstance(mContext, request));
+        mFragment.startActivityForResult(RequestDetailActivity.newInstance(mContext, request),
+                REQUEST_DETAIL);
     }
 }

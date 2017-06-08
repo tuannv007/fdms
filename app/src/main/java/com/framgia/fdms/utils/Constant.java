@@ -63,6 +63,7 @@ public class Constant {
         public static final String BUNDLE_STATUE = "BUNDLE_STATUE";
         public static final String BUNDLE_DEVICE = "BUNDLE_DEVICE";
         public static final String BUNDLE_CONTENT = "BUNDLE_CONTENT";
+        public static final String BUNDLE_RESPONE = "BUNDLE_RESPONE";
     }
 
     public static final class RequestConstant {

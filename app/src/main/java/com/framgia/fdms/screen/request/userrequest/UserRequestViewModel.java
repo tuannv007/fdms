@@ -1,10 +1,10 @@
 package com.framgia.fdms.screen.request.userrequest;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.Bindable;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.PopupMenu;
@@ -16,6 +16,7 @@ import com.framgia.fdms.BaseFragmentContract;
 import com.framgia.fdms.BaseFragmentModel;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Request;
+import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.screen.request.OnRequestClickListenner;
 import com.framgia.fdms.screen.requestdetail.RequestDetailActivity;
@@ -24,6 +25,8 @@ import com.framgia.fdms.screen.selection.StatusSelectionType;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
+import static com.framgia.fdms.utils.Constant.BundleConstant.BUNDLE_RESPONE;
 import static com.framgia.fdms.utils.Constant.BundleConstant.BUNDLE_STATUE;
 import static com.framgia.fdms.utils.Constant.OUT_OF_INDEX;
 import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_DETAIL;
@@ -45,12 +48,10 @@ public class UserRequestViewModel extends BaseFragmentModel
     private List<Status> mRelatives = new ArrayList<>();
 
     private Status mStatus;
-    private FragmentActivity mActivity;
     private Status mRelative;
 
     public UserRequestViewModel(FragmentActivity activity, Fragment fragment) {
         mContext = activity.getApplicationContext();
-        mActivity = activity;
         mFragment = fragment;
         mAdapter = new UserRequestAdapter(mContext, new ArrayList<Request>(), this);
         setStatus(new Status(OUT_OF_INDEX, mContext.getString(R.string.title_request_status)));
@@ -107,23 +108,24 @@ public class UserRequestViewModel extends BaseFragmentModel
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (data == null || data.getExtras() == null || resultCode != Activity.RESULT_OK) {
+        if (data == null || data.getExtras() == null || resultCode != RESULT_OK) {
             return;
         }
         Bundle bundle = data.getExtras();
-        Status status = bundle.getParcelable(BUNDLE_STATUE);
         switch (requestCode) {
             case REQUEST_SELECTION:
-                if (status != null) {
-                    if (status.getName().equals(mContext.getString(R.string.action_clear))) {
-                        status.setName(mContext.getString(R.string.title_request_relative));
+                Status relative = bundle.getParcelable(BUNDLE_STATUE);
+                if (relative != null) {
+                    if (relative.getName().equals(mContext.getString(R.string.action_clear))) {
+                        relative.setName(mContext.getString(R.string.title_request_relative));
                     }
-                    setRelative(status);
+                    setRelative(relative);
                     mAdapter.clear();
                     mPresenter.getData(mRelative, mStatus);
                 }
                 break;
             case REQUEST_STATUS:
+                Status status = bundle.getParcelable(BUNDLE_STATUE);
                 if (status != null) {
                     if (status.getName().equals(mContext.getString(R.string.action_clear))) {
                         status.setName(mContext.getString(R.string.title_request_status));
@@ -134,14 +136,23 @@ public class UserRequestViewModel extends BaseFragmentModel
                 }
                 break;
             case REQUEST_DETAIL:
-                if (status != null) {
-                    mAdapter.clear();
-                    mPresenter.getData(mRelative, mStatus);
+                Respone<Request> requestRespone =
+                        (Respone<Request>) bundle.getSerializable(BUNDLE_RESPONE);
+                if (requestRespone != null) {
+                    onUpdateActionSuccess(requestRespone);
                 }
                 break;
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onUpdateActionSuccess(Respone<Request> requestRespone) {
+        if (requestRespone == null || requestRespone.getData() == null) return;
+        mAdapter.updateItem(requestRespone.getData());
+        Snackbar.make(mFragment.getView(), requestRespone.getMessage(), Snackbar.LENGTH_LONG)
+                .show();
     }
 
     public void onSelectStatusClick() {
@@ -193,7 +204,7 @@ public class UserRequestViewModel extends BaseFragmentModel
     }
 
     @Override
-    public void onMenuClick(View v, UserRequestAdapter.RequestModel request) {
+    public void onMenuClick(View v, final UserRequestAdapter.RequestModel request) {
         if (request == null
                 || request.getRequest() == null
                 || request.getRequest().getRequestActionList() == null) {
@@ -209,6 +220,8 @@ public class UserRequestViewModel extends BaseFragmentModel
                         @Override
                         public boolean onMenuItemClick(MenuItem menuItem) {
                             // TODO: 22/05/2017 update request status
+                            ((UserRequestContract.Presenter) mPresenter).updateActionRequest(
+                                    request.getRequest().getId(), action.getId());
                             return false;
                         }
                     });
@@ -218,7 +231,7 @@ public class UserRequestViewModel extends BaseFragmentModel
 
     @Override
     public void onDetailRequestClick(Request request) {
-        mActivity.startActivityForResult(RequestDetailActivity.newInstance(mContext, request),
+        mFragment.startActivityForResult(RequestDetailActivity.newInstance(mContext, request),
                 REQUEST_DETAIL);
     }
 }

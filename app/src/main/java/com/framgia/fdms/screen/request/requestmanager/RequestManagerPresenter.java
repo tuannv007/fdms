@@ -1,6 +1,7 @@
 package com.framgia.fdms.screen.request.requestmanager;
 
 import com.framgia.fdms.data.model.Request;
+import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.data.source.RequestRepositoryContract;
 import com.framgia.fdms.data.source.StatusRepository;
@@ -74,10 +75,10 @@ final class RequestManagerPresenter implements RequestManagerContract.Presenter 
                         mViewModel.showProgressbar();
                     }
                 })
-                .subscribe(new Action1<Request>() {
+                .subscribe(new Action1<Respone<Request>>() {
                     @Override
-                    public void call(Request request) {
-                        mViewModel.onGetActionRequestSuccess(request);
+                    public void call(Respone<Request> requestRespone) {
+                        mViewModel.onUpdateActionSuccess(requestRespone);
                     }
                 }, new Action1<Throwable>() {
                     @Override

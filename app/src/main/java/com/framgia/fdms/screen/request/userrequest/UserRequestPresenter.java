@@ -1,6 +1,7 @@
 package com.framgia.fdms.screen.request.userrequest;
 
 import com.framgia.fdms.data.model.Request;
+import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.data.source.RequestRepositoryContract;
 import com.framgia.fdms.data.source.StatusRepository;
@@ -9,6 +10,7 @@ import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
@@ -157,6 +159,38 @@ final class UserRequestPresenter implements UserRequestContract.Presenter {
                     @Override
                     public void onNext(List<Status> statuses) {
                         mViewModel.onGetRelativeSuccess(statuses);
+                    }
+                });
+
+        mSubscription.add(subscription);
+    }
+
+    @Override
+    public void updateActionRequest(int requestId, int actionId) {
+        Subscription subscription = mRequestRepository.updateActionRequest(requestId, actionId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mViewModel.showProgressbar();
+                    }
+                })
+                .subscribe(new Action1<Respone<Request>>() {
+                    @Override
+                    public void call(Respone<Request> requestRespone) {
+                        mViewModel.onUpdateActionSuccess(requestRespone);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        mViewModel.hideProgressbar();
+                        mViewModel.onLoadError(throwable.getMessage());
+                    }
+                }, new Action0() {
+                    @Override
+                    public void call() {
+                        mViewModel.hideProgressbar();
                     }
                 });
 

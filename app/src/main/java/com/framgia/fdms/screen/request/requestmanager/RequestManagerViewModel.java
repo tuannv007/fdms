@@ -1,15 +1,12 @@
 package com.framgia.fdms.screen.request.requestmanager;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.Bindable;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -18,6 +15,7 @@ import com.framgia.fdms.BaseFragmentContract;
 import com.framgia.fdms.BaseFragmentModel;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Request;
+import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.screen.request.OnRequestClickListenner;
 import com.framgia.fdms.screen.request.userrequest.UserRequestAdapter;
@@ -27,6 +25,8 @@ import com.framgia.fdms.screen.selection.StatusSelectionType;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
+import static com.framgia.fdms.utils.Constant.BundleConstant.BUNDLE_RESPONE;
 import static com.framgia.fdms.utils.Constant.BundleConstant.BUNDLE_STATUE;
 import static com.framgia.fdms.utils.Constant.OUT_OF_INDEX;
 import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_DETAIL;
@@ -107,29 +107,24 @@ public class RequestManagerViewModel extends BaseFragmentModel
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_DETAIL) {
-            mAdapter.clear();
-            mPresenter.getData(mRelative, mStatus);
-            return;
-        }
-
-        if (data == null || data.getExtras() == null || resultCode != Activity.RESULT_OK) {
+        if (data == null || data.getExtras() == null || resultCode != RESULT_OK) {
             return;
         }
         Bundle bundle = data.getExtras();
-        Status status = bundle.getParcelable(BUNDLE_STATUE);
         switch (requestCode) {
             case REQUEST_SELECTION:
-                if (status != null) {
-                    if (status.getName().equals(mContext.getString(R.string.action_clear))) {
-                        status.setName(mContext.getString(R.string.title_request_relative));
+                Status relative = bundle.getParcelable(BUNDLE_STATUE);
+                if (relative != null) {
+                    if (relative.getName().equals(mContext.getString(R.string.action_clear))) {
+                        relative.setName(mContext.getString(R.string.title_request_relative));
                     }
-                    setRelative(status);
+                    setRelative(relative);
                     mAdapter.clear();
                     mPresenter.getData(mRelative, mStatus);
                 }
                 break;
             case REQUEST_STATUS:
+                Status status = bundle.getParcelable(BUNDLE_STATUE);
                 if (status != null) {
                     if (status.getName().equals(mContext.getString(R.string.action_clear))) {
                         status.setName(mContext.getString(R.string.title_request_status));
@@ -139,15 +134,24 @@ public class RequestManagerViewModel extends BaseFragmentModel
                     mPresenter.getData(mRelative, mStatus);
                 }
                 break;
+            case REQUEST_DETAIL:
+                Respone<Request> requestRespone =
+                        (Respone<Request>) bundle.getSerializable(BUNDLE_RESPONE);
+                if (requestRespone != null) {
+                    onUpdateActionSuccess(requestRespone);
+                }
+                break;
             default:
                 break;
         }
     }
 
     @Override
-    public void onGetActionRequestSuccess(Request request) {
-        if (request == null) return;
-        mAdapter.updateItem(request);
+    public void onUpdateActionSuccess(Respone<Request> requestRespone) {
+        if (requestRespone == null || requestRespone.getData() == null) return;
+        mAdapter.updateItem(requestRespone.getData());
+        Snackbar.make(mFragment.getView(), requestRespone.getMessage(), Snackbar.LENGTH_LONG)
+                .show();
     }
 
     public void onSelectStatusClick() {

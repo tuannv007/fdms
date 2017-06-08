@@ -3,6 +3,7 @@ package com.framgia.fdms.screen.request.userrequest;
 import android.content.Intent;
 import com.framgia.fdms.BaseFragmentContract;
 import com.framgia.fdms.data.model.Request;
+import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.Status;
 import java.util.List;
 
@@ -25,6 +26,8 @@ interface UserRequestContract {
         void getData();
 
         void onActivityResult(int requestCode, int resultCode, Intent data);
+
+        void onUpdateActionSuccess(Respone<Request> requestRespone);
     }
 
     /**
@@ -36,5 +39,7 @@ interface UserRequestContract {
         void getStatusDevice();
 
         void getListRelative();
+
+        void updateActionRequest(int requestId, int actionId);
     }
 }
