@@ -1,4 +1,4 @@
-package com.framgia.fdms.screen.historydetail;
+package com.framgia.fdms.screen.devicedetail.history;
 
 import com.framgia.fdms.BasePresenter;
 import com.framgia.fdms.BaseViewModel;

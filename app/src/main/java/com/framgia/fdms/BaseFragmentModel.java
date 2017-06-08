@@ -18,6 +18,7 @@ public abstract class BaseFragmentModel extends BaseObservable
     protected ObservableField<Boolean> mIsLoadMore = new ObservableField<>(false);
     private ObservableField<Integer> mProgressBarVisibility = new ObservableField<>();
     protected BaseFragmentContract.Presenter mPresenter;
+
     private RecyclerView.OnScrollListener mScrollListenner = new RecyclerView.OnScrollListener() {
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {

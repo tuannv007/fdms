@@ -1,4 +1,4 @@
-package com.framgia.fdms.screen.historydetail;
+package com.framgia.fdms.screen.devicedetail.history;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

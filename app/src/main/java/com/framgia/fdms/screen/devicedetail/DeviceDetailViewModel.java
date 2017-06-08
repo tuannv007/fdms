@@ -12,7 +12,7 @@ import com.android.databinding.library.baseAdapters.BR;
 import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.screen.devicedetail.infomation.DeviceInfomationFragment;
 import com.framgia.fdms.screen.devicedetail.usinghistory.DeviceUsingHistoryFragment;
-import com.framgia.fdms.screen.historydetail.DeviceDetailHistoryFragment;
+import com.framgia.fdms.screen.devicedetail.history.DeviceDetailHistoryFragment;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,7 +71,6 @@ public class DeviceDetailViewModel extends BaseObservable
     @Override
     public void onGetDeviceSuccess(Device device) {
         setDevice(device);
-        mActivity.setTitle(device.getProductionName());
     }
 
     public ObservableField<Integer> getProgressBarVisibility() {

@@ -66,4 +66,14 @@ public class Utils {
         }
         return result;
     }
+
+    public static String formatPrice(String priceStr) {
+        try {
+            double price = Double.parseDouble(priceStr);
+            return String.format(Locale.US, "%,.0f", price);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return priceStr;
+        }
+    }
 }
