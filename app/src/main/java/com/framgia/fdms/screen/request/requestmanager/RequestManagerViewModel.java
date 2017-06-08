@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.PopupMenu;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -17,6 +18,8 @@ import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.Status;
+import com.framgia.fdms.data.model.User;
+import com.framgia.fdms.data.source.local.sharepref.SharePreferenceImp;
 import com.framgia.fdms.screen.request.OnRequestClickListenner;
 import com.framgia.fdms.screen.request.userrequest.UserRequestAdapter;
 import com.framgia.fdms.screen.requestdetail.RequestDetailActivity;
@@ -28,6 +31,7 @@ import java.util.List;
 import static android.app.Activity.RESULT_OK;
 import static com.framgia.fdms.utils.Constant.BundleConstant.BUNDLE_RESPONE;
 import static com.framgia.fdms.utils.Constant.BundleConstant.BUNDLE_STATUE;
+import static com.framgia.fdms.utils.Constant.DeviceStatus.WAITING_DONE;
 import static com.framgia.fdms.utils.Constant.OUT_OF_INDEX;
 import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_DETAIL;
 import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_SELECTION;
@@ -52,7 +56,7 @@ public class RequestManagerViewModel extends BaseFragmentModel
     public RequestManagerViewModel(Fragment fragment) {
         mFragment = fragment;
         mContext = fragment.getContext();
-        mAdapter = new UserRequestAdapter(mContext, new ArrayList<Request>(), this);
+        mAdapter = new UserRequestAdapter(mContext, new ArrayList<Request>(), this, new User());
         setStatus(new Status(OUT_OF_INDEX, mContext.getString(R.string.title_request_status)));
         setRelative(new Status(OUT_OF_INDEX, mContext.getString(R.string.title_request_relative)));
     }
@@ -160,6 +164,12 @@ public class RequestManagerViewModel extends BaseFragmentModel
         mPresenter.getData(mRelative, mStatus);
     }
 
+    @Override
+    public void setCurrentUser(User user) {
+        if (user == null) return;
+        mAdapter.updateUser(user);
+    }
+
     public void onSelectStatusClick() {
         if (mStatuses == null) return;
         mFragment.startActivityForResult(
@@ -215,6 +225,7 @@ public class RequestManagerViewModel extends BaseFragmentModel
                 || request.getRequest().getRequestActionList() == null) {
             return;
         }
+
         Request requestModel = request.getRequest();
         PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
         for (int i = 0; i < requestModel.getRequestActionList().size(); i++) {
@@ -224,7 +235,6 @@ public class RequestManagerViewModel extends BaseFragmentModel
                     .setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem menuItem) {
-                            // TODO: 22/05/2017 update request status
                             ((RequestManagerContract.Presenter) mPresenter).updateActionRequest(
                                     request.getRequest().getId(), action.getId());
                             return false;
@@ -238,5 +248,9 @@ public class RequestManagerViewModel extends BaseFragmentModel
     public void onDetailRequestClick(Request request) {
         mFragment.startActivityForResult(RequestDetailActivity.newInstance(mContext, request),
                 REQUEST_DETAIL);
+    }
+
+    @Override
+    public void onAddDeviceClick(int requestId) {
     }
 }

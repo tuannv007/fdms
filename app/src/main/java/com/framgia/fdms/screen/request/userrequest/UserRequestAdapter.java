@@ -12,10 +12,14 @@ import com.framgia.fdms.BR;
 import com.framgia.fdms.BaseRecyclerViewAdapter;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Request;
+import com.framgia.fdms.data.model.User;
 import com.framgia.fdms.databinding.ItemRequestManagerAdapterBinding;
 import com.framgia.fdms.screen.request.OnRequestClickListenner;
+import com.framgia.fdms.utils.Constant;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.framgia.fdms.utils.Constant.DeviceStatus.WAITING_DONE;
 
 /**
  * Created by beepi on 09/05/2017.
@@ -26,12 +30,14 @@ public class UserRequestAdapter
     private List<Request> mRequests = new ArrayList<>();
     private OnRequestClickListenner mListenner;
     private static final int FIRST_ITEM = 0;
+    private User mUser;
 
     public UserRequestAdapter(Context context, List<Request> requests,
-            OnRequestClickListenner listenner) {
+            OnRequestClickListenner listenner, User user) {
         super(context);
         mRequests = requests;
         mListenner = listenner;
+        mUser = user;
     }
 
     @Override
@@ -49,6 +55,12 @@ public class UserRequestAdapter
                 notifyItemChanged(i);
             }
         }
+    }
+
+    public void updateUser(User user) {
+        if (user == null) return;
+        mUser = user;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -95,10 +107,12 @@ public class UserRequestAdapter
 
     public class RequestModel extends BaseObservable {
         private Request mRequest;
-        private ObservableField<Integer> mStatusRequest = new ObservableField<>();
+        private boolean mIsShowAddDevice;
 
         public RequestModel(Request request) {
             mRequest = request;
+            mIsShowAddDevice = mUser.isBo()
+                    && mRequest.getRequestStatus().equals(WAITING_DONE);
         }
 
         @Bindable
@@ -111,12 +125,14 @@ public class UserRequestAdapter
             notifyPropertyChanged(BR.request);
         }
 
-        public ObservableField<Integer> getStatusRequest() {
-            return mStatusRequest;
+        @Bindable
+        public boolean isShowAddDevice() {
+            return mIsShowAddDevice;
         }
 
-        public void setStatusRequest(ObservableField<Integer> statusRequest) {
-            mStatusRequest = statusRequest;
+        public void setShowAddDevice(boolean showAddDevice) {
+            mIsShowAddDevice = showAddDevice;
+            notifyPropertyChanged(BR.showAddDevice);
         }
     }
 }

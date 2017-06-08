@@ -12,4 +12,6 @@ public interface OnRequestClickListenner {
     void onMenuClick(View v, UserRequestAdapter.RequestModel request);
 
     void onDetailRequestClick(Request request);
+
+    void onAddDeviceClick(int requestId);
 }

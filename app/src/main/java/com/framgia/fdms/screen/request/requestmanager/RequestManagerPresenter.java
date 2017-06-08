@@ -3,8 +3,10 @@ package com.framgia.fdms.screen.request.requestmanager;
 import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.Status;
+import com.framgia.fdms.data.model.User;
 import com.framgia.fdms.data.source.RequestRepositoryContract;
 import com.framgia.fdms.data.source.StatusRepository;
+import com.framgia.fdms.data.source.UserRepository;
 import java.util.List;
 import rx.Subscriber;
 import rx.Subscription;
@@ -31,18 +33,22 @@ final class RequestManagerPresenter implements RequestManagerContract.Presenter 
     private CompositeSubscription mSubscription;
     private RequestRepositoryContract mRequestRepository;
     private StatusRepository mRepository;
+    private UserRepository mUserRepository;
     private int mRelativeId = ALL_RELATIVE_ID;
     private int mStatusId = ALL_REQUEST_STATUS_ID;
 
     public RequestManagerPresenter(RequestManagerContract.ViewModel viewModel,
-            RequestRepositoryContract deviceRepository, StatusRepository statusRepository) {
+            RequestRepositoryContract deviceRepository, StatusRepository statusRepository,
+            UserRepository userRepository) {
         mViewModel = viewModel;
         mSubscription = new CompositeSubscription();
         mRequestRepository = deviceRepository;
         mRepository = statusRepository;
+        mUserRepository = userRepository;
         getStatusDevice();
         getListRelative();
         getRequest(ALL_REQUEST_STATUS_ID, ALL_RELATIVE_ID, mPage, PER_PAGE);
+        getCurrentUser();
     }
 
     @Override
@@ -187,6 +193,25 @@ final class RequestManagerPresenter implements RequestManagerContract.Presenter 
                     }
                 });
 
+        mSubscription.add(subscription);
+    }
+
+    @Override
+    public void getCurrentUser() {
+        Subscription subscription = mUserRepository.getCurrentUser()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<User>() {
+                    @Override
+                    public void call(User user) {
+                        mViewModel.setCurrentUser(user);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        mViewModel.onLoadError(throwable.getMessage());
+                    }
+                });
         mSubscription.add(subscription);
     }
 }

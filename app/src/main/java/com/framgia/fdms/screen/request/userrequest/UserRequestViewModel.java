@@ -18,6 +18,7 @@ import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.Status;
+import com.framgia.fdms.data.model.User;
 import com.framgia.fdms.screen.request.OnRequestClickListenner;
 import com.framgia.fdms.screen.requestdetail.RequestDetailActivity;
 import com.framgia.fdms.screen.selection.StatusSelectionActivity;
@@ -53,7 +54,7 @@ public class UserRequestViewModel extends BaseFragmentModel
     public UserRequestViewModel(FragmentActivity activity, Fragment fragment) {
         mContext = activity.getApplicationContext();
         mFragment = fragment;
-        mAdapter = new UserRequestAdapter(mContext, new ArrayList<Request>(), this);
+        mAdapter = new UserRequestAdapter(mContext, new ArrayList<Request>(), this, new User());
         setStatus(new Status(OUT_OF_INDEX, mContext.getString(R.string.title_request_status)));
         setRelative(new Status(OUT_OF_INDEX, mContext.getString(R.string.title_request_relative)));
     }
@@ -161,6 +162,12 @@ public class UserRequestViewModel extends BaseFragmentModel
         mPresenter.getData(mRelative, mStatus);
     }
 
+    @Override
+    public void setCurrentUser(User user) {
+        if (user == null) return;
+        mAdapter.updateUser(user);
+    }
+
     public void onSelectStatusClick() {
         if (mStatuses == null) return;
         mFragment.startActivityForResult(
@@ -239,5 +246,9 @@ public class UserRequestViewModel extends BaseFragmentModel
     public void onDetailRequestClick(Request request) {
         mFragment.startActivityForResult(RequestDetailActivity.newInstance(mContext, request),
                 REQUEST_DETAIL);
+    }
+
+    @Override
+    public void onAddDeviceClick(int requestId) {
     }
 }
