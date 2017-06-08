@@ -93,13 +93,20 @@ public class RequestRemoteDataSource extends BaseRemoteDataSource
     }
 
     @Override
-    public Observable<Request> updateActionRequest(int requestId, int actionId) {
+    public Observable<Respone<Request>> updateActionRequest(int requestId, int actionId) {
         return mFDMSApi.updateActionRequest(requestId, actionId)
-                .flatMap(new Func1<Respone<Request>, Observable<Request>>() {
+                .flatMap(new Func1<Respone<Request>, Observable<Respone<Request>>>() {
 
                     @Override
-                    public Observable<Request> call(Respone<Request> requestRespone) {
-                        return Utils.getResponse(requestRespone);
+                    public Observable<Respone<Request>> call(Respone<Request> requestRespone) {
+                        if (requestRespone == null) {
+                            return Observable.error(new NullPointerException());
+                        } else if (requestRespone.isError()) {
+                            return Observable.error(
+                                    new NullPointerException("ERROR" + requestRespone.getStatus()));
+                        } else {
+                            return Observable.just(requestRespone);
+                        }
                     }
                 });
     }

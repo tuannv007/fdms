@@ -3,6 +3,7 @@ package com.framgia.fdms.screen.request.requestmanager;
 import android.content.Intent;
 import com.framgia.fdms.BaseFragmentContract;
 import com.framgia.fdms.data.model.Request;
+import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.Status;
 import java.util.List;
 
@@ -26,7 +27,7 @@ interface RequestManagerContract {
 
         void onActivityResult(int requestCode, int resultCode, Intent data);
 
-        void onGetActionRequestSuccess(Request request);
+        void onUpdateActionSuccess(Respone<Request> requestRespone);
     }
 
     /**

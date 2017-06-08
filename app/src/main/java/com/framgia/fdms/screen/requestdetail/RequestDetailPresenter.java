@@ -2,6 +2,7 @@ package com.framgia.fdms.screen.requestdetail;
 
 import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Request;
+import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.source.CategoryRepository;
 import com.framgia.fdms.data.source.RequestRepository;
 import com.framgia.fdms.data.source.api.service.FDMSServiceClient;
@@ -12,6 +13,7 @@ import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
@@ -75,21 +77,21 @@ public class RequestDetailPresenter implements RequestDetailContract.Presenter {
                         mViewModel.showProgressbar();
                     }
                 })
-                .subscribe(new Subscriber<Request>() {
+                .subscribe(new Action1<Respone<Request>>() {
                     @Override
-                    public void onCompleted() {
-                        mViewModel.hideProgressbar();
+                    public void call(Respone<Request> requestRespone) {
+                        mViewModel.editActionSuccess(requestRespone);
                     }
-
+                }, new Action1<Throwable>() {
                     @Override
-                    public void onError(Throwable e) {
+                    public void call(Throwable throwable) {
                         mViewModel.hideProgressbar();
-                        mViewModel.onLoadError(e.getMessage());
+                        mViewModel.onLoadError(throwable.getMessage());
                     }
-
+                }, new Action0() {
                     @Override
-                    public void onNext(Request request) {
-                        mViewModel.editActionSuccess();
+                    public void call() {
+                        mViewModel.hideProgressbar();
                     }
                 });
         mSubscription.add(subscription);

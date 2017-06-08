@@ -124,7 +124,7 @@
                     android:layout_weight="1"
                     android:paddingLeft="@dimen/dp_5"
                     android:textSize="@dimen/sp_12"
-                    bind:dateCreate="@{requestModel.request.creatAt}"
+                    bind:dateCreate="@{requestModel.request.createdAt}"
                     />
 
                 <TextView

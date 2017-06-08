@@ -3,11 +3,13 @@ package com.framgia.fdms.screen.dashboard.dashboarddetail;
 import com.framgia.fdms.data.model.Dashboard;
 import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.data.model.Request;
+import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.source.DeviceRepository;
 import com.framgia.fdms.data.source.RequestRepository;
 import java.util.List;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
@@ -133,6 +135,38 @@ final class DashBoardDetailPresenter implements DashBoardDetailContract.Presente
                         mViewModel.onDashBoardError(throwable.getMessage());
                     }
                 });
+        mCompositeSubscriptions.add(subscription);
+    }
+
+    @Override
+    public void updateActionRequest(int requestId, int actionId) {
+        Subscription subscription = mRequestRepository.updateActionRequest(requestId, actionId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mViewModel.showProgressbar();
+                    }
+                })
+                .subscribe(new Action1<Respone<Request>>() {
+                    @Override
+                    public void call(Respone<Request> requestRespone) {
+                        mViewModel.onUpdateActionSuccess(requestRespone);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        mViewModel.hideProgressbar();
+                        mViewModel.onDashBoardError(throwable.getMessage());
+                    }
+                }, new Action0() {
+                    @Override
+                    public void call() {
+                        mViewModel.hideProgressbar();
+                    }
+                });
+
         mCompositeSubscriptions.add(subscription);
     }
 }

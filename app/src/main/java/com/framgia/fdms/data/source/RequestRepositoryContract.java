@@ -2,6 +2,7 @@ package com.framgia.fdms.data.source;
 
 import com.framgia.fdms.data.model.Dashboard;
 import com.framgia.fdms.data.model.Request;
+import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.data.source.api.request.RequestCreatorRequest;
 import java.util.List;
@@ -26,5 +27,5 @@ public interface RequestRepositoryContract {
 
     Observable<List<Request>> getTopRequest(int topRequest);
 
-    Observable<Request> updateActionRequest(int requestId, int statusId);
+    Observable<Respone<Request>> updateActionRequest(int requestId, int statusId);
 }
