@@ -80,7 +80,7 @@
                     android:layout_height="@dimen/dp_30"
                     android:onClick="@{()-> listenner.onAddDeviceClick(requestModel.request.id)}"
                     android:padding="@dimen/dp_3"
-                    android:src="@drawable/ic_add_24dp"
+                    android:src="@drawable/ic_add_device_24dp"
                     android:visibility="@{requestModel.showAddDevice? View.VISIBLE : View.GONE}"
                     />
 

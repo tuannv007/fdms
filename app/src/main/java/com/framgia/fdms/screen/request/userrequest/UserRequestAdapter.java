@@ -111,8 +111,8 @@ public class UserRequestAdapter
 
         public RequestModel(Request request) {
             mRequest = request;
-            mIsShowAddDevice = mUser.isBo()
-                    && mRequest.getRequestStatus().equals(WAITING_DONE);
+            mIsShowAddDevice =
+                    mUser.isBoStaff() && mRequest.getRequestStatus().equals(WAITING_DONE);
         }
 
         @Bindable
