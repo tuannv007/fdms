@@ -1,4 +1,4 @@
-package com.framgia.fdms.screen.historydetail;
+package com.framgia.fdms.screen.devicedetail.history;
 
 import com.framgia.fdms.data.model.DeviceHistoryDetail;
 import com.framgia.fdms.data.source.DeviceRepository;

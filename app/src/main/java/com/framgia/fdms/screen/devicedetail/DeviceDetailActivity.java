@@ -41,7 +41,6 @@ public class DeviceDetailActivity extends AppCompatActivity {
         ActivityDeviceDetailBinding binding =
                 DataBindingUtil.setContentView(this, R.layout.activity_device_detail);
         binding.setViewModel((DeviceDetailViewModel) mViewModel);
-        setTitle(getString(R.string.title_device_detail));
     }
 
     @Override

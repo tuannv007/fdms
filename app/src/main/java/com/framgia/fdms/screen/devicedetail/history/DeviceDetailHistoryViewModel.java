@@ -1,12 +1,10 @@
-package com.framgia.fdms.screen.historydetail;
+package com.framgia.fdms.screen.devicedetail.history;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-import android.databinding.ObservableField;
 import android.view.View;
 import com.framgia.fdms.BR;
 import com.framgia.fdms.data.model.DeviceHistoryDetail;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
