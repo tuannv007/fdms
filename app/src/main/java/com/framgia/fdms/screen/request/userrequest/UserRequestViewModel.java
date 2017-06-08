@@ -155,6 +155,12 @@ public class UserRequestViewModel extends BaseFragmentModel
                 .show();
     }
 
+    @Override
+    public void refreshData() {
+        mAdapter.clear();
+        mPresenter.getData(mRelative, mStatus);
+    }
+
     public void onSelectStatusClick() {
         if (mStatuses == null) return;
         mFragment.startActivityForResult(

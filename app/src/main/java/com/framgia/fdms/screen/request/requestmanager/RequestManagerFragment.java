@@ -15,11 +15,12 @@ import com.framgia.fdms.data.source.api.service.FDMSServiceClient;
 import com.framgia.fdms.data.source.remote.RequestRemoteDataSource;
 import com.framgia.fdms.data.source.remote.StatusRemoteDataSource;
 import com.framgia.fdms.databinding.FragmentRequestManagerBinding;
+import com.framgia.fdms.screen.request.BaseRequestFragment;
 
 /**
  * RequestManager Screen.
  */
-public class RequestManagerFragment extends Fragment {
+public class RequestManagerFragment extends BaseRequestFragment {
 
     private RequestManagerContract.ViewModel mViewModel;
 
@@ -67,5 +68,10 @@ public class RequestManagerFragment extends Fragment {
     public void onStop() {
         mViewModel.onStop();
         super.onStop();
+    }
+
+    @Override
+    protected void refreshData() {
+        mViewModel.refreshData();
     }
 }

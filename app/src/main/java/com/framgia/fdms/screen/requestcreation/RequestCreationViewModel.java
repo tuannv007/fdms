@@ -6,6 +6,7 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 import com.framgia.fdms.BR;
@@ -54,6 +55,7 @@ public class RequestCreationViewModel extends BaseObservable
     private String mTitleError;
     private String mDescriptionError;
     private String mRelativeError;
+    private int mProgressBarVisibility = View.GONE;
 
     public RequestCreationViewModel(AppCompatActivity activity) {
         mActivity = activity;
@@ -188,12 +190,12 @@ public class RequestCreationViewModel extends BaseObservable
 
     @Override
     public void hideProgressbar() {
-        // TODO: later
+        setProgressBarVisibility(View.GONE);
     }
 
     @Override
     public void showProgressbar() {
-        // TODO: later
+        setProgressBarVisibility(View.VISIBLE);
     }
 
     @Override
@@ -203,6 +205,7 @@ public class RequestCreationViewModel extends BaseObservable
 
     @Override
     public void onGetRequestSuccess(Request request) {
+        mActivity.setResult(RESULT_OK);
         mActivity.finish();
     }
 
@@ -317,5 +320,15 @@ public class RequestCreationViewModel extends BaseObservable
     @Bindable
     public List<Category> getCategories() {
         return mCategories;
+    }
+
+    @Bindable
+    public int getProgressBarVisibility() {
+        return mProgressBarVisibility;
+    }
+
+    public void setProgressBarVisibility(int progressBarVisibility) {
+        mProgressBarVisibility = progressBarVisibility;
+        notifyPropertyChanged(BR.progressBarVisibility);
     }
 }

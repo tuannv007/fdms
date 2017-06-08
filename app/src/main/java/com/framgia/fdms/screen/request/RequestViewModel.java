@@ -1,9 +1,9 @@
 package com.framgia.fdms.screen.request;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-import android.support.v4.app.Fragment;
 import android.widget.Toast;
 import com.framgia.fdms.BR;
 import com.framgia.fdms.data.model.User;
@@ -12,6 +12,9 @@ import com.framgia.fdms.screen.request.userrequest.UserRequestFragment;
 import com.framgia.fdms.screen.requestcreation.RequestCreationActivity;
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
+import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_CREATE_REQUEST;
 
 /**
  * Exposes the data to be used in the Request screen.
@@ -57,7 +60,9 @@ public class RequestViewModel extends BaseObservable implements RequestContract.
 
     @Override
     public void onRegisterRequestClick() {
-        mFragment.startActivity(RequestCreationActivity.getInstance(mFragment.getActivity()));
+        mFragment.startActivityForResult(
+                RequestCreationActivity.getInstance(mFragment.getActivity()),
+                REQUEST_CREATE_REQUEST);
     }
 
     @Override
@@ -67,7 +72,7 @@ public class RequestViewModel extends BaseObservable implements RequestContract.
 
         setBo(user.isBo());
 
-        List<Fragment> fragments = new ArrayList<>();
+        List<BaseRequestFragment> fragments = new ArrayList<>();
         fragments.add(UserRequestFragment.newInstance());
         if (mIsBo) fragments.add(RequestManagerFragment.newInstance());
         mAdapter =
@@ -78,6 +83,14 @@ public class RequestViewModel extends BaseObservable implements RequestContract.
     @Override
     public void onError(String message) {
         Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != RESULT_OK) return;
+        if (requestCode == REQUEST_CREATE_REQUEST) {
+            mAdapter.refreshData();
+        }
     }
 
     @Bindable

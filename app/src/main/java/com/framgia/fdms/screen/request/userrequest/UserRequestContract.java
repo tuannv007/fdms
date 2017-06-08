@@ -28,6 +28,8 @@ interface UserRequestContract {
         void onActivityResult(int requestCode, int resultCode, Intent data);
 
         void onUpdateActionSuccess(Respone<Request> requestRespone);
+
+        void refreshData();
     }
 
     /**
