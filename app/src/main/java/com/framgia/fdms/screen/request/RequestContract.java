@@ -1,5 +1,6 @@
 package com.framgia.fdms.screen.request;
 
+import android.content.Intent;
 import com.framgia.fdms.BasePresenter;
 import com.framgia.fdms.BaseViewModel;
 import com.framgia.fdms.data.model.User;
@@ -17,6 +18,8 @@ interface RequestContract {
         void onGetCurrentUserSuccess(User user);
 
         void onError(String message);
+
+        void onActivityResult(int requestCode, int resultCode, Intent data);
     }
 
     /**

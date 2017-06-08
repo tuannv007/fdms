@@ -11,15 +11,17 @@ import android.view.ViewGroup;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.source.RequestRepository;
 import com.framgia.fdms.data.source.StatusRepository;
+import com.framgia.fdms.data.source.api.request.BaseRequest;
 import com.framgia.fdms.data.source.api.service.FDMSServiceClient;
 import com.framgia.fdms.data.source.remote.RequestRemoteDataSource;
 import com.framgia.fdms.data.source.remote.StatusRemoteDataSource;
 import com.framgia.fdms.databinding.FragmentUserRequestBinding;
+import com.framgia.fdms.screen.request.BaseRequestFragment;
 
 /**
  * RequestManager Screen.
  */
-public class UserRequestFragment extends Fragment {
+public class UserRequestFragment extends BaseRequestFragment {
 
     private UserRequestContract.ViewModel mViewModel;
 
@@ -72,5 +74,10 @@ public class UserRequestFragment extends Fragment {
     public void onStop() {
         mViewModel.onStop();
         super.onStop();
+    }
+
+    @Override
+    protected void refreshData() {
+        mViewModel.refreshData();
     }
 }

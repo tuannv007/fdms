@@ -1,5 +1,6 @@
 package com.framgia.fdms.screen.request;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -45,6 +46,12 @@ public class RequestFragment extends Fragment {
                 DataBindingUtil.inflate(inflater, R.layout.fragment_request, container, false);
         binding.setViewModel((RequestViewModel) mViewModel);
         return binding.getRoot();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mViewModel.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

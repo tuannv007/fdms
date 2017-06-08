@@ -20,10 +20,10 @@ public class RequestPagerAdapter extends FragmentPagerAdapter {
 
     private static final int PAGE_COUNT = 2;
     private Context mContext;
-    private List<Fragment> mFragments;
+    private List<BaseRequestFragment> mFragments;
     private List<String> mTitles = new ArrayList<>();
 
-    public RequestPagerAdapter(Context context, FragmentManager fm, List<Fragment> fragments) {
+    public RequestPagerAdapter(Context context, FragmentManager fm, List<BaseRequestFragment> fragments) {
         super(fm);
         mContext = context;
         mFragments = fragments;
@@ -44,6 +44,12 @@ public class RequestPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return mFragments.size();
+    }
+
+    public void refreshData() {
+        for (BaseRequestFragment fragment : mFragments){
+            fragment.refreshData();
+        }
     }
 
     @IntDef({ MANAGER_REQUEST, USER_REQUEST })
