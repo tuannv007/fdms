@@ -8,6 +8,7 @@ import com.framgia.fdms.BaseViewModel;
 import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.data.model.Respone;
+import com.framgia.fdms.data.model.User;
 import com.github.clans.fab.FloatingActionMenu;
 import java.util.List;
 
@@ -40,9 +41,13 @@ public interface RequestDetailContract {
         void initFloatActionButton(FloatingActionMenu menu);
 
         void editActionSuccess(Respone<Request> requestRespone);
+
+        void setCurrentUser(User user);
     }
 
     interface Presenter extends BasePresenter {
         void updateActionRequest(int requestId, int actionId);
+
+        void getCurrentUser();
     }
 }

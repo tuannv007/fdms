@@ -1,5 +1,6 @@
 package com.framgia.fdms.screen.assignment;
 
+import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.support.v7.app.AppCompatActivity;
@@ -18,9 +19,12 @@ public class AssignmentViewModel extends BaseObservable implements AssignmentCon
     private int mProgressBarVisibility = View.GONE;
     private Request mRequest;
     private AssignmentAdapter mAdapter;
+    private Context mContext;
 
     public AssignmentViewModel(AppCompatActivity activity) {
         mActivity = activity;
+        mContext = activity.getApplicationContext();
+        mAdapter = new AssignmentAdapter(mContext, this);
     }
 
     @Override
@@ -40,7 +44,7 @@ public class AssignmentViewModel extends BaseObservable implements AssignmentCon
 
     @Override
     public void onAddItemClick() {
-
+        mAdapter.addItem();
     }
 
     @Override

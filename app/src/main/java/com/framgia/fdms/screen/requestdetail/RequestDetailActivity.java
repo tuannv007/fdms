@@ -10,6 +10,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Request;
+import com.framgia.fdms.data.source.UserRepository;
+import com.framgia.fdms.data.source.local.UserLocalDataSource;
+import com.framgia.fdms.data.source.local.sharepref.SharePreferenceImp;
 import com.framgia.fdms.databinding.ActivityRequestDetailBinding;
 import com.github.clans.fab.FloatingActionMenu;
 
@@ -38,9 +41,12 @@ public class RequestDetailActivity extends AppCompatActivity {
         getRequestFromIntent();
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_request_detail);
         mViewModel = new RequestDetailViewModel(this, mRequest.getDevices(),
-                mRequest.getRequestActionList(), mRequest.getRequestStatus(), mRequest);
+                mRequest.getRequestActionList(), mRequest.getRequestStatus(), mRequest,
+                mBinding.floatActionMenu);
         mBinding.setViewModel((RequestDetailViewModel) mViewModel);
-        RequestDetailContract.Presenter presenter = new RequestDetailPresenter(mViewModel);
+        RequestDetailContract.Presenter presenter = new RequestDetailPresenter(mViewModel,
+                new UserRepository(
+                        new UserLocalDataSource(new SharePreferenceImp(getApplicationContext()))));
         mBinding.setRequest(mRequest);
         mViewModel.setPresenter(presenter);
         mFloatingActionsMenu = mBinding.floatActionMenu;
