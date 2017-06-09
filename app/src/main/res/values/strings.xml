@@ -160,4 +160,5 @@
     <string name="title_add_new_device">Add New Device</string>
     <string name="title_assignment">Assignment</string>
     <string name="title_device_id">Device ID</string>
+    <string name="title_add_device">Add Device</string>
 </resources>

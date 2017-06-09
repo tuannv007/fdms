@@ -18,11 +18,14 @@ import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.data.model.Respone;
+import com.framgia.fdms.data.model.User;
 import com.framgia.fdms.data.source.CategoryRepository;
 import com.framgia.fdms.data.source.api.service.FDMSServiceClient;
 import com.framgia.fdms.data.source.remote.CategoryRemoteDataSource;
+import com.framgia.fdms.screen.assignment.AssignmentActivity;
 import com.framgia.fdms.screen.selection.StatusSelectionActivity;
 import com.framgia.fdms.screen.selection.StatusSelectionType;
+import com.framgia.fdms.utils.Constant;
 import com.framgia.fdms.widget.FdmsProgressDialog;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -39,6 +42,7 @@ import static com.framgia.fdms.utils.Constant.RequestAction.DONE;
 import static com.framgia.fdms.utils.Constant.RequestAction.WAITING_APPROVE;
 import static com.framgia.fdms.utils.Constant.RequestAction.WAITING_DONE;
 import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_CATEGORY;
+import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_CREATE_ASSIGNMENT;
 import static com.github.clans.fab.FloatingActionButton.SIZE_MINI;
 
 /**
@@ -63,9 +67,11 @@ public class RequestDetailViewModel extends BaseObservable
     private int mPosition;
     private FdmsProgressDialog mProgressDialog;
     private int mProgressBarVisibility = View.GONE;
+    private User mUser;
+    private FloatingActionMenu mFloatingActionsMenu;
 
     public RequestDetailViewModel(AppCompatActivity activity, List<Request.DeviceRequest> request,
-            List<Request.RequestAction> actions, String statusRequest, Request actionRequest) {
+            List<Request.RequestAction> actions, String statusRequest, Request actionRequest, FloatingActionMenu floatingActionsMenu) {
         mContext = activity;
         mActivity = activity;
         mRequest = actionRequest;
@@ -77,6 +83,7 @@ public class RequestDetailViewModel extends BaseObservable
         mListAction.addAll(actions);
         mCategoryRepository = new CategoryRepository(
                 new CategoryRemoteDataSource(FDMSServiceClient.getInstance()));
+        mFloatingActionsMenu = floatingActionsMenu;
     }
 
     @Override
@@ -242,6 +249,27 @@ public class RequestDetailViewModel extends BaseObservable
         intent.putExtras(bundle);
         mActivity.setResult(RESULT_OK, intent);
         mActivity.finish();
+    }
+
+    @Override
+    public void setCurrentUser(User user) {
+        if (user == null) return;
+        mUser = user;
+        if (mUser.isBoStaff() && mRequest.getRequestStatus()
+                .equals(Constant.DeviceStatus.WAITING_DONE)) {
+            FloatingActionButton button = new FloatingActionButton(mContext);
+            button.setImageResource(R.drawable.ic_timer);
+            button.setLabelText(mContext.getString(R.string.title_add_device));
+            button.setButtonSize(SIZE_MINI);
+            mFloatingActionsMenu.addMenuButton(button);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mActivity.startActivityForResult(AssignmentActivity.getInstance(mContext),
+                            REQUEST_CREATE_ASSIGNMENT);
+                }
+            });
+        }
     }
 
     public ObservableField<Category> getCategory() {

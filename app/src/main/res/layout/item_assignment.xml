@@ -145,6 +145,7 @@
                 android:layout_alignParentTop="true"
                 android:paddingRight="@dimen/dp_5"
                 android:paddingTop="@dimen/dp_5"
+                android:onClick="@{viewHolderModel.onDelteClick}"
                 android:src="@drawable/ic_delete_15dp"
                 />
         </RelativeLayout>
