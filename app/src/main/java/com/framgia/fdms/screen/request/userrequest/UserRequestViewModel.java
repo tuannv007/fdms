@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.PopupMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -52,6 +53,7 @@ public class UserRequestViewModel extends BaseFragmentModel
 
     private Status mStatus;
     private Status mRelative;
+    private boolean mIsRefresh;
 
     public UserRequestViewModel(FragmentActivity activity, Fragment fragment) {
         mContext = activity.getApplicationContext();
@@ -254,5 +256,28 @@ public class UserRequestViewModel extends BaseFragmentModel
     public void onAddDeviceClick(int requestId) {
         mFragment.startActivityForResult(AssignmentActivity.getInstance(mContext),
                 REQUEST_CREATE_ASSIGNMENT);
+    }
+
+    public void setRefresh(boolean refresh) {
+        mIsRefresh = refresh;
+        notifyPropertyChanged(BR.refresh);
+    }
+
+    @Bindable
+    public boolean isRefresh() {
+        return mIsRefresh;
+    }
+
+    private SwipeRefreshLayout.OnRefreshListener mRefreshLayout =
+            new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    mAdapter.clear();
+                    getData();
+                }
+            };
+
+    public SwipeRefreshLayout.OnRefreshListener getRefreshLayout() {
+        return mRefreshLayout;
     }
 }

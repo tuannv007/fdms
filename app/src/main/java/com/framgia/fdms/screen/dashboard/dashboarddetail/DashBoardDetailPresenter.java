@@ -26,7 +26,7 @@ import static com.framgia.fdms.screen.dashboard.dashboarddetail.DashBoardDetailF
  * updates
  * the UI as required.
  */
-final class DashBoardDetailPresenter implements DashBoardDetailContract.Presenter {
+public final class DashBoardDetailPresenter implements DashBoardDetailContract.Presenter {
     private CompositeSubscription mCompositeSubscriptions = new CompositeSubscription();
 
     private final DashBoardDetailContract.ViewModel mViewModel;
@@ -65,6 +65,7 @@ final class DashBoardDetailPresenter implements DashBoardDetailContract.Presente
                     @Override
                     public void call(List<Dashboard> dashboards) {
                         mViewModel.onDashBoardLoaded(dashboards);
+                        mViewModel.setRefresh(false);
                     }
                 }, new Action1<Throwable>() {
                     @Override
@@ -84,6 +85,7 @@ final class DashBoardDetailPresenter implements DashBoardDetailContract.Presente
                     @Override
                     public void call(List<Dashboard> dashboards) {
                         mViewModel.onDashBoardLoaded(dashboards);
+                        mViewModel.setRefresh(false);
                     }
                 }, new Action1<Throwable>() {
                     @Override
@@ -96,6 +98,7 @@ final class DashBoardDetailPresenter implements DashBoardDetailContract.Presente
 
     @Override
     public void getData() {
+        mViewModel.setRefresh(true);
         if (mDashboardType == DEVICE_DASHBOARD) {
             getDeviceDashboard();
             getTopDevice();
@@ -133,11 +136,13 @@ final class DashBoardDetailPresenter implements DashBoardDetailContract.Presente
                     @Override
                     public void call(List<Device> devices) {
                         mViewModel.onGetTopDeviceSuccess(devices);
+                        mViewModel.setRefresh(false);
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
                         mViewModel.onDashBoardError(throwable.getMessage());
+                        mViewModel.setRefresh(false);
                     }
                 });
         mCompositeSubscriptions.add(subscription);

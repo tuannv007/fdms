@@ -12,6 +12,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.RecyclerView;
@@ -417,5 +418,16 @@ public final class BindingUtils {
         } else {
             fab.hide();
         }
+    }
+
+    @BindingAdapter("refreshAble")
+    public static void setRefreshLayout(SwipeRefreshLayout view, boolean isRefresh) {
+        view.setRefreshing(isRefresh);
+    }
+
+    @BindingAdapter("swipeRefreshListener")
+    public static void setOnRefreshUserRequest(SwipeRefreshLayout view,
+            SwipeRefreshLayout.OnRefreshListener listener) {
+        view.setOnRefreshListener(listener);
     }
 }

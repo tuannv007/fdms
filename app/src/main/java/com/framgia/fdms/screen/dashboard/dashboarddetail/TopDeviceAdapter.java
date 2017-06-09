@@ -16,12 +16,10 @@ import java.util.List;
  * Created by MyPC on 30/05/2017.
  */
 
-public class TopDeviceAdapter
-        extends BaseRecyclerViewAdapter<Device, TopDeviceAdapter.ViewHolder> {
+public class TopDeviceAdapter extends BaseRecyclerViewAdapter<Device, TopDeviceAdapter.ViewHolder> {
     private List<Device> mDevices;
 
-    protected TopDeviceAdapter(@NonNull Context context,
-            @NonNull List<Device> devices) {
+    protected TopDeviceAdapter(@NonNull Context context, @NonNull List<Device> devices) {
         super(context);
         mDevices = devices;
     }
@@ -68,5 +66,10 @@ public class TopDeviceAdapter
             mBinding.setDevice(device);
             mBinding.executePendingBindings();
         }
+    }
+
+    public void clear() {
+        if (mDevices != null) mDevices.clear();
+        notifyDataSetChanged();
     }
 }

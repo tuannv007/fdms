@@ -33,6 +33,8 @@ interface UserRequestContract {
         void refreshData();
 
         void setCurrentUser(User user);
+
+        void setRefresh(boolean refresh);
     }
 
     /**

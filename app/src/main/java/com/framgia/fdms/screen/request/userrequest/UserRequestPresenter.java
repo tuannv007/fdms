@@ -27,7 +27,7 @@ import static com.framgia.fdms.utils.Constant.PER_PAGE;
  * updates
  * the UI as required.
  */
-final class UserRequestPresenter implements UserRequestContract.Presenter {
+public final class UserRequestPresenter implements UserRequestContract.Presenter {
 
     private int mPage = FIRST_PAGE;
     private final UserRequestContract.ViewModel mViewModel;
@@ -83,6 +83,7 @@ final class UserRequestPresenter implements UserRequestContract.Presenter {
 
     @Override
     public void getMyRequest(int requestStatusId, int relativeId, int perPage, int page) {
+        mViewModel.setRefresh(true);
         Subscription subscription =
                 mRequestRepository.getRequests(USER_REQUEST, requestStatusId, relativeId, page,
                         perPage)
@@ -98,11 +99,13 @@ final class UserRequestPresenter implements UserRequestContract.Presenter {
                             @Override
                             public void onCompleted() {
                                 mViewModel.hideProgressbar();
+                                mViewModel.setRefresh(false);
                             }
 
                             @Override
                             public void onError(Throwable e) {
                                 mViewModel.hideProgressbar();
+                                mViewModel.setRefresh(false);
                             }
 
                             @Override
@@ -110,7 +113,6 @@ final class UserRequestPresenter implements UserRequestContract.Presenter {
                                 mViewModel.onGetRequestSuccess(requests);
                             }
                         });
-
         mSubscription.add(subscription);
     }
 
@@ -154,7 +156,6 @@ final class UserRequestPresenter implements UserRequestContract.Presenter {
                 .subscribe(new Subscriber<List<Status>>() {
                     @Override
                     public void onCompleted() {
-
                     }
 
                     @Override

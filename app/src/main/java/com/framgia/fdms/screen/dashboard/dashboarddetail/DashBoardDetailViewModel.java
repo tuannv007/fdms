@@ -8,7 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.PopupMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -56,6 +56,7 @@ public class DashBoardDetailViewModel extends BaseObservable
     private int mEmptyViewVisible = View.GONE;
     private int mDashboardType;
     private Fragment mFragment;
+    private boolean mIsRefresh;
 
     public DashBoardDetailViewModel(Fragment fragment, int dashboardType) {
         mFragment = fragment;
@@ -280,6 +281,30 @@ public class DashBoardDetailViewModel extends BaseObservable
 
     @Override
     public void onAddDeviceClick(int requestId) {
-        
+
+    }
+
+    @Bindable
+    public boolean isRefresh() {
+        return mIsRefresh;
+    }
+
+    public void setRefresh(boolean refresh) {
+        mIsRefresh = refresh;
+        notifyPropertyChanged(BR.refresh);
+    }
+
+    private SwipeRefreshLayout.OnRefreshListener mRefreshLayout =
+            new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    mAdapterTopDevice.clear();
+                    mAdapterTopRequest.clear();
+                    getData();
+                }
+            };
+
+    public SwipeRefreshLayout.OnRefreshListener getRefreshLayout() {
+        return mRefreshLayout;
     }
 }

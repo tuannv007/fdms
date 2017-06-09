@@ -51,7 +51,8 @@ public class DashBoardDetailFragment extends Fragment {
                 new DeviceRepository(new DeviceRemoteDataSource(FDMSServiceClient.getInstance())),
                 RequestRepository.getInstant(
                         new RequestRemoteDataSource(FDMSServiceClient.getInstance())),
-                dashboradType, new UserRepository(new UserLocalDataSource(new SharePreferenceImp(getContext()))));
+                dashboradType,
+                new UserRepository(new UserLocalDataSource(new SharePreferenceImp(getContext()))));
         mViewModel.setPresenter(presenter);
         mViewModel.getData();
     }

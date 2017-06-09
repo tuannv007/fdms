@@ -27,7 +27,7 @@ import static com.framgia.fdms.utils.Constant.PER_PAGE;
  * updates
  * the UI as required.
  */
-final class RequestManagerPresenter implements RequestManagerContract.Presenter {
+public final class RequestManagerPresenter implements RequestManagerContract.Presenter {
     private int mPage = FIRST_PAGE;
     private final RequestManagerContract.ViewModel mViewModel;
     private CompositeSubscription mSubscription;
@@ -59,6 +59,7 @@ final class RequestManagerPresenter implements RequestManagerContract.Presenter 
 
     @Override
     public void getData(Status relative, Status status) {
+        mViewModel.setRefresh(true);
         mPage = FIRST_PAGE;
         if (relative != null) {
             mRelativeId = relative.getId();
@@ -66,7 +67,6 @@ final class RequestManagerPresenter implements RequestManagerContract.Presenter 
         if (status != null) {
             mStatusId = status.getId();
         }
-
         getRequest(mStatusId, mRelativeId, mPage, PER_PAGE);
     }
 
@@ -128,11 +128,13 @@ final class RequestManagerPresenter implements RequestManagerContract.Presenter 
                             @Override
                             public void onCompleted() {
                                 mViewModel.hideProgressbar();
+                                mViewModel.setRefresh(false);
                             }
 
                             @Override
                             public void onError(Throwable e) {
                                 mViewModel.hideProgressbar();
+                                mViewModel.setRefresh(false);
                             }
 
                             @Override
