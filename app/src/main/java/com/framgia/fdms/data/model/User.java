@@ -326,7 +326,13 @@ public class User extends BaseObservable {
     }
 
     public boolean isBo() {
+        if (mRole == null) return false;
         return mRole.equals(BO_MANAGER) || mRole.equals(BO_STAFF) || mRole.equals(
                 Constant.Role.STAFF);
+    }
+
+    public boolean isBoStaff() {
+        if (mRole == null) return false;
+        return mRole.equals(BO_STAFF) || mRole.equals(Constant.Role.STAFF);
     }
 }

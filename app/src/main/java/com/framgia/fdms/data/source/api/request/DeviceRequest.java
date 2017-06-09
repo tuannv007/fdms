@@ -18,6 +18,9 @@ public class DeviceRequest extends BaseObservable {
     private int mNumber;
     private Category mCategory;
 
+    public DeviceRequest() {
+    }
+
     public DeviceRequest(int number) {
         mNumber = number;
     }

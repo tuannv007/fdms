@@ -19,6 +19,7 @@ import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.data.model.User;
+import com.framgia.fdms.screen.assignment.AssignmentActivity;
 import com.framgia.fdms.screen.request.OnRequestClickListenner;
 import com.framgia.fdms.screen.requestdetail.RequestDetailActivity;
 import com.framgia.fdms.screen.selection.StatusSelectionActivity;
@@ -30,6 +31,7 @@ import static android.app.Activity.RESULT_OK;
 import static com.framgia.fdms.utils.Constant.BundleConstant.BUNDLE_RESPONE;
 import static com.framgia.fdms.utils.Constant.BundleConstant.BUNDLE_STATUE;
 import static com.framgia.fdms.utils.Constant.OUT_OF_INDEX;
+import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_CREATE_ASSIGNMENT;
 import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_DETAIL;
 import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_SELECTION;
 import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_STATUS;
@@ -250,5 +252,7 @@ public class UserRequestViewModel extends BaseFragmentModel
 
     @Override
     public void onAddDeviceClick(int requestId) {
+        mFragment.startActivityForResult(AssignmentActivity.getInstance(mContext),
+                REQUEST_CREATE_ASSIGNMENT);
     }
 }
