@@ -4,7 +4,6 @@ import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.DataBindingUtil;
-import android.databinding.ObservableField;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.data.model.User;
 import com.framgia.fdms.databinding.ItemRequestManagerAdapterBinding;
 import com.framgia.fdms.screen.request.OnRequestClickListenner;
-import com.framgia.fdms.utils.Constant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +37,6 @@ public class UserRequestAdapter
         mListenner = listenner;
         mUser = user;
     }
-
     @Override
     public void onUpdatePage(List<Request> datas) {
         if (datas != null) {

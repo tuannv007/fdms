@@ -40,6 +40,8 @@ interface DashBoardDetailContract {
         void onActivityResult(int requestCode, int resultCode, Intent data);
 
         void setCurrentUser(User user);
+
+        void setRefresh(boolean isRefresh);
     }
 
     /**
