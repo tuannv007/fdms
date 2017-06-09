@@ -11,7 +11,10 @@ import android.view.ViewGroup;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.source.DeviceRepository;
 import com.framgia.fdms.data.source.RequestRepository;
+import com.framgia.fdms.data.source.UserRepository;
 import com.framgia.fdms.data.source.api.service.FDMSServiceClient;
+import com.framgia.fdms.data.source.local.UserLocalDataSource;
+import com.framgia.fdms.data.source.local.sharepref.SharePreferenceImp;
 import com.framgia.fdms.data.source.remote.DeviceRemoteDataSource;
 import com.framgia.fdms.data.source.remote.RequestRemoteDataSource;
 import com.framgia.fdms.databinding.FragmentDashBoardDetailBinding;
@@ -48,7 +51,7 @@ public class DashBoardDetailFragment extends Fragment {
                 new DeviceRepository(new DeviceRemoteDataSource(FDMSServiceClient.getInstance())),
                 RequestRepository.getInstant(
                         new RequestRemoteDataSource(FDMSServiceClient.getInstance())),
-                dashboradType);
+                dashboradType, new UserRepository(new UserLocalDataSource(new SharePreferenceImp(getContext()))));
         mViewModel.setPresenter(presenter);
         mViewModel.getData();
     }

@@ -7,6 +7,7 @@ import com.framgia.fdms.data.model.Dashboard;
 import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.data.model.Respone;
+import com.framgia.fdms.data.model.User;
 import com.github.mikephil.charting.data.PieDataSet;
 import java.util.List;
 
@@ -37,6 +38,8 @@ interface DashBoardDetailContract {
         void hideProgressbar();
 
         void onActivityResult(int requestCode, int resultCode, Intent data);
+
+        void setCurrentUser(User user);
     }
 
     /**
@@ -54,5 +57,7 @@ interface DashBoardDetailContract {
         void getTopDevice();
 
         void updateActionRequest(int requestId, int actionId);
+
+        void getCurrentUser();
     }
 }

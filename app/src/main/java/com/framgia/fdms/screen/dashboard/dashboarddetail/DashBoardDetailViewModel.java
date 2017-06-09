@@ -19,6 +19,7 @@ import com.framgia.fdms.data.model.Dashboard;
 import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.data.model.Respone;
+import com.framgia.fdms.data.model.User;
 import com.framgia.fdms.screen.request.OnRequestClickListenner;
 import com.framgia.fdms.screen.request.userrequest.UserRequestAdapter;
 import com.framgia.fdms.screen.requestdetail.RequestDetailActivity;
@@ -60,7 +61,8 @@ public class DashBoardDetailViewModel extends BaseObservable
         mFragment = fragment;
         mContext = fragment.getContext();
         mPieData = new PieData();
-        mAdapterTopRequest = new UserRequestAdapter(mContext, new ArrayList<Request>(), this);
+        mAdapterTopRequest =
+                new UserRequestAdapter(mContext, new ArrayList<Request>(), this, new User());
         mAdapterTopDevice = new TopDeviceAdapter(mContext, new ArrayList<Device>());
         initDashboardTitle(dashboardType);
         mDashboardType = dashboardType;
@@ -103,6 +105,12 @@ public class DashBoardDetailViewModel extends BaseObservable
                 onUpdateActionSuccess(requestRespone);
             }
         }
+    }
+
+    @Override
+    public void setCurrentUser(User user) {
+        if (user == null) return;
+        mAdapterTopRequest.updateUser(user);
     }
 
     @Bindable
@@ -268,5 +276,10 @@ public class DashBoardDetailViewModel extends BaseObservable
     public void onDetailRequestClick(Request request) {
         mFragment.startActivityForResult(RequestDetailActivity.newInstance(mContext, request),
                 REQUEST_DETAIL);
+    }
+
+    @Override
+    public void onAddDeviceClick(int requestId) {
+        
     }
 }

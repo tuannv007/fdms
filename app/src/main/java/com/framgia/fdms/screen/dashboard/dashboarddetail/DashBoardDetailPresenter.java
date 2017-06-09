@@ -4,8 +4,10 @@ import com.framgia.fdms.data.model.Dashboard;
 import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.data.model.Respone;
+import com.framgia.fdms.data.model.User;
 import com.framgia.fdms.data.source.DeviceRepository;
 import com.framgia.fdms.data.source.RequestRepository;
+import com.framgia.fdms.data.source.UserRepository;
 import java.util.List;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -30,16 +32,19 @@ final class DashBoardDetailPresenter implements DashBoardDetailContract.Presente
     private final DashBoardDetailContract.ViewModel mViewModel;
     private DeviceRepository mDeviceRepository;
     private RequestRepository mRequestRepository;
+    private UserRepository mUserRepository;
     private int mDashboardType;
     public static final int top = 1;
 
     public DashBoardDetailPresenter(DashBoardDetailContract.ViewModel viewModel,
             DeviceRepository deviceRepository, RequestRepository requestRepository,
-            int dashboardType) {
+            int dashboardType, UserRepository userRepository) {
         mViewModel = viewModel;
         mDeviceRepository = deviceRepository;
         mRequestRepository = requestRepository;
         mDashboardType = dashboardType;
+        mUserRepository = userRepository;
+        getCurrentUser();
     }
 
     @Override
@@ -167,6 +172,25 @@ final class DashBoardDetailPresenter implements DashBoardDetailContract.Presente
                     }
                 });
 
+        mCompositeSubscriptions.add(subscription);
+    }
+
+    @Override
+    public void getCurrentUser() {
+        Subscription subscription = mUserRepository.getCurrentUser()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<User>() {
+                    @Override
+                    public void call(User user) {
+                        mViewModel.setCurrentUser(user);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        mViewModel.onDashBoardError(throwable.getMessage());
+                    }
+                });
         mCompositeSubscriptions.add(subscription);
     }
 }

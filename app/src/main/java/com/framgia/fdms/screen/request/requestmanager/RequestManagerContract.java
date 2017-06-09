@@ -5,6 +5,7 @@ import com.framgia.fdms.BaseFragmentContract;
 import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.Status;
+import com.framgia.fdms.data.model.User;
 import java.util.List;
 
 /**
@@ -30,6 +31,8 @@ interface RequestManagerContract {
         void onUpdateActionSuccess(Respone<Request> requestRespone);
 
         void refreshData();
+
+        void setCurrentUser(User user);
     }
 
     /**
@@ -43,5 +46,7 @@ interface RequestManagerContract {
         void getListRelative();
 
         void updateActionRequest(int requestId, int actionId);
+
+        void getCurrentUser();
     }
 }
