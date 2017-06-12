@@ -165,4 +165,8 @@
     <string name="title_type_code">Type of code</string>
     <string name="title_qrcode">QRCode</string>
     <string name="title_barcode">BarCode</string>
+    <string name="title_device_code_staff">ID- %d</string>
+    <string name="title_id_card_staff">Card ID- %s</string>
+    <string name="title_export">Export data</string>
+    <string name="title_user">User</string>
 </resources>
