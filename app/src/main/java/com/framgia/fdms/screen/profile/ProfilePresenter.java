@@ -23,11 +23,11 @@ final class ProfilePresenter implements ProfileContract.Presenter {
         mViewModel = viewModel;
         mRepository = repository;
         mCompositeSubscription = new CompositeSubscription();
+        getCurrentUser();
     }
 
     @Override
     public void onStart() {
-        getCurrentUser();
     }
 
     @Override
