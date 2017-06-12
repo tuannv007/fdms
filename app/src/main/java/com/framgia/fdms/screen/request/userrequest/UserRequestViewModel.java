@@ -3,6 +3,7 @@ package com.framgia.fdms.screen.request.userrequest;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.Bindable;
+import android.databinding.ObservableField;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -54,6 +55,7 @@ public class UserRequestViewModel extends BaseFragmentModel
     private Status mStatus;
     private Status mRelative;
     private boolean mIsRefresh;
+    private ObservableField<User> mUser = new ObservableField<>();
 
     public UserRequestViewModel(FragmentActivity activity, Fragment fragment) {
         mContext = activity.getApplicationContext();
@@ -170,6 +172,7 @@ public class UserRequestViewModel extends BaseFragmentModel
     public void setCurrentUser(User user) {
         if (user == null) return;
         mAdapter.updateUser(user);
+        mUser.set(user);
     }
 
     public void onSelectStatusClick() {
@@ -279,5 +282,10 @@ public class UserRequestViewModel extends BaseFragmentModel
 
     public SwipeRefreshLayout.OnRefreshListener getRefreshLayout() {
         return mRefreshLayout;
+    }
+
+    @Bindable
+    public ObservableField<User> getUser() {
+        return mUser;
     }
 }
