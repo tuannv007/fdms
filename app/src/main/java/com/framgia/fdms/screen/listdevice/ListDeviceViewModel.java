@@ -10,6 +10,7 @@ import android.databinding.ObservableField;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -34,8 +35,6 @@ import static com.framgia.fdms.utils.Constant.BundleConstant.BUNDLE_CATEGORY;
 import static com.framgia.fdms.utils.Constant.BundleConstant.BUNDLE_STATUE;
 import static com.framgia.fdms.utils.Constant.OUT_OF_INDEX;
 import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_SELECTION;
-import static com.framgia.fdms.utils.Constant.Role.BO_MANAGER;
-import static com.framgia.fdms.utils.Constant.Role.BO_STAFF;
 
 /**
  * Exposes the data to be used in the ListDevice screen.
@@ -59,6 +58,18 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
     public ObservableBoolean getIsLoadingMore() {
         return mIsLoadingMore;
     }
+
+    private boolean mIsRefresh;
+
+    private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener =
+            new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    if (mPresenter != null) {
+                        mPresenter.getData(mKeyWord, mCategory, mStatus);
+                    }
+                }
+            };
 
     public ListDeviceViewModel(FragmentActivity activity, Fragment fragment) {
         mFragment = fragment;
@@ -152,6 +163,7 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
     public void onDeviceLoaded(List<Device> devices) {
         mIsLoadingMore.set(false);
         mAdapter.onUpdatePage(devices);
+        setRefresh(false);
     }
 
     @Override
@@ -284,5 +296,25 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
     public void setBo(boolean bo) {
         mIsBo = bo;
         notifyPropertyChanged(BR.bo);
+    }
+
+    @Bindable
+    public boolean isRefresh() {
+        return mIsRefresh;
+    }
+
+    public void setRefresh(boolean refresh) {
+        mIsRefresh = refresh;
+        notifyPropertyChanged(BR.refresh);
+    }
+
+    @Bindable
+    public SwipeRefreshLayout.OnRefreshListener getOnRefreshListener() {
+        return mOnRefreshListener;
+    }
+
+    public void setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener onRefreshListener) {
+        mOnRefreshListener = onRefreshListener;
+        notifyPropertyChanged(BR.onRefreshListener);
     }
 }

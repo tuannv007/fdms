@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.net.Uri;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 import com.framgia.fdms.BR;
@@ -40,6 +41,15 @@ public class ProfileViewModel extends BaseObservable
     private User mUser;
     private boolean mIsEdit;
     private String mBirthDay;
+    private boolean mIsRefresh;
+
+    private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener =
+            new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    mPresenter.getCurrentUser();
+                }
+            };
 
     public ProfileViewModel(AppCompatActivity activity, ProfileFragment fragment) {
         mActivity = activity;
@@ -81,6 +91,7 @@ public class ProfileViewModel extends BaseObservable
         mBirthDay = mUser.getBirthday() == null ? "" : format.format(mUser.getBirthday());
 
         setUser(user);
+        setRefresh(false);
     }
 
     @Override
@@ -163,5 +174,25 @@ public class ProfileViewModel extends BaseObservable
     public void setBirthDay(String birthDay) {
         mBirthDay = birthDay;
         notifyPropertyChanged(BR.birthDay);
+    }
+
+    @Bindable
+    public boolean isRefresh() {
+        return mIsRefresh;
+    }
+
+    public void setRefresh(boolean refresh) {
+        mIsRefresh = refresh;
+        notifyPropertyChanged(BR.refresh);
+    }
+
+    @Bindable
+    public SwipeRefreshLayout.OnRefreshListener getOnRefreshListener() {
+        return mOnRefreshListener;
+    }
+
+    public void setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener onRefreshListener) {
+        mOnRefreshListener = onRefreshListener;
+        notifyPropertyChanged(BR.onRefreshListener);
     }
 }
