@@ -161,4 +161,8 @@
     <string name="title_assignment">Assignment</string>
     <string name="title_device_id">Device ID</string>
     <string name="title_add_device">Add Device</string>
+    <string name="title_branch">Branch</string>
+    <string name="title_type_code">Type of code</string>
+    <string name="title_qrcode">QRCode</string>
+    <string name="title_barcode">BarCode</string>
 </resources>
