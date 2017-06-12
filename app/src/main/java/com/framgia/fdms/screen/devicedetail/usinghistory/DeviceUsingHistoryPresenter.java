@@ -23,10 +23,11 @@ final class DeviceUsingHistoryPresenter implements DeviceUsingHistoryContract.Pr
     private int mDeviceId = -1;
 
     public DeviceUsingHistoryPresenter(DeviceUsingHistoryContract.ViewModel viewModel,
-            DeviceRepository repository) {
+            DeviceRepository repository, int deviceId) {
         mViewModel = viewModel;
         mCompositeSubscription = new CompositeSubscription();
         mRepository = repository;
+        mDeviceId = deviceId;
         getUsingHistoryDevice(mDeviceId);
     }
 
@@ -68,7 +69,7 @@ final class DeviceUsingHistoryPresenter implements DeviceUsingHistoryContract.Pr
     @Override
     public void onLoadMore() {
         // TODO: 23/05/2017 later
-      mViewModel.hideProgressbar();
+        mViewModel.hideProgressbar();
     }
 
     @Override

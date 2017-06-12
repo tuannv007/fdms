@@ -11,13 +11,14 @@ import com.framgia.fdms.data.source.api.service.FDMSServiceClient;
 import com.framgia.fdms.data.source.remote.DeviceRemoteDataSource;
 import com.framgia.fdms.databinding.FragmentHistoryDetailBinding;
 
+import static com.framgia.fdms.utils.Constant.BundleConstant.EXTRA_DEVICE_ID;
+
 /**
  * DeviceHistoryDetail Screen.
  */
 public class DeviceDetailHistoryFragment extends Fragment {
 
     private DeviceDetailHistoryContract.ViewModel mViewModel;
-    private static final String EXTRA_DEVICE_ID = "EXTRA_DEVICE_ID";
 
     public static DeviceDetailHistoryFragment newInstance() {
         return new DeviceDetailHistoryFragment();
