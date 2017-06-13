@@ -4,9 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.support.annotation.IntDef;
+import android.support.v4.view.ViewPager;
 import android.widget.Toast;
 import com.framgia.fdms.BR;
 import com.framgia.fdms.data.model.User;
+import com.framgia.fdms.screen.ViewPagerScroll;
 import com.framgia.fdms.screen.request.requestmanager.RequestManagerFragment;
 import com.framgia.fdms.screen.request.userrequest.UserRequestFragment;
 import com.framgia.fdms.screen.requestcreation.RequestCreationActivity;
@@ -14,19 +17,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
+import static com.framgia.fdms.screen.request.RequestViewModel.Tab.TAB_MANAGER_REQUEST;
+import static com.framgia.fdms.screen.request.RequestViewModel.Tab.TAB_MY_REQUEST;
 import static com.framgia.fdms.utils.Constant.RequestConstant.REQUEST_CREATE_REQUEST;
 
 /**
  * Exposes the data to be used in the Request screen.
  */
 
-public class RequestViewModel extends BaseObservable implements RequestContract.ViewModel {
+public class RequestViewModel extends BaseObservable
+        implements RequestContract.ViewModel, ViewPagerScroll {
 
     private RequestContract.Presenter mPresenter;
     private RequestPagerAdapter mAdapter;
     private RequestFragment mFragment;
     private Context mContext;
     private boolean mIsBo;
+    private int mTab = TAB_MY_REQUEST;
 
     public RequestViewModel(RequestFragment fragment) {
         mFragment = fragment;
@@ -48,14 +55,14 @@ public class RequestViewModel extends BaseObservable implements RequestContract.
         mPresenter = presenter;
     }
 
-    @Bindable
-    public RequestPagerAdapter getAdapter() {
-        return mAdapter;
+    @Override
+    public void onCurrentPosition(int position) {
+        setTab(position);
     }
 
-    public void setAdapter(RequestPagerAdapter adapter) {
-        mAdapter = adapter;
-        notifyPropertyChanged(BR.adapter);
+    @Override
+    public void onClickChangeTab(ViewPager viewPager, int currentTab) {
+        viewPager.setCurrentItem(currentTab);
     }
 
     @Override
@@ -101,5 +108,31 @@ public class RequestViewModel extends BaseObservable implements RequestContract.
     public void setBo(boolean bo) {
         mIsBo = bo;
         notifyPropertyChanged(BR.bo);
+    }
+
+    @Bindable
+    public RequestPagerAdapter getAdapter() {
+        return mAdapter;
+    }
+
+    public void setAdapter(RequestPagerAdapter adapter) {
+        mAdapter = adapter;
+        notifyPropertyChanged(BR.adapter);
+    }
+
+    @Bindable
+    public int getTab() {
+        return mTab;
+    }
+
+    public void setTab(int tab) {
+        mTab = tab;
+        notifyPropertyChanged(BR.tab);
+    }
+
+    @IntDef({ TAB_MY_REQUEST, TAB_MANAGER_REQUEST })
+    public @interface Tab {
+        int TAB_MY_REQUEST = 0;
+        int TAB_MANAGER_REQUEST = 1;
     }
 }

@@ -1,6 +1,7 @@
 package com.framgia.fdms.screen.request;
 
 import android.content.Intent;
+import android.support.v4.view.ViewPager;
 import com.framgia.fdms.BasePresenter;
 import com.framgia.fdms.BaseViewModel;
 import com.framgia.fdms.data.model.User;
@@ -20,6 +21,8 @@ interface RequestContract {
         void onError(String message);
 
         void onActivityResult(int requestCode, int resultCode, Intent data);
+
+        void onClickChangeTab(ViewPager viewPager, int currentTab);
     }
 
     /**
