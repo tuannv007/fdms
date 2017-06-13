@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import com.framgia.fdms.screen.dashboard.DashboardFragment;
-import com.framgia.fdms.screen.listdevice.ListDeviceFragment;
+import com.framgia.fdms.screen.device.DeviceFragment;
 import com.framgia.fdms.screen.profile.ProfileFragment;
 import com.framgia.fdms.screen.request.RequestFragment;
 
@@ -32,7 +32,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
             case TAB_REQUEST_MANAGER:
                 return RequestFragment.newInstance();
             case TAB_DEVICE_MANAGER:
-                return ListDeviceFragment.newInstance();
+                return DeviceFragment.newInstance();
             case TAB_PROFILE:
                 return ProfileFragment.newInstance();
             default:
