@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
     <data>
         <variable
@@ -11,8 +13,17 @@
             type="String"
             />
         <variable
+            name="error"
+            type="String"
+            />
+        <variable
             name="image"
-            type="android.graphics.drawable.Drawable"/>
+            type="android.graphics.drawable.Drawable"
+            />
+        <variable
+            name="onClick"
+            type="android.view.View.OnClickListener"
+            />
     </data>
 
 
@@ -51,23 +62,30 @@
                     android:textColor="@color/color_brown"
                     android:textSize="@dimen/sp_12"
                     />
+
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="end"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:onClick="@{onClick}"
                     android:text="@{text}"
                     android:textSize="@dimen/sp_16"
-                    android:textStyle="bold"
                     />
             </LinearLayout>
 
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/appCompatTextView"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1"
-                android:layout_marginTop="@dimen/dp_5"
-                android:background="@color/color_gray_mos"
-                />
+                android:layout_height="wrap_content"
+                app:errorText="@{error}"
+                >
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/appCompatTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:background="@color/color_gray_mos"
+                    />
+            </android.support.design.widget.TextInputLayout>
         </LinearLayout>
     </LinearLayout>
 </layout>

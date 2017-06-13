@@ -4,6 +4,7 @@ import android.text.TextUtils;
 import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.data.model.Status;
+import com.framgia.fdms.data.source.BranchRepository;
 import com.framgia.fdms.data.source.CategoryRepository;
 import com.framgia.fdms.data.source.DeviceRepository;
 import com.framgia.fdms.data.source.StatusRepository;
@@ -26,14 +27,16 @@ final class CreateDevicePresenter implements CreateDeviceContract.Presenter {
     private DeviceRepository mDeviceRepository;
     private StatusRepository mStatusRepository;
     private CategoryRepository mCategoryRepository;
+    private BranchRepository mBranchRepository;
 
     public CreateDevicePresenter(CreateDeviceContract.ViewModel viewModel,
             DeviceRepository deviceRepository, StatusRepository statusRepository,
-            CategoryRepository categoryRepository) {
+            CategoryRepository categoryRepository, BranchRepository branchRepository) {
         mViewModel = viewModel;
         mDeviceRepository = deviceRepository;
         mCategoryRepository = categoryRepository;
         mStatusRepository = statusRepository;
+        mBranchRepository = branchRepository;
         mCompositeSubscription = new CompositeSubscription();
     }
 
@@ -41,6 +44,7 @@ final class CreateDevicePresenter implements CreateDeviceContract.Presenter {
     public void onStart() {
         getListCategories();
         getListStatuses();
+        getListBranch();
     }
 
     @Override
@@ -107,7 +111,8 @@ final class CreateDevicePresenter implements CreateDeviceContract.Presenter {
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        mViewModel.onInputCategoryError();
+                        mViewModel.hideProgressbar();
+                        mViewModel.onLoadError(throwable.getMessage());
                     }
                 }, new Action0() {
                     @Override
@@ -136,7 +141,38 @@ final class CreateDevicePresenter implements CreateDeviceContract.Presenter {
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        mViewModel.onInputStatusError();
+                        mViewModel.hideProgressbar();
+                        mViewModel.onLoadError(throwable.getMessage());
+                    }
+                }, new Action0() {
+                    @Override
+                    public void call() {
+                        mViewModel.hideProgressbar();
+                    }
+                });
+        mCompositeSubscription.add(subscription);
+    }
+
+    public void getListBranch() {
+        Subscription subscription = mBranchRepository.getListBranch()
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mViewModel.showProgressbar();
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<Status>>() {
+                    @Override
+                    public void call(List<Status> statuses) {
+                        mViewModel.onGetBranchSuccess(statuses);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        mViewModel.hideProgressbar();
+                        mViewModel.onLoadError(throwable.getMessage());
                     }
                 }, new Action0() {
                     @Override
@@ -150,9 +186,13 @@ final class CreateDevicePresenter implements CreateDeviceContract.Presenter {
     @Override
     public boolean validateDataInput(Device device) {
         boolean isValid = true;
-        if (TextUtils.isEmpty(device.getDeviceCode())) {
+        if (device.getDeviceCategoryId() <= 0) {
             isValid = false;
-            mViewModel.onInputDeviceCodeError();
+            mViewModel.onInputCategoryError();
+        }
+        if (device.getBoughtDate() == null) {
+            isValid = false;
+            mViewModel.onInputBoughtDateError();
         }
         if (TextUtils.isEmpty(device.getModelNumber())) {
             isValid = false;
@@ -165,6 +205,10 @@ final class CreateDevicePresenter implements CreateDeviceContract.Presenter {
         if (TextUtils.isEmpty(device.getSerialNumber())) {
             isValid = false;
             mViewModel.onInputSerialNumberError();
+        }
+        if (TextUtils.isEmpty(device.getOriginalPrice())) {
+            isValid = false;
+            mViewModel.onInputOriginalPriceError();
         }
         return isValid;
     }

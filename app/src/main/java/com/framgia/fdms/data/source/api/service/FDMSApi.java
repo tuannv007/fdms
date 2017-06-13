@@ -97,4 +97,7 @@ public interface FDMSApi {
 
     @GET("api/v1/device_using/{id}")
     Observable<Respone<List<DeviceUsingHistory>>> getDeviceUsingHistory(@Path("id") int deviceId);
+
+    @GET("api/v1/branch")
+    Observable<Respone<List<Status>>> getListBranch();
 }

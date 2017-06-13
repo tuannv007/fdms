@@ -8,10 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Device;
+import com.framgia.fdms.data.source.BranchRepository;
 import com.framgia.fdms.data.source.CategoryRepository;
 import com.framgia.fdms.data.source.DeviceRepository;
 import com.framgia.fdms.data.source.StatusRepository;
 import com.framgia.fdms.data.source.api.service.FDMSServiceClient;
+import com.framgia.fdms.data.source.remote.BranchRemoteDataSource;
 import com.framgia.fdms.data.source.remote.CategoryRemoteDataSource;
 import com.framgia.fdms.data.source.remote.DeviceRemoteDataSource;
 import com.framgia.fdms.data.source.remote.StatusRemoteDataSource;
@@ -71,7 +73,8 @@ public class CreateDeviceActivity extends AppCompatActivity {
                 new CategoryRemoteDataSource(FDMSServiceClient.getInstance()));
         CreateDeviceContract.Presenter presenter =
                 new CreateDevicePresenter(mViewModel, deviceRepository, statusRepository,
-                        categoryRepository);
+                        categoryRepository, new BranchRepository(
+                        new BranchRemoteDataSource(FDMSServiceClient.getInstance())));
         mViewModel.setPresenter(presenter);
 
         ActivityCreatedeviceBinding binding =
