@@ -195,4 +195,7 @@ public class ProfileViewModel extends BaseObservable
         mOnRefreshListener = onRefreshListener;
         notifyPropertyChanged(BR.onRefreshListener);
     }
+    public void exportDevice(){
+        // TODO: 6/12/17 export data
+    }
 }

@@ -86,8 +86,21 @@ public class User extends BaseObservable {
     @Expose
     @SerializedName("token")
     private String mToken;
+    @Expose
+    @SerializedName("card_number")
+    private String mCardNumber;
 
     public User() {
+    }
+
+    @Bindable
+    public String getCardNumber() {
+        return mCardNumber;
+    }
+
+    public void setCardNumber(String cardNumber) {
+        mCardNumber = cardNumber;
+        notifyPropertyChanged(BR.cardNumber);
     }
 
     @Bindable
