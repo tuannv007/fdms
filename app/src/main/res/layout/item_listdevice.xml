@@ -8,7 +8,7 @@
     <data class="ItemListDataBinding">
         <variable
             name="viewModel"
-            type="com.framgia.fdms.screen.listdevice.ListDeviceViewModel"
+            type="com.framgia.fdms.screen.device.listdevice.ListDeviceViewModel"
             />
         <variable
             name="item"

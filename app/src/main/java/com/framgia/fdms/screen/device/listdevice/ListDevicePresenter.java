@@ -1,4 +1,4 @@
-package com.framgia.fdms.screen.listdevice;
+package com.framgia.fdms.screen.device.listdevice;
 
 import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Device;
@@ -6,6 +6,7 @@ import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.data.model.User;
 import com.framgia.fdms.data.source.CategoryRepository;
 import com.framgia.fdms.data.source.DeviceRepository;
+import com.framgia.fdms.data.source.DeviceReturnRepository;
 import com.framgia.fdms.data.source.StatusRepository;
 import com.framgia.fdms.data.source.UserRepository;
 import java.util.List;
@@ -32,6 +33,7 @@ final class ListDevicePresenter implements ListDeviceContract.Presenter {
 
     private final ListDeviceContract.ViewModel mViewModel;
     private DeviceRepository mDeviceRepository;
+    private DeviceReturnRepository mReturnRepository;
     private CategoryRepository mCategoryRepository;
     private StatusRepository mStatusRepository;
     private String mKeyWord = NOT_SEARCH;
@@ -41,12 +43,14 @@ final class ListDevicePresenter implements ListDeviceContract.Presenter {
 
     public ListDevicePresenter(ListDeviceContract.ViewModel viewModel,
             DeviceRepository deviceRepository, CategoryRepository categoryRepository,
-            StatusRepository statusRepository, UserRepository userRepository) {
+            StatusRepository statusRepository, UserRepository userRepository,
+            DeviceReturnRepository returnRepository) {
         mViewModel = viewModel;
         mDeviceRepository = deviceRepository;
         mCategoryRepository = categoryRepository;
         mStatusRepository = statusRepository;
         mUserRepository = userRepository;
+        mReturnRepository = returnRepository;
     }
 
     @Override
@@ -58,6 +62,37 @@ final class ListDevicePresenter implements ListDeviceContract.Presenter {
         mCompositeSubscriptions.clear();
     }
 
+    @Override
+    public void getDevicesBorrow() {
+        Subscription subscription = mReturnRepository.devicesOfBorrower()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mViewModel.showProgressbar();
+                    }
+                })
+                .subscribe(new Subscriber<List<Device>>() {
+                    @Override
+                    public void onCompleted() {
+                        mViewModel.hideProgressbar();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mViewModel.onError(e.getCause().getMessage());
+                    }
+
+                    @Override
+                    public void onNext(List<Device> devices) {
+                        mViewModel.onDeviceLoaded(devices);
+                    }
+                });
+        mCompositeSubscriptions.add(subscription);
+    }
+
+    @Override
     public void getListDevice(String deviceName, int categoryId, int statusId, int page,
             int perPage) {
         Subscription subscription =

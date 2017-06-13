@@ -9,7 +9,7 @@ import android.widget.Toast;
 import com.android.databinding.library.baseAdapters.BR;
 import com.framgia.fdms.data.model.User;
 import com.framgia.fdms.screen.ViewPagerScroll;
-import com.framgia.fdms.screen.listdevice.ListDeviceFragment;
+import com.framgia.fdms.screen.device.listdevice.ListDeviceFragment;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,9 +32,10 @@ public class DeviceViewModel extends BaseObservable
     public DeviceViewModel(Fragment fragment) {
         mFragment = fragment;
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(ListDeviceFragment.newInstance());
-        fragments.add(ListDeviceFragment.newInstance());
+        fragments.add(ListDeviceFragment.newInstance(TAB_MY_DEVICE));
+        fragments.add(ListDeviceFragment.newInstance(TAB_MANAGE_DEVICE));
         mAdapter = new ViewPagerAdapter(mFragment.getChildFragmentManager(), fragments);
+        setAdapter(mAdapter);
     }
 
     @Override
@@ -60,8 +61,8 @@ public class DeviceViewModel extends BaseObservable
         setBo(user.isBo());
 
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(ListDeviceFragment.newInstance());
-        if (mIsBo) fragments.add(ListDeviceFragment.newInstance());
+        fragments.add(ListDeviceFragment.newInstance(TAB_MY_DEVICE));
+        if (mIsBo) fragments.add(ListDeviceFragment.newInstance(TAB_MANAGE_DEVICE));
         mAdapter = new ViewPagerAdapter(mFragment.getChildFragmentManager(), fragments);
         setAdapter(mAdapter);
     }

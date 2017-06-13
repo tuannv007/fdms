@@ -31,8 +31,8 @@ import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.screen.ViewPagerScroll;
 import com.framgia.fdms.screen.dashboard.DashboardViewModel;
+import com.framgia.fdms.screen.device.listdevice.ListDeviceViewModel;
 import com.framgia.fdms.screen.devicedetail.DeviceDetailViewModel;
-import com.framgia.fdms.screen.listdevice.ListDeviceViewModel;
 import com.framgia.fdms.screen.requestcreation.RequestCreationViewModel;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -115,7 +115,7 @@ public final class BindingUtils {
             final ViewPagerScroll viewModel) {
         viewPager.setAdapter(adapter);
         if (viewModel == null) return;
-        viewPager.setOffscreenPageLimit(adapter.getCount());
+        if (adapter != null) viewPager.setOffscreenPageLimit(adapter.getCount());
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset,
