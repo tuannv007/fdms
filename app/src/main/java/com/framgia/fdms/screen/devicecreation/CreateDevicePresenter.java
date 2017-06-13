@@ -38,13 +38,13 @@ final class CreateDevicePresenter implements CreateDeviceContract.Presenter {
         mStatusRepository = statusRepository;
         mBranchRepository = branchRepository;
         mCompositeSubscription = new CompositeSubscription();
+        getListCategories();
+        getListStatuses();
+        getListBranch();
     }
 
     @Override
     public void onStart() {
-        getListCategories();
-        getListStatuses();
-        getListBranch();
     }
 
     @Override
@@ -167,6 +167,39 @@ final class CreateDevicePresenter implements CreateDeviceContract.Presenter {
                     @Override
                     public void call(List<Status> statuses) {
                         mViewModel.onGetBranchSuccess(statuses);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        mViewModel.hideProgressbar();
+                        mViewModel.onLoadError(throwable.getMessage());
+                    }
+                }, new Action0() {
+                    @Override
+                    public void call() {
+                        mViewModel.hideProgressbar();
+                    }
+                });
+        mCompositeSubscription.add(subscription);
+    }
+
+    @Override
+    public void getDeviceCode(int deviceCategoryId, int branchId) {
+        Subscription subscription = mDeviceRepository.getDeviceCode(deviceCategoryId, branchId)
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mViewModel.showProgressbar();
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Device>() {
+                    @Override
+                    public void call(Device device) {
+                        if (device != null && device.getDeviceCode() != null) {
+                            mViewModel.onGetDeviceCodeSuccess(device.getDeviceCode());
+                        }
                     }
                 }, new Action1<Throwable>() {
                     @Override

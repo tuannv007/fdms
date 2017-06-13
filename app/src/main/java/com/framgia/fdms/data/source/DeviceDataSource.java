@@ -39,5 +39,7 @@ public class DeviceDataSource {
         Observable<Device> getDevice(int deviceId);
 
         Observable<List<Device>> getTopDevice(int topDevice);
+
+        Observable<Device> getDeviceCode(int deviceCategoryId, int branchId);
     }
 }

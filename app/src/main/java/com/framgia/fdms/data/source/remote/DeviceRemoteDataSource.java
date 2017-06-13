@@ -224,6 +224,14 @@ public class DeviceRemoteDataSource implements DeviceDataSource.RemoteDataSource
                 });
     }
 
+    @Override
+    public Observable<Device> getDeviceCode(int deviceCategoryId, int branchId) {
+        // TODO: later
+        Device device = new Device();
+        device.setDeviceCode("HN_05_501_0003");
+        return Observable.just(device);
+    }
+
     public Map<String, String> getDeviceParams(String deviceName, int categoryId, int statusId,
             int page, int perPage) {
         Map<String, String> parrams = new HashMap<>();
