@@ -59,6 +59,8 @@ interface CreateDeviceContract {
         void onInputBoughtDateError();
 
         void onInputOriginalPriceError();
+
+        void onGetDeviceCodeSuccess(String deviceCode);
     }
 
     /**
@@ -70,5 +72,7 @@ interface CreateDeviceContract {
         void updateDevice(Device device);
 
         boolean validateDataInput(Device device);
+
+        void getDeviceCode(int deviceCategoryId, int branchId);
     }
 }

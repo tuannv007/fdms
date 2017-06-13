@@ -65,7 +65,11 @@ public class Device extends BaseObservable implements Parcelable {
     @Expose
     @SerializedName("device_category_name")
     private String mDeviceCategoryName;
+    @Expose
+    @SerializedName("serial_number")
     private String mSerialNumber;
+    @Expose
+    @SerializedName("model_number")
     private String mModelNumber;
     @Expose
     @SerializedName("category_name")

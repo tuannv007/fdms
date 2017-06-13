@@ -74,7 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="@dimen/dp_15"
+                android:background="@color/color_gray_mos"
                 >
 
                 <android.support.v7.widget.CardView
@@ -127,7 +127,7 @@
                         <include
                             layout="@layout/text_input"
                             bind:image="@{@drawable/ic_code_24dp}"
-                            bind:text=""
+                            bind:text="@{viewModel.device.deviceCode}"
                             bind:title="@{@string/title_code}"
                             />
                     </LinearLayout>
@@ -136,7 +136,7 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_10"
                     android:elevation="@dimen/dp_5"
                     car_view:cardCornerRadius="@dimen/dp_5"
                     car_view:cardElevation="@dimen/dp1"
@@ -218,7 +218,7 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_10"
                     android:elevation="@dimen/dp_5"
                     car_view:cardCornerRadius="@dimen/dp_5"
                     car_view:cardElevation="@dimen/dp1"

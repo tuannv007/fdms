@@ -244,6 +244,11 @@ public class CreateDeviceViewModel extends BaseObservable
     }
 
     @Override
+    public void onGetDeviceCodeSuccess(String deviceCode) {
+        mDevice.setDeviceCode(deviceCode);
+    }
+
+    @Override
     public void onInputStatusError() {
         // TODO: later
     }
@@ -279,6 +284,7 @@ public class CreateDeviceViewModel extends BaseObservable
                     category.setName(mContext.getString(R.string.title_empty));
                 }
                 setCategory(category);
+                mPresenter.getDeviceCode(mCategory.getId(), mBranch.getId());
                 break;
             case REQUEST_STATUS:
                 bundle = data.getExtras();
@@ -296,6 +302,9 @@ public class CreateDeviceViewModel extends BaseObservable
                     branch.setName(DEFAULT_BRANCH_NAME);
                 }
                 setBranch(branch);
+                if (mCategory != null && mCategory.getId() > 0) {
+                    mPresenter.getDeviceCode(mCategory.getId(), mBranch.getId());
+                }
                 break;
             default:
                 break;

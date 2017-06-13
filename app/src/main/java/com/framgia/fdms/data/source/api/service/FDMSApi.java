@@ -100,4 +100,9 @@ public interface FDMSApi {
 
     @GET("api/v1/branch")
     Observable<Respone<List<Status>>> getListBranch();
+
+    @GET("api/v1/device_code/show")
+    Observable<Respone<Device>> getDeviceCode(
+            @Query("device_category_id") int deviceCategoryId,
+            @Query("branch") int branchId);
 }
