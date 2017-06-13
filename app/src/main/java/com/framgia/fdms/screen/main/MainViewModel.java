@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.framgia.fdms.BR;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Device;
+import com.framgia.fdms.screen.ViewPagerScroll;
 import com.framgia.fdms.screen.devicedetail.DeviceDetailActivity;
 import com.framgia.fdms.screen.scanner.ScannerActivity;
 import com.framgia.fdms.utils.permission.PermissionUtil;
@@ -26,7 +27,8 @@ import static com.framgia.fdms.utils.permission.PermissionUtil.MY_PERMISSIONS_RE
 /**
  * Exposes the data to be used in the Newmain screen.
  */
-public class MainViewModel extends BaseObservable implements MainContract.ViewModel {
+public class MainViewModel extends BaseObservable
+        implements MainContract.ViewModel, ViewPagerScroll {
     private MainContract.Presenter mPresenter;
     private ViewPagerAdapter mPagerAdapter;
     private int mTab = TAB_DASH_BOARD;
@@ -120,6 +122,11 @@ public class MainViewModel extends BaseObservable implements MainContract.ViewMo
     public void getResult(String resultQrCode) {
         if (mPresenter == null) return;
         mPresenter.getDevice(resultQrCode);
+    }
+
+    @Override
+    public void onCurrentPosition(int position) {
+        setTab(position);
     }
 
     @IntDef({ TAB_DASH_BOARD, TAB_REQUEST_MANAGER, TAB_DEVICE_MANAGER, Tab.TAB_PROFILE })

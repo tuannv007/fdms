@@ -29,10 +29,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.framgia.fdms.R;
 import com.framgia.fdms.data.model.Category;
+import com.framgia.fdms.screen.ViewPagerScroll;
 import com.framgia.fdms.screen.dashboard.DashboardViewModel;
 import com.framgia.fdms.screen.devicedetail.DeviceDetailViewModel;
 import com.framgia.fdms.screen.listdevice.ListDeviceViewModel;
-import com.framgia.fdms.screen.main.MainViewModel;
 import com.framgia.fdms.screen.requestcreation.RequestCreationViewModel;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -112,7 +112,7 @@ public final class BindingUtils {
 
     @BindingAdapter(value = { "bind:adapter", "model" }, requireAll = false)
     public static void setupViewPager(final ViewPager viewPager, FragmentPagerAdapter adapter,
-            final MainViewModel viewModel) {
+            final ViewPagerScroll viewModel) {
         viewPager.setAdapter(adapter);
         if (viewModel == null) return;
         viewPager.setOffscreenPageLimit(adapter.getCount());
@@ -124,7 +124,7 @@ public final class BindingUtils {
 
             @Override
             public void onPageSelected(int position) {
-                viewModel.setTab(position);
+                viewModel.onCurrentPosition(position);
             }
 
             @Override
@@ -161,7 +161,7 @@ public final class BindingUtils {
                 break;
         }
     }
-    
+
     private static void changeImageColor(ImageView image, int colorRes) {
         image.getDrawable()
                 .setColorFilter(image.getContext().getResources().getColor(colorRes),
