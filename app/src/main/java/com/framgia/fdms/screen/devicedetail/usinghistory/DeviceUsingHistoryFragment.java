@@ -13,6 +13,8 @@ import com.framgia.fdms.data.source.api.service.FDMSServiceClient;
 import com.framgia.fdms.data.source.remote.DeviceRemoteDataSource;
 import com.framgia.fdms.databinding.FragmentDeviceUsingHistoryBinding;
 
+import static com.framgia.fdms.utils.Constant.BundleConstant.EXTRA_DEVICE_ID;
+
 /**
  * UsingHistory Screen.
  */
@@ -20,8 +22,12 @@ public class DeviceUsingHistoryFragment extends Fragment {
 
     private DeviceUsingHistoryContract.ViewModel mViewModel;
 
-    public static DeviceUsingHistoryFragment newInstance() {
-        return new DeviceUsingHistoryFragment();
+    public static DeviceUsingHistoryFragment newInstance(int deviceId) {
+        DeviceUsingHistoryFragment fragment = new DeviceUsingHistoryFragment();
+        Bundle args = new Bundle();
+        args.putInt(EXTRA_DEVICE_ID, deviceId);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -32,7 +38,8 @@ public class DeviceUsingHistoryFragment extends Fragment {
         DeviceRepository repository =
                 new DeviceRepository(new DeviceRemoteDataSource(FDMSServiceClient.getInstance()));
         DeviceUsingHistoryContract.Presenter presenter =
-                new DeviceUsingHistoryPresenter(mViewModel, repository);
+                new DeviceUsingHistoryPresenter(mViewModel, repository,
+                        getArguments().getInt(EXTRA_DEVICE_ID));
 
         mViewModel.setPresenter(presenter);
     }

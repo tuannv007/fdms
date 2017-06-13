@@ -3,22 +3,24 @@ package com.framgia.fdms.data.model;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import com.framgia.fdms.BR;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import java.util.Date;
 
 /**
  * Created by framgia on 23/05/2017.
  */
 
 public class DeviceUsingHistory extends BaseObservable {
-    // TODO: 23/05/2017 fix when api be updated
+    @Expose
+    @SerializedName("staff")
     private String mStaffName;
-    private String mStartDate;
-    private String mEndDate;
-
-    public DeviceUsingHistory(String staffName, String startDate, String endDate) {
-        mStaffName = staffName;
-        mStartDate = startDate;
-        mEndDate = endDate;
-    }
+    @Expose
+    @SerializedName("from_date")
+    private Date mStartDate;
+    @Expose
+    @SerializedName("return_date")
+    private Date mEndDate;
 
     @Bindable
     public String getStaffName() {
@@ -31,21 +33,21 @@ public class DeviceUsingHistory extends BaseObservable {
     }
 
     @Bindable
-    public String getStartDate() {
+    public Date getStartDate() {
         return mStartDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(Date startDate) {
         mStartDate = startDate;
         notifyPropertyChanged(BR.startDate);
     }
 
     @Bindable
-    public String getEndDate() {
+    public Date getEndDate() {
         return mEndDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(Date endDate) {
         mEndDate = endDate;
         notifyPropertyChanged(BR.endDate);
     }
