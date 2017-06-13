@@ -49,6 +49,16 @@ interface CreateDeviceContract {
         void onUpdateError();
 
         void onUpdateSuccess(Device device);
+
+        void onPickDateTimeClick();
+
+        void onGetBranchSuccess(List<Status> branches);
+
+        void onLoadError(String msg);
+
+        void onInputBoughtDateError();
+
+        void onInputOriginalPriceError();
     }
 
     /**

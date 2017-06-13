@@ -77,6 +77,7 @@ public class Constant {
         public static final int REQUEST_SCANNER = 7;
         public static final int REQUEST_CREATE_REQUEST = 8;
         public static final int REQUEST_CREATE_ASSIGNMENT = 9;
+        public static final int REQUEST_BRANCH = 10;
     }
 
     public class BundleRequest {
