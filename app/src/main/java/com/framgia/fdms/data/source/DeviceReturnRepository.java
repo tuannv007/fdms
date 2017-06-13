@@ -14,8 +14,8 @@ import rx.Observable;
 public class DeviceReturnRepository {
     private DeviceReturnRemoteDataSource mDataSource;
 
-    public DeviceReturnRepository(DeviceReturnRemoteDataSource dataSource) {
-        mDataSource = dataSource;
+    public DeviceReturnRepository() {
+        mDataSource = DeviceReturnRemoteDataSource.getInstances();
     }
 
     public Observable<List<Status>> getBorrowers() {

@@ -65,6 +65,7 @@ public class Constant {
         public static final String BUNDLE_CONTENT = "BUNDLE_CONTENT";
         public static final String BUNDLE_RESPONE = "BUNDLE_RESPONE";
         public static final String EXTRA_DEVICE_ID = "EXTRA_DEVICE_ID";
+        public static final String BUNDLE_TAB = "BUNDLE_TAB";
     }
 
     public static final class RequestConstant {

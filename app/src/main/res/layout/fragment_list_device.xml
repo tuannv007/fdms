@@ -6,10 +6,12 @@
     >
 
     <data>
+
         <import type="android.view.View"/>
+        <import type="com.framgia.fdms.screen.device.DeviceViewModel.Tab"/>
         <variable
             name="viewModel"
-            type="com.framgia.fdms.screen.listdevice.ListDeviceViewModel"
+            type="com.framgia.fdms.screen.device.listdevice.ListDeviceViewModel"
             />
     </data>
 
@@ -34,13 +36,13 @@
                 />
 
             <LinearLayout
-
                 android:id="@id/linear_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/searchview"
                 android:orientation="horizontal"
                 android:padding="@dimen/dp_5"
+                android:visibility="@{viewModel.tab == Tab.TAB_MY_DEVICE ? View.GONE : View.VISIBLE}"
                 >
 
                 <TextView

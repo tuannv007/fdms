@@ -1,4 +1,4 @@
-package com.framgia.fdms.screen.listdevice;
+package com.framgia.fdms.screen.device.listdevice;
 
 import android.content.Intent;
 import com.framgia.fdms.BasePresenter;
@@ -60,5 +60,9 @@ interface ListDeviceContract {
         void getData(String keyWord, Category category, Status status);
 
         void getCurrentUser();
+
+        void getDevicesBorrow();
+
+        void getListDevice(String deviceName, int categoryId, int statusId, int page, int perPage);
     }
 }

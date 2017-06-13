@@ -1,10 +1,15 @@
 package com.framgia.fdms.data.source.remote;
 
 import com.framgia.fdms.data.model.Device;
+import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.Status;
+import com.framgia.fdms.data.source.api.service.FDMSApi;
+import com.framgia.fdms.data.source.api.service.FDMSServiceClient;
+import com.framgia.fdms.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 import rx.Observable;
+import rx.functions.Func1;
 
 /**
  * Created by Hoang Van Nha on 5/23/2017.
@@ -13,6 +18,18 @@ import rx.Observable;
 
 public class DeviceReturnRemoteDataSource
         implements com.framgia.fdms.data.source.DeviceReturnDataSource.RemoteDataSource {
+
+    private static DeviceReturnRemoteDataSource sInstances;
+    private FDMSApi mFDMSApi;
+
+    private DeviceReturnRemoteDataSource() {
+        mFDMSApi = FDMSServiceClient.getInstance();
+    }
+
+    public static DeviceReturnRemoteDataSource getInstances() {
+        if (sInstances == null) sInstances = new DeviceReturnRemoteDataSource();
+        return sInstances;
+    }
 
     @Override
     public Observable<List<Status>> getBorrowers() {
@@ -29,12 +46,13 @@ public class DeviceReturnRemoteDataSource
 
     @Override
     public Observable<List<Device>> getDevicesOfBorrower() {
-        List<Device> devices = new ArrayList<>();
-        devices.add(new Device("HCM_06_506_006", "IPad", "IPad 2012"));
-        devices.add(new Device("HCM_06_506_007", "IPad", "IPad 2013"));
-        devices.add(new Device("HCM_06_506_008", "IPad", "IPad 2015"));
-        devices.add(new Device("HCM_06_506_009", "IPad", "IPad 2016"));
-        devices.add(new Device("HCM_06_506_0010", "IPad", "IPad 2017"));
-        return Observable.just(devices);
+        return mFDMSApi.getDevicesBorrow()
+                .flatMap(new Func1<Respone<List<Device>>, Observable<List<Device>>>() {
+
+                    @Override
+                    public Observable<List<Device>> call(Respone<List<Device>> listRespone) {
+                        return Utils.getResponse(listRespone);
+                    }
+                });
     }
 }

@@ -16,7 +16,6 @@ import com.framgia.fdms.data.source.DeviceReturnRepository;
 import com.framgia.fdms.data.source.StatusRepository;
 import com.framgia.fdms.data.source.api.service.FDMSServiceClient;
 import com.framgia.fdms.data.source.remote.DeviceRemoteDataSource;
-import com.framgia.fdms.data.source.remote.DeviceReturnRemoteDataSource;
 import com.framgia.fdms.data.source.remote.StatusRemoteDataSource;
 import com.framgia.fdms.databinding.ActivityReturnDeviceBinding;
 
@@ -44,7 +43,7 @@ public class ReturnDeviceActivity extends AppCompatActivity {
 
         ReturnDeviceContract.Presenter presenter = new ReturnDevicePresenter(mViewModel,
                 new StatusRepository(new StatusRemoteDataSource(FDMSServiceClient.getInstance())),
-                new DeviceReturnRepository(new DeviceReturnRemoteDataSource()),
+                new DeviceReturnRepository(),
                 new DeviceRepository(new DeviceRemoteDataSource(FDMSServiceClient.getInstance())));
         mViewModel.setPresenter(presenter);
 

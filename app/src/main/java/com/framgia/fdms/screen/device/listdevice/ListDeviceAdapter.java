@@ -1,4 +1,4 @@
-package com.framgia.fdms.screen.listdevice;
+package com.framgia.fdms.screen.device.listdevice;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;

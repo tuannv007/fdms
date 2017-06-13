@@ -1,4 +1,4 @@
-package com.framgia.fdms.screen.listdevice;
+package com.framgia.fdms.screen.device.listdevice;
 
 import android.app.Activity;
 import android.content.Context;
@@ -31,6 +31,8 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.framgia.fdms.screen.device.DeviceViewModel.Tab.TAB_MANAGE_DEVICE;
+import static com.framgia.fdms.screen.device.DeviceViewModel.Tab.TAB_MY_DEVICE;
 import static com.framgia.fdms.utils.Constant.BundleConstant.BUNDLE_CATEGORY;
 import static com.framgia.fdms.utils.Constant.BundleConstant.BUNDLE_STATUE;
 import static com.framgia.fdms.utils.Constant.OUT_OF_INDEX;
@@ -54,6 +56,7 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
     private Status mStatus;
     private String mKeyWord;
     private boolean mIsBo = false;
+    private int mTab = TAB_MY_DEVICE;
 
     public ObservableBoolean getIsLoadingMore() {
         return mIsLoadingMore;
@@ -65,13 +68,11 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
             new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
-                    if (mPresenter != null) {
-                        mPresenter.getData(mKeyWord, mCategory, mStatus);
-                    }
+                    loadData();
                 }
             };
 
-    public ListDeviceViewModel(FragmentActivity activity, Fragment fragment) {
+    public ListDeviceViewModel(FragmentActivity activity, Fragment fragment, int tabDevice) {
         mFragment = fragment;
         mActivity = activity;
         mContext = activity.getApplicationContext();
@@ -79,6 +80,22 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
 
         setCategory(new Category(OUT_OF_INDEX, mContext.getString(R.string.title_btn_category)));
         setStatus(new Status(OUT_OF_INDEX, mContext.getString(R.string.title_request_status)));
+        mTab = tabDevice;
+        loadData();
+    }
+
+    private void loadData() {
+        if (mPresenter == null) return;
+        switch (mTab) {
+            case TAB_MY_DEVICE:
+                mPresenter.getDevicesBorrow();
+                break;
+            case TAB_MANAGE_DEVICE:
+                mPresenter.getData(mKeyWord, mCategory, mStatus);
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -181,6 +198,7 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
         mIsLoadingMore.set(false);
         hideProgressbar();
         Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+        setRefresh(false);
     }
 
     @Override
@@ -316,5 +334,15 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
     public void setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener onRefreshListener) {
         mOnRefreshListener = onRefreshListener;
         notifyPropertyChanged(BR.onRefreshListener);
+    }
+
+    @Bindable
+    public int getTab() {
+        return mTab;
+    }
+
+    public void setTab(int tab) {
+        mTab = tab;
+        notifyPropertyChanged(BR.tab);
     }
 }
