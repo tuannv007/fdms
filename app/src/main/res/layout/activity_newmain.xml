@@ -41,27 +41,61 @@
                 android:orientation="horizontal"
                 >
 
-                <ImageView
-                    android:id="@+id/image_dash_board"
+                <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="@{()->viewModel.onDirectChildTab(Tab.TAB_DASH_BOARD ,viewpager)}"
-                    android:padding="@dimen/dp_15"
-                    android:src="@drawable/ic_home_black_24dp"
-                    bind:tabPostion="@{viewModel.tab}"
-                    />
+                    android:orientation="vertical"
+                    >
+                    <ImageView
+                        android:id="@+id/image_dash_board"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:padding="@dimen/dp_5"
+                        android:src="@drawable/ic_home_black_24dp"
+                        bind:tabPostion="@{viewModel.tab}"
+                        />
 
-                <ImageView
-                    android:id="@+id/image_request_manager"
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/title_home"
+                        android:textSize="@dimen/sp_14"
+                        android:textColor="@{viewModel.tab == Tab.TAB_DASH_BOARD ? @color/color_red : @color/color_grey_700}"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="@{()->viewModel.onDirectChildTab(Tab.TAB_REQUEST_MANAGER ,viewpager)}"
-                    android:padding="@dimen/dp_15"
-                    android:src="@drawable/ic_request_manager"
-                    bind:tabPostion="@{viewModel.tab}"
-                    />
+                    android:orientation="vertical"
+                    >
+                    <ImageView
+                        android:id="@+id/image_request_manager"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:padding="@dimen/dp_7"
+                        android:src="@drawable/ic_request_manager"
+                        bind:tabPostion="@{viewModel.tab}"
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/action_filter_status"
+                        android:textSize="@dimen/sp_14"
+                        android:textColor="@{viewModel.tab == Tab.TAB_REQUEST_MANAGER? @color/color_red : @color/color_grey_700}"
+                        />
+
+                </LinearLayout>
 
                 <ImageView
                     android:layout_width="0dp"
@@ -70,27 +104,62 @@
                     android:background="@color/colorPrimary"
                     />
 
-                <ImageView
-                    android:id="@+id/image_device_manager"
+                <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="@{()->viewModel.onDirectChildTab(Tab.TAB_DEVICE_MANAGER ,viewpager)}"
-                    android:padding="@dimen/dp_15"
-                    android:src="@drawable/ic_device_manager"
-                    bind:tabPostion="@{viewModel.tab}"
-                    />
+                    android:orientation="vertical"
+                    >
+                    <ImageView
+                        android:id="@+id/image_device_manager"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:padding="@dimen/dp_7"
+                        android:src="@drawable/ic_device_manager"
+                        bind:tabPostion="@{viewModel.tab}"
+                        />
 
-                <ImageView
-                    android:id="@+id/image_profile"
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/title_device"
+                        android:textSize="@dimen/sp_14"
+                        android:textColor="@{viewModel.tab == Tab.TAB_DEVICE_MANAGER ? @color/color_red : @color/color_grey_700}"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="@{()->viewModel.onDirectChildTab(Tab.TAB_PROFILE ,viewpager)}"
-                    android:padding="@dimen/dp_15"
-                    android:src="@drawable/ic_profile"
-                    bind:tabPostion="@{viewModel.tab}"
-                    />
+                    android:orientation="vertical"
+                    >
+                    <ImageView
+                        android:id="@+id/image_profile"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:padding="@dimen/dp_7"
+                        android:src="@drawable/ic_profile"
+                        bind:tabPostion="@{viewModel.tab}"
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/title_profile"
+                        android:textColor="@{viewModel.tab == Tab.TAB_PROFILE ? @color/color_red : @color/color_grey_700}"
+                        android:textSize="@dimen/sp_14"
+                        />
+
+                </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
 

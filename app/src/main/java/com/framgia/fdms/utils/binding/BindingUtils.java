@@ -161,7 +161,7 @@ public final class BindingUtils {
                 break;
         }
     }
-
+    
     private static void changeImageColor(ImageView image, int colorRes) {
         image.getDrawable()
                 .setColorFilter(image.getContext().getResources().getColor(colorRes),
