@@ -7,6 +7,7 @@ import com.android.databinding.library.baseAdapters.BR;
 import com.framgia.fdms.utils.Constant;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import java.io.Serializable;
 import java.util.Date;
 
 import static com.framgia.fdms.data.model.User.Role.STAFF;
@@ -16,7 +17,7 @@ import static com.framgia.fdms.utils.Constant.Role.BO_STAFF;
 /**
  * Created by levutantuan on 3/31/17.
  */
-public class User extends BaseObservable {
+public class User extends BaseObservable implements Serializable {
     @Expose
     @SerializedName("id")
     private int mId;

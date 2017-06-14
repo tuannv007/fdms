@@ -20,6 +20,7 @@ public class Constant {
     public static final int MAX_NOTIFICATION = 99;
     public static final String TITLE_UNKNOWN = "Unknown";
     public static final String ACTION_CLEAR = "Clear";
+    public static final String TYPE_DIALOG = "TYPE_DIALOG";
 
     private Constant() {
         // No-op
@@ -66,6 +67,7 @@ public class Constant {
         public static final String BUNDLE_RESPONE = "BUNDLE_RESPONE";
         public static final String EXTRA_DEVICE_ID = "EXTRA_DEVICE_ID";
         public static final String BUNDLE_TAB = "BUNDLE_TAB";
+        public static final String  BUNDLE_USER = "USER_BUND";
     }
 
     public static final class RequestConstant {
@@ -99,5 +101,12 @@ public class Constant {
         public static final int APPROVED = 3;
         public static final int WAITING_DONE = 4;
         public static final int DONE = 5;
+    }
+
+    public class KeyExport {
+        public static final String TITLE_DEVICE_NAME = "Device Name";
+        public static final String TITLE_MODEL_NUMBER = "Model Number";
+        public static final String TITLE_SERIES_NUMBER = "Series Number";
+        public static final String TITLE_ASSIGNED = "Assigned date";
     }
 }
