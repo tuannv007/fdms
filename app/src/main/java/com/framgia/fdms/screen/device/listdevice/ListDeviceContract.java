@@ -7,7 +7,6 @@ import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.data.model.User;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import java.util.List;
 
 /**
@@ -27,10 +26,6 @@ interface ListDeviceContract {
         void onError(String msg);
 
         void hideProgressbar();
-
-        void onRegisterDeviceClick(FloatingActionsMenu actionsMenu);
-
-        void onStartReturnDevice(FloatingActionsMenu actionsMenu);
 
         void onDeviceCategoryLoaded(List<Category> categories);
 

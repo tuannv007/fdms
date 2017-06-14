@@ -21,13 +21,9 @@ import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.data.model.User;
-import com.framgia.fdms.screen.devicecreation.CreateDeviceActivity;
-import com.framgia.fdms.screen.devicecreation.DeviceStatusType;
 import com.framgia.fdms.screen.devicedetail.DeviceDetailActivity;
-import com.framgia.fdms.screen.returndevice.ReturnDeviceActivity;
 import com.framgia.fdms.screen.selection.StatusSelectionActivity;
 import com.framgia.fdms.screen.selection.StatusSelectionType;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -204,18 +200,6 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
     @Override
     public void hideProgressbar() {
         mProgressBarVisibility.set(View.GONE);
-    }
-
-    @Override
-    public void onRegisterDeviceClick(FloatingActionsMenu actionsMenu) {
-        actionsMenu.collapse();
-        mContext.startActivity(CreateDeviceActivity.getInstance(mContext, DeviceStatusType.CREATE));
-    }
-
-    @Override
-    public void onStartReturnDevice(FloatingActionsMenu actionsMenu) {
-        actionsMenu.collapse();
-        mContext.startActivity(ReturnDeviceActivity.newIntent(mContext));
     }
 
     @Override
