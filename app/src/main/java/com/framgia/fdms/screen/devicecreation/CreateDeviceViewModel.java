@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,11 @@ import com.framgia.fdms.screen.main.MainActivity;
 import com.framgia.fdms.screen.selection.StatusSelectionActivity;
 import com.framgia.fdms.screen.selection.StatusSelectionType;
 import com.framgia.fdms.utils.Utils;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,6 +47,10 @@ public class CreateDeviceViewModel extends BaseObservable
     private static final String DEFAULT_STATUS_NAME = "available";
     private static final int DEFAULT_BRANCH_ID = 1;
     private static final String DEFAULT_BRANCH_NAME = "Hanoi";
+    private static final int DEFAULT_WIDTH_QRCODE = 300;
+    private static final int DEFAULT_HEIGHT_QRCODE = 300;
+    private static final int DEFAULT_WIDTH_BARCODE = 200;
+    private static final int DEFAULT_HEIGHT_BARCODE = 100;
 
     private DeviceStatusType mDeviceType = DeviceStatusType.CREATE;
     private Context mContext;
@@ -66,6 +76,7 @@ public class CreateDeviceViewModel extends BaseObservable
     private Status mBranch;
     private Calendar mCalendar = Calendar.getInstance();
     private boolean mIsQrCode = true;
+    private Bitmap mDeviceCode;
 
     public CreateDeviceViewModel(CreateDeviceActivity activity, Device device,
             DeviceStatusType type) {
@@ -246,6 +257,7 @@ public class CreateDeviceViewModel extends BaseObservable
     @Override
     public void onGetDeviceCodeSuccess(String deviceCode) {
         mDevice.setDeviceCode(deviceCode);
+        onGenerateBarCode(mIsQrCode);
     }
 
     @Override
@@ -308,6 +320,27 @@ public class CreateDeviceViewModel extends BaseObservable
                 break;
             default:
                 break;
+        }
+    }
+
+    public void generateBarCode(BarcodeFormat format, int width, int height) {
+        String deviceCode = mDevice.getDeviceCode();
+        if (deviceCode == null) return;
+        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+        try {
+            BitMatrix bitMatrix = multiFormatWriter.encode(deviceCode, format, width, height);
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            setDeviceCode(barcodeEncoder.createBitmap(bitMatrix));
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void onGenerateBarCode(boolean isQrCode) {
+        if (isQrCode) {
+            generateBarCode(BarcodeFormat.QR_CODE, DEFAULT_WIDTH_QRCODE, DEFAULT_HEIGHT_QRCODE);
+        } else {
+            generateBarCode(BarcodeFormat.CODE_128, DEFAULT_WIDTH_BARCODE, DEFAULT_HEIGHT_BARCODE);
         }
     }
 
@@ -421,6 +454,7 @@ public class CreateDeviceViewModel extends BaseObservable
     }
 
     public void setQrCode(boolean qrCode) {
+        onGenerateBarCode(qrCode);
         mIsQrCode = qrCode;
         notifyPropertyChanged(BR.qrCode);
     }
@@ -433,5 +467,15 @@ public class CreateDeviceViewModel extends BaseObservable
     public void setBranch(Status branch) {
         mBranch = branch;
         notifyPropertyChanged(BR.branch);
+    }
+
+    @Bindable
+    public Bitmap getDeviceCode() {
+        return mDeviceCode;
+    }
+
+    public void setDeviceCode(Bitmap deviceCode) {
+        mDeviceCode = deviceCode;
+        notifyPropertyChanged(BR.deviceCode);
     }
 }

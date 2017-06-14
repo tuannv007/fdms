@@ -73,8 +73,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:background="@color/color_gray_mos"
+                android:orientation="vertical"
                 >
 
                 <android.support.v7.widget.CardView
@@ -100,8 +100,8 @@
 
                         <include
                             layout="@layout/text_input"
-                            bind:image="@{@drawable/ic_calendar_24dp}"
                             bind:error="@{viewModel.boughtDateError}"
+                            bind:image="@{@drawable/ic_calendar_24dp}"
                             bind:onClick="@{() -> viewModel.onPickDateTimeClick()}"
                             bind:text="@{viewModel.boughtDate}"
                             bind:title="@{@string/title_bought_date}"
@@ -109,8 +109,8 @@
 
                         <include
                             layout="@layout/text_input"
-                            bind:image="@{@drawable/ic_device_24dp}"
                             bind:error="@{viewModel.categoryError}"
+                            bind:image="@{@drawable/ic_device_24dp}"
                             bind:onClick="@{() -> viewModel.onChooseCategory()}"
                             bind:text="@{viewModel.category.name}"
                             bind:title="@{@string/title_device_category}"
@@ -258,8 +258,8 @@
                                     android:layout_width="@dimen/dp_0"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="@string/title_qrcode"
                                     android:checked="@={viewModel.qrCode}"
+                                    android:text="@string/title_qrcode"
                                     />
 
                                 <RadioButton
@@ -308,6 +308,7 @@
                                 android:layout_height="@dimen/dp_150"
                                 android:layout_weight="2"
                                 android:src="@drawable/ic_no_image"
+                                bind:imageBitmap="@{viewModel.deviceCode}"
                                 />
                         </LinearLayout>
                     </LinearLayout>
