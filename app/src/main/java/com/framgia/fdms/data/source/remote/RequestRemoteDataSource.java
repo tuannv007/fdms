@@ -1,10 +1,12 @@
 package com.framgia.fdms.data.source.remote;
 
+import android.util.Log;
 import com.framgia.fdms.data.model.Dashboard;
 import com.framgia.fdms.data.model.Request;
 import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.data.source.RequestDataSource;
+import com.framgia.fdms.data.source.api.request.DeviceRequest;
 import com.framgia.fdms.data.source.api.request.RequestCreatorRequest;
 import com.framgia.fdms.data.source.api.service.FDMSApi;
 import com.framgia.fdms.utils.Utils;
@@ -24,6 +26,7 @@ import static com.framgia.fdms.utils.Constant.ApiParram.RELATIVE_ID;
 import static com.framgia.fdms.utils.Constant.ApiParram.REQUEST_ASSIGNEE_ID;
 import static com.framgia.fdms.utils.Constant.ApiParram.REQUEST_DESCRIPTION;
 import static com.framgia.fdms.utils.Constant.ApiParram.REQUEST_FOR_USER_ID;
+import static com.framgia.fdms.utils.Constant.ApiParram.REQUEST_REQUEST_DETAILS;
 import static com.framgia.fdms.utils.Constant.ApiParram.REQUEST_STATUS_ID;
 import static com.framgia.fdms.utils.Constant.ApiParram.REQUEST_TITLE;
 import static com.framgia.fdms.utils.Constant.ApiParram.REQUEST_TYPE;
@@ -69,8 +72,9 @@ public class RequestRemoteDataSource extends BaseRemoteDataSource
         parrams.put(REQUEST_DESCRIPTION, request.getDescription());
         parrams.put(REQUEST_FOR_USER_ID, String.valueOf(request.getForUserId()));
         parrams.put(REQUEST_ASSIGNEE_ID, String.valueOf(request.getAssigneeId()));
+        parrams.put(REQUEST_REQUEST_DETAILS, request.getDeviceRequests().toString());
 
-        return mFDMSApi.registerRequest(parrams, request.getDeviceRequests())
+        return mFDMSApi.registerRequest(parrams)
                 .flatMap(new Func1<Respone<Request>, Observable<Request>>() {
 
                     @Override

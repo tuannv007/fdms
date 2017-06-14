@@ -45,6 +45,7 @@ public class Constant {
         public static final String REQUEST_DESCRIPTION = "request[description]";
         public static final String REQUEST_FOR_USER_ID = "request[for_user_id]";
         public static final String REQUEST_ASSIGNEE_ID = "request[assignee_id]";
+        public static final String REQUEST_REQUEST_DETAILS = "request[request_details_attributes]";
     }
 
     public class DeviceStatus {
