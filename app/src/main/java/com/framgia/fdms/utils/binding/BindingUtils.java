@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.databinding.BindingAdapter;
 import android.databinding.InverseBindingAdapter;
 import android.databinding.InverseBindingListener;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
@@ -429,5 +430,10 @@ public final class BindingUtils {
     public static void setOnRefreshUserRequest(SwipeRefreshLayout view,
             SwipeRefreshLayout.OnRefreshListener listener) {
         view.setOnRefreshListener(listener);
+    }
+
+    @BindingAdapter("imageBitmap")
+    public static void setImageBitmap(ImageView view, Bitmap bitmap) {
+        view.setImageBitmap(bitmap);
     }
 }
