@@ -7,14 +7,23 @@ import android.widget.NumberPicker;
 import com.framgia.fdms.BR;
 import com.framgia.fdms.data.model.Category;
 import com.framgia.fdms.screen.requestcreation.RequestCreationViewModel;
+import com.google.gson.Gson;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by MyPC on 19/05/2017.
  */
 
 public class DeviceRequest extends BaseObservable {
+    @Expose
+    @SerializedName("description")
     private String mDescription;
+    @Expose
+    @SerializedName("device_category_id")
     private int mDeviceCategoryId;
+    @Expose
+    @SerializedName("number")
     private int mNumber;
     private Category mCategory;
 
@@ -69,5 +78,10 @@ public class DeviceRequest extends BaseObservable {
 
     public void onIncrement() {
         setNumber(getNumber() + 1);
+    }
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
     }
 }

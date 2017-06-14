@@ -10,10 +10,12 @@ import com.framgia.fdms.data.model.Respone;
 import com.framgia.fdms.data.model.Status;
 import com.framgia.fdms.data.model.User;
 import com.framgia.fdms.data.source.api.request.DeviceRequest;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -74,9 +76,7 @@ public interface FDMSApi {
     Observable<Respone<List<Status>>> getListAssign();
 
     @POST("api/v1/requests")
-    @FormUrlEncoded
-    Observable<Respone<Request>> registerRequest(@FieldMap Map<String, String> params,
-            @Field("request[request_details_attributes]") List<DeviceRequest> deviceRequests);
+    Observable<Respone<Request>> registerRequest(@QueryMap Map<String, String> params);
 
     @GET("api/v1/device_code")
     Observable<Respone<Device>> getDevice(@Query("device_id") int deviceId);
