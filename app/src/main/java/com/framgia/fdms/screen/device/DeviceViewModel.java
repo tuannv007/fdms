@@ -10,6 +10,10 @@ import com.android.databinding.library.baseAdapters.BR;
 import com.framgia.fdms.data.model.User;
 import com.framgia.fdms.screen.ViewPagerScroll;
 import com.framgia.fdms.screen.device.listdevice.ListDeviceFragment;
+import com.framgia.fdms.screen.devicecreation.CreateDeviceActivity;
+import com.framgia.fdms.screen.devicecreation.DeviceStatusType;
+import com.framgia.fdms.screen.returndevice.ReturnDeviceActivity;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,6 +84,19 @@ public class DeviceViewModel extends BaseObservable
     @Override
     public void onClickChangeTab(ViewPager viewPager, @Tab int currentTab) {
         viewPager.setCurrentItem(currentTab);
+    }
+
+    @Override
+    public void onStartReturnDevice(FloatingActionsMenu floatingActionsMenu) {
+        floatingActionsMenu.collapse();
+        mFragment.startActivity(ReturnDeviceActivity.newIntent(mFragment.getContext()));
+    }
+
+    @Override
+    public void onRegisterDeviceClick(FloatingActionsMenu floatingActionsMenu) {
+        floatingActionsMenu.collapse();
+        mFragment.startActivity(
+                CreateDeviceActivity.getInstance(mFragment.getContext(), DeviceStatusType.CREATE));
     }
 
     @Bindable

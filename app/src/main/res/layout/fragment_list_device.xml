@@ -88,44 +88,6 @@
                 app:scrollListenner="@{viewModel.scrollListenner}"
                 />
 
-            <com.getbase.floatingactionbutton.FloatingActionsMenu
-                android:id="@+id/float_action_menu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_gravity="bottom|end"
-                android:layout_margin="@dimen/dp_16"
-                android:visibility="@{viewModel.bo ? View.VISIBLE : View.GONE}"
-                app:backgroundTint="@color/colorPrimary"
-                app:fab_addButtonColorNormal="@color/colorPrimary"
-                app:fab_addButtonColorPressed="@color/color_grey_757575"
-                app:fab_addButtonPlusIconColor="@color/color_white"
-                app:fab_labelStyle="@style/FloatMenuTitleStyle"
-                >
-                <com.getbase.floatingactionbutton.FloatingActionButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{() -> viewModel.onStartReturnDevice(floatActionMenu)}"
-                    app:fab_colorNormal="@android:color/white"
-                    app:fab_colorPressed="@color/color_seashell"
-                    app:fab_icon="@drawable/ic_return_teal_24px"
-                    app:fab_size="mini"
-                    app:fab_title="@string/action_return_device"
-                    />
-                <com.getbase.floatingactionbutton.FloatingActionButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{() -> viewModel.onRegisterDeviceClick(floatActionMenu)}"
-                    app:fab_colorNormal="@android:color/white"
-                    app:fab_colorPressed="@color/color_seashell"
-                    app:fab_icon="@drawable/ic_add_teal_24dp"
-                    app:fab_size="mini"
-                    app:fab_title="@string/action_add_new_device"
-                    />
-            </com.getbase.floatingactionbutton.FloatingActionsMenu>
-
             <ProgressBar
                 android:id="@+id/progress_loading"
                 android:layout_width="wrap_content"
