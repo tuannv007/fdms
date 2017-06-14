@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.print.PrintHelper;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 import com.framgia.fdms.BR;
@@ -51,6 +54,7 @@ public class CreateDeviceViewModel extends BaseObservable
     private static final int DEFAULT_HEIGHT_QRCODE = 300;
     private static final int DEFAULT_WIDTH_BARCODE = 200;
     private static final int DEFAULT_HEIGHT_BARCODE = 100;
+    private static final int SCALE_BITMAP = 7;
 
     private DeviceStatusType mDeviceType = DeviceStatusType.CREATE;
     private Context mContext;
@@ -258,6 +262,23 @@ public class CreateDeviceViewModel extends BaseObservable
     public void onGetDeviceCodeSuccess(String deviceCode) {
         mDevice.setDeviceCode(deviceCode);
         onGenerateBarCode(mIsQrCode);
+    }
+
+    @Override
+    public void onPrintClick() {
+        if (mDevice == null || mDevice.getDeviceCode() == null || mDeviceCode == null) return;
+
+        Bitmap dstBitmap = Bitmap.createBitmap(mDeviceCode.getWidth() * SCALE_BITMAP,
+                mDeviceCode.getHeight() * SCALE_BITMAP, Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(dstBitmap);
+        canvas.drawColor(Color.WHITE);
+        canvas.drawBitmap(mDeviceCode, mDeviceCode.getWidth() * (SCALE_BITMAP - 1),
+                mDeviceCode.getHeight() * (SCALE_BITMAP - 1), null);
+
+        PrintHelper photoPrinter = new PrintHelper(getActivity());
+        photoPrinter.setScaleMode(PrintHelper.SCALE_MODE_FIT);
+        photoPrinter.printBitmap(mDevice.getDeviceCode(), dstBitmap);
     }
 
     @Override

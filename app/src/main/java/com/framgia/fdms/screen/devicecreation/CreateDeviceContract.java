@@ -61,6 +61,8 @@ interface CreateDeviceContract {
         void onInputOriginalPriceError();
 
         void onGetDeviceCodeSuccess(String deviceCode);
+
+        void onPrintClick();
     }
 
     /**
