@@ -72,9 +72,6 @@ public class Device extends BaseObservable implements Parcelable {
     @SerializedName("model_number")
     private String mModelNumber;
     @Expose
-    @SerializedName("category_name")
-    private String mCategoryName;
-    @Expose
     @SerializedName("status")
     private int mStatus;
     @Expose
@@ -107,7 +104,6 @@ public class Device extends BaseObservable implements Parcelable {
         mDeviceCategoryName = in.readString();
         mSerialNumber = in.readString();
         mModelNumber = in.readString();
-        mCategoryName = in.readString();
         mStatus = in.readInt();
         mIsSelected = in.readByte() != 0;
         mUser = in.readParcelable(UserBorrow.class.getClassLoader());
@@ -128,7 +124,6 @@ public class Device extends BaseObservable implements Parcelable {
         dest.writeString(mDeviceCategoryName);
         dest.writeString(mSerialNumber);
         dest.writeString(mModelNumber);
-        dest.writeString(mCategoryName);
         dest.writeInt(mStatus);
         dest.writeByte((byte) (mIsSelected ? 1 : 0));
         dest.writeParcelable(mUser, flags);
@@ -271,14 +266,6 @@ public class Device extends BaseObservable implements Parcelable {
     public void setModelNumber(String modelNumber) {
         mModelNumber = modelNumber;
         notifyPropertyChanged(BR.modelNumber);
-    }
-
-    public String getCategoryName() {
-        return mCategoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        mCategoryName = categoryName;
     }
 
     public int getStatus() {

@@ -46,7 +46,6 @@ public class RequestDetailActivity extends AppCompatActivity {
         RequestDetailContract.Presenter presenter = new RequestDetailPresenter(mViewModel,
                 new UserRepository(
                         new UserLocalDataSource(new SharePreferenceImp(getApplicationContext()))));
-        mBinding.setRequest(mRequest);
         mViewModel.setPresenter(presenter);
         mFloatingActionsMenu = mBinding.floatActionMenu;
         setFloatingActionButton();

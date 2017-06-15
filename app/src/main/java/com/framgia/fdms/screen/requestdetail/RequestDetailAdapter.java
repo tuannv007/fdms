@@ -36,6 +36,11 @@ public class RequestDetailAdapter
         notifyDataSetChanged();
     }
 
+    public void clear(){
+        mDeviceRequests.clear();
+        notifyDataSetChanged();
+    }
+
     public void removeAt(int position) {
         mDeviceRequests.remove(position);
         notifyDataSetChanged();
