@@ -107,4 +107,8 @@ public interface FDMSApi {
 
     @GET("api/v1/user_brorrow")
     Observable<Respone<List<Device>>> getDevicesBorrow();
+
+    @PATCH("/api/v1/requests/{id}")
+    Observable<Respone<Request>> updateRequest(@Path("id") int requestId,
+            @QueryMap Map<String, String> params);
 }

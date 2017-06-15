@@ -85,7 +85,38 @@ public class RequestDetailPresenter implements RequestDetailContract.Presenter {
                 .subscribe(new Action1<Respone<Request>>() {
                     @Override
                     public void call(Respone<Request> requestRespone) {
-                        mViewModel.editActionSuccess(requestRespone);
+                        mViewModel.onGetReponeSuccess(requestRespone);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        mViewModel.hideProgressbar();
+                        mViewModel.onLoadError(throwable.getMessage());
+                    }
+                }, new Action0() {
+                    @Override
+                    public void call() {
+                        mViewModel.hideProgressbar();
+                    }
+                });
+        mSubscription.add(subscription);
+    }
+
+    @Override
+    public void updateRequest(Request request) {
+        Subscription subscription = mRequestRepository.updateRequest(request)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mViewModel.showProgressbar();
+                    }
+                })
+                .subscribe(new Action1<Respone<Request>>() {
+                    @Override
+                    public void call(Respone<Request> requestRespone) {
+                        mViewModel.onGetReponeSuccess(requestRespone);
                     }
                 }, new Action1<Throwable>() {
                     @Override
