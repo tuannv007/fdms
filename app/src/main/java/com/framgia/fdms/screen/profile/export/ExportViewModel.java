@@ -1,6 +1,9 @@
 package com.framgia.fdms.screen.profile.export;
 
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AppCompatActivity;
+
+import static com.framgia.fdms.utils.permission.PermissionUtil.checkWritePermission;
 
 /**
  * Created by tuanbg on 6/14/17.
@@ -31,8 +34,10 @@ public class ExportViewModel implements ExportContract.ViewModel {
 
     @Override
     public void exportPdf() {
-        mPresenter.exportTask();
-        mFragment.dismiss();
+        if (checkWritePermission((AppCompatActivity) mFragment.getActivity())) {
+            mPresenter.exportTask();
+            mFragment.dismiss();
+        }
     }
 
     @Override
