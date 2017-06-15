@@ -23,7 +23,7 @@ public class ExportDialogFragment extends DialogFragment {
 
     public static ExportDialogFragment newInstance(User user) {
         Bundle args = new Bundle();
-        args.putSerializable(BUNDLE_USER, user);
+        args.putParcelable(BUNDLE_USER, user);
         ExportDialogFragment fragment = new ExportDialogFragment();
         fragment.setArguments(args);
         return fragment;
@@ -46,7 +46,7 @@ public class ExportDialogFragment extends DialogFragment {
     public void getDataFromIntent() {
         Bundle bundle = getArguments();
         if (bundle == null) return;
-        mUser = (User) bundle.getSerializable(BUNDLE_USER);
+        mUser = bundle.getParcelable(BUNDLE_USER);
     }
 
     @Override

@@ -2,6 +2,8 @@ package com.framgia.fdms.data.model;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.StringDef;
 import com.android.databinding.library.baseAdapters.BR;
 import com.framgia.fdms.utils.Constant;
@@ -17,7 +19,7 @@ import static com.framgia.fdms.utils.Constant.Role.BO_STAFF;
 /**
  * Created by levutantuan on 3/31/17.
  */
-public class User extends BaseObservable implements Serializable {
+public class User extends BaseObservable implements Parcelable {
     @Expose
     @SerializedName("id")
     private int mId;
@@ -93,6 +95,39 @@ public class User extends BaseObservable implements Serializable {
 
     public User() {
     }
+
+    protected User(Parcel in) {
+        mId = in.readInt();
+        mFirstName = in.readString();
+        mLastName = in.readString();
+        mEmail = in.readString();
+        mAddress = in.readString();
+        mPasswordDigest = in.readString();
+        mResetDigest = in.readString();
+        mCreatedBy = in.readString();
+        mUpdatedBy = in.readString();
+        mRememberDigest = in.readString();
+        mAvatar = in.readParcelable(Picture.class.getClassLoader());
+        mFromExcel = in.readByte() != 0;
+        mGender = in.readString();
+        mRole = in.readString();
+        mEmployeeCode = in.readString();
+        mStatus = in.readString();
+        mToken = in.readString();
+        mCardNumber = in.readString();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     @Bindable
     public String getCardNumber() {
@@ -332,6 +367,33 @@ public class User extends BaseObservable implements Serializable {
     public void setToken(String token) {
         mToken = token;
         notifyPropertyChanged(BR.token);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mId);
+        dest.writeString(mFirstName);
+        dest.writeString(mLastName);
+        dest.writeString(mEmail);
+        dest.writeString(mAddress);
+        dest.writeString(mPasswordDigest);
+        dest.writeString(mResetDigest);
+        dest.writeString(mCreatedBy);
+        dest.writeString(mUpdatedBy);
+        dest.writeString(mRememberDigest);
+        dest.writeParcelable(mAvatar, flags);
+        dest.writeByte((byte) (mFromExcel ? 1 : 0));
+        dest.writeString(mGender);
+        dest.writeString(mRole);
+        dest.writeString(mEmployeeCode);
+        dest.writeString(mStatus);
+        dest.writeString(mToken);
+        dest.writeString(mCardNumber);
     }
 
     @StringDef({ STAFF })

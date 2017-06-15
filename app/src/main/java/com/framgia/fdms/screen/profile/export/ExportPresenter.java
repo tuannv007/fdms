@@ -74,10 +74,10 @@ public class ExportPresenter implements ExportContract.Presenter {
 
     private Object createPdf() {
         if (mUser != null) {
-            String fullName = mUser.getId() + mUser.getFirstName() + mUser.getLastName();
+            String fullName = mUser.getId() + "_" + mUser.getFirstName() + mUser.getLastName();
             File exportDir = new File(Environment.getExternalStorageDirectory(), FOLDER_NAME_FAMS);
             if (!exportDir.exists()) exportDir.mkdirs();
-            File file = new File(exportDir, fullName + getCurentTime() + FILE_NAME_SAVED_PDF);
+            File file = new File(exportDir, fullName + "_" + getCurentTime() + FILE_NAME_SAVED_PDF);
             OutputStream output;
             try {
                 output = new FileOutputStream(file);
@@ -141,8 +141,7 @@ public class ExportPresenter implements ExportContract.Presenter {
 
     public String getCurentTime() {
         Calendar cal = Calendar.getInstance();
-        SimpleDateFormat dateFormat =
-                new SimpleDateFormat("EEE MMM dd hh:mm:ss 'GMT'Z yyyy", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy", Locale.getDefault());
         return dateFormat.format(cal.getTime());
     }
 
