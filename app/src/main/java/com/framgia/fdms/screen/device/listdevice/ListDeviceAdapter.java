@@ -21,7 +21,7 @@ public class ListDeviceAdapter
     private List<Device> mDevices;
     private ListDeviceViewModel mViewModel;
 
-    protected ListDeviceAdapter(@NonNull Context context, @NonNull List<Device> devices,
+    public ListDeviceAdapter(@NonNull Context context, @NonNull List<Device> devices,
             @NonNull ListDeviceViewModel viewModel) {
         super(context);
         mDevices = devices;
