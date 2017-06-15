@@ -48,6 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:clickable="@{type == DeviceStatusType.CREATE}"
+            android:onClick="@{onClick}"
             android:src="@{image}"
             />
 
@@ -55,6 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="@{type == DeviceStatusType.CREATE}"
+            android:onClick="@{onClick}"
             android:orientation="vertical"
             android:paddingLeft="@dimen/dp_16"
             >
@@ -63,6 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="@{type == DeviceStatusType.CREATE}"
+                android:onClick="@{onClick}"
                 android:orientation="vertical"
                 >
                 <android.support.v7.widget.AppCompatTextView
@@ -70,6 +73,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/dp_5"
                     android:clickable="@{type == DeviceStatusType.CREATE}"
+                    android:onClick="@{onClick}"
                     android:text="@{title}"
                     android:textColor="@color/color_brown"
                     android:textSize="@dimen/sp_12"
@@ -89,6 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="@{type == DeviceStatusType.CREATE}"
+                android:onClick="@{onClick}"
                 app:errorText="@{error}"
                 >
                 <android.support.v7.widget.AppCompatTextView
@@ -98,6 +103,7 @@
                     android:layout_marginTop="@dimen/dp_2"
                     android:background="@color/color_gray_mos"
                     android:clickable="@{type == DeviceStatusType.CREATE}"
+                    android:onClick="@{onClick}"
                     />
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
