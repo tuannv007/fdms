@@ -5,10 +5,6 @@
     >
     <data>
         <variable
-            name="request"
-            type="com.framgia.fdms.data.model.Request"
-            />
-        <variable
             name="viewModel"
             type="com.framgia.fdms.screen.requestdetail.RequestDetailViewModel"
             />
@@ -66,9 +62,9 @@
                             android:layout_height="match_parent"
                             android:enabled="false"
                             android:gravity="center_vertical|end"
-                            android:text="@{request.requestStatus}"
+                            android:text="@{viewModel.request.requestStatus}"
                             android:textStyle="bold"
-                            bind:deviceStatus="@{request.requestStatus}"
+                            bind:deviceStatus="@{viewModel.request.requestStatus}"
                             />
                     </LinearLayout>
                     <View style="@style/ViewRequestDetail"/>
@@ -92,7 +88,7 @@
                             />
                         <EditText
                             android:enabled="@{viewModel.isEdit}"
-                            android:text="@={request.title}"
+                            android:text="@={viewModel.request.title}"
                             style="@style/EditTextStyleRequestDetail"
                             />
                     </LinearLayout>
@@ -118,7 +114,7 @@
                             android:gravity="center_vertical|end"
                             android:lines="3"
                             android:maxLines="10"
-                            android:text="@={request.description}"
+                            android:text="@={viewModel.request.description}"
                             style="@style/EditTextStyleRequestDetail"
                             />
                     </LinearLayout>
@@ -141,7 +137,7 @@
                             />
                         <EditText
                             android:enabled="false"
-                            android:text="@={request.requestFor}"
+                            android:text="@={viewModel.request.requestFor}"
                             style="@style/EditTextStyleRequestDetail"
                             />
                     </LinearLayout>
@@ -164,7 +160,7 @@
                             />
                         <EditText
                             android:enabled="false"
-                            android:text="@={request.creater}"
+                            android:text="@={viewModel.request.creater}"
                             style="@style/EditTextStyleRequestDetail"
                             />
                     </LinearLayout>
@@ -189,7 +185,7 @@
                             />
                         <EditText
                             android:enabled="false"
-                            android:text="@{request.updater}"
+                            android:text="@{viewModel.request.updater}"
                             style="@style/EditTextStyleRequestDetail"
                             />
                     </LinearLayout>

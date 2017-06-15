@@ -5,6 +5,7 @@ import android.databinding.Bindable;
 import com.android.databinding.library.baseAdapters.BR;
 import com.framgia.fdms.FDMSApplication;
 import com.framgia.fdms.R;
+import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
@@ -16,7 +17,7 @@ import java.util.List;
  * Created by beepi on 09/05/2017.
  */
 
-public class Request extends BaseObservable implements Serializable {
+public class Request extends BaseObservable implements Serializable, Cloneable{
     @Expose
     @SerializedName("id")
     private int mId;
@@ -53,6 +54,11 @@ public class Request extends BaseObservable implements Serializable {
     @Expose
     @SerializedName("create_at")
     private Date mCreatAt;
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 
     @Bindable
     public List<RequestAction> getRequestActionList() {
@@ -251,6 +257,11 @@ public class Request extends BaseObservable implements Serializable {
 
         public void onIncrement() {
             setNumber(getNumber() + 1);
+        }
+
+        @Override
+        public String toString() {
+            return new Gson().toJson(this);
         }
     }
 

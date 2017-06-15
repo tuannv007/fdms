@@ -67,12 +67,14 @@ public class RequestDetailViewModel extends BaseObservable
     private int mProgressBarVisibility = View.GONE;
     private User mUser;
     private FloatingActionMenu mFloatingActionsMenu;
+    private Request mRequestTemp;
 
     public RequestDetailViewModel(AppCompatActivity activity, List<Request.DeviceRequest> request,
-            List<Request.RequestAction> actions, String statusRequest, Request actionRequest, FloatingActionMenu floatingActionsMenu) {
+            List<Request.RequestAction> actions, String statusRequest, Request actionRequest,
+            FloatingActionMenu floatingActionsMenu) {
         mContext = activity;
         mActivity = activity;
-        mRequest = actionRequest;
+        setRequest(actionRequest);
         mStatusRequest = statusRequest;
         mIsEdit.set(false);
         mAdapter = new RequestDetailAdapter(activity, this);
@@ -110,10 +112,6 @@ public class RequestDetailViewModel extends BaseObservable
 
     public ObservableBoolean getIsEdit() {
         return mIsEdit;
-    }
-
-    public RequestDetailAdapter getAdapter() {
-        return mAdapter;
     }
 
     @Override
@@ -171,6 +169,11 @@ public class RequestDetailViewModel extends BaseObservable
     public void onCancelEditClick() {
         mIsEdit.set(false);
         mActionMenu.showMenu(true);
+        if (mRequestTemp != null) {
+            setRequest(mRequestTemp);
+            mAdapter.clear();
+            mAdapter.onUpdatePage(mRequestTemp.getDevices());
+        }
     }
 
     @Override
@@ -263,6 +266,11 @@ public class RequestDetailViewModel extends BaseObservable
     public void initEditRequest() {
         mIsEdit.set(true);
         mActionMenu.hideMenu(true);
+        try {
+            mRequestTemp = (Request) mRequest.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getStatusRequest() {
@@ -277,5 +285,25 @@ public class RequestDetailViewModel extends BaseObservable
     public void setProgressBarVisibility(int progressBarVisibility) {
         mProgressBarVisibility = progressBarVisibility;
         notifyPropertyChanged(BR.progressBarVisibility);
+    }
+
+    @Bindable
+    public Request getRequest() {
+        return mRequest;
+    }
+
+    public void setRequest(Request request) {
+        mRequest = request;
+        notifyPropertyChanged(BR.request);
+    }
+
+    @Bindable
+    public RequestDetailAdapter getAdapter() {
+        return mAdapter;
+    }
+
+    public void setAdapter(RequestDetailAdapter adapter) {
+        mAdapter = adapter;
+        notifyPropertyChanged(BR.adapter);
     }
 }

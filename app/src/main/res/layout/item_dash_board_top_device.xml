@@ -51,7 +51,7 @@
                     android:layout_marginTop="@dimen/dp_5"
                     android:paddingLeft="@dimen/dp_16"
                     android:paddingTop="@dimen/dp_4"
-                    android:text="@{device.categoryName}"
+                    android:text="@{device.deviceCategoryName}"
                     android:textSize="@dimen/sp_16"
                     android:textStyle="bold"
                     />
