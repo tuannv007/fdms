@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.net.Uri;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
@@ -15,7 +14,7 @@ import com.framgia.fdms.data.model.Picture;
 import com.framgia.fdms.data.model.User;
 import com.framgia.fdms.data.source.local.sharepref.SharePreferenceImp;
 import com.framgia.fdms.screen.authenication.login.LoginActivity;
-import com.framgia.fdms.screen.profile.export.ExportDialogFragment;
+import com.framgia.fdms.screen.profile.chooseexport.ChooseExportActivity;
 import com.framgia.fdms.utils.Utils;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import java.text.DateFormat;
@@ -26,7 +25,6 @@ import java.util.Locale;
 import static android.app.Activity.RESULT_OK;
 import static com.framgia.fdms.data.source.local.sharepref.SharePreferenceKey.USER_PREFS;
 import static com.framgia.fdms.utils.Constant.PICK_IMAGE_REQUEST;
-import static com.framgia.fdms.utils.Constant.TYPE_DIALOG;
 
 /**
  * Exposes the data to be used in the Profile screen.
@@ -200,8 +198,6 @@ public class ProfileViewModel extends BaseObservable
     }
 
     public void showDilogExport() {
-        FragmentTransaction ft = mActivity.getSupportFragmentManager().beginTransaction();
-        ExportDialogFragment newFragment = ExportDialogFragment.newInstance(mUser);
-        newFragment.show(ft, TYPE_DIALOG);
+        mActivity.startActivity(ChooseExportActivity.newInstance(mContext, mUser));
     }
 }
