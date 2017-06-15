@@ -135,6 +135,7 @@ public final class RequestManagerPresenter implements RequestManagerContract.Pre
                             public void onError(Throwable e) {
                                 mViewModel.hideProgressbar();
                                 mViewModel.setRefresh(false);
+                                mViewModel.onGetRequestError();
                             }
 
                             @Override

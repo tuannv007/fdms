@@ -53,6 +53,7 @@ public class RequestManagerViewModel extends BaseFragmentModel
     private Status mStatus;
     private Status mRelative;
     private boolean mIsRefresh;
+    private int mEmptyViewVisible = View.GONE; // show empty state when no date
 
     public RequestManagerViewModel(Fragment fragment) {
         mFragment = fragment;
@@ -87,7 +88,13 @@ public class RequestManagerViewModel extends BaseFragmentModel
 
     @Override
     public void onGetRequestSuccess(List<Request> requests) {
+        setEmptyViewVisible(requests.isEmpty() ? View.VISIBLE : View.GONE);
         mAdapter.onUpdatePage(requests);
+    }
+
+    @Override
+    public void onGetRequestError() {
+        setEmptyViewVisible(View.VISIBLE);
     }
 
     @Override
@@ -279,5 +286,15 @@ public class RequestManagerViewModel extends BaseFragmentModel
 
     public SwipeRefreshLayout.OnRefreshListener getRefreshLayout() {
         return mRefreshLayout;
+    }
+
+    @Bindable
+    public int getEmptyViewVisible() {
+        return mEmptyViewVisible;
+    }
+
+    public void setEmptyViewVisible(int emptyViewVisible) {
+        mEmptyViewVisible = emptyViewVisible;
+        notifyPropertyChanged(BR.emptyViewVisible);
     }
 }

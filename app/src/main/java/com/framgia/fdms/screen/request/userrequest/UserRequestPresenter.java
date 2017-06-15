@@ -106,6 +106,7 @@ public final class UserRequestPresenter implements UserRequestContract.Presenter
                             public void onError(Throwable e) {
                                 mViewModel.hideProgressbar();
                                 mViewModel.setRefresh(false);
+                                mViewModel.onGetRequestError();
                             }
 
                             @Override
