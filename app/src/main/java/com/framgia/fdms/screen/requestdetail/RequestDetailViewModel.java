@@ -224,7 +224,7 @@ public class RequestDetailViewModel extends BaseObservable
     }
 
     @Override
-    public void editActionSuccess(Respone<Request> requestRespone) {
+    public void onGetReponeSuccess(Respone<Request> requestRespone) {
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         bundle.putSerializable(BUNDLE_RESPONE, requestRespone);

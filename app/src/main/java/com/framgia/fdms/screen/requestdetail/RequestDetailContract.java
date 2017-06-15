@@ -35,13 +35,15 @@ public interface RequestDetailContract {
 
         void initFloatActionButton(FloatingActionMenu menu);
 
-        void editActionSuccess(Respone<Request> requestRespone);
+        void onGetReponeSuccess(Respone<Request> requestRespone);
 
         void setCurrentUser(User user);
     }
 
     interface Presenter extends BasePresenter {
         void updateActionRequest(int requestId, int actionId);
+
+        void updateRequest(Request request);
 
         void getCurrentUser();
     }

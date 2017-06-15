@@ -116,6 +116,31 @@ public class RequestRemoteDataSource extends BaseRemoteDataSource
     }
 
     @Override
+    public Observable<Respone<Request>> updateRequest(Request request) {
+        Map<String, String> parrams = new HashMap<>();
+
+        parrams.put(REQUEST_TITLE, request.getTitle());
+        parrams.put(REQUEST_DESCRIPTION, request.getDescription());
+        parrams.put(REQUEST_REQUEST_DETAILS, request.getDevices().toString());
+
+        return mFDMSApi.updateRequest(request.getId(), parrams)
+                .flatMap(new Func1<Respone<Request>, Observable<Respone<Request>>>() {
+
+                    @Override
+                    public Observable<Respone<Request>> call(Respone<Request> requestRespone) {
+                        if (requestRespone == null) {
+                            return Observable.error(new NullPointerException());
+                        } else if (requestRespone.isError()) {
+                            return Observable.error(
+                                    new NullPointerException("ERROR" + requestRespone.getStatus()));
+                        } else {
+                            return Observable.just(requestRespone);
+                        }
+                    }
+                });
+    }
+
+    @Override
     public Observable<List<Dashboard>> getDashboardRequest() {
         return mFDMSApi.getDashboardRequest()
                 .flatMap(new Func1<Respone<List<Dashboard>>, Observable<List<Dashboard>>>() {
