@@ -284,6 +284,7 @@
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
                                 android:orientation="horizontal"
+                                android:onClick="@{() -> viewModel.onPrintClick()}"
                                 android:padding="@dimen/dp_5"
                                 android:paddingTop="@dimen/dp_15"
                                 >
