@@ -56,6 +56,7 @@ public class UserRequestViewModel extends BaseFragmentModel
     private Status mRelative;
     private boolean mIsRefresh;
     private ObservableField<User> mUser = new ObservableField<>();
+    private int mEmptyViewVisible = View.GONE; // show empty state when no date
 
     public UserRequestViewModel(FragmentActivity activity, Fragment fragment) {
         mContext = activity.getApplicationContext();
@@ -90,7 +91,13 @@ public class UserRequestViewModel extends BaseFragmentModel
 
     @Override
     public void onGetRequestSuccess(List<Request> requests) {
+        setEmptyViewVisible(requests.isEmpty() ? View.VISIBLE : View.GONE);
         mAdapter.onUpdatePage(requests);
+    }
+
+    @Override
+    public void onGetRequestError() {
+        setEmptyViewVisible(View.VISIBLE);
     }
 
     @Override
@@ -287,5 +294,15 @@ public class UserRequestViewModel extends BaseFragmentModel
     @Bindable
     public ObservableField<User> getUser() {
         return mUser;
+    }
+
+    @Bindable
+    public int getEmptyViewVisible() {
+        return mEmptyViewVisible;
+    }
+
+    public void setEmptyViewVisible(int emptyViewVisible) {
+        mEmptyViewVisible = emptyViewVisible;
+        notifyPropertyChanged(BR.emptyViewVisible);
     }
 }

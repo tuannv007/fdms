@@ -78,6 +78,14 @@
                     />
 
             </LinearLayout>
+
+            <include
+                layout="@layout/empty_state"
+                bind:image="@{@drawable/ic_no_report}"
+                bind:text="@{@string/msg_no_device}"
+                bind:visibleState="@{viewModel.emptyViewVisible}"
+                />
+
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

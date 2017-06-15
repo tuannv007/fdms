@@ -181,4 +181,7 @@
     <string name="title_employcode">Employee code:</string>
     <string name="message_export_error">Export error</string>
     <string name="title_user_not_found">User not found</string>
+    <string name="msg_no_device">Not device</string>
+    <string name="msg_no_request">To create a new request, please click the + button bellow</string>
+    <string name="msg_no_request_manager">Not request device</string>
 </resources>

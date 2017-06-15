@@ -2,6 +2,7 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools"
     >
 
     <data>
@@ -68,6 +69,14 @@
                         android:visibility="@{viewModel.user.role.equals(Constant.Role.STAFF) ? View.GONE : View.VISIBLE}"
                         />
                 </LinearLayout>
+
+                <include
+                    layout="@layout/empty_state"
+                    bind:image="@{@drawable/ic_no_report}"
+                    bind:text="@{@string/msg_no_request}"
+                    bind:visibleState="@{viewModel.emptyViewVisible}"
+                    />
+
                 <android.support.v7.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"

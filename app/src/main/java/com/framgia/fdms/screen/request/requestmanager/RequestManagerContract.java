@@ -35,6 +35,8 @@ interface RequestManagerContract {
         void setCurrentUser(User user);
 
         void setRefresh(boolean isRefresh);
+
+        void onGetRequestError();
     }
 
     /**

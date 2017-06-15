@@ -53,6 +53,7 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
     private String mKeyWord;
     private boolean mIsBo = false;
     private int mTab = TAB_MY_DEVICE;
+    private int mEmptyViewVisible = View.GONE; // show empty state ui when not data
 
     public ObservableBoolean getIsLoadingMore() {
         return mIsLoadingMore;
@@ -160,6 +161,7 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
     @Override
     public void onStart() {
         mPresenter.onStart();
+        loadData();
     }
 
     @Override
@@ -174,6 +176,7 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
 
     @Override
     public void onDeviceLoaded(List<Device> devices) {
+        setEmptyViewVisible(devices.isEmpty() ? View.VISIBLE : View.GONE);
         mIsLoadingMore.set(false);
         mAdapter.onUpdatePage(devices);
         setRefresh(false);
@@ -195,6 +198,7 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
         hideProgressbar();
         Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
         setRefresh(false);
+        setEmptyViewVisible(View.VISIBLE);
     }
 
     @Override
@@ -328,5 +332,15 @@ public class ListDeviceViewModel extends BaseObservable implements ListDeviceCon
     public void setTab(int tab) {
         mTab = tab;
         notifyPropertyChanged(BR.tab);
+    }
+
+    @Bindable
+    public int getEmptyViewVisible() {
+        return mEmptyViewVisible;
+    }
+
+    public void setEmptyViewVisible(int emptyViewVisible) {
+        mEmptyViewVisible = emptyViewVisible;
+        notifyPropertyChanged(BR.emptyViewVisible);
     }
 }
