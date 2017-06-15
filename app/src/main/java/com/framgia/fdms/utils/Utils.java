@@ -76,4 +76,10 @@ public class Utils {
             return priceStr;
         }
     }
+
+    public static String stringBoughtDateDevice(Date date) {
+        if (date == null) return "";
+        SimpleDateFormat formatter = new SimpleDateFormat("dd - MM - yyyy", Locale.getDefault());
+        return formatter.format(date);
+    }
 }

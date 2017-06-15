@@ -4,7 +4,6 @@ import com.framgia.fdms.data.model.Device;
 import com.framgia.fdms.data.source.DeviceRepository;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;

@@ -94,6 +94,7 @@ public class CreateDeviceViewModel extends BaseObservable
             mDevice = device;
             mCategory = new Category(device.getDeviceCategoryId(), device.getDeviceCategoryName());
             mStatus = new Status(device.getDeviceStatusId(), device.getDeviceStatusName());
+            setBoughtDate(Utils.stringBoughtDateDevice(device.getBoughtDate()));
         }
         mDeviceType = type;
     }

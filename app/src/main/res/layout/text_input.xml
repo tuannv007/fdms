@@ -4,6 +4,7 @@
     >
 
     <data>
+        <import type="com.framgia.fdms.screen.devicecreation.DeviceStatusType"/>
         <variable
             name="title"
             type="String"
@@ -24,6 +25,11 @@
             name="onClick"
             type="android.view.View.OnClickListener"
             />
+        <variable
+            name="type"
+            type="com.framgia.fdms.screen.devicecreation.DeviceStatusType"
+            />
+
     </data>
 
 
@@ -31,6 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_10"
+        android:clickable="@{type == DeviceStatusType.CREATE}"
         android:orientation="horizontal"
         android:padding="@dimen/dp_8"
         >
@@ -39,12 +46,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:clickable="@{type == DeviceStatusType.CREATE}"
             android:src="@{image}"
             />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clickable="@{type == DeviceStatusType.CREATE}"
             android:orientation="vertical"
             android:paddingLeft="@dimen/dp_16"
             >
@@ -52,12 +61,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="@{type == DeviceStatusType.CREATE}"
                 android:orientation="vertical"
                 >
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/dp_5"
+                    android:clickable="@{type == DeviceStatusType.CREATE}"
                     android:text="@{title}"
                     android:textColor="@color/color_brown"
                     android:textSize="@dimen/sp_12"
@@ -67,6 +78,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_5"
+                    android:clickable="@{type == DeviceStatusType.CREATE}"
                     android:onClick="@{onClick}"
                     android:text="@{text}"
                     android:textSize="@dimen/sp_16"
@@ -76,6 +88,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="@{type == DeviceStatusType.CREATE}"
                 app:errorText="@{error}"
                 >
                 <android.support.v7.widget.AppCompatTextView
@@ -84,6 +97,7 @@
                     android:layout_height="@dimen/dp_1"
                     android:layout_marginTop="@dimen/dp_2"
                     android:background="@color/color_gray_mos"
+                    android:clickable="@{type == DeviceStatusType.CREATE}"
                     />
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
