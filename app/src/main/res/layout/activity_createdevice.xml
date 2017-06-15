@@ -96,9 +96,11 @@
                             bind:image="@{@drawable/ic_list_24dp}"
                             bind:text="@{viewModel.status.name}"
                             bind:title="@{@string/title_device_status}"
+                            bind:type="@{DeviceStatusType.CREATE}"
                             />
 
                         <include
+                            bind:type="@{DeviceStatusType.EDIT}"
                             layout="@layout/text_input"
                             bind:error="@{viewModel.boughtDateError}"
                             bind:image="@{@drawable/ic_calendar_24dp}"
@@ -108,6 +110,7 @@
                             />
 
                         <include
+                            bind:type="@{DeviceStatusType.EDIT}"
                             layout="@layout/text_input"
                             bind:error="@{viewModel.categoryError}"
                             bind:image="@{@drawable/ic_device_24dp}"
@@ -117,6 +120,7 @@
                             />
 
                         <include
+                            bind:type="@{DeviceStatusType.EDIT}"
                             layout="@layout/text_input"
                             bind:image="@{@drawable/ic_list_24dp}"
                             bind:onClick="@{() -> viewModel.onChooseBranch()}"
@@ -125,6 +129,7 @@
                             />
 
                         <include
+                            bind:type="@{DeviceStatusType.EDIT}"
                             layout="@layout/text_input"
                             bind:image="@{@drawable/ic_code_24dp}"
                             bind:text="@{viewModel.device.deviceCode}"
