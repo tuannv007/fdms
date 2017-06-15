@@ -161,7 +161,7 @@
     <string name="title_assignment">Assignment</string>
     <string name="title_device_id">Device ID</string>
     <string name="title_add_device">Add Device</string>
-    <string name="title_branch">Branch</string>
+    <string name="title_branch">Branch: </string>
     <string name="title_type_code">Type of code</string>
     <string name="title_qrcode">QRCode</string>
     <string name="title_barcode">BarCode</string>
@@ -172,4 +172,13 @@
     <string name="title_user">User</string>
     <string name="title_my_device">My Device</string>
     <string name="title_manager_device">Manage Device</string>
+    <string name="title_pdf">PDF</string>
+    <string name="title_word">Word</string>
+    <string name="message_export_success">Export Success File in </string>
+    <string name="action_export_file">Export file curent -</string>
+    <string name="title_devices_assignment_report">Devices assignment report</string>
+    <string name="title_full_name">Full Name:</string>
+    <string name="title_employcode">Employee code:</string>
+    <string name="message_export_error">Export error</string>
+    <string name="title_user_not_found">User not found</string>
 </resources>

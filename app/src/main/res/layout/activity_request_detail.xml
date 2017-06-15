@@ -278,9 +278,9 @@
                     android:layout_height="wrap_content"
                     android:onClick="@{() -> viewModel.initEditRequest()}"
                     android:src="@drawable/ic_edit_white_24dp"
-                    android:visibility="@{viewModel.getStatusRequest().equals(Constant.DeviceStatus.DONE) ? View.GONE : View.VISIBLE}"
                     app:fab_label="@string/action_edit"
                     app:fab_size="mini"
+                    app:setVisibility="@{viewModel}"
                     />
             </com.github.clans.fab.FloatingActionMenu>
 

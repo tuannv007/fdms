@@ -35,6 +35,8 @@ import com.framgia.fdms.screen.dashboard.DashboardViewModel;
 import com.framgia.fdms.screen.device.listdevice.ListDeviceViewModel;
 import com.framgia.fdms.screen.devicedetail.DeviceDetailViewModel;
 import com.framgia.fdms.screen.requestcreation.RequestCreationViewModel;
+import com.framgia.fdms.screen.requestdetail.RequestDetailViewModel;
+import com.framgia.fdms.utils.Constant;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -435,5 +437,14 @@ public final class BindingUtils {
     @BindingAdapter("imageBitmap")
     public static void setImageBitmap(ImageView view, Bitmap bitmap) {
         view.setImageBitmap(bitmap);
+    }
+
+    @BindingAdapter("setVisibility")
+    public static void setVisibility(com.github.clans.fab.FloatingActionButton view,
+            RequestDetailViewModel viewModel) {
+        int visibility = viewModel.getStatusRequest().equals(Constant.DeviceStatus.DONE)
+                || viewModel.getStatusRequest().equals(Constant.DeviceStatus.APPROVED) ? View.GONE
+                : View.VISIBLE;
+        view.setVisibility(visibility);
     }
 }

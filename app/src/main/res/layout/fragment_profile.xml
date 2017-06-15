@@ -311,6 +311,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp_16"
+                            android:onClick="@{() -> viewModel.showDilogExport()}"
                             android:orientation="horizontal"
                             android:paddingBottom="@dimen/dp_4"
                             android:paddingTop="@dimen/dp_4"
