@@ -38,6 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_10"
         android:clickable="@{type == DeviceStatusType.CREATE}"
+        android:onClick="@{onClick}"
         android:orientation="horizontal"
         android:padding="@dimen/dp_8"
         >
@@ -79,7 +80,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_5"
                     android:clickable="@{type == DeviceStatusType.CREATE}"
-                    android:onClick="@{onClick}"
                     android:text="@{text}"
                     android:textSize="@dimen/sp_16"
                     />
